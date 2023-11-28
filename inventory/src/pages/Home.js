@@ -16,10 +16,23 @@ import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import InboxIcon from '@mui/icons-material/MoveToInbox';
-import MailIcon from '@mui/icons-material/Mail';
-import { Button, Card, CardActions, CardContent, Grid } from '@mui/material';
-
+import LocationOnIcon from '@mui/icons-material/LocationOn';
+import DashboardIcon from '@mui/icons-material/Dashboard';
+import IsoIcon from '@mui/icons-material/Iso';
+import CurrencyRupeeIcon from '@mui/icons-material/CurrencyRupee';
+import DriveFileRenameOutlineIcon from '@mui/icons-material/DriveFileRenameOutline';
+import LocalShippingIcon from '@mui/icons-material/LocalShipping';
+import AddCardIcon from '@mui/icons-material/AddCard';
+import CategoryIcon from '@mui/icons-material/Category';
+import BrandingWatermarkIcon from '@mui/icons-material/BrandingWatermark';
+import Inventory2Icon from '@mui/icons-material/Inventory2';
+import TransferWithinAStationIcon from '@mui/icons-material/TransferWithinAStation';
+import WhatshotIcon from '@mui/icons-material/Whatshot';
+import HighlightOffIcon from '@mui/icons-material/HighlightOff';
+import RingVolumeIcon from '@mui/icons-material/RingVolume';
+import ReportIcon from '@mui/icons-material/Report';
+import PersonIcon from '@mui/icons-material/Person';
+import SettingsIcon from '@mui/icons-material/Settings';
 const drawerWidth = 240;
 
 const openedMixin = (theme) => ({
@@ -98,6 +111,26 @@ export default function Home() {
   const handleDrawerClose = () => {
     setOpen(false);
   };
+  const menuItems = [
+    { text: 'Dashboard', icon: <DashboardIcon /> },
+    { text: 'Location/Vessel', icon: <LocationOnIcon /> },
+    { text: 'Pick up', icon: <IsoIcon /> },
+    { text: 'Currency', icon: <CurrencyRupeeIcon /> },
+    { text: 'UOM', icon: <DriveFileRenameOutlineIcon /> },
+    { text: 'Shipper', icon: <LocalShippingIcon /> },
+    { text: 'Consignee', icon: <AddCardIcon /> },
+    { text: 'Category', icon: <CategoryIcon /> },
+    { text: 'Brand', icon: <BrandingWatermarkIcon /> },
+    { text: 'Item', icon: <Inventory2Icon /> },
+    { text: 'Inventory', icon: <TransferWithinAStationIcon /> },
+    { text: 'Transfer Item', icon: <WhatshotIcon /> },
+    { text: 'Consume Item', icon: <HighlightOffIcon /> },
+    { text: 'Scrapped Item', icon: <LocationOnIcon /> },
+    { text: 'Incoming Stock', icon: <RingVolumeIcon /> },
+    { text: 'User', icon: <PersonIcon /> },
+    { text: 'Settings', icon: <SettingsIcon /> },
+    { text: 'Reports', icon: <ReportIcon /> },
+  ];
 
   return (
     <Box sx={{ display: 'flex' }}>
@@ -133,8 +166,8 @@ export default function Home() {
         </DrawerHeader>
         <Divider />
         <List>
-          {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-            <ListItem key={text} disablePadding sx={{ display: 'block' }}>
+          {menuItems.map((item, index) => (
+            <ListItem key={item.text} disablePadding sx={{ display: 'block' }}>
               <ListItemButton
                 sx={{
                   minHeight: 48,
@@ -149,34 +182,12 @@ export default function Home() {
                     justifyContent: 'center',
                   }}
                 >
-                  {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+                  {item.icon}
                 </ListItemIcon>
-                <ListItemText primary={text} sx={{ opacity: open ? 1 : 0 }} />
-              </ListItemButton>
-            </ListItem>
-          ))}
-        </List>
-        <Divider />
-        <List>
-          {['All mail', 'Trash', 'Spam'].map((text, index) => (
-            <ListItem key={text} disablePadding sx={{ display: 'block' }}>
-              <ListItemButton
-                sx={{
-                  minHeight: 48,
-                  justifyContent: open ? 'initial' : 'center',
-                  px: 2.5,
-                }}
-              >
-                <ListItemIcon
-                  sx={{
-                    minWidth: 0,
-                    mr: open ? 3 : 'auto',
-                    justifyContent: 'center',
-                  }}
-                >
-                  {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-                </ListItemIcon>
-                <ListItemText primary={text} sx={{ opacity: open ? 1 : 0 }} />
+                <ListItemText
+                  primary={item.text}
+                  sx={{ opacity: open ? 1 : 0 }}
+                />
               </ListItemButton>
             </ListItem>
           ))}
