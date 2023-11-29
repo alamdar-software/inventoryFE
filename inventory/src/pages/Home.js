@@ -33,6 +33,8 @@ import RingVolumeIcon from '@mui/icons-material/RingVolume';
 import ReportIcon from '@mui/icons-material/Report';
 import PersonIcon from '@mui/icons-material/Person';
 import SettingsIcon from '@mui/icons-material/Settings';
+import { Button, Card, CardActions, CardContent, Grid } from '@mui/material';
+import { Link } from 'react-router-dom';
 const drawerWidth = 240;
 
 const openedMixin = (theme) => ({
@@ -168,27 +170,33 @@ export default function Home() {
         <List>
           {menuItems.map((item, index) => (
             <ListItem key={item.text} disablePadding sx={{ display: 'block' }}>
-              <ListItemButton
-                sx={{
-                  minHeight: 48,
-                  justifyContent: open ? 'initial' : 'center',
-                  px: 2.5,
-                }}
+              <Link
+                key={item.text}
+                to={`/${item.text.toLowerCase().replace(' ', '-')}`}
+                style={{ textDecoration: 'none', color: 'inherit' }}
               >
-                <ListItemIcon
+                <ListItemButton
                   sx={{
-                    minWidth: 0,
-                    mr: open ? 3 : 'auto',
-                    justifyContent: 'center',
+                    minHeight: 48,
+                    justifyContent: open ? 'initial' : 'center',
+                    px: 2.5,
                   }}
                 >
-                  {item.icon}
-                </ListItemIcon>
-                <ListItemText
-                  primary={item.text}
-                  sx={{ opacity: open ? 1 : 0 }}
-                />
-              </ListItemButton>
+                  <ListItemIcon
+                    sx={{
+                      minWidth: 0,
+                      mr: open ? 3 : 'auto',
+                      justifyContent: 'center',
+                    }}
+                  >
+                    {item.icon}
+                  </ListItemIcon>
+                  <ListItemText
+                    primary={item.text}
+                    sx={{ opacity: open ? 1 : 0 }}
+                  />
+                </ListItemButton>
+              </Link>
             </ListItem>
           ))}
         </List>
@@ -200,33 +208,35 @@ export default function Home() {
           spacing={3}
           sx={{ display: 'flex', justifyContent: 'center' }}
         >
-          <Grid item xs={12} sm={3}>
-            <Card sx={{ minWidth: 275 }}>
-              <CardContent>
-                <Typography
-                  sx={{ fontSize: 14 }}
-                  color='text.secondary'
-                  gutterBottom
-                >
-                  Word of the Day
-                </Typography>
-                <Typography variant='h5' component='div'>
-                  items
-                </Typography>
-                <Typography sx={{ mb: 1.5 }} color='text.secondary'>
-                  adjective
-                </Typography>
-                <Typography variant='body2'>
-                  well meaning and kindly.
-                  <br />
-                  {'"a benevolent smile"'}
-                </Typography>
-              </CardContent>
-              <CardActions>
-                <Button size='small'>Learn More</Button>
-              </CardActions>
-            </Card>
-          </Grid>
+          <Link to='/location/vessel' style={{ textDecoration: 'none' }}>
+            <Grid item xs={12} sm={3}>
+              <Card sx={{ minWidth: 275 }}>
+                <CardContent>
+                  <Typography
+                    sx={{ fontSize: 14 }}
+                    color='text.secondary'
+                    gutterBottom
+                  >
+                    Word of the Day
+                  </Typography>
+                  <Typography variant='h5' component='div'>
+                    Location/Vessel
+                  </Typography>
+                  <Typography sx={{ mb: 1.5 }} color='text.secondary'>
+                    adjective
+                  </Typography>
+                  <Typography variant='body2'>
+                    well meaning and kindly.
+                    <br />
+                    {'"a benevolent smile"'}
+                  </Typography>
+                </CardContent>
+                <CardActions>
+                  <Button size='small'>Learn More</Button>
+                </CardActions>
+              </Card>
+            </Grid>
+          </Link>
           <Grid item xs={12} sm={3}>
             <Card sx={{ minWidth: 275 }}>
               <CardContent>
