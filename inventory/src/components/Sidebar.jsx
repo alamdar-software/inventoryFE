@@ -204,13 +204,13 @@ export default function Sidebar({ children }) {
       <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
         <DrawerHeader />
         <Grid
-          container
-          spacing={3}
-          sx={{ display: "flex", justifyContent: "center" }}
+        //container
+        // spacing={3}
+        //sx={{ display: "flex", justifyContent: "center" }}
         >
           <div>
             {/* Add some content or debug info */}
-            <h2>Sidebar Content</h2>
+
             {children}
           </div>
         </Grid>
