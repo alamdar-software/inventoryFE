@@ -6,6 +6,7 @@ import {
   CardContent,
   Grid,
   IconButton,
+  TextField,
   Toolbar,
   Typography,
 } from '@mui/material';
@@ -35,7 +36,38 @@ export const Location = () => {
         </AppBar>
       </Box>
       <Grid>
-        <Card sx={{ minWidth: 275, pt: '11px' }}>
+        <Card sx={{ minWidth: 275, m: '11px' }}>
+          <CardContent>
+            <Typography
+              sx={{ fontSize: 14 }}
+              color='text.secondary'
+              gutterBottom
+            >
+              Location/Vessel
+            </Typography>
+            <TextField
+              id='outlined-basic'
+              label='Location'
+              variant='outlined'
+              fullWidth
+            />
+            <Typography sx={{ mb: 1.5 }} color='text.secondary'>
+              Sub Locations
+            </Typography>
+            <TextField
+              id='outlined-basic'
+              label='Sub Location'
+              variant='outlined'
+              fullWidth
+            />
+          </CardContent>
+          <CardActions>
+            <Button size='large'>Add</Button>
+          </CardActions>
+        </Card>
+      </Grid>
+      <Grid sx={{ mt: '70px' }}>
+        <Card sx={{ minWidth: 275, m: '11px' }}>
           <CardContent>
             <Typography
               sx={{ fontSize: 14 }}
