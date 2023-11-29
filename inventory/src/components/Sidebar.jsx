@@ -152,7 +152,7 @@ export default function Sidebar({ children }) {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" noWrap component="div">
-            Mini variant drawer
+            INVENTORY
           </Typography>
         </Toolbar>
       </AppBar>
@@ -203,16 +203,10 @@ export default function Sidebar({ children }) {
       </Drawer>
       <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
         <DrawerHeader />
-        <Grid
-          container
-          spacing={3}
-          sx={{ display: "flex", justifyContent: "center" }}
-        >
-          <div>
-            {/* Add some content or debug info */}
-            <h2>Sidebar Content</h2>
-            {children}
-          </div>
+        <Grid spacing={3} sx={{}}>
+          {/* Add some content or debug info */}
+
+          {children}
         </Grid>
       </Box>
     </Box>
