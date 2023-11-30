@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
 import {
   Card,
   CardContent,
@@ -6,8 +6,7 @@ import {
   TextField,
   Button,
   Typography,
-} from "@mui/material";
-import axios from "axios";
+} from '@mui/material';
 
 export const Location = () => {
   const [location, setLocation] = useState();
@@ -32,11 +31,11 @@ export const Location = () => {
     <>
       <Grid>
         <Card
-          color="secondary"
-          sx={{ width: "100%", backgroundColor: "secondary" }}
+          color='secondary'
+          sx={{ width: '100%', backgroundColor: 'secondary' }}
         >
           <CardContent>
-            <Typography variant="h4" color="secondary" gutterBottom>
+            <Typography variant='h4' color='secondary' gutterBottom>
               Create Location/Vessel
             </Typography>
           </CardContent>
@@ -45,18 +44,18 @@ export const Location = () => {
 
       <Card
         sx={{
-          width: "100%",
-          mt: "33px",
-          pt: "33px",
-          borderBottom: "2px solid grey",
+          width: '100%',
+          mt: '33px',
+          pt: '33px',
+          borderBottom: '2px solid grey',
         }}
       >
-        <Grid container spacing={2} sx={{ ml: "11px" }}>
+        <Grid container spacing={2} sx={{ ml: '11px' }}>
           <Grid item xs={12} sm={6}>
             <TextField
-              id="outlined-basic"
-              label="Location/vessel"
-              variant="outlined"
+              id='outlined-basic'
+              label='Location/vessel'
+              variant='outlined'
               value={location}
               onChange={(e) => setLocation(e.target.value)}
               fullWidth
@@ -64,9 +63,9 @@ export const Location = () => {
           </Grid>
           <Grid item xs={12} sm={6}>
             <TextField
-              id="outlined-basic"
-              label="SubLocation"
-              variant="outlined"
+              id='outlined-basic'
+              label='SubLocation'
+              variant='outlined'
               value={subLocation}
               onChange={(e) => setSubLocation(e.target.value)}
               fullWidth
@@ -74,16 +73,16 @@ export const Location = () => {
           </Grid>
         </Grid>
         <Button
-          variant="contained"
-          color="secondary"
-          size="large"
+          variant='contained'
+          color='secondary'
+          size='large'
           onClick={handleClick}
           sx={{
-            mt: "33px",
-            mb: "17px",
-            marginLeft: "auto",
-            marginRight: "auto",
-            display: "block",
+            mt: '33px',
+            mb: '17px',
+            marginLeft: 'auto',
+            marginRight: 'auto',
+            display: 'block',
           }}
         >
           Add

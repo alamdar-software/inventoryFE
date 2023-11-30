@@ -1,4 +1,4 @@
-import { Grid } from '@mui/material';
+import { FormControl, Grid, InputLabel, MenuItem, Select } from '@mui/material';
 import React from 'react';
 import {
   Card,
@@ -14,7 +14,11 @@ const Item = () => {
       <Grid>
         <Card
           color='secondary'
-          sx={{ width: '100%', backgroundColor: 'secondary' }}
+          sx={{
+            width: '100%',
+            backgroundColor: 'secondary',
+            borderBottom: '2px solid yellow',
+          }}
         >
           <CardContent>
             <Typography variant='h4' color='secondary' gutterBottom>
@@ -29,10 +33,11 @@ const Item = () => {
           width: '100%',
           mt: '33px',
           pt: '33px',
-          borderBottom: '2px solid grey',
+          borderBottom: '2px solid yellow',
+          borderRadius: '33px',
         }}
       >
-        <Grid container spacing={2} sx={{ ml: '11px' }}>
+        <Grid container spacing={2} sx={{ ml: '13px' }}>
           <Grid item xs={12} sm={6}>
             <TextField
               id='outlined-basic'
@@ -41,6 +46,7 @@ const Item = () => {
               //   value={location}
               //   onChange={(e) => setLocation(e.target.value)}
               fullWidth
+              sx={{ width: '90%' }}
             />
           </Grid>
           <Grid item xs={12} sm={6}>
@@ -51,33 +57,46 @@ const Item = () => {
               //   value={subLocation}
               //   onChange={(e) => setSubLocation(e.target.value)}
               fullWidth
+              sx={{ width: '90%' }}
             />
           </Grid>
         </Grid>
 
-        <Grid container spacing={2} sx={{ ml: '11px', mt: '21px' }}>
+        <Grid container spacing={2} sx={{ ml: '13px', mt: '21px' }}>
           <Grid item xs={12} sm={6}>
-            <TextField
-              id='outlined-basic'
-              label='Catagory'
-              variant='outlined'
-              //   value={location}
-              //   onChange={(e) => setLocation(e.target.value)}
-              fullWidth
-            />
+            <FormControl fullWidth sx={{ width: '90%' }}>
+              <InputLabel id='demo-simple-select-label'>Catagory</InputLabel>
+              <Select
+                labelId='demo-simple-select-label'
+                id='demo-simple-select'
+                //value={age}
+                label='Catagory'
+                //onChange={handleChange}
+              >
+                <MenuItem value={10}>Ten</MenuItem>
+                <MenuItem value={20}>Twenty</MenuItem>
+                <MenuItem value={30}>Thirty</MenuItem>
+              </Select>
+            </FormControl>
           </Grid>
           <Grid item xs={12} sm={6}>
-            <TextField
-              id='outlined-basic'
-              label='UOM'
-              variant='outlined'
-              //   value={subLocation}
-              //   onChange={(e) => setSubLocation(e.target.value)}
-              fullWidth
-            />
+            <FormControl fullWidth sx={{ width: '90%' }}>
+              <InputLabel id='demo-simple-select-label'>UOM</InputLabel>
+              <Select
+                labelId='demo-simple-select-label'
+                id='demo-simple-select'
+                //value={age}
+                label='UOM'
+                //onChange={handleChange}
+              >
+                <MenuItem value={10}>Ten</MenuItem>
+                <MenuItem value={20}>Twenty</MenuItem>
+                <MenuItem value={30}>Thirty</MenuItem>
+              </Select>
+            </FormControl>
           </Grid>
         </Grid>
-        <Grid container spacing={2} sx={{ mt: '21px', ml: '11px' }}>
+        <Grid container spacing={2} sx={{ mt: '21px', ml: '13px' }}>
           <Grid item xs={12} sm={6}>
             <TextField
               id='outlined-basic'
@@ -86,6 +105,7 @@ const Item = () => {
               //   value={subLocation}
               //   onChange={(e) => setSubLocation(e.target.value)}
               fullWidth
+              sx={{ width: '90%' }}
             />
           </Grid>
         </Grid>
