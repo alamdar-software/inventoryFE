@@ -44,6 +44,7 @@ const openedMixin = (theme) => ({
     duration: theme.transitions.duration.enteringScreen,
   }),
   overflowX: "hidden",
+  /* backgroundColor: "#090979+", */
 });
 
 const closedMixin = (theme) => ({
@@ -137,7 +138,14 @@ export default function Sidebar({ children }) {
   return (
     <Box sx={{ display: "flex" }}>
       <CssBaseline />
-      <AppBar position="fixed" open={open} sx={{ backgroundColor: "teal" }}>
+      <AppBar
+        position="fixed"
+        open={open}
+        sx={{
+          background:
+            "linear-gradient(90deg, #090979 0%, #090979 35%, #00d4ff 100%)",
+        }}
+      >
         <Toolbar>
           <IconButton
             color="inherit"

@@ -50,10 +50,14 @@ const Dashboard = () => {
             sx={{
               display: "flex",
               flexDirection: "column",
-              alignItems: "start",
+              alignItems: "Start",
             }}
           >
-            <CountertopsIcon fontSize="large" color="primary" />
+            <CountertopsIcon
+              fontSize="large"
+              color="primary"
+              sx={{ alignItems: "Center" }}
+            />
 
             <Typography
               sx={{ mb: 1.5, textAlign: "right" }}
@@ -81,7 +85,7 @@ const Dashboard = () => {
         >
           <CardContent>
             <DatasetIcon fontSize="large" color="secondary" />
-            <Typography variant="h5" component="div">
+            <Typography variant="h5" color="text.secondary" component="div">
               Daily Data Count
             </Typography>
             <Typography sx={{ mb: 1.5 }} color="text.secondary">
@@ -101,7 +105,7 @@ const Dashboard = () => {
         >
           <CardContent>
             <AssessmentIcon fontSize="large" style={{ color: "#ff0000" }} />
-            <Typography variant="h5" component="div">
+            <Typography variant="h5" component="div" color="text.secondary">
               Reports
             </Typography>
           </CardContent>
@@ -118,7 +122,7 @@ const Dashboard = () => {
         >
           <CardContent>
             <DescriptionIcon fontSize="large" style={{ color: "#c6ff00" }} />
-            <Typography variant="h5" component="div">
+            <Typography variant="h5" component="div" color="text.secondary">
               Items
             </Typography>
           </CardContent>
@@ -245,9 +249,9 @@ const Dashboard = () => {
             <CountertopsIcon fontSize="large" style={{ color: "#795548" }} />
 
             <Typography
-              sx={{ mb: 1.5, textAlign: "right" }}
+              sx={{ mb: 1, textAlign: "right" }}
               color="text.secondary"
-              variant="h5"
+              variant="h6"
               component="div"
             >
               Consumed Items
