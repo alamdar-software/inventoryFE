@@ -7,6 +7,7 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
+import { border } from "@mui/system";
 
 const columns = [
   { id: "name", label: "Currency", minWidth: 200 },
@@ -38,9 +39,19 @@ export default function TableComp() {
   };
 
   return (
-    <Paper sx={{ width: "100%", p: "3" }}>
-      <TableContainer sx={{ maxHeight: 440 }}>
-        <Table stickyHeader aria-label="sticky table" sx={{ mx: "5", mt: "5" }}>
+    <Paper sx={{ width: "100%", margin: "0 auto", maxWidth: "1000px" }}>
+      <TableContainer sx={{ maxHeight: 500 }}>
+        <Table
+          stickyHeader
+          aria-label="sticky table"
+          sx={{
+            mx: "5",
+            mt: "5",
+            border: 1,
+            borderColor: "grey.300",
+            borderStyle: "solid",
+          }}
+        >
           <TableHead>
             <TableRow>
               {columns.map((column) => (
