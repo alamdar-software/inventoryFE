@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
 import {
   Card,
   CardContent,
@@ -6,9 +6,8 @@ import {
   TextField,
   Button,
   Typography,
-} from "@mui/material";
-import axios from "axios";
-import TableComp from "./TableComp.jsx";
+} from '@mui/material';
+import TableComp from './TableComp.jsx';
 export const Currency = () => {
   const [currency, setcurrency] = useState();
 
@@ -44,11 +43,11 @@ export const Currency = () => {
     <>
       <Grid>
         <Card
-          color="secondary"
-          sx={{ width: "100%", backgroundColor: "secondary" }}
+          color='secondary'
+          sx={{ width: '100%', backgroundColor: 'secondary' }}
         >
           <CardContent>
-            <Typography variant="h4" color="secondary" gutterBottom>
+            <Typography variant='h4' color='secondary' gutterBottom>
               Create Currency
             </Typography>
           </CardContent>
@@ -57,22 +56,22 @@ export const Currency = () => {
 
       <Card
         sx={{
-          width: "100%",
-          mt: "33px",
-          pt: "33px",
-          borderBottom: "2px solid grey",
+          width: '100%',
+          mt: '33px',
+          pt: '33px',
+          borderBottom: '2px solid grey',
         }}
       >
         <Grid
           container
           spacing={2}
-          sx={{ ml: "11px", justifyContent: "center" }}
+          sx={{ ml: '11px', justifyContent: 'center' }}
         >
           <Grid item xs={12} sm={6}>
             <TextField
-              id="outlined-basic"
-              label="Enter Currency"
-              variant="outlined"
+              id='outlined-basic'
+              label='Enter Currency'
+              variant='outlined'
               value={currency}
               onChange={(e) => setcurrency(e.target.value)}
               fullWidth
@@ -80,21 +79,21 @@ export const Currency = () => {
           </Grid>
         </Grid>
         <Button
-          variant="contained"
-          color="secondary"
-          size="large"
+          variant='contained'
+          color='secondary'
+          size='large'
           onClick={handleClick}
           sx={{
-            mt: "33px",
-            mb: "17px",
-            marginLeft: "auto",
-            marginRight: "auto",
-            display: "block",
+            mt: '33px',
+            mb: '17px',
+            marginLeft: 'auto',
+            marginRight: 'auto',
+            display: 'block',
           }}
         >
           Add
         </Button>
-        <div sx={{ margin: "20px" }}>
+        <div sx={{ margin: '20px' }}>
           <TableComp />
         </div>
       </Card>
