@@ -11,7 +11,7 @@ import {
 export const Location = () => {
   const [location, setLocation] = useState();
   const [subLocation, setSubLocation] = useState();
-  const handleClick = () => {
+  const handleClick = async () => {
     const formData = {
       location,
       subLocation,
@@ -19,11 +19,23 @@ export const Location = () => {
 
     console.log(formData);
 
+    /*    const res = await fetch("http://localhost:8080/location/add", {
+      methd: "POST",
+      headers: {
+        "COntent-type": "application/json",
+      },
+      body: JSON.Stringify(...formData),
+    });
+
+    const data = await res.json(); */
+
     // fetch('http://localhost:8080/location/add', {
     //   method: 'POST',
     //   headers: { 'Content-type': 'application/json' },
     //   body: JSON.stringify(formData),
-    // }).then(() => {
+    // })
+
+    // .then(() => {
     //   console.log('Location Added');
     // });
   };
