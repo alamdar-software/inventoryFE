@@ -12,6 +12,7 @@ import DescriptionIcon from "@mui/icons-material/Description";
 import { createTheme } from "@mui/material/styles";
 import { purple } from "@mui/material/colors";
 import { red } from "@mui/material/colors";
+import { Link } from "react-router-dom";
 const bull = (
   <Box
     component="span"
@@ -46,31 +47,33 @@ const Dashboard = () => {
             borderRadius: 8,
           }}
         >
-          <CardContent
-            sx={{
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "Start",
-            }}
-          >
-            <CountertopsIcon
-              fontSize="large"
-              color="primary"
-              sx={{ alignItems: "Center" }}
-            />
-
-            <Typography
-              sx={{ mb: 1.5, textAlign: "right" }}
-              color="text.secondary"
-              variant="h5"
-              component="div"
+          <Link to={"/MOC"} style={{ textDecoration: "none" }}>
+            <CardContent
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "Start",
+              }}
             >
-              MOC
-            </Typography>
-            <Typography sx={{ mb: 1.5 }} color="text.secondary">
-              Count:
-            </Typography>
-          </CardContent>
+              <CountertopsIcon
+                fontSize="large"
+                color="primary"
+                sx={{ alignItems: "Center" }}
+              />
+
+              <Typography
+                sx={{ mb: 1.5, textAlign: "right" }}
+                color="text.secondary"
+                variant="h5"
+                component="div"
+              >
+                MOC
+              </Typography>
+              <Typography sx={{ mb: 1.5 }} color="text.secondary">
+                Count:
+              </Typography>
+            </CardContent>
+          </Link>
         </Card>
 
         <Card
@@ -83,15 +86,17 @@ const Dashboard = () => {
             borderRadius: 8,
           }}
         >
-          <CardContent>
-            <DatasetIcon fontSize="large" color="secondary" />
-            <Typography variant="h5" color="text.secondary" component="div">
-              Daily Data Count
-            </Typography>
-            <Typography sx={{ mb: 1.5 }} color="text.secondary">
-              Count:
-            </Typography>
-          </CardContent>
+          <Link to={"/datacount"} style={{ textDecoration: "none" }}>
+            <CardContent>
+              <DatasetIcon fontSize="large" color="secondary" />
+              <Typography variant="h5" color="text.secondary" component="div">
+                Daily Data Count
+              </Typography>
+              <Typography sx={{ mb: 1.5 }} color="text.secondary">
+                Count:
+              </Typography>
+            </CardContent>
+          </Link>
         </Card>
         <Card
           sx={{
@@ -103,12 +108,14 @@ const Dashboard = () => {
             marginTop: 3,
           }}
         >
-          <CardContent>
-            <AssessmentIcon fontSize="large" style={{ color: "#ff0000" }} />
-            <Typography variant="h5" component="div" color="text.secondary">
-              Reports
-            </Typography>
-          </CardContent>
+          <Link to={"/Reports"} style={{ textDecoration: "none" }}>
+            <CardContent>
+              <AssessmentIcon fontSize="large" style={{ color: "#ff0000" }} />
+              <Typography variant="h5" component="div" color="text.secondary">
+                Reports
+              </Typography>
+            </CardContent>
+          </Link>
         </Card>
         <Card
           sx={{
@@ -120,12 +127,14 @@ const Dashboard = () => {
             marginTop: 3,
           }}
         >
-          <CardContent>
-            <DescriptionIcon fontSize="large" style={{ color: "#c6ff00" }} />
-            <Typography variant="h5" component="div" color="text.secondary">
-              Items
-            </Typography>
-          </CardContent>
+          <Link to={"/Items"} style={{ textDecoration: "none" }}>
+            <CardContent>
+              <DescriptionIcon fontSize="large" style={{ color: "#c6ff00" }} />
+              <Typography variant="h5" component="div" color="text.secondary">
+                Items
+              </Typography>
+            </CardContent>
+          </Link>
         </Card>
       </div>
       <div style={{ display: "flex", flexDirection: "row", marginTop: 3 }}>
@@ -140,27 +149,29 @@ const Dashboard = () => {
             borderRadius: 8,
           }}
         >
-          <CardContent
-            sx={{
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "start",
-            }}
-          >
-            <CountertopsIcon fontSize="large" style={{ color: "#c6ff00" }} />
-
-            <Typography
-              sx={{ mb: 1.5, textAlign: "right" }}
-              color="text.secondary"
-              variant="h5"
-              component="div"
+          <Link to={"/Location-Vessel"} style={{ textDecoration: "none" }}>
+            <CardContent
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "start",
+              }}
             >
-              Location/Vessel
-            </Typography>
-            <Typography sx={{ mb: 1.5 }} color="text.secondary">
-              Count:
-            </Typography>
-          </CardContent>
+              <CountertopsIcon fontSize="large" style={{ color: "#c6ff00" }} />
+
+              <Typography
+                sx={{ mb: 1.5, textAlign: "right" }}
+                color="text.secondary"
+                variant="h5"
+                component="div"
+              >
+                Location/Vessel
+              </Typography>
+              <Typography sx={{ mb: 1.5 }} color="text.secondary">
+                Count:
+              </Typography>
+            </CardContent>
+          </Link>
         </Card>
         <Card
           sx={{
@@ -173,27 +184,29 @@ const Dashboard = () => {
             borderRadius: 8,
           }}
         >
-          <CardContent
-            sx={{
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "start",
-            }}
-          >
-            <CountertopsIcon fontSize="large" style={{ color: "#64dd17" }} />
-
-            <Typography
-              sx={{ mb: 1.5, textAlign: "right" }}
-              color="text.secondary"
-              variant="h5"
-              component="div"
+          <Link to={"/Inventory"} style={{ textDecoration: "none" }}>
+            <CardContent
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "start",
+              }}
             >
-              Inventory
-            </Typography>
-            <Typography sx={{ mb: 1.5 }} color="text.secondary">
-              Count:
-            </Typography>
-          </CardContent>
+              <CountertopsIcon fontSize="large" style={{ color: "#64dd17" }} />
+
+              <Typography
+                sx={{ mb: 1.5, textAlign: "right" }}
+                color="text.secondary"
+                variant="h5"
+                component="div"
+              >
+                Inventory
+              </Typography>
+              <Typography sx={{ mb: 1.5 }} color="text.secondary">
+                Count:
+              </Typography>
+            </CardContent>
+          </Link>
         </Card>
         <Card
           sx={{
@@ -206,27 +219,29 @@ const Dashboard = () => {
             borderRadius: 8,
           }}
         >
-          <CardContent
-            sx={{
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "start",
-            }}
-          >
-            <CountertopsIcon fontSize="large" style={{ color: "#9e9e9e" }} />
-
-            <Typography
-              sx={{ mb: 1.5, textAlign: "right" }}
-              color="text.secondary"
-              variant="h5"
-              component="div"
+          <Link to={"/Transfer-Items"} style={{ textDecoration: "none" }}>
+            <CardContent
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "start",
+              }}
             >
-              Transfer Items
-            </Typography>
-            <Typography sx={{ mb: 1.5 }} color="text.secondary">
-              Count:
-            </Typography>
-          </CardContent>
+              <CountertopsIcon fontSize="large" style={{ color: "#9e9e9e" }} />
+
+              <Typography
+                sx={{ mb: 1.5, textAlign: "right" }}
+                color="text.secondary"
+                variant="h5"
+                component="div"
+              >
+                Transfer Items
+              </Typography>
+              <Typography sx={{ mb: 1.5 }} color="text.secondary">
+                Count:
+              </Typography>
+            </CardContent>
+          </Link>
         </Card>
         <Card
           sx={{
@@ -239,27 +254,29 @@ const Dashboard = () => {
             borderRadius: 8,
           }}
         >
-          <CardContent
-            sx={{
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "start",
-            }}
-          >
-            <CountertopsIcon fontSize="large" style={{ color: "#795548" }} />
-
-            <Typography
-              sx={{ mb: 1, textAlign: "right" }}
-              color="text.secondary"
-              variant="h6"
-              component="div"
+          <Link to={"/Consumed-Items"} style={{ textDecoration: "none" }}>
+            <CardContent
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "start",
+              }}
             >
-              Consumed Items
-            </Typography>
-            <Typography sx={{ mb: 1.5 }} color="text.secondary">
-              Count:
-            </Typography>
-          </CardContent>
+              <CountertopsIcon fontSize="large" style={{ color: "#795548" }} />
+
+              <Typography
+                sx={{ mb: 1, textAlign: "right" }}
+                color="text.secondary"
+                variant="h6"
+                component="div"
+              >
+                Consumed Items
+              </Typography>
+              <Typography sx={{ mb: 1.5 }} color="text.secondary">
+                Count:
+              </Typography>
+            </CardContent>
+          </Link>
         </Card>
       </div>
       <div style={{ display: "flex", flexDirection: "row", marginTop: 3 }}>
@@ -275,27 +292,29 @@ const Dashboard = () => {
             width: "23%",
           }}
         >
-          <CardContent
-            sx={{
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "start",
-            }}
-          >
-            <CountertopsIcon fontSize="large" style={{ color: "#ff5722" }} />
-
-            <Typography
-              sx={{ mb: 1.5, textAlign: "right" }}
-              color="text.secondary"
-              variant="h5"
-              component="div"
+          <Link to={"/Incoming-Stock"} style={{ textDecoration: "none" }}>
+            <CardContent
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "start",
+              }}
             >
-              Incomming Stock
-            </Typography>
-            <Typography sx={{ mb: 1.5 }} color="text.secondary">
-              Count:
-            </Typography>
-          </CardContent>
+              <CountertopsIcon fontSize="large" style={{ color: "#ff5722" }} />
+
+              <Typography
+                sx={{ mb: 1.5, textAlign: "right" }}
+                color="text.secondary"
+                variant="h5"
+                component="div"
+              >
+                Incomming Stock
+              </Typography>
+              <Typography sx={{ mb: 1.5 }} color="text.secondary">
+                Count:
+              </Typography>
+            </CardContent>
+          </Link>
         </Card>
         <Card
           sx={{
@@ -309,27 +328,29 @@ const Dashboard = () => {
             width: "23%",
           }}
         >
-          <CardContent
-            sx={{
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "start",
-            }}
-          >
-            <CountertopsIcon fontSize="large" style={{ color: "#00bcd4" }} />
-
-            <Typography
-              sx={{ mb: 1.5, textAlign: "right" }}
-              color="text.secondary"
-              variant="h5"
-              component="div"
+          <Link to={"/Scrapped-Item"} style={{ textDecoration: "none" }}>
+            <CardContent
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "start",
+              }}
             >
-              Scrapped Items
-            </Typography>
-            <Typography sx={{ mb: 1.5 }} color="text.secondary">
-              Count:
-            </Typography>
-          </CardContent>
+              <CountertopsIcon fontSize="large" style={{ color: "#00bcd4" }} />
+
+              <Typography
+                sx={{ mb: 1.5, textAlign: "right" }}
+                color="text.secondary"
+                variant="h5"
+                component="div"
+              >
+                Scrapped Items
+              </Typography>
+              <Typography sx={{ mb: 1.5 }} color="text.secondary">
+                Count:
+              </Typography>
+            </CardContent>
+          </Link>
         </Card>
       </div>
     </>

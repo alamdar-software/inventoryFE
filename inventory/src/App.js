@@ -8,6 +8,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { Location } from "./components/Location";
 import Sidebar from "./components/Sidebar.jsx";
 import Item from "./components/Item.js";
+import { Currency } from "./components/Currency.jsx";
 const theme = createTheme({
   palette: {
     background: {
@@ -27,6 +28,7 @@ function App() {
               <Route path="/dashboard" element={<Dashboard />}></Route>
               <Route path="/location/vessel" element={<Location />} />
               <Route path="/item" element={<Item />} />
+              <Route path="/currency" element={<Currency />} />
             </Routes>
           </ThemeProvider>
         </Sidebar>

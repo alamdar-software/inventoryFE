@@ -8,35 +8,35 @@ import {
   Typography,
 } from "@mui/material";
 import axios from "axios";
+import TableComp from "./TableComp.jsx";
+export const Currency = () => {
+  const [currency, setcurrency] = useState();
 
-export const Location = () => {
-  const [location, setLocation] = useState();
-  const [subLocation, setSubLocation] = useState();
-  const handleClick = async () => {
+  const handleClick = () => {
     const formData = {
-      location,
-      subLocation,
+      currency,
     };
 
     console.log(formData);
 
-    /*    const res = await fetch("http://localhost:8080/location/add", {
-      methd: "POST",
-      headers: {
-        "COntent-type": "application/json",
-      },
-      body: JSON.Stringify(...formData),
-    });
+    /*     const res= await fetch("http://localhost:8080/currency/add",{
+        method:"POST",
+        headers:{
+            "Content-Type":"application/json"
+        },
+        body: JSON.stringify(formData)
 
-    const data = await res.json(); */
+        
+
+    })
+    const data =await  res.json();
+    console.log(data); */
 
     // fetch('http://localhost:8080/location/add', {
     //   method: 'POST',
     //   headers: { 'Content-type': 'application/json' },
     //   body: JSON.stringify(formData),
-    // })
-
-    // .then(() => {
+    // }).then(() => {
     //   console.log('Location Added');
     // });
   };
@@ -49,7 +49,7 @@ export const Location = () => {
         >
           <CardContent>
             <Typography variant="h4" color="secondary" gutterBottom>
-              Create Location/Vessel
+              Create Currency
             </Typography>
           </CardContent>
         </Card>
@@ -63,24 +63,18 @@ export const Location = () => {
           borderBottom: "2px solid grey",
         }}
       >
-        <Grid container spacing={2} sx={{ ml: "11px" }}>
+        <Grid
+          container
+          spacing={2}
+          sx={{ ml: "11px", justifyContent: "center" }}
+        >
           <Grid item xs={12} sm={6}>
             <TextField
               id="outlined-basic"
-              label="Location/vessel"
+              label="Enter Currency"
               variant="outlined"
-              value={location}
-              onChange={(e) => setLocation(e.target.value)}
-              fullWidth
-            />
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <TextField
-              id="outlined-basic"
-              label="SubLocation"
-              variant="outlined"
-              value={subLocation}
-              onChange={(e) => setSubLocation(e.target.value)}
+              value={currency}
+              onChange={(e) => setcurrency(e.target.value)}
               fullWidth
             />
           </Grid>
@@ -100,6 +94,9 @@ export const Location = () => {
         >
           Add
         </Button>
+        <div sx={{ margin: "20px" }}>
+          <TableComp />
+        </div>
       </Card>
     </>
   );
