@@ -9,35 +9,24 @@ import {
 } from '@mui/material';
 
 export const Location = () => {
-  const [location, setLocation] = useState();
-  const [subLocation, setSubLocation] = useState();
-  const handleClick = async () => {
-    const formData = {
-      location,
-      subLocation,
+  const [locationName, setLocation] = useState();
+  const [address, setSubLocation] = useState();
+
+  const handleClick = (e) => {
+    e.preventDefault();
+    const attendence = {
+      locationName,
+      address,
     };
+    console.log(attendence);
 
-    console.log(formData);
-
-    /*    const res = await fetch("http://localhost:8080/location/add", {
-      methd: "POST",
-      headers: {
-        "COntent-type": "application/json",
-      },
-      body: JSON.Stringify(...formData),
+    fetch('http://localhost:8080/location/add', {
+      method: 'POST',
+      headers: { 'Content-type': 'application/json' },
+      body: JSON.stringify(attendence),
+    }).then(() => {
+      console.log('Attendence Added');
     });
-
-    const data = await res.json(); */
-
-    // fetch('http://localhost:8080/location/add', {
-    //   method: 'POST',
-    //   headers: { 'Content-type': 'application/json' },
-    //   body: JSON.stringify(formData),
-    // })
-
-    // .then(() => {
-    //   console.log('Location Added');
-    // });
   };
   return (
     <>
@@ -68,7 +57,7 @@ export const Location = () => {
               id='outlined-basic'
               label='Location/vessel'
               variant='outlined'
-              value={location}
+              value={locationName}
               onChange={(e) => setLocation(e.target.value)}
               fullWidth
             />
@@ -78,7 +67,7 @@ export const Location = () => {
               id='outlined-basic'
               label='SubLocation'
               variant='outlined'
-              value={subLocation}
+              value={address}
               onChange={(e) => setSubLocation(e.target.value)}
               fullWidth
             />

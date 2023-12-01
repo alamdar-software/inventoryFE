@@ -28,13 +28,13 @@ const Pickup = () => {
 
     console.log(formData);
 
-    // fetch('http://localhost:8080/location/add', {
-    //   method: 'POST',
-    //   headers: { 'Content-type': 'application/json' },
-    //   body: JSON.stringify(formData),
-    // }).then(() => {
-    //   console.log('Location Added');
-    // });
+    fetch('http://localhost:8080/pickup/add', {
+      method: 'POST',
+      headers: { 'Content-type': 'application/json' },
+      body: JSON.stringify(formData),
+    }).then(() => {
+      console.log('Pickup Added');
+    });
   };
   return (
     <>
@@ -144,6 +144,7 @@ const Pickup = () => {
           Add
         </Button>
       </Card>
+      <Grid></Grid>
     </>
   );
 };
