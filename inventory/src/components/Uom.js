@@ -7,21 +7,28 @@ import {
   Typography,
 } from "@mui/material";
 import React from "react";
+
 import { useState } from "react";
 
-const Uom = () => {
-  const [unit, setunit] = useState();
-  const handleChange = (e) => {
-    setunit(e.target.value);
-  };
+export const Uom = async () => {
+  const [unit, setunit] = useState({
+    name: "",
+  });
+
   console.log(unit);
 
-  const handleClick = (e) => {
-    try {
-      const formData = { unit };
-      console.log(formData);
-    } catch (error) {}
+  const handleClick = async () => {
+    const res = await fetch("http://192.168.0.121:8080/unit/add", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(unit),
+    });
+    const data = await res.json();
+    console.log(data);
   };
+
   return (
     <>
       <Grid>
@@ -53,10 +60,14 @@ const Uom = () => {
         <Grid container spacing={2} sx={{ ml: "13px" }}>
           <Grid item xs={12} sm={6}>
             <TextField
-              id="outlined-basic"
+              id="name"
               label="Unit Name"
               variant="outlined"
-              onChange={handleChange}
+              onChange={(e) =>
+                setunit({
+                  name: e.target.value,
+                })
+              }
               //   value={location}
               //   onChange={(e) => setLocation(e.target.value)}
               fullWidth
