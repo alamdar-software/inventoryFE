@@ -6,9 +6,37 @@ import {
   TextField,
   Typography,
 } from '@mui/material';
-import React from 'react';
+import React, { useState } from 'react';
 
 const Shipper = () => {
+  const [name, setShipperName] = useState();
+  const [address, setAddressName] = useState();
+  const [postalCode, setPostalCode] = useState();
+
+  const [contactNumber, setContactNumber] = useState();
+  const [email, setEmail] = useState();
+
+  const handleClick = (e) => {
+    e.preventDefault();
+    const formData = {
+      name,
+      address,
+      postalCode,
+      contactNumber,
+      email,
+    };
+
+    console.log(formData);
+
+    fetch('http://localhost:8080/shipper/add', {
+      method: 'POST',
+      headers: { 'Content-type': 'application/json' },
+      body: JSON.stringify(formData),
+    }).then(() => {
+      console.log('Shipper Added');
+    });
+  };
+
   return (
     <>
       <Grid>
@@ -44,6 +72,8 @@ const Shipper = () => {
               label='Shipper Name'
               variant='outlined'
               //   value={location}
+              value={name}
+              onChange={(e) => setShipperName(e.target.value)}
               //   onChange={(e) => setLocation(e.target.value)}
               fullWidth
               sx={{ width: '90%' }}
@@ -54,8 +84,8 @@ const Shipper = () => {
               id='outlined-basic'
               label='Address Name'
               variant='outlined'
-              //   value={subLocation}
-              //   onChange={(e) => setSubLocation(e.target.value)}
+              value={address}
+              onChange={(e) => setAddressName(e.target.value)}
               fullWidth
               sx={{ width: '90%' }}
             />
@@ -68,101 +98,43 @@ const Shipper = () => {
               id='outlined-basic'
               label='Postal Code'
               variant='outlined'
-              //   value={subLocation}
-              //   onChange={(e) => setSubLocation(e.target.value)}
+              value={postalCode}
+              onChange={(e) => setPostalCode(e.target.value)}
               fullWidth
               sx={{ width: '90%' }}
             />
           </Grid>
-          <Grid item xs={12} sm={6}>
-            <TextField
-              id='outlined-basic'
-              label='Country Code'
-              variant='outlined'
-              //   value={subLocation}
-              //   onChange={(e) => setSubLocation(e.target.value)}
-              fullWidth
-              sx={{ width: '90%' }}
-            />
-          </Grid>
-        </Grid>
-        <Grid container spacing={2} sx={{ mt: '21px', ml: '13px' }}>
           <Grid item xs={12} sm={6}>
             <TextField
               id='outlined-basic'
               label='Contact Number'
               variant='outlined'
-              //   value={subLocation}
-              //   onChange={(e) => setSubLocation(e.target.value)}
+              value={contactNumber}
+              onChange={(e) => setContactNumber(e.target.value)}
               fullWidth
               sx={{ width: '90%' }}
             />
           </Grid>
+        </Grid>
+        <Grid container spacing={2} sx={{ mt: '21px', ml: '13px' }}>
           <Grid item xs={12} sm={6}>
             <TextField
               id='outlined-basic'
               label='Email'
               variant='outlined'
-              //   value={subLocation}
-              //   onChange={(e) => setSubLocation(e.target.value)}
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
               fullWidth
               sx={{ width: '90%' }}
             />
           </Grid>
         </Grid>
-        <Grid container spacing={2} sx={{ mt: '21px', ml: '13px' }}>
-          <Grid item xs={12} sm={6}>
-            <TextField
-              id='outlined-basic'
-              label='PIC Name 1'
-              variant='outlined'
-              //   value={subLocation}
-              //   onChange={(e) => setSubLocation(e.target.value)}
-              fullWidth
-              sx={{ width: '90%' }}
-            />
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <TextField
-              id='outlined-basic'
-              label='Contact Number 1'
-              variant='outlined'
-              //   value={subLocation}
-              //   onChange={(e) => setSubLocation(e.target.value)}
-              fullWidth
-              sx={{ width: '90%' }}
-            />
-          </Grid>
-        </Grid>
-        <Grid container spacing={2} sx={{ mt: '21px', ml: '13px' }}>
-          <Grid item xs={12} sm={6}>
-            <TextField
-              id='outlined-basic'
-              label='PIC Name 2'
-              variant='outlined'
-              //   value={subLocation}
-              //   onChange={(e) => setSubLocation(e.target.value)}
-              fullWidth
-              sx={{ width: '90%' }}
-            />
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <TextField
-              id='outlined-basic'
-              label='Contact Number 2'
-              variant='outlined'
-              //   value={subLocation}
-              //   onChange={(e) => setSubLocation(e.target.value)}
-              fullWidth
-              sx={{ width: '90%' }}
-            />
-          </Grid>
-        </Grid>
+
         <Button
           variant='contained'
           color='secondary'
           size='large'
-          //onClick={handleClick}
+          onClick={handleClick}
           sx={{
             mt: '33px',
             mb: '17px',

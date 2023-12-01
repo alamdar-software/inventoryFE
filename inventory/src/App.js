@@ -12,7 +12,10 @@ import Pickup from './components/Pickup.js';
 import Uom from './components/Uom.js';
 import Shipper from './components/Shipper.js';
 import Consignee from './components/Consignee.js';
+
 import { Currency } from './components/Currency.jsx';
+import LocationList from './components/LocationList.js';
+
 const theme = createTheme({
   palette: {
     background: {
@@ -36,6 +39,8 @@ function App() {
               <Route path='/uom' element={<Uom />} />
               <Route path='/shipper' element={<Shipper />} />
               <Route path='/consignee' element={<Consignee />} />
+              <Route path='/Location-Vessel' element={<LocationList />} />
+
               <Route path='/currency' element={<Currency />} />
             </Routes>
           </ThemeProvider>
