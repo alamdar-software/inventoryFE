@@ -22,6 +22,7 @@ const Consignee = () => {
   // console.log(formData, 'hey');
   const handleClick = async (e) => {
     e.preventDefault();
+<<<<<<< HEAD
     const res = await fetch('http://localhost:8080/consignee/add', {
       method: 'POST',
       headers: { 'Content-type': 'application/json' },
@@ -29,6 +30,27 @@ const Consignee = () => {
     });
     const data = await res.json();
     console.log(data);
+=======
+    try {
+      const res = await fetch("http://192.168.1.10:8080/consignee/add", {
+        method: "post",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+      const data = await res.json();
+      console.log(data, "resdata");
+    } catch (error) {
+      console.error("Error during fetch:", error);
+    }
+  };
+  const handleInputChange = (e) => {
+    setformData({
+      ...formData,
+      [e.target.id]: e.target.value,
+    });
+>>>>>>> eefa750e6822870d0a7bfbf831499024fe9ba9da
   };
   return (
     <>
@@ -61,6 +83,7 @@ const Consignee = () => {
         <Grid container spacing={2} sx={{ ml: '13px' }}>
           <Grid item xs={12} sm={6}>
             <TextField
+<<<<<<< HEAD
               id='outlined-basic'
               label='Consignee Name'
               variant='outlined'
@@ -70,6 +93,12 @@ const Consignee = () => {
                   name: e.target.value,
                 })
               }
+=======
+              id="name"
+              label="Consignee Name"
+              variant="outlined"
+              onChange={handleInputChange}
+>>>>>>> eefa750e6822870d0a7bfbf831499024fe9ba9da
               //   value={location}
               //   onChange={(e) => setLocation(e.target.value)}
               fullWidth
@@ -78,6 +107,7 @@ const Consignee = () => {
           </Grid>
           <Grid item xs={12} sm={6}>
             <TextField
+<<<<<<< HEAD
               id='outlined-basic'
               label='Address '
               variant='outlined'
@@ -87,6 +117,12 @@ const Consignee = () => {
                   adress: e.target.value,
                 })
               }
+=======
+              id="adress"
+              label="Address "
+              variant="outlined"
+              onChange={handleInputChange}
+>>>>>>> eefa750e6822870d0a7bfbf831499024fe9ba9da
               //   value={subLocation}
               //   onChange={(e) => setSubLocation(e.target.value)}
               fullWidth
@@ -98,6 +134,7 @@ const Consignee = () => {
         <Grid container spacing={2} sx={{ ml: '13px', mt: '21px' }}>
           <Grid item xs={12} sm={6}>
             <TextField
+<<<<<<< HEAD
               id='outlined-basic'
               label='Postal Code'
               variant='outlined'
@@ -107,6 +144,12 @@ const Consignee = () => {
                   pincode: e.target.value,
                 })
               }
+=======
+              id="pincode"
+              label="Postal Code"
+              variant="outlined"
+              onChange={handleInputChange}
+>>>>>>> eefa750e6822870d0a7bfbf831499024fe9ba9da
               //   value={subLocation}
               //   onChange={(e) => setSubLocation(e.target.value)}
               fullWidth
@@ -115,6 +158,7 @@ const Consignee = () => {
           </Grid>
           <Grid item xs={12} sm={6}>
             <TextField
+<<<<<<< HEAD
               id='outlined-basic'
               label='Delivery Address'
               variant='outlined'
@@ -124,6 +168,12 @@ const Consignee = () => {
                   deliveryAdress: e.target.value,
                 })
               }
+=======
+              id="deliveryAdress"
+              label="Delivery Address"
+              variant="outlined"
+              onChange={handleInputChange}
+>>>>>>> eefa750e6822870d0a7bfbf831499024fe9ba9da
               //   value={subLocation}
               //   onChange={(e) => setSubLocation(e.target.value)}
               fullWidth
@@ -134,6 +184,7 @@ const Consignee = () => {
         <Grid container spacing={2} sx={{ mt: '21px', ml: '13px' }}>
           <Grid item xs={12} sm={6}>
             <TextField
+<<<<<<< HEAD
               id='outlined-basic'
               label='Contact Number'
               variant='outlined'
@@ -143,6 +194,12 @@ const Consignee = () => {
                   phoneNumber: e.target.value,
                 })
               }
+=======
+              id="phoneNumber"
+              label="Contact Number"
+              variant="outlined"
+              onChange={handleInputChange}
+>>>>>>> eefa750e6822870d0a7bfbf831499024fe9ba9da
               //   value={subLocation}
               //   onChange={(e) => setSubLocation(e.target.value)}
               fullWidth
@@ -151,6 +208,7 @@ const Consignee = () => {
           </Grid>
           <Grid item xs={12} sm={6}>
             <TextField
+<<<<<<< HEAD
               id='outlined-basic'
               label='Email'
               variant='outlined'
@@ -160,6 +218,12 @@ const Consignee = () => {
                   email: e.target.value,
                 })
               }
+=======
+              id="email"
+              label="Email"
+              variant="outlined"
+              onChange={handleInputChange}
+>>>>>>> eefa750e6822870d0a7bfbf831499024fe9ba9da
               //   value={subLocation}
               //   onChange={(e) => setSubLocation(e.target.value)}
               fullWidth
@@ -172,6 +236,7 @@ const Consignee = () => {
         <Grid container spacing={2} sx={{ mt: '21px', ml: '13px' }}>
           <Grid item xs={12} sm={6}>
             <TextField
+<<<<<<< HEAD
               id='outlined-basic'
               label='Notify Party'
               variant='outlined'
@@ -181,6 +246,12 @@ const Consignee = () => {
                   NotifyParty: e.target.value,
                 })
               }
+=======
+              id="NotifyParty"
+              label="Notify Party"
+              variant="outlined"
+              onChange={handleInputChange}
+>>>>>>> eefa750e6822870d0a7bfbf831499024fe9ba9da
               //   value={subLocation}
               //   onChange={(e) => setSubLocation(e.target.value)}
               fullWidth

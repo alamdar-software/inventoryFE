@@ -7,38 +7,44 @@ import {
   Button,
   Typography,
 } from "@mui/material";
-import TableComp from "./TableComp.jsx";
+
 import { useEffect } from "react";
+import { useParams } from "react-router-dom";
 // const currency = {
 //   currencyName: "",
 // };
 
-export const Currency = () => {
+export default function UpdateCurrency() {
   const [currency, setCurrency] = useState({
     currencyName: "",
   });
   const [Loading, setLoading] = useState(false);
   const [error, seterror] = useState(false);
   const [data, setdata] = useState([]);
+  const { id } = useParams();
   console.log(currency);
 
   useEffect(() => {
     const getCurrency = async () => {
-      const res = await fetch("http://localhost:8080/currency/view");
+      const res = await fetch(`http://localhost:8080/currency/get/${id}`);
 
       const data = await res.json();
 
       console.log(data, "backdata");
-      setdata(data);
+      setCurrency({
+        currencyName: data.currencyName,
+      });
+      /* setdata(data); */
     };
     getCurrency();
   }, []);
   const handleClick = async () => {
-    const res = await fetch("http://localhost:8080/currency/add", {
+    const res = await fetch(`http://localhost:8080/currency/update/${id}`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
+
       body: JSON.stringify(currency),
     });
     const data = await res.json();
@@ -53,10 +59,10 @@ export const Currency = () => {
     // });
   };
   /*   const handleChange = (e) => {
-    setCurrency({
-      currencyName: e.target.value,
-    });
-  }; */
+        setCurrency({
+          currencyName: e.target.value,
+        });
+      }; */
   return (
     <>
       <Grid>
@@ -66,7 +72,7 @@ export const Currency = () => {
         >
           <CardContent>
             <Typography variant="h4" color="secondary" gutterBottom>
-              Create Currency
+              Update Currency
             </Typography>
           </CardContent>
         </Card>
@@ -88,8 +94,8 @@ export const Currency = () => {
           <Grid item xs={12} sm={6}>
             <TextField
               name="currencyName"
-              label="Enter Currency"
               variant="outlined"
+              value={currency?.currencyName}
               /*  value={currency?.currencyName} */
               onChange={(e) =>
                 setCurrency({
@@ -113,12 +119,9 @@ export const Currency = () => {
             display: "block",
           }}
         >
-          Add
+          Update
         </Button>
-        <div sx={{ margin: "20px" }}>
-          <TableComp data={data} />
-        </div>
       </Card>
     </>
   );
-};
+}
