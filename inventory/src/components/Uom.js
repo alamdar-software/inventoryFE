@@ -6,17 +6,49 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import React from "react";
 
 import { useState } from "react";
-
-export const Uom = async () => {
+import * as React from "react";
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableCell from "@mui/material/TableCell";
+import TableContainer from "@mui/material/TableContainer";
+import TableHead from "@mui/material/TableHead";
+import TableRow from "@mui/material/TableRow";
+import Paper from "@mui/material/Paper";
+import { useEffect } from "react";
+export const Uom = () => {
   const [unit, setunit] = useState({
-    name: "",
+    unitName: "",
   });
+  const [Uom, setUom] = useState([]);
 
   console.log(unit);
+  function createData(name, calories, fat, carbs, protein) {
+    return { name, calories, fat, carbs, protein };
+  }
+  useEffect(() => {
+    const getUom = async () => {
+      try {
+        const res = await fetch("http://192.168.0.121:8080/unit/view");
+        const data = await res.json();
 
+        setUom(data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    getUom();
+  }, []);
+
+  const rows = [
+    createData("Frozen yoghurt", 159, 6.0, 24, 4.0),
+    createData("Ice cream sandwich", 237, 9.0, 37, 4.3),
+    createData("Eclair", 262, 16.0, 24, 6.0),
+    createData("Cupcake", 305, 3.7, 67, 4.3),
+    createData("Gingerbread", 356, 16.0, 49, 3.9),
+  ];
   const handleClick = async () => {
     const res = await fetch("http://192.168.0.121:8080/unit/add", {
       method: "POST",
@@ -27,6 +59,11 @@ export const Uom = async () => {
     });
     const data = await res.json();
     console.log(data);
+  };
+  const handleChange = (e) => {
+    setunit({
+      [e.target.id]: e.target.value,
+    });
   };
 
   return (
@@ -60,14 +97,10 @@ export const Uom = async () => {
         <Grid container spacing={2} sx={{ ml: "13px" }}>
           <Grid item xs={12} sm={6}>
             <TextField
-              id="name"
+              id="unitName"
               label="Unit Name"
               variant="outlined"
-              onChange={(e) =>
-                setunit({
-                  name: e.target.value,
-                })
-              }
+              onChange={handleChange}
               //   value={location}
               //   onChange={(e) => setLocation(e.target.value)}
               fullWidth
@@ -91,6 +124,36 @@ export const Uom = async () => {
         >
           Add
         </Button>
+        <div>
+          <TableContainer component={Paper}>
+            <Table
+              sx={{ minWidth: 650, marginLeft: "5px" }}
+              aria-label="simple table"
+            >
+              <TableHead>
+                <TableRow>
+                  <TableCell>Units</TableCell>
+                  <TableCell align="right">Actions</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {Uom.map((row) => (
+                  <TableRow
+                    key={row.name}
+                    sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                  >
+                    <TableCell component="th" scope="row">
+                      {row.name}
+                    </TableCell>
+                    <TableCell component="th" scope="row">
+                      <button>Edit</button>
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </TableContainer>
+        </div>
       </Card>
     </>
   );

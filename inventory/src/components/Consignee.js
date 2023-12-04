@@ -30,9 +30,17 @@ const Consignee = () => {
         },
         body: JSON.stringify(formData),
       });
-      const data = res.json();
+      const data = await res.json();
       console.log(data, "resdata");
-    } catch (error) {}
+    } catch (error) {
+      console.error("Error during fetch:", error);
+    }
+  };
+  const handleInputChange = (e) => {
+    setformData({
+      ...formData,
+      [e.target.id]: e.target.value,
+    });
   };
   return (
     <>
@@ -65,15 +73,10 @@ const Consignee = () => {
         <Grid container spacing={2} sx={{ ml: "13px" }}>
           <Grid item xs={12} sm={6}>
             <TextField
-              id="outlined-basic"
+              id="name"
               label="Consignee Name"
               variant="outlined"
-              onChange={(e) =>
-                setformData({
-                  ...formData,
-                  name: e.target.value,
-                })
-              }
+              onChange={handleInputChange}
               //   value={location}
               //   onChange={(e) => setLocation(e.target.value)}
               fullWidth
@@ -82,15 +85,10 @@ const Consignee = () => {
           </Grid>
           <Grid item xs={12} sm={6}>
             <TextField
-              id="outlined-basic"
+              id="adress"
               label="Address "
               variant="outlined"
-              onChange={(e) =>
-                setformData({
-                  ...formData,
-                  adress: e.target.value,
-                })
-              }
+              onChange={handleInputChange}
               //   value={subLocation}
               //   onChange={(e) => setSubLocation(e.target.value)}
               fullWidth
@@ -102,15 +100,10 @@ const Consignee = () => {
         <Grid container spacing={2} sx={{ ml: "13px", mt: "21px" }}>
           <Grid item xs={12} sm={6}>
             <TextField
-              id="outlined-basic"
+              id="pincode"
               label="Postal Code"
               variant="outlined"
-              onChange={(e) =>
-                setformData({
-                  ...formData,
-                  pincode: e.target.value,
-                })
-              }
+              onChange={handleInputChange}
               //   value={subLocation}
               //   onChange={(e) => setSubLocation(e.target.value)}
               fullWidth
@@ -119,15 +112,10 @@ const Consignee = () => {
           </Grid>
           <Grid item xs={12} sm={6}>
             <TextField
-              id="outlined-basic"
+              id="deliveryAdress"
               label="Delivery Address"
               variant="outlined"
-              onChange={(e) =>
-                setformData({
-                  ...formData,
-                  deliveryAdress: e.target.value,
-                })
-              }
+              onChange={handleInputChange}
               //   value={subLocation}
               //   onChange={(e) => setSubLocation(e.target.value)}
               fullWidth
@@ -138,15 +126,10 @@ const Consignee = () => {
         <Grid container spacing={2} sx={{ mt: "21px", ml: "13px" }}>
           <Grid item xs={12} sm={6}>
             <TextField
-              id="outlined-basic"
+              id="phoneNumber"
               label="Contact Number"
               variant="outlined"
-              onChange={(e) =>
-                setformData({
-                  ...formData,
-                  phoneNumber: e.target.value,
-                })
-              }
+              onChange={handleInputChange}
               //   value={subLocation}
               //   onChange={(e) => setSubLocation(e.target.value)}
               fullWidth
@@ -155,15 +138,10 @@ const Consignee = () => {
           </Grid>
           <Grid item xs={12} sm={6}>
             <TextField
-              id="outlined-basic"
+              id="email"
               label="Email"
               variant="outlined"
-              onChange={(e) =>
-                setformData({
-                  ...formData,
-                  email: e.target.value,
-                })
-              }
+              onChange={handleInputChange}
               //   value={subLocation}
               //   onChange={(e) => setSubLocation(e.target.value)}
               fullWidth
@@ -176,15 +154,10 @@ const Consignee = () => {
         <Grid container spacing={2} sx={{ mt: "21px", ml: "13px" }}>
           <Grid item xs={12} sm={6}>
             <TextField
-              id="outlined-basic"
+              id="NotifyParty"
               label="Notify Party"
               variant="outlined"
-              onChange={(e) =>
-                setformData({
-                  ...formData,
-                  NotifyParty: e.target.value,
-                })
-              }
+              onChange={handleInputChange}
               //   value={subLocation}
               //   onChange={(e) => setSubLocation(e.target.value)}
               fullWidth
