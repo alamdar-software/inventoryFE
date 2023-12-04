@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Card,
   CardContent,
@@ -10,6 +10,14 @@ import {
   FormControl,
   Grid,
   Select,
+  TableCell,
+  TableHead,
+  TableRow,
+  TableContainer,
+  Paper,
+  Table,
+  TableBody,
+  TablePagination,
 } from '@mui/material';
 const Pickup = () => {
   const [pickupAddress, setPickupAddress] = useState();
@@ -17,6 +25,20 @@ const Pickup = () => {
   const [companyName, setCompanyName] = useState();
   const [countryCode, setCountryCode] = useState();
   const [contactNumber, setContactNumber] = useState();
+  const [pickup, setPickUp] = useState([]);
+
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(5);
+
+  const handleChangePage = (event, newPage) => {
+    setPage(newPage);
+  };
+
+  const handleChangeRowsPerPage = (event) => {
+    setRowsPerPage(parseInt(event.target.value, 10));
+    setPage(0);
+  };
+
   const handleClick = () => {
     const formData = {
       pickupAddress,
@@ -36,6 +58,14 @@ const Pickup = () => {
       console.log('Pickup Added');
     });
   };
+  useEffect(() => {
+    fetch('http://localhost:8080/pickup/list')
+      .then((res) => res.json())
+      .then((result) => {
+        console.log(result);
+        setPickUp(result);
+      });
+  }, []);
   return (
     <>
       <Grid>
@@ -107,6 +137,7 @@ const Pickup = () => {
             <TextField
               id='outlined-basic'
               label='Country Code'
+              type='number'
               variant='outlined'
               value={countryCode}
               onChange={(e) => setCountryCode(e.target.value)}
@@ -120,6 +151,7 @@ const Pickup = () => {
             <TextField
               id='outlined-basic'
               label='Contact Number'
+              type='number'
               variant='outlined'
               value={contactNumber}
               onChange={(e) => setContactNumber(e.target.value)}
@@ -144,7 +176,56 @@ const Pickup = () => {
           Add
         </Button>
       </Card>
-      <Grid></Grid>
+      <Grid sx={{ mt: '33px' }}>
+        <TableContainer
+          component={Paper}
+          sx={{ borderRadius: '33px', borderBottom: '2px solid yellow' }}
+        >
+          <Table sx={{ minWidth: 650 }} aria-label='simple table'>
+            <TableHead>
+              <TableRow>
+                <TableCell align='right'>pickupAddress</TableCell>
+                <TableCell align='right'>pic</TableCell>
+                <TableCell align='right'>companyName</TableCell>
+                <TableCell align='right'>countryCode</TableCell>
+                <TableCell align='right'>contactNumber</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {pickup
+                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                .map((pickup) => (
+                  <TableRow
+                    key={pickup.name}
+                    sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                  >
+                    {/* <TableCell component='th' scope='row'>
+                  {attendence.name}
+                </TableCell> */}
+                    <TableCell align='right'>{pickup.pickupAddress}</TableCell>
+                    <TableCell align='right'>{pickup.pic}</TableCell>
+                    <TableCell align='right'>{pickup.companyName}</TableCell>
+                    <TableCell align='right'>{pickup.countryCode}</TableCell>
+                    <TableCell align='right'>{pickup.contactNumber}</TableCell>
+
+                    {/* <Link to={`/updateAttendence/${attendence.id}`}>
+                  <Button variant='contained'>Update</Button>
+                </Link> */}
+                  </TableRow>
+                ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+        <TablePagination
+          rowsPerPageOptions={[5, 10, 25]}
+          component='div'
+          count={pickup.length}
+          rowsPerPage={rowsPerPage}
+          page={page}
+          onPageChange={handleChangePage}
+          onRowsPerPageChange={handleChangeRowsPerPage}
+        />
+      </Grid>
     </>
   );
 };

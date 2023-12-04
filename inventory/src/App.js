@@ -15,6 +15,8 @@ import Consignee from './components/Consignee.js';
 
 import { Currency } from './components/Currency.jsx';
 import LocationList from './components/LocationList.js';
+import Moc from './pages/Moc.jsx';
+import Update from './components/Update.js';
 
 const theme = createTheme({
   palette: {
@@ -40,7 +42,8 @@ function App() {
               <Route path='/shipper' element={<Shipper />} />
               <Route path='/consignee' element={<Consignee />} />
               <Route path='/Location-Vessel' element={<LocationList />} />
-
+              <Route path='/MOC' element={<Moc />} />
+              <Route path='/updateLocation/:id' element={<Update />} />
               <Route path='/currency' element={<Currency />} />
             </Routes>
           </ThemeProvider>

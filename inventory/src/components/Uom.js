@@ -5,23 +5,23 @@ import {
   Grid,
   TextField,
   Typography,
-} from "@mui/material";
-import React from "react";
+} from '@mui/material';
+import React from 'react';
 
-import { useState } from "react";
+import { useState } from 'react';
 
-export const Uom = async () => {
+export const Uom = () => {
   const [unit, setunit] = useState({
-    name: "",
+    name: '',
   });
 
-  console.log(unit);
+  // console.log(unit);
 
   const handleClick = async () => {
-    const res = await fetch("http://192.168.0.121:8080/unit/add", {
-      method: "POST",
+    const res = await fetch('http://localhost:8080/unit/add', {
+      method: 'POST',
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
       },
       body: JSON.stringify(unit),
     });
@@ -33,15 +33,15 @@ export const Uom = async () => {
     <>
       <Grid>
         <Card
-          color="secondary"
+          color='secondary'
           sx={{
-            width: "100%",
-            backgroundColor: "secondary",
-            borderBottom: "2px solid yellow",
+            width: '100%',
+            backgroundColor: 'secondary',
+            borderBottom: '2px solid yellow',
           }}
         >
           <CardContent>
-            <Typography variant="h4" color="secondary" gutterBottom>
+            <Typography variant='h4' color='secondary' gutterBottom>
               Add UOM
             </Typography>
           </CardContent>
@@ -50,19 +50,19 @@ export const Uom = async () => {
 
       <Card
         sx={{
-          width: "100%",
-          mt: "33px",
-          pt: "33px",
-          borderBottom: "2px solid yellow",
-          borderRadius: "33px",
+          width: '100%',
+          mt: '33px',
+          pt: '33px',
+          borderBottom: '2px solid yellow',
+          borderRadius: '33px',
         }}
       >
-        <Grid container spacing={2} sx={{ ml: "13px" }}>
+        <Grid container spacing={2} sx={{ ml: '13px' }}>
           <Grid item xs={12} sm={6}>
             <TextField
-              id="name"
-              label="Unit Name"
-              variant="outlined"
+              id='name'
+              label='Unit Name'
+              variant='outlined'
               onChange={(e) =>
                 setunit({
                   name: e.target.value,
@@ -76,16 +76,16 @@ export const Uom = async () => {
         </Grid>
 
         <Button
-          variant="contained"
-          color="secondary"
-          size="large"
+          variant='contained'
+          color='secondary'
+          size='large'
           //onClick={handleClick}
           sx={{
-            mt: "33px",
-            mb: "17px",
-            marginLeft: "auto",
-            marginRight: "auto",
-            display: "block",
+            mt: '33px',
+            mb: '17px',
+            marginLeft: 'auto',
+            marginRight: 'auto',
+            display: 'block',
           }}
           onClick={handleClick}
         >
