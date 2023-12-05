@@ -79,7 +79,8 @@ const Pickup = () => {
       headers: { 'Content-type': 'application/json' },
       body: JSON.stringify(attendence),
     }).then(() => {
-      console.log('Attendence Added');
+      console.log('Pickup Added');
+      window.location.reload();
     });
   };
   useEffect(() => {
@@ -101,6 +102,7 @@ const Pickup = () => {
     })
       .then(() => {
         console.log('Pickup Deleted');
+        window.location.reload();
       })
       .catch((error) => {
         console.error('Error updating class:', error);
@@ -260,15 +262,15 @@ const Pickup = () => {
 
                     <Link to={`/updatePickup/${pickup.id}`}>
                       <Button variant='contained'>Update</Button>
-                      <Button
-                        sx={{ marginLeft: '11px' }}
-                        variant='contained'
-                        color='secondary'
-                        onClick={() => deletePickup(pickup.id)}
-                      >
-                        Delete
-                      </Button>
                     </Link>
+                    <Button
+                      sx={{ marginLeft: '11px' }}
+                      variant='contained'
+                      color='secondary'
+                      onClick={() => deletePickup(pickup.id)}
+                    >
+                      Delete
+                    </Button>
                   </TableRow>
                 ))}
             </TableBody>

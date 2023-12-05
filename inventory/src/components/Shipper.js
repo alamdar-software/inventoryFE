@@ -16,6 +16,7 @@ import {
 } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import Swal from 'sweetalert2';
 
 const Shipper = () => {
   const [shipperList, setShipperList] = useState([]);
@@ -38,6 +39,14 @@ const Shipper = () => {
 
   const handleClick = (e) => {
     e.preventDefault();
+    if (!name || !address || !postalCode || !contactNumber || !email) {
+      Swal.fire({
+        title: 'Plese Fill All Fiels',
+        text: 'Fields are Empty?',
+        icon: 'question',
+      });
+      return;
+    }
     const formData = {
       name,
       address,
@@ -54,6 +63,7 @@ const Shipper = () => {
       body: JSON.stringify(formData),
     }).then(() => {
       console.log('Shipper Added');
+      window.location.reload();
     });
   };
 
@@ -77,7 +87,8 @@ const Shipper = () => {
       body: JSON.stringify(shipperList),
     })
       .then(() => {
-        console.log('Class Updated');
+        console.log('Shipper Updated');
+        window.location.reload();
       })
       .catch((error) => {
         console.error('Error updating class:', error);
