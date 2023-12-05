@@ -18,6 +18,7 @@ import LocationList from "./components/LocationList.js";
 import Moc from "./pages/Moc.jsx";
 import Update from "./components/Update.js";
 import Brand from "./pages/Brand";
+import UpdateBrand from "./pages/UpdateBrand";
 
 const theme = createTheme({
   palette: {
@@ -47,6 +48,7 @@ function App() {
               <Route path="/updateLocation/:id" element={<Update />} />
               <Route path="/currency" element={<Currency />} />
               <Route path="/brand" element={<Brand />} />
+              <Route path="/brand/edit/:id" element={<UpdateBrand />} />
             </Routes>
           </ThemeProvider>
         </Sidebar>

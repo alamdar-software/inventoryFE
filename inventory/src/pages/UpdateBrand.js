@@ -9,42 +9,49 @@ import {
 } from "@mui/material";
 
 import { useEffect } from "react";
-import BrandTable from "../components/BrandTable.js";
+import { useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 // const currency = {
 //   currencyName: "",
 // };
 
-export default function Brand() {
-  const [Brand, setBrand] = useState({
+export default function UpdateBrand() {
+  const navigate = useNavigate();
+  const [brand, setBrand] = useState({
     name: "",
   });
   const [Loading, setLoading] = useState(false);
   const [error, seterror] = useState(false);
   const [data, setdata] = useState([]);
-  console.log(Brand);
+  const { id } = useParams();
+  console.log(brand);
 
   useEffect(() => {
-    const getBrand = async () => {
-      const res = await fetch("http://localhost:8080/brand/view");
+    const getCurrency = async () => {
+      const res = await fetch(`http://localhost:8080/brand/get/${id}`);
 
       const data = await res.json();
 
       console.log(data, "backdata");
-      setdata(data);
+      setBrand({
+        name: data.name,
+      });
+      /* setdata(data); */
     };
-    getBrand();
+    getCurrency();
   }, []);
   const handleClick = async () => {
-    const res = await fetch("http://localhost:8080/brand/add", {
-      method: "POST",
+    const res = await fetch(`http://localhost:8080/brand/edit/${id}`, {
+      method: "PUT",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(Brand),
+
+      body: JSON.stringify(brand),
     });
-    const data = await res.json();
+    const data = await res.text();
     console.log(data);
-    window.location.reload();
+    navigate("/brand");
 
     // fetch('http://localhost:8080/location/add', {
     //   method: 'POST',
@@ -55,10 +62,10 @@ export default function Brand() {
     // });
   };
   /*   const handleChange = (e) => {
-        setCurrency({
-          currencyName: e.target.value,
-        });
-      }; */
+          setCurrency({
+            currencyName: e.target.value,
+          });
+        }; */
   return (
     <>
       <Grid>
@@ -68,7 +75,7 @@ export default function Brand() {
         >
           <CardContent>
             <Typography variant="h4" color="secondary" gutterBottom>
-              Create Brand
+              Update Currency
             </Typography>
           </CardContent>
         </Card>
@@ -89,9 +96,9 @@ export default function Brand() {
         >
           <Grid item xs={12} sm={6}>
             <TextField
-              name="name"
-              label="Enter Brand"
+              name="currencyName"
               variant="outlined"
+              value={brand?.name}
               /*  value={currency?.currencyName} */
               onChange={(e) =>
                 setBrand({
@@ -115,11 +122,8 @@ export default function Brand() {
             display: "block",
           }}
         >
-          Add
+          Update
         </Button>
-        <div sx={{ margin: "20px" }}>
-          <BrandTable data={data} />
-        </div>
       </Card>
     </>
   );
