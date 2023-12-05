@@ -13,11 +13,11 @@ import ButtonGroup from "@mui/material/ButtonGroup";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 const columns = [
-  { id: "Currency", label: "Currency", minWidth: 200 },
+  { id: "Category", label: "Category", minWidth: 200 },
   { id: "Actions", label: "Actions", minWidth: 100 },
 ];
 
-export default function TableComp({ data }) {
+export default function CategoryTable({ data }) {
   const navigate = useNavigate();
   const [page, setPage] = React.useState(0);
   /*  const [datas, setdatas] = useState([]); */
@@ -25,6 +25,7 @@ export default function TableComp({ data }) {
 
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
   console.log(Array.isArray(data), "yesss");
+  console.log(data, "brandtable");
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -38,7 +39,7 @@ export default function TableComp({ data }) {
     try {
       // Perform the delete operation
       const response = await fetch(
-        `http://localhost:8080/currency/delete/${id}`,
+        `http://localhost:8080/category/delete/${id}`,
         {
           method: "DELETE",
           headers: {
@@ -87,14 +88,14 @@ export default function TableComp({ data }) {
             </TableRow>
           </TableHead>
           <TableBody>
-            {data.currencyList
+            {data.content
               ?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
               .map((row, index) => (
                 <TableRow hover role="checkbox" tabIndex={-1} key={index}>
-                  <TableCell>{row.currencyName}</TableCell>
+                  <TableCell>{row.name}</TableCell>
                   <TableCell>
                     <ButtonGroup>
-                      <Link to={`/currency/update/${row.id}`}>
+                      <Link to={`/category/edit/${row.id}`}>
                         <Button variant="contained" color="primary">
                           Edit
                         </Button>

@@ -3,46 +3,62 @@ import {
   Card,
   CardContent,
   Grid,
+  InputLabel,
+  MenuItem,
+  Select,
   TextField,
   Typography,
-} from '@mui/material';
-import React from 'react';
-import { useState } from 'react';
+} from "@mui/material";
+import React from "react";
+import { useState } from "react";
 
 const Consignee = () => {
   const [formData, setformData] = useState({
-    name: '',
-    adress: '',
-    pincode: '',
-    email: '',
-    phoneNumber: '',
-    NotifyParty: '',
-    deliveryAdress: '',
+    name: "",
+    address: "",
+    pincode: "",
+    email: "",
+    phoneNumber: "",
+    notifyParty: "",
+    deliveryAddress: "",
+    location: "null",
   });
   // console.log(formData, 'hey');
   const handleClick = async (e) => {
     e.preventDefault();
-    const res = await fetch('http://localhost:8080/consignee/add', {
-      method: 'POST',
-      headers: { 'Content-type': 'application/json' },
-      body: JSON.stringify(formData),
+    try {
+      const res = await fetch("http://localhost:8080/consignee/add", {
+        method: "post",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+      const data = await res.json();
+      console.log(data, "resdata");
+    } catch (error) {
+      console.error("Error during fetch:", error);
+    }
+  };
+  const handleInputChange = async (e) => {
+    setformData({
+      ...formData,
+      [e.target.id]: e.target.value,
     });
-    const data = await res.json();
-    console.log(data);
   };
   return (
     <>
       <Grid>
         <Card
-          color='secondary'
+          color="secondary"
           sx={{
-            width: '100%',
-            backgroundColor: 'secondary',
-            borderBottom: '2px solid yellow',
+            width: "100%",
+            backgroundColor: "secondary",
+            borderBottom: "2px solid yellow",
           }}
         >
           <CardContent>
-            <Typography variant='h4' color='secondary' gutterBottom>
+            <Typography variant="h4" color="secondary" gutterBottom>
               Create Consignee
             </Typography>
           </CardContent>
@@ -51,19 +67,19 @@ const Consignee = () => {
 
       <Card
         sx={{
-          width: '100%',
-          mt: '33px',
-          pt: '33px',
-          borderBottom: '2px solid yellow',
-          borderRadius: '33px',
+          width: "100%",
+          mt: "33px",
+          pt: "33px",
+          borderBottom: "2px solid yellow",
+          borderRadius: "33px",
         }}
       >
-        <Grid container spacing={2} sx={{ ml: '13px' }}>
+        <Grid container spacing={2} sx={{ ml: "13px" }}>
           <Grid item xs={12} sm={6}>
             <TextField
-              id='outlined-basic'
-              label='Consignee Name'
-              variant='outlined'
+              id="outlined-basic"
+              label="Consignee Name"
+              variant="outlined"
               onChange={(e) =>
                 setformData({
                   ...formData,
@@ -73,34 +89,29 @@ const Consignee = () => {
               //   value={location}
               //   onChange={(e) => setLocation(e.target.value)}
               fullWidth
-              sx={{ width: '90%' }}
+              sx={{ width: "90%" }}
             />
           </Grid>
           <Grid item xs={12} sm={6}>
             <TextField
-              id='outlined-basic'
-              label='Address '
-              variant='outlined'
-              onChange={(e) =>
-                setformData({
-                  ...formData,
-                  adress: e.target.value,
-                })
-              }
+              id="address"
+              label="Address "
+              variant="outlined"
+              onChange={handleInputChange}
               //   value={subLocation}
               //   onChange={(e) => setSubLocation(e.target.value)}
               fullWidth
-              sx={{ width: '90%' }}
+              sx={{ width: "90%" }}
             />
           </Grid>
         </Grid>
 
-        <Grid container spacing={2} sx={{ ml: '13px', mt: '21px' }}>
+        <Grid container spacing={2} sx={{ ml: "13px", mt: "21px" }}>
           <Grid item xs={12} sm={6}>
             <TextField
-              id='outlined-basic'
-              label='Postal Code'
-              variant='outlined'
+              id="outlined-basic"
+              label="Postal Code"
+              variant="outlined"
               onChange={(e) =>
                 setformData({
                   ...formData,
@@ -110,33 +121,28 @@ const Consignee = () => {
               //   value={subLocation}
               //   onChange={(e) => setSubLocation(e.target.value)}
               fullWidth
-              sx={{ width: '90%' }}
+              sx={{ width: "90%" }}
             />
           </Grid>
           <Grid item xs={12} sm={6}>
             <TextField
-              id='outlined-basic'
-              label='Delivery Address'
-              variant='outlined'
-              onChange={(e) =>
-                setformData({
-                  ...formData,
-                  deliveryAdress: e.target.value,
-                })
-              }
+              id="deliveryAddress"
+              label="deliveryAddress"
+              variant="outlined"
+              onChange={handleInputChange}
               //   value={subLocation}
               //   onChange={(e) => setSubLocation(e.target.value)}
               fullWidth
-              sx={{ width: '90%' }}
+              sx={{ width: "90%" }}
             />
           </Grid>
         </Grid>
-        <Grid container spacing={2} sx={{ mt: '21px', ml: '13px' }}>
+        <Grid container spacing={2} sx={{ mt: "21px", ml: "13px" }}>
           <Grid item xs={12} sm={6}>
             <TextField
-              id='outlined-basic'
-              label='Contact Number'
-              variant='outlined'
+              id="outlined-basic"
+              label="Contact Number"
+              variant="outlined"
               onChange={(e) =>
                 setformData({
                   ...formData,
@@ -146,60 +152,64 @@ const Consignee = () => {
               //   value={subLocation}
               //   onChange={(e) => setSubLocation(e.target.value)}
               fullWidth
-              sx={{ width: '90%' }}
+              sx={{ width: "90%" }}
             />
           </Grid>
           <Grid item xs={12} sm={6}>
             <TextField
-              id='outlined-basic'
-              label='Email'
-              variant='outlined'
-              onChange={(e) =>
-                setformData({
-                  ...formData,
-                  email: e.target.value,
-                })
-              }
+              id="phoneNumber"
+              label="Contact Number"
+              variant="outlined"
+              onChange={handleInputChange}
               //   value={subLocation}
               //   onChange={(e) => setSubLocation(e.target.value)}
               fullWidth
-              sx={{ width: '90%' }}
+              sx={{ width: "90%" }}
             />
           </Grid>
         </Grid>
 
-        <Grid container spacing={2} sx={{ mt: '21px', ml: '13px' }}></Grid>
-        <Grid container spacing={2} sx={{ mt: '21px', ml: '13px' }}>
+        <Grid container spacing={2} sx={{ mt: "21px", ml: "13px" }}></Grid>
+        <Grid container spacing={2} sx={{ mt: "21px", ml: "13px" }}>
           <Grid item xs={12} sm={6}>
             <TextField
-              id='outlined-basic'
-              label='Notify Party'
-              variant='outlined'
-              onChange={(e) =>
-                setformData({
-                  ...formData,
-                  NotifyParty: e.target.value,
-                })
-              }
+              id="notifyParty"
+              label="notifyParty"
+              variant="outlined"
+              onChange={handleInputChange}
               //   value={subLocation}
               //   onChange={(e) => setSubLocation(e.target.value)}
               fullWidth
-              sx={{ width: '90%' }}
+              sx={{ width: "90%" }}
             />
+          </Grid>
+          <Grid item xs={10} sm={6}>
+            <InputLabel id="demo-simple-select-label">Age</InputLabel>
+            <Select
+              labelId="demo-simple-select-label"
+              id="demo-simple-select"
+              value={"age"}
+              label="Age"
+              fullWidth
+            >
+              <MenuItem value={10}>Ten</MenuItem>
+              <MenuItem value={20}>Twenty</MenuItem>
+              <MenuItem value={30}>Thirty</MenuItem>
+            </Select>
           </Grid>
         </Grid>
         <Button
-          variant='contained'
-          color='secondary'
-          size='large'
+          variant="contained"
+          color="secondary"
+          size="large"
           //onClick={handleClick}
           onClick={handleClick}
           sx={{
-            mt: '33px',
-            mb: '17px',
-            marginLeft: 'auto',
-            marginRight: 'auto',
-            display: 'block',
+            mt: "33px",
+            mb: "17px",
+            marginLeft: "auto",
+            marginRight: "auto",
+            display: "block",
           }}
         >
           Add

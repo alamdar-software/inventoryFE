@@ -15,43 +15,43 @@ import { useNavigate } from "react-router-dom";
 //   currencyName: "",
 // };
 
-export default function UpdateCurrency() {
+export default function UpdateCategory() {
   const navigate = useNavigate();
-  const [currency, setCurrency] = useState({
-    currencyName: "",
+  const [category, setCategory] = useState({
+    name: "",
   });
   const [Loading, setLoading] = useState(false);
   const [error, seterror] = useState(false);
   const [data, setdata] = useState([]);
   const { id } = useParams();
-  console.log(currency);
+  console.log(category);
 
   useEffect(() => {
     const getCurrency = async () => {
-      const res = await fetch(`http://localhost:8080/currency/get/${id}`);
+      const res = await fetch(`http://localhost:8080/category/get/${id}`);
 
       const data = await res.json();
 
-      console.log(data, "backdata");
-      setCurrency({
-        currencyName: data.currencyName,
+      console.log(data, "backdata update");
+      setCategory({
+        name: data.name,
       });
       /* setdata(data); */
     };
     getCurrency();
   }, []);
   const handleClick = async () => {
-    const res = await fetch(`http://localhost:8080/currency/update/${id}`, {
+    const res = await fetch(`http://localhost:8080/category/edit/${id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
       },
 
-      body: JSON.stringify(currency),
+      body: JSON.stringify(category),
     });
     const data = await res.text();
     console.log(data);
-    navigate("/currency");
+    navigate("/category");
 
     // fetch('http://localhost:8080/location/add', {
     //   method: 'POST',
@@ -62,10 +62,10 @@ export default function UpdateCurrency() {
     // });
   };
   /*   const handleChange = (e) => {
-        setCurrency({
-          currencyName: e.target.value,
-        });
-      }; */
+            setCurrency({
+              currencyName: e.target.value,
+            });
+          }; */
   return (
     <>
       <Grid>
@@ -75,7 +75,7 @@ export default function UpdateCurrency() {
         >
           <CardContent>
             <Typography variant="h4" color="secondary" gutterBottom>
-              Update Currency
+              Update Category
             </Typography>
           </CardContent>
         </Card>
@@ -98,11 +98,11 @@ export default function UpdateCurrency() {
             <TextField
               name="currencyName"
               variant="outlined"
-              value={currency?.currencyName}
+              value={category?.name}
               /*  value={currency?.currencyName} */
               onChange={(e) =>
-                setCurrency({
-                  currencyName: e.target.value,
+                setCategory({
+                  name: e.target.value,
                 })
               }
               fullWidth

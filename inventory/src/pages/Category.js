@@ -9,49 +9,43 @@ import {
 } from "@mui/material";
 
 import { useEffect } from "react";
-import { useParams } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
+import CategoryTable from "../components/CategoryTable";
+
 // const currency = {
 //   currencyName: "",
 // };
 
-export default function UpdateCurrency() {
-  const navigate = useNavigate();
-  const [currency, setCurrency] = useState({
-    currencyName: "",
+export default function Category() {
+  const [category, setCategory] = useState({
+    name: "",
   });
   const [Loading, setLoading] = useState(false);
   const [error, seterror] = useState(false);
   const [data, setdata] = useState([]);
-  const { id } = useParams();
-  console.log(currency);
+  console.log(category);
 
   useEffect(() => {
-    const getCurrency = async () => {
-      const res = await fetch(`http://localhost:8080/currency/get/${id}`);
+    const getCategory = async () => {
+      const res = await fetch("http://localhost:8080/category/view");
 
       const data = await res.json();
 
       console.log(data, "backdata");
-      setCurrency({
-        currencyName: data.currencyName,
-      });
-      /* setdata(data); */
+      setdata(data);
     };
-    getCurrency();
+    getCategory();
   }, []);
   const handleClick = async () => {
-    const res = await fetch(`http://localhost:8080/currency/update/${id}`, {
-      method: "PUT",
+    const res = await fetch("http://localhost:8080/category/add", {
+      method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-
-      body: JSON.stringify(currency),
+      body: JSON.stringify(category),
     });
     const data = await res.text();
-    console.log(data);
-    navigate("/currency");
+    console.log(data, "add data");
+    window.location.reload();
 
     // fetch('http://localhost:8080/location/add', {
     //   method: 'POST',
@@ -62,10 +56,10 @@ export default function UpdateCurrency() {
     // });
   };
   /*   const handleChange = (e) => {
-        setCurrency({
-          currencyName: e.target.value,
-        });
-      }; */
+            setCurrency({
+              currencyName: e.target.value,
+            });
+          }; */
   return (
     <>
       <Grid>
@@ -75,7 +69,7 @@ export default function UpdateCurrency() {
         >
           <CardContent>
             <Typography variant="h4" color="secondary" gutterBottom>
-              Update Currency
+              Create Category
             </Typography>
           </CardContent>
         </Card>
@@ -96,13 +90,13 @@ export default function UpdateCurrency() {
         >
           <Grid item xs={12} sm={6}>
             <TextField
-              name="currencyName"
+              name="name"
+              label="Enter Category"
               variant="outlined"
-              value={currency?.currencyName}
               /*  value={currency?.currencyName} */
               onChange={(e) =>
-                setCurrency({
-                  currencyName: e.target.value,
+                setCategory({
+                  name: e.target.value,
                 })
               }
               fullWidth
@@ -122,8 +116,11 @@ export default function UpdateCurrency() {
             display: "block",
           }}
         >
-          Update
+          Add
         </Button>
+        <div sx={{ margin: "20px" }}>
+          <CategoryTable data={data} />
+        </div>
       </Card>
     </>
   );
