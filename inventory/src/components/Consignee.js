@@ -23,7 +23,7 @@ const Consignee = () => {
     deliveryAddress: "",
     location: "null",
   });
-  console.log(formData, "hey");
+  // console.log(formData, 'hey');
   const handleClick = async (e) => {
     e.preventDefault();
     try {
@@ -40,7 +40,7 @@ const Consignee = () => {
       console.error("Error during fetch:", error);
     }
   };
-  const handleInputChange = (e) => {
+  const handleInputChange = async (e) => {
     setformData({
       ...formData,
       [e.target.id]: e.target.value,
@@ -77,10 +77,15 @@ const Consignee = () => {
         <Grid container spacing={2} sx={{ ml: "13px" }}>
           <Grid item xs={12} sm={6}>
             <TextField
-              id="name"
+              id="outlined-basic"
               label="Consignee Name"
               variant="outlined"
-              onChange={handleInputChange}
+              onChange={(e) =>
+                setformData({
+                  ...formData,
+                  name: e.target.value,
+                })
+              }
               //   value={location}
               //   onChange={(e) => setLocation(e.target.value)}
               fullWidth
@@ -104,10 +109,15 @@ const Consignee = () => {
         <Grid container spacing={2} sx={{ ml: "13px", mt: "21px" }}>
           <Grid item xs={12} sm={6}>
             <TextField
-              id="pincode"
+              id="outlined-basic"
               label="Postal Code"
               variant="outlined"
-              onChange={handleInputChange}
+              onChange={(e) =>
+                setformData({
+                  ...formData,
+                  pincode: e.target.value,
+                })
+              }
               //   value={subLocation}
               //   onChange={(e) => setSubLocation(e.target.value)}
               fullWidth
@@ -130,10 +140,15 @@ const Consignee = () => {
         <Grid container spacing={2} sx={{ mt: "21px", ml: "13px" }}>
           <Grid item xs={12} sm={6}>
             <TextField
-              id="phoneNumber"
+              id="outlined-basic"
               label="Contact Number"
               variant="outlined"
-              onChange={handleInputChange}
+              onChange={(e) =>
+                setformData({
+                  ...formData,
+                  phoneNumber: e.target.value,
+                })
+              }
               //   value={subLocation}
               //   onChange={(e) => setSubLocation(e.target.value)}
               fullWidth

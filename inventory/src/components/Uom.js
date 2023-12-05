@@ -5,21 +5,21 @@ import {
   Grid,
   TextField,
   Typography,
-} from "@mui/material";
+} from '@mui/material';
 
-import { useState } from "react";
-import * as React from "react";
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
-import TableContainer from "@mui/material/TableContainer";
-import TableHead from "@mui/material/TableHead";
-import TableRow from "@mui/material/TableRow";
-import Paper from "@mui/material/Paper";
-import { useEffect } from "react";
+import { useState } from 'react';
+import * as React from 'react';
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import Paper from '@mui/material/Paper';
+import { useEffect } from 'react';
 export const Uom = () => {
   const [unit, setunit] = useState({
-    unitName: "",
+    unitName: '',
   });
   const [Uom, setUom] = useState([]);
 
@@ -30,7 +30,7 @@ export const Uom = () => {
   useEffect(() => {
     const getUom = async () => {
       try {
-        const res = await fetch("http://192.168.0.121:8080/unit/view");
+        const res = await fetch('http://192.168.0.121:8080/unit/view');
         const data = await res.json();
 
         setUom(data);
@@ -43,17 +43,17 @@ export const Uom = () => {
   }, []);
 
   const rows = [
-    createData("Frozen yoghurt", 159, 6.0, 24, 4.0),
-    createData("Ice cream sandwich", 237, 9.0, 37, 4.3),
-    createData("Eclair", 262, 16.0, 24, 6.0),
-    createData("Cupcake", 305, 3.7, 67, 4.3),
-    createData("Gingerbread", 356, 16.0, 49, 3.9),
+    createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
+    createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
+    createData('Eclair', 262, 16.0, 24, 6.0),
+    createData('Cupcake', 305, 3.7, 67, 4.3),
+    createData('Gingerbread', 356, 16.0, 49, 3.9),
   ];
   const handleClick = async () => {
-    const res = await fetch("http://192.168.0.121:8080/unit/add", {
-      method: "POST",
+    const res = await fetch('http://localhost:8080/unit/add', {
+      method: 'POST',
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
       },
       body: JSON.stringify(unit),
     });
@@ -70,15 +70,15 @@ export const Uom = () => {
     <>
       <Grid>
         <Card
-          color="secondary"
+          color='secondary'
           sx={{
-            width: "100%",
-            backgroundColor: "secondary",
-            borderBottom: "2px solid yellow",
+            width: '100%',
+            backgroundColor: 'secondary',
+            borderBottom: '2px solid yellow',
           }}
         >
           <CardContent>
-            <Typography variant="h4" color="secondary" gutterBottom>
+            <Typography variant='h4' color='secondary' gutterBottom>
               Add UOM
             </Typography>
           </CardContent>
@@ -87,19 +87,19 @@ export const Uom = () => {
 
       <Card
         sx={{
-          width: "100%",
-          mt: "33px",
-          pt: "33px",
-          borderBottom: "2px solid yellow",
-          borderRadius: "33px",
+          width: '100%',
+          mt: '33px',
+          pt: '33px',
+          borderBottom: '2px solid yellow',
+          borderRadius: '33px',
         }}
       >
-        <Grid container spacing={2} sx={{ ml: "13px" }}>
+        <Grid container spacing={2} sx={{ ml: '13px' }}>
           <Grid item xs={12} sm={6}>
             <TextField
-              id="unitName"
-              label="Unit Name"
-              variant="outlined"
+              id='unitName'
+              label='Unit Name'
+              variant='outlined'
               onChange={handleChange}
               //   value={location}
               //   onChange={(e) => setLocation(e.target.value)}
@@ -109,16 +109,16 @@ export const Uom = () => {
         </Grid>
 
         <Button
-          variant="contained"
-          color="secondary"
-          size="large"
+          variant='contained'
+          color='secondary'
+          size='large'
           //onClick={handleClick}
           sx={{
-            mt: "33px",
-            mb: "17px",
-            marginLeft: "auto",
-            marginRight: "auto",
-            display: "block",
+            mt: '33px',
+            mb: '17px',
+            marginLeft: 'auto',
+            marginRight: 'auto',
+            display: 'block',
           }}
           onClick={handleClick}
         >
@@ -127,25 +127,25 @@ export const Uom = () => {
         <div>
           <TableContainer component={Paper}>
             <Table
-              sx={{ minWidth: 650, marginLeft: "5px" }}
-              aria-label="simple table"
+              sx={{ minWidth: 650, marginLeft: '5px' }}
+              aria-label='simple table'
             >
               <TableHead>
                 <TableRow>
                   <TableCell>Units</TableCell>
-                  <TableCell align="right">Actions</TableCell>
+                  <TableCell align='right'>Actions</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
                 {Uom.map((row) => (
                   <TableRow
                     key={row.name}
-                    sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                    sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                   >
-                    <TableCell component="th" scope="row">
+                    <TableCell component='th' scope='row'>
                       {row.name}
                     </TableCell>
-                    <TableCell component="th" scope="row">
+                    <TableCell component='th' scope='row'>
                       <button>Edit</button>
                     </TableCell>
                   </TableRow>

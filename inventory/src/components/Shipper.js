@@ -12,7 +12,6 @@ const Shipper = () => {
   const [name, setShipperName] = useState();
   const [address, setAddressName] = useState();
   const [postalCode, setPostalCode] = useState();
-
   const [contactNumber, setContactNumber] = useState();
   const [email, setEmail] = useState();
 
