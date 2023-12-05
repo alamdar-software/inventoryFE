@@ -3,17 +3,38 @@ import {
   Card,
   CardContent,
   Grid,
+  Paper,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TablePagination,
+  TableRow,
   TextField,
   Typography,
 } from '@mui/material';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 
 const Shipper = () => {
+  const [shipperList, setShipperList] = useState([]);
   const [name, setShipperName] = useState();
   const [address, setAddressName] = useState();
   const [postalCode, setPostalCode] = useState();
   const [contactNumber, setContactNumber] = useState();
   const [email, setEmail] = useState();
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(5); // You can adjust the number of rows per page
+
+  const handleChangePage = (event, newPage) => {
+    setPage(newPage);
+  };
+
+  const handleChangeRowsPerPage = (event) => {
+    setRowsPerPage(parseInt(event.target.value, 10));
+    setPage(0);
+  };
 
   const handleClick = (e) => {
     e.preventDefault();
@@ -34,6 +55,33 @@ const Shipper = () => {
     }).then(() => {
       console.log('Shipper Added');
     });
+  };
+
+  useEffect(() => {
+    fetch('http://localhost:8080/shipper/view')
+      .then((res) => res.json())
+      .then((result) => {
+        console.log(result);
+        // Convert the object values to an array
+        const shippersArray = Object.values(result);
+        setShipperList(shippersArray);
+      });
+  }, []);
+
+  const deleteShipper = async (id) => {
+    console.log(id);
+    alert('Deleted Successfully!');
+    fetch(`http://localhost:8080/shipper/delete/${id}`, {
+      method: 'DELETE',
+      headers: { 'Content-type': 'application/json' },
+      body: JSON.stringify(shipperList),
+    })
+      .then(() => {
+        console.log('Class Updated');
+      })
+      .catch((error) => {
+        console.error('Error updating class:', error);
+      });
   };
 
   return (
@@ -145,6 +193,78 @@ const Shipper = () => {
           Add
         </Button>
       </Card>
+      <Grid sx={{ mt: '33px' }}>
+        <TableContainer
+          component={Paper}
+          sx={{ borderRadius: '33px', borderBottom: '2px solid yellow' }}
+        >
+          <Table sx={{ minWidth: 650 }} aria-label='simple table'>
+            <TableHead>
+              <TableRow>
+                <TableCell align='right' sx={{ fontWeight: 'bold' }}>
+                  Name
+                </TableCell>
+                <TableCell align='right' sx={{ fontWeight: 'bold' }}>
+                  Address
+                </TableCell>
+                <TableCell align='right' sx={{ fontWeight: 'bold' }}>
+                  Postal Code
+                </TableCell>
+                <TableCell align='right' sx={{ fontWeight: 'bold' }}>
+                  Contact Number
+                </TableCell>
+                <TableCell align='right' sx={{ fontWeight: 'bold' }}>
+                  Email
+                </TableCell>
+              </TableRow>
+            </TableHead>
+
+            <TableBody>
+              {shipperList
+                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                .map((shipperList) => (
+                  <TableRow
+                    key={shipperList.name}
+                    sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                  >
+                    <TableCell align='right'>{shipperList.name}</TableCell>
+
+                    <TableCell align='right'>{shipperList.address}</TableCell>
+                    <TableCell align='right'>
+                      {shipperList.postalCode}
+                    </TableCell>
+                    <TableCell align='right'>
+                      {shipperList.contactNumber}
+                    </TableCell>
+                    <TableCell align='right'>{shipperList.email}</TableCell>
+
+                    {/* Include your update and delete buttons here */}
+                    <Link to={`/updateShipper/${shipperList.id}`}>
+                      <Button variant='contained'>Update</Button>
+                    </Link>
+                    <Button
+                      sx={{ marginLeft: '11px' }}
+                      variant='contained'
+                      color='secondary'
+                      onClick={() => deleteShipper(shipperList.id)}
+                    >
+                      Delete
+                    </Button>
+                  </TableRow>
+                ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+        <TablePagination
+          rowsPerPageOptions={[5, 10, 25]}
+          component='div'
+          count={shipperList.length}
+          rowsPerPage={rowsPerPage}
+          page={page}
+          onPageChange={handleChangePage}
+          onRowsPerPageChange={handleChangeRowsPerPage}
+        />
+      </Grid>
     </>
   );
 };

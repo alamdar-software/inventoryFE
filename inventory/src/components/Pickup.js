@@ -19,9 +19,10 @@ import {
   TableBody,
   TablePagination,
 } from '@mui/material';
+import { Link } from 'react-router-dom';
 const Pickup = () => {
   const [pickupAddress, setPickupAddress] = useState();
-  const [pIC, setPic] = useState();
+  const [pic, setPic] = useState();
   const [companyName, setCompanyName] = useState();
   const [countryCode, setCountryCode] = useState();
   const [contactNumber, setContactNumber] = useState();
@@ -39,37 +40,72 @@ const Pickup = () => {
     setPage(0);
   };
 
-  const handleClick = () => {
-    try {
-      const formData = {
-        pickupAddress,
-        pIC,
-        companyName,
-        countryCode,
-        contactNumber,
-      };
+  // const handleClick = () => {
+  //   try {
+  //     const formData = {
+  //       pickupAddress,
+  //       pIC,
+  //       companyName,
+  //       countryCode,
+  //       contactNumber,
+  //     };
 
-      console.log(formData);
+  //     console.log(formData);
 
-      fetch('http://localhost:8080/pickup/add', {
-        method: 'POST',
-        headers: { 'Content-type': 'application/json' },
-        body: JSON.stringify(formData),
-      }).then(() => {
-        console.log('Pickup Added');
-      });
-    } catch (error) {
-      console.log(error);
-    }
+  //     fetch('http://localhost:8080/pickup/add', {
+  //       method: 'POST',
+  //       headers: { 'Content-type': 'application/json' },
+  //       body: JSON.stringify(formData),
+  //     }).then(() => {
+  //       console.log('Pickup Added');
+  //     });
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
+  const handleClick = (e) => {
+    e.preventDefault();
+    const attendence = {
+      pickupAddress,
+      pic,
+      companyName,
+      countryCode,
+      contactNumber,
+    };
+    console.log(attendence);
+
+    fetch('http://localhost:8080/pickup/add', {
+      method: 'POST',
+      headers: { 'Content-type': 'application/json' },
+      body: JSON.stringify(attendence),
+    }).then(() => {
+      console.log('Attendence Added');
+    });
   };
   useEffect(() => {
-    fetch('http://localhost:8080/pickup/list')
+    fetch('http://localhost:8080/pickup/view')
       .then((res) => res.json())
       .then((result) => {
         console.log(result);
         setPickUp(result);
       });
   }, []);
+
+  const deletePickup = async (id) => {
+    alert('Deleted Successfully!');
+    console.log(id);
+    fetch(`http://localhost:8080/pickup/delete/${id}`, {
+      method: 'DELETE',
+      headers: { 'Content-type': 'application/json' },
+      body: JSON.stringify(Pickup),
+    })
+      .then(() => {
+        console.log('Pickup Deleted');
+      })
+      .catch((error) => {
+        console.error('Error updating class:', error);
+      });
+  };
   return (
     <>
       <Grid>
@@ -117,7 +153,7 @@ const Pickup = () => {
               id='outlined-basic'
               label='PIC'
               variant='outlined'
-              value={pIC}
+              value={pic}
               onChange={(e) => setPic(e.target.value)}
               fullWidth
               sx={{ width: '90%' }}
@@ -188,11 +224,21 @@ const Pickup = () => {
           <Table sx={{ minWidth: 650 }} aria-label='simple table'>
             <TableHead>
               <TableRow>
-                <TableCell align='right'>pickupAddress</TableCell>
-                <TableCell align='right'>pic</TableCell>
-                <TableCell align='right'>companyName</TableCell>
-                <TableCell align='right'>countryCode</TableCell>
-                <TableCell align='right'>contactNumber</TableCell>
+                <TableCell align='right' sx={{ fontWeight: 'bold' }}>
+                  PickupAddress
+                </TableCell>
+                <TableCell align='right' sx={{ fontWeight: 'bold' }}>
+                  Pic
+                </TableCell>
+                <TableCell align='right' sx={{ fontWeight: 'bold' }}>
+                  CompanyName
+                </TableCell>
+                <TableCell align='right' sx={{ fontWeight: 'bold' }}>
+                  CountryCode
+                </TableCell>
+                <TableCell align='right' sx={{ fontWeight: 'bold' }}>
+                  ContactNumber
+                </TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -212,9 +258,17 @@ const Pickup = () => {
                     <TableCell align='right'>{pickup.countryCode}</TableCell>
                     <TableCell align='right'>{pickup.contactNumber}</TableCell>
 
-                    {/* <Link to={`/updateAttendence/${attendence.id}`}>
-                  <Button variant='contained'>Update</Button>
-                </Link> */}
+                    <Link to={`/updatePickup/${pickup.id}`}>
+                      <Button variant='contained'>Update</Button>
+                      <Button
+                        sx={{ marginLeft: '11px' }}
+                        variant='contained'
+                        color='secondary'
+                        onClick={() => deletePickup(pickup.id)}
+                      >
+                        Delete
+                      </Button>
+                    </Link>
                   </TableRow>
                 ))}
             </TableBody>
