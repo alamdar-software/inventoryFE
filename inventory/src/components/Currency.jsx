@@ -43,6 +43,7 @@ export const Currency = () => {
     });
     const data = await res.json();
     console.log(data);
+    window.location.reload();
 
     // fetch('http://localhost:8080/location/add', {
     //   method: 'POST',

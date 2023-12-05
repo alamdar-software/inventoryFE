@@ -23,7 +23,7 @@ export default function TableComp({ data }) {
   /*  const [datas, setdatas] = useState([]); */
   /*   setdatas(data); */
 
-  const [rowsPerPage, setRowsPerPage] = React.useState(10);
+  const [rowsPerPage, setRowsPerPage] = React.useState(5);
   console.log(Array.isArray(data), "yesss");
 
   const handleChangePage = (event, newPage) => {
@@ -31,10 +31,34 @@ export default function TableComp({ data }) {
   };
 
   const handleChangeRowsPerPage = (event) => {
-    setRowsPerPage(+event.target.value);
+    setRowsPerPage(5);
     setPage(0);
   };
+  const handleDelete = async (id) => {
+    try {
+      // Perform the delete operation
+      const response = await fetch(
+        `http://localhost:8080/currency/delete/${id}`,
+        {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
 
+      if (response.ok) {
+        // Update the state or fetch data again after deletion
+        // For simplicity, you can reload the page or fetch data again
+        window.location.reload();
+      } else {
+        // Handle the error if deletion fails
+        console.error("Delete failed");
+      }
+    } catch (error) {
+      console.error("Error during delete:", error);
+    }
+  };
   return (
     <Paper sx={{ width: "100%", margin: "0 auto", maxWidth: "1000px" }}>
       <TableContainer sx={{ maxHeight: 500 }}>
@@ -49,7 +73,7 @@ export default function TableComp({ data }) {
             borderStyle: "solid",
           }}
         >
-          <TableHead>
+          <TableHead sx={{ backgroundColor: "#f3f3f3" }}>
             <TableRow>
               {columns.map((column) => (
                 <TableCell
@@ -63,33 +87,35 @@ export default function TableComp({ data }) {
             </TableRow>
           </TableHead>
           <TableBody>
-            {/* .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage) */}
-            {data.currencyList?.map((row, index) => (
-              <TableRow hover role="checkbox" tabIndex={-1} key={index}>
-                <TableCell>{row.currencyName}</TableCell>
-                <TableCell>
-                  <ButtonGroup>
-                    <Link to={`/currency/update/${row.id}`}>
-                      <Button variant="contained" color="primary">
-                        Edit
+            {data.currencyList
+              ?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+              .map((row, index) => (
+                <TableRow hover role="checkbox" tabIndex={-1} key={index}>
+                  <TableCell>{row.currencyName}</TableCell>
+                  <TableCell>
+                    <ButtonGroup>
+                      <Link to={`/currency/update/${row.id}`}>
+                        <Button variant="contained" color="primary">
+                          Edit
+                        </Button>
+                      </Link>
+                      <Button
+                        variant="contained"
+                        color="secondary"
+                        sx={{ marginLeft: "8px !important" }}
+                        onClick={() => handleDelete(row.id)}
+                      >
+                        Delete
                       </Button>
-                    </Link>
-                    <Button
-                      variant="contained"
-                      color="secondary"
-                      sx={{ marginLeft: "8px !important" }}
-                    >
-                      Delete
-                    </Button>
-                  </ButtonGroup>
-                </TableCell>
-              </TableRow>
-            ))}
+                    </ButtonGroup>
+                  </TableCell>
+                </TableRow>
+              ))}
           </TableBody>
         </Table>
       </TableContainer>
       <TablePagination
-        rowsPerPageOptions={[10, 25, 100]}
+        rowsPerPageOptions={[5, 25, 100]}
         component="div"
         count={data.length}
         rowsPerPage={rowsPerPage}

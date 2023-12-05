@@ -3,6 +3,9 @@ import {
   Card,
   CardContent,
   Grid,
+  InputLabel,
+  MenuItem,
+  Select,
   TextField,
   Typography,
 } from "@mui/material";
@@ -12,18 +15,19 @@ import { useState } from "react";
 const Consignee = () => {
   const [formData, setformData] = useState({
     name: "",
-    adress: "",
+    address: "",
     pincode: "",
     email: "",
     phoneNumber: "",
-    NotifyParty: "",
-    deliveryAdress: "",
+    notifyParty: "",
+    deliveryAddress: "",
+    location: "null",
   });
   console.log(formData, "hey");
   const handleClick = async (e) => {
     e.preventDefault();
     try {
-      const res = await fetch("http://192.168.1.10:8080/consignee/add", {
+      const res = await fetch("http://localhost:8080/consignee/add", {
         method: "post",
         headers: {
           "Content-Type": "application/json",
@@ -85,7 +89,7 @@ const Consignee = () => {
           </Grid>
           <Grid item xs={12} sm={6}>
             <TextField
-              id="adress"
+              id="address"
               label="Address "
               variant="outlined"
               onChange={handleInputChange}
@@ -112,8 +116,8 @@ const Consignee = () => {
           </Grid>
           <Grid item xs={12} sm={6}>
             <TextField
-              id="deliveryAdress"
-              label="Delivery Address"
+              id="deliveryAddress"
+              label="deliveryAddress"
               variant="outlined"
               onChange={handleInputChange}
               //   value={subLocation}
@@ -138,8 +142,8 @@ const Consignee = () => {
           </Grid>
           <Grid item xs={12} sm={6}>
             <TextField
-              id="email"
-              label="Email"
+              id="phoneNumber"
+              label="Contact Number"
               variant="outlined"
               onChange={handleInputChange}
               //   value={subLocation}
@@ -154,8 +158,8 @@ const Consignee = () => {
         <Grid container spacing={2} sx={{ mt: "21px", ml: "13px" }}>
           <Grid item xs={12} sm={6}>
             <TextField
-              id="NotifyParty"
-              label="Notify Party"
+              id="notifyParty"
+              label="notifyParty"
               variant="outlined"
               onChange={handleInputChange}
               //   value={subLocation}
@@ -163,6 +167,20 @@ const Consignee = () => {
               fullWidth
               sx={{ width: "90%" }}
             />
+          </Grid>
+          <Grid item xs={10} sm={6}>
+            <InputLabel id="demo-simple-select-label">Age</InputLabel>
+            <Select
+              labelId="demo-simple-select-label"
+              id="demo-simple-select"
+              value={"age"}
+              label="Age"
+              fullWidth
+            >
+              <MenuItem value={10}>Ten</MenuItem>
+              <MenuItem value={20}>Twenty</MenuItem>
+              <MenuItem value={30}>Thirty</MenuItem>
+            </Select>
           </Grid>
         </Grid>
         <Button
