@@ -19,6 +19,8 @@ import Moc from "./pages/Moc.jsx";
 import Update from "./components/Update.js";
 import Brand from "./pages/Brand";
 import UpdateBrand from "./pages/UpdateBrand";
+import Category from "./pages/Category";
+import UpdateCategory from "./pages/UpdateCategory";
 
 const theme = createTheme({
   palette: {
@@ -49,6 +51,8 @@ function App() {
               <Route path="/currency" element={<Currency />} />
               <Route path="/brand" element={<Brand />} />
               <Route path="/brand/edit/:id" element={<UpdateBrand />} />
+              <Route path="/category" element={<Category />} />
+              <Route path="/category/edit/:id" element={<UpdateCategory />} />
             </Routes>
           </ThemeProvider>
         </Sidebar>
