@@ -40,10 +40,10 @@ const LocationList = () => {
       body: JSON.stringify(LocationList),
     })
       .then(() => {
-        console.log('Class Updated');
+        console.log('Location Updated');
       })
       .catch((error) => {
-        console.error('Error updating class:', error);
+        console.error('Error updating location:', error);
       });
   };
   const handleChangePage = (event, newPage) => {
