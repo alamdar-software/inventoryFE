@@ -10,9 +10,20 @@ import {
   Typography,
 } from "@mui/material";
 import React from "react";
+import { useEffect } from "react";
 import { useState } from "react";
+import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { fetchlocation } from "../redux/slice/location";
 
 const Consignee = () => {
+  const state = useSelector((state) => state);
+  console.log(state, "location data");
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(fetchlocation());
+  }, []);
+
   const [formData, setformData] = useState({
     name: "",
     address: "",
@@ -21,9 +32,9 @@ const Consignee = () => {
     phoneNumber: "",
     notifyParty: "",
     deliveryAddress: "",
-    location: "null",
+    locationName: null,
   });
-  // console.log(formData, 'hey');
+
   const handleClick = async (e) => {
     e.preventDefault();
     try {
@@ -46,6 +57,7 @@ const Consignee = () => {
       [e.target.id]: e.target.value,
     });
   };
+  console.log(formData, "hey");
   return (
     <>
       <Grid>
@@ -184,17 +196,26 @@ const Consignee = () => {
             />
           </Grid>
           <Grid item xs={10} sm={6}>
-            <InputLabel id="demo-simple-select-label">Age</InputLabel>
+            <InputLabel id="location">Location</InputLabel>
             <Select
-              labelId="demo-simple-select-label"
-              id="demo-simple-select"
-              value={"age"}
-              label="Age"
+              labelId="location"
+              id="location"
+              value={formData?.locationName || "sgr"}
+              label="Location"
               fullWidth
+              onChange={(e) =>
+                setformData({
+                  ...formData,
+                  locationName: e.target.value,
+                })
+              }
             >
-              <MenuItem value={10}>Ten</MenuItem>
-              <MenuItem value={20}>Twenty</MenuItem>
-              <MenuItem value={30}>Thirty</MenuItem>
+              {state.location.data?.map((item, index) => (
+                <MenuItem key={index} value={item?.locationName}>
+                  {" "}
+                  {item?.locationName}
+                </MenuItem>
+              ))}
             </Select>
           </Grid>
         </Grid>
