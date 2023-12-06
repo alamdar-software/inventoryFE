@@ -9,11 +9,13 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
+import { Box } from "@mui/system";
 import React from "react";
 import { useEffect } from "react";
 import { useState } from "react";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
+import { Link } from "react-router-dom";
 import { fetchlocation } from "../redux/slice/location";
 
 const Consignee = () => {
@@ -219,22 +221,36 @@ const Consignee = () => {
             </Select>
           </Grid>
         </Grid>
-        <Button
-          variant="contained"
-          color="secondary"
-          size="large"
-          //onClick={handleClick}
-          onClick={handleClick}
-          sx={{
-            mt: "33px",
-            mb: "17px",
-            marginLeft: "auto",
-            marginRight: "auto",
-            display: "block",
-          }}
-        >
-          Add
-        </Button>
+        <Box display="flex" justifyContent="center" alignItems="center" gap={2}>
+          <Button
+            variant="contained"
+            color="secondary"
+            size="large"
+            //onClick={handleClick}
+            onClick={handleClick}
+            sx={{
+              mt: "33px",
+              mb: "17px",
+            }}
+          >
+            Add
+          </Button>
+          <Link to={"consignee/view"}>
+            <Button
+              variant="contained"
+              color="secondary"
+              size="large"
+              //onClick={handleClick}
+
+              sx={{
+                mt: "33px",
+                mb: "17px",
+              }}
+            >
+              View Consignee
+            </Button>
+          </Link>
+        </Box>
       </Card>
     </>
   );

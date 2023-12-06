@@ -12,8 +12,14 @@ import { useDispatch } from "react-redux";
 import { fetchCategory } from "../redux/slice/CategorySlice";
 import { useEffect } from "react";
 import { fetchUom } from "../redux/slice/UomSlice";
+import { useState } from "react";
 
 const Item = () => {
+  const [formData, setformData] = useState({
+    itemName: "",
+    minimumStock: "",
+    description: "",
+  });
   const state = useSelector((state) => state);
   console.log(state, "category data");
   const dispatch = useDispatch();
