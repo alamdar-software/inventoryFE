@@ -91,7 +91,7 @@ const Shipper = () => {
         window.location.reload();
       })
       .catch((error) => {
-        console.error('Error updating class:', error);
+        console.error('Error updating shipper:', error);
       });
   };
 
