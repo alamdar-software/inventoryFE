@@ -19,16 +19,40 @@ const Item = () => {
     itemName: "",
     minimumStock: "",
     description: "",
-    category: "",
-    unit: "",
+    name: "",
+    unitName: "",
   });
+  console.log(formData, "formmmmmmmmm");
   const state = useSelector((state) => state);
-  console.log(state, "category data");
+
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(fetchCategory());
     dispatch(fetchUom());
   }, []);
+
+  const handleInputChange = (e) => {
+    setformData({
+      ...formData,
+      [e.target.id]: e.target.value,
+    });
+  };
+  console.log(formData, "heyyyy");
+
+  const handleClick = async (e) => {
+    e.preventDefault();
+    try {
+      const res = await fetch("http://localhost:8080/item/add", {
+        method: "post",
+        headers: {
+          "content-type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+      const data = await res.json();
+      console.log(data);
+    } catch (error) {}
+  };
 
   return (
     <>
@@ -61,15 +85,10 @@ const Item = () => {
         <Grid container spacing={2} sx={{ ml: "13px" }}>
           <Grid item xs={12} sm={6}>
             <TextField
-              id="outlined-basic"
+              id="itemName"
               label="Item"
               variant="outlined"
-              onChange={(e) =>
-                setformData({
-                  ...formData,
-                  name: e.target.value,
-                })
-              }
+              onChange={handleInputChange}
               //   value={location}
               //   onChange={(e) => setLocation(e.target.value)}
               fullWidth
@@ -78,9 +97,10 @@ const Item = () => {
           </Grid>
           <Grid item xs={12} sm={6}>
             <TextField
-              id="outlined-basic"
+              id="description"
               label="Item Description"
               variant="outlined"
+              onChange={handleInputChange}
               //   value={subLocation}
               //   onChange={(e) => setSubLocation(e.target.value)}
               fullWidth
@@ -92,12 +112,19 @@ const Item = () => {
         <Grid container spacing={2} sx={{ ml: "13px", mt: "21px" }}>
           <Grid item xs={12} sm={6}>
             <FormControl fullWidth sx={{ width: "90%" }}>
-              <InputLabel id="demo-simple-select-label">Catagory</InputLabel>
+              <InputLabel id="Catagory">Catagory</InputLabel>
               <Select
-                labelId="demo-simple-select-label"
-                id="demo-simple-select"
+                labelId="Catagory"
+                id="name"
+                value={formData?.name}
                 //value={age}
                 label="Catagory"
+                onChange={(e) =>
+                  setformData({
+                    ...formData,
+                    name: e.target.value,
+                  })
+                }
                 //onChange={handleChange}
               >
                 {state.category.data?.content.map((item, index) => (
@@ -114,9 +141,16 @@ const Item = () => {
               <InputLabel id="demo-simple-select-label">UOM</InputLabel>
               <Select
                 labelId="demo-simple-select-label"
-                id="demo-simple-select"
+                id="unitName"
+                value={formData.unitName}
                 //value={age}
                 label="UOM"
+                onChange={(e) =>
+                  setformData({
+                    ...formData,
+                    unitName: e.target.value,
+                  })
+                }
                 //onChange={handleChange}
               >
                 {state.Uom.data?.content.map((item, index) => (
@@ -132,10 +166,11 @@ const Item = () => {
         <Grid container spacing={2} sx={{ mt: "21px", ml: "13px" }}>
           <Grid item xs={12} sm={6}>
             <TextField
-              id="outlined-basic"
+              id="minimumStock"
               label="Minimum Stock"
               variant="outlined"
               //   value={subLocation}
+              onChange={handleInputChange}
               //   onChange={(e) => setSubLocation(e.target.value)}
               fullWidth
               sx={{ width: "90%" }}
@@ -146,6 +181,7 @@ const Item = () => {
           variant="contained"
           color="secondary"
           size="large"
+          onClick={handleClick}
           //onClick={handleClick}
           sx={{
             mt: "33px",
