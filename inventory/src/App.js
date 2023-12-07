@@ -34,6 +34,7 @@ import IncomingStock from './pages/IncomingStock.js';
 import SingleIncome from './components/SingleIncome.js';
 import BulkIncome from './components/BulkIncome.js';
 import User from './components/User.js';
+import DailyDataCount from './pages/DailyDataCount.js';
 
 const theme = createTheme({
   palette: {
@@ -81,6 +82,7 @@ function App() {
               <Route path='/singleIncome' element={<SingleIncome />} />
               <Route path='/bulkIncome' element={<BulkIncome />} />
               <Route path='/user' element={<User />} />
+              <Route path='/datacount' element={<DailyDataCount />} />
 
               {/* <Route
                 path='/consignee/consignee/view'

@@ -26,7 +26,7 @@ const ScrappedItem = () => {
         >
           <CardContent>
             <Typography variant='h4' color='secondary' gutterBottom>
-              Consume Item
+              Scripped Item
             </Typography>
           </CardContent>
         </Card>
