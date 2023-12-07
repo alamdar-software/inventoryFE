@@ -24,8 +24,8 @@ const Inventory = () => {
     locationName: "",
     address: "",
     quantity: "",
-    consumedQuantity: "",
-    scrappedQuantity: "",
+    consumedItem: "",
+    scrappedItem: "",
   });
   const dispatch = useDispatch();
   const state = useSelector((state) => state);
@@ -197,20 +197,20 @@ const Inventory = () => {
       <Grid container spacing={2} sx={{ mt: "33px" }}>
         <Grid item xs={21} sm={6}>
           <TextField
-            id="outlined-basic"
+            id="consumedItem"
             label="Consumed Quantity"
             variant="outlined"
             type="number"
             //   onChange={(e) =>
             //     setformData({
             //       ...formData,
-            //       name: e.target.value,
+            //       consumedItem: e.target.value,
             //     })
             //   }
             onChange={(e) =>
               setformData({
                 ...formData,
-                consumedQuantity: e.target.value,
+                consumedItem: e.target.value,
               })
             }
             fullWidth
@@ -219,7 +219,7 @@ const Inventory = () => {
         </Grid>
         <Grid item xs={12} sm={6}>
           <TextField
-            id="outlined-basic"
+            id="scrappedItem"
             label="Scrapped Quantity"
             variant="outlined"
             type="number"
@@ -232,7 +232,7 @@ const Inventory = () => {
             onChange={(e) =>
               setformData({
                 ...formData,
-                scrappedQuantity: e.target.value,
+                scrappedItem: e.target.value,
               })
             }
             fullWidth
