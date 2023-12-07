@@ -33,6 +33,7 @@ import ScrappedItem from './components/ScrappedItem.js';
 import IncomingStock from './pages/IncomingStock.js';
 import SingleIncome from './components/SingleIncome.js';
 import BulkIncome from './components/BulkIncome.js';
+import User from './components/User.js';
 
 const theme = createTheme({
   palette: {
@@ -79,6 +80,7 @@ function App() {
               <Route path='/incoming-stock' element={<IncomingStock />} />
               <Route path='/singleIncome' element={<SingleIncome />} />
               <Route path='/bulkIncome' element={<BulkIncome />} />
+              <Route path='/user' element={<User />} />
 
               {/* <Route
                 path='/consignee/consignee/view'
