@@ -10,97 +10,128 @@ import {
   Select,
   TextField,
   Typography,
-} from '@mui/material';
-import React from 'react';
+} from "@mui/material";
+import React from "react";
+import { useEffect } from "react";
+import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { fetchConsignee } from "../redux/slice/ConsigneeSlice";
+import { fetchlocation } from "../redux/slice/location";
 
 const Mto = () => {
+  const state = useSelector((state) => state);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(fetchConsignee());
+    dispatch(fetchlocation());
+  }, []);
+
   return (
     <>
       <Grid>
         <Card
-          color='secondary'
+          color="secondary"
           sx={{
-            width: '100%',
-            backgroundColor: 'secondary',
-            borderBottom: '2px solid yellow',
-            mb: '33px',
+            width: "100%",
+            backgroundColor: "secondary",
+            borderBottom: "2px solid yellow",
+            mb: "33px",
           }}
         >
           <CardContent>
-            <Typography variant='h4' color='secondary' gutterBottom>
+            <Typography variant="h4" color="secondary" gutterBottom>
               Transfer Mto
             </Typography>
           </CardContent>
         </Card>
       </Grid>
-      <Grid container spacing={2} sx={{ mt: '23px' }}>
+      <Grid container spacing={2} sx={{ mt: "23px" }}>
         <Grid item xs={12} sm={6}>
-          <FormControl fullWidth sx={{ width: '90%' }}>
-            <InputLabel id='demo-simple-select-label'>Location</InputLabel>
+          <FormControl fullWidth sx={{ width: "90%" }}>
+            <InputLabel id="demo-simple-select-label">Location</InputLabel>
             <Select
-              labelId='demo-simple-select-label'
-              id='demo-simple-select'
+              labelId="demo-simple-select-label"
+              id="demo-simple-select"
               //value={age}
-              label='location'
+              label="location"
+              MenuProps={{
+                PaperProps: {
+                  style: {
+                    maxHeight: 120, // Adjust the height as needed
+                  },
+                },
+              }}
               //onChange={handleChange}
             >
-              <MenuItem value={10}>Ten</MenuItem>
-              <MenuItem value={20}>Twenty</MenuItem>
-              <MenuItem value={30}>Thirty</MenuItem>
+              {state.location.data?.map((item, index) => (
+                <MenuItem key={index} value={item?.locationName}>
+                  {" "}
+                  {item?.locationName}
+                </MenuItem>
+              ))}
             </Select>
           </FormControl>
         </Grid>
         <Grid item xs={12} sm={6}>
           <TextField
-            sx={{ width: '90%' }}
-            id='outlined-basic'
-            label='Transfer Date'
-            variant='outlined'
+            sx={{ width: "90%" }}
+            id="outlined-basic"
+            label="Transfer Date"
+            variant="outlined"
             // value={locationName}
             // onChange={(e) => setLocation(e.target.value)}
             fullWidth
           />
         </Grid>
       </Grid>
-      <Grid container spacing={2} sx={{ mt: '23px' }}>
+      <Grid container spacing={2} sx={{ mt: "23px" }}>
         <Grid item xs={12} sm={6}>
-          <FormControl fullWidth sx={{ width: '90%' }}>
-            <InputLabel id='demo-simple-select-label'>Consignee</InputLabel>
+          <FormControl fullWidth sx={{ width: "90%" }}>
+            <InputLabel id="demo-simple-select-label">Consignee</InputLabel>
             <Select
-              labelId='demo-simple-select-label'
-              id='demo-simple-select'
+              labelId="demo-simple-select-label"
+              id="demo-simple-select"
               //value={age}
-              label='consignee'
+              label="consignee"
               //onChange={handleChange}
+              MenuProps={{
+                PaperProps: {
+                  style: {
+                    maxHeight: 200, // Adjust the height as needed
+                  },
+                },
+              }}
             >
-              <MenuItem value={10}>Ten</MenuItem>
-              <MenuItem value={20}>Twenty</MenuItem>
-              <MenuItem value={30}>Thirty</MenuItem>
+              {state.consignee.data?.map((item, index) => (
+                <MenuItem key={index} value={item?.name}>
+                  {" "}
+                  {item?.name}
+                </MenuItem>
+              ))}
             </Select>
           </FormControl>
         </Grid>
         <Grid item xs={12} sm={6}>
-          <FormControl fullWidth sx={{ width: '90%' }}>
-            <InputLabel id='demo-simple-select-label'>
+          <FormControl fullWidth sx={{ width: "90%" }}>
+            <InputLabel id="demo-simple-select-label">
               Repair/Service
             </InputLabel>
             <Select
-              labelId='demo-simple-select-label'
-              id='demo-simple-select'
+              labelId="demo-simple-select-label"
+              id="demo-simple-select"
               //value={age}
-              label='Repair/service'
+              label="Repair/service"
               //onChange={handleChange}
             >
-              <MenuItem value={10}>Ten</MenuItem>
-              <MenuItem value={20}>Twenty</MenuItem>
-              <MenuItem value={30}>Thirty</MenuItem>
+              <MenuItem value={"Yes"}>Yes</MenuItem>
+              <MenuItem value={"No"}>No</MenuItem>
             </Select>
           </FormControl>
         </Grid>
       </Grid>
-      <Box sx={{ display: 'flex', justifyContent: 'center', mt: '33px' }}>
-        {' '}
-        <Button variant='contained' size='large' color='secondary'>
+      <Box sx={{ display: "flex", justifyContent: "center", mt: "33px" }}>
+        {" "}
+        <Button variant="contained" size="large" color="secondary">
           Add
         </Button>
       </Box>
