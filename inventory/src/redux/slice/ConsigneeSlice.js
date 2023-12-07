@@ -1,13 +1,13 @@
-import { createAsyncThunk } from '@reduxjs/toolkit';
-import { createSlice } from '@reduxjs/toolkit';
+import { createAsyncThunk } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 
-export const fetchConsignee = createAsyncThunk('fetchConsignee', async () => {
-  const res = await fetch('http://localhost:8080/consignee/view');
+export const fetchConsignee = createAsyncThunk("fetchConsignee", async () => {
+  const res = await fetch("http://localhost:8080/consignee/view");
   return res.json();
 });
 
 const consigneeSlice = createSlice({
-  name: 'consignee',
+  name: "consignee",
   initialState: {
     loading: false,
     data: null,
@@ -28,4 +28,4 @@ const consigneeSlice = createSlice({
     });
   },
 });
-export default fetchConsignee.reducer;
+export default consigneeSlice.reducer;
