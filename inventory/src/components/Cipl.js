@@ -18,6 +18,8 @@ import { useDispatch } from "react-redux";
 import { fetchlocation } from "../redux/slice/location";
 import { fetchShipper } from "../redux/slice/ShipperSlice";
 import { fetchConsignee } from "../redux/slice/ConsigneeSlice";
+import { fetchPickup } from "../redux/slice/PickUpSlice";
+import { fetchCurrency } from "../redux/slice/CurrencySlice";
 
 const Cipl = () => {
   const state = useSelector((state) => state);
@@ -26,6 +28,8 @@ const Cipl = () => {
     dispatch(fetchlocation());
     dispatch(fetchShipper());
     dispatch(fetchConsignee());
+    dispatch(fetchPickup());
+    dispatch(fetchCurrency());
   }, []);
   console.log(state, "cipl");
 
@@ -57,6 +61,13 @@ const Cipl = () => {
               id="demo-simple-select"
               //value={age}
               label="location"
+              MenuProps={{
+                PaperProps: {
+                  style: {
+                    maxHeight: 120, // Adjust the height as needed
+                  },
+                },
+              }}
               //onChange={handleChange}
             >
               {state.location.data?.map((item, index) => (
@@ -76,11 +87,21 @@ const Cipl = () => {
               id="demo-simple-select"
               //value={age}
               label="shipper"
+              MenuProps={{
+                PaperProps: {
+                  style: {
+                    maxHeight: 120, // Adjust the height as needed
+                  },
+                },
+              }}
               //onChange={handleChange}
             >
-              <MenuItem value={10}>Ten</MenuItem>
-              <MenuItem value={20}>Twenty</MenuItem>
-              <MenuItem value={30}>Thirty</MenuItem>
+              {state.shipper.data?.map((item, index) => (
+                <MenuItem key={index} value={item?.name}>
+                  {" "}
+                  {item?.name}
+                </MenuItem>
+              ))}
             </Select>
           </FormControl>
         </Grid>
@@ -106,10 +127,20 @@ const Cipl = () => {
               //value={age}
               label="consignee"
               //onChange={handleChange}
+              MenuProps={{
+                PaperProps: {
+                  style: {
+                    maxHeight: 200, // Adjust the height as needed
+                  },
+                },
+              }}
             >
-              <MenuItem value={10}>Ten</MenuItem>
-              <MenuItem value={20}>Twenty</MenuItem>
-              <MenuItem value={30}>Thirty</MenuItem>
+              {state.consignee.data?.map((item, index) => (
+                <MenuItem key={index} value={item?.name}>
+                  {" "}
+                  {item?.name}
+                </MenuItem>
+              ))}
             </Select>
           </FormControl>
         </Grid>
@@ -126,10 +157,20 @@ const Cipl = () => {
               //value={age}
               label="pickupAddress"
               //onChange={handleChange}
+              MenuProps={{
+                PaperProps: {
+                  style: {
+                    maxHeight: 150, // Adjust the height as needed
+                  },
+                },
+              }}
             >
-              <MenuItem value={10}>Ten</MenuItem>
-              <MenuItem value={20}>Twenty</MenuItem>
-              <MenuItem value={30}>Thirty</MenuItem>
+              {state.pickup.data?.map((item, index) => (
+                <MenuItem key={index} value={item?.pickupAddress}>
+                  {" "}
+                  {item?.pickupAddress}
+                </MenuItem>
+              ))}
             </Select>
           </FormControl>
         </Grid>
@@ -143,11 +184,21 @@ const Cipl = () => {
               id="demo-simple-select"
               //value={age}
               label="selectCurrency"
+              MenuProps={{
+                PaperProps: {
+                  style: {
+                    maxHeight: 120, // Adjust the height as needed
+                  },
+                },
+              }}
               //onChange={handleChange}
             >
-              <MenuItem value={10}>Ten</MenuItem>
-              <MenuItem value={20}>Twenty</MenuItem>
-              <MenuItem value={30}>Thirty</MenuItem>
+              {state.currency.data?.currencyList.map((item, index) => (
+                <MenuItem key={index} value={item?.currencyName}>
+                  {" "}
+                  {item?.currencyName}
+                </MenuItem>
+              ))}
             </Select>
           </FormControl>
         </Grid>
@@ -176,9 +227,8 @@ const Cipl = () => {
               label="Repair/service"
               //onChange={handleChange}
             >
-              <MenuItem value={10}>Ten</MenuItem>
-              <MenuItem value={20}>Twenty</MenuItem>
-              <MenuItem value={30}>Thirty</MenuItem>
+              <MenuItem value={true}>Yes</MenuItem>
+              <MenuItem value={false}>No</MenuItem>
             </Select>
           </FormControl>
         </Grid>

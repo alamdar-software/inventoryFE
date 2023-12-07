@@ -85,10 +85,18 @@ const Pickup = () => {
   };
   useEffect(() => {
     fetch("http://localhost:8080/pickup/view")
-      .then((res) => res.json())
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error(`HTTP error! Status: ${res.status}`);
+        }
+        return res.json();
+      })
       .then((result) => {
         console.log(result);
         setPickUp(result);
+      })
+      .catch((error) => {
+        console.error("Error fetching pickup data:", error);
       });
   }, []);
 
