@@ -83,6 +83,23 @@ const Consignee = () => {
         setConsignee(result);
       });
   }, []);
+
+  const deleteConsignee = async (id) => {
+    console.log(id);
+    alert('Deleted Successfully!');
+    fetch(`http://localhost:8080/consignee/delete/${id}`, {
+      method: 'DELETE',
+      headers: { 'Content-type': 'application/json' },
+      body: JSON.stringify(consignee),
+    })
+      .then(() => {
+        console.log('Consignee Updated');
+        window.location.reload();
+      })
+      .catch((error) => {
+        console.error('Error updating consignee:', error);
+      });
+  };
   const handleInputChange = async (e) => {
     setformData({
       ...formData,
@@ -331,14 +348,14 @@ const Consignee = () => {
                       <Button variant="contained">Update</Button>
                     </Link>
 
-                    {/* <Button
-                    sx={{ marginLeft: '11px' }}
-                    variant='contained'
-                    color='secondary'
-                    // onClick={() => deletePickup(pickup.id)}
-                  >
-                    Delete
-                  </Button> */}
+                    <Button
+                      sx={{ marginLeft: '11px' }}
+                      variant='contained'
+                      color='secondary'
+                      onClick={() => deleteConsignee(consignee.id)}
+                    >
+                      Delete
+                    </Button>
                   </TableRow>
                 ))}
             </TableBody>

@@ -27,6 +27,12 @@ import Mto from './components/Mto.js';
 import InternalTransfer from './components/InternalTransfer.js';
 import ViewConsignee from './pages/ViewConsignee';
 import UpdateConsignee from './components/UpdateConsignee.js';
+import ConsumeItem from './components/ConsumeItem.js';
+import Inventory from './components/Inventory.js';
+import ScrappedItem from './components/ScrappedItem.js';
+import IncomingStock from './pages/IncomingStock.js';
+import SingleIncome from './components/SingleIncome.js';
+import BulkIncome from './components/BulkIncome.js';
 
 const theme = createTheme({
   palette: {
@@ -67,6 +73,12 @@ function App() {
                 path='/updateConsignee/:id'
                 element={<UpdateConsignee />}
               />
+              <Route path='/consume-item' element={<ConsumeItem />} />
+              <Route path='/inventory' element={<Inventory />} />
+              <Route path='/scrapped-item' element={<ScrappedItem />} />
+              <Route path='/incoming-stock' element={<IncomingStock />} />
+              <Route path='/singleIncome' element={<SingleIncome />} />
+              <Route path='/bulkIncome' element={<BulkIncome />} />
 
               {/* <Route
                 path='/consignee/consignee/view'
