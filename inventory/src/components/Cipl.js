@@ -16,12 +16,16 @@ import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { fetchlocation } from "../redux/slice/location";
+import { fetchShipper } from "../redux/slice/ShipperSlice";
+import { fetchConsignee } from "../redux/slice/ConsigneeSlice";
 
 const Cipl = () => {
   const state = useSelector((state) => state);
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(fetchlocation());
+    dispatch(fetchShipper());
+    dispatch(fetchConsignee());
   }, []);
   console.log(state, "cipl");
 
