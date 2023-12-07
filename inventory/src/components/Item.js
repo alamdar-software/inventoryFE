@@ -19,6 +19,8 @@ const Item = () => {
     itemName: "",
     minimumStock: "",
     description: "",
+    category: "",
+    unit: "",
   });
   const state = useSelector((state) => state);
   console.log(state, "category data");
@@ -62,6 +64,12 @@ const Item = () => {
               id="outlined-basic"
               label="Item"
               variant="outlined"
+              onChange={(e) =>
+                setformData({
+                  ...formData,
+                  name: e.target.value,
+                })
+              }
               //   value={location}
               //   onChange={(e) => setLocation(e.target.value)}
               fullWidth
