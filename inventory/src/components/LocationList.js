@@ -12,9 +12,9 @@ import {
   TableRow,
   Typography,
   TablePagination,
-} from '@mui/material';
-import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+} from "@mui/material";
+import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 
 const LocationList = () => {
   const [page, setPage] = useState(0);
@@ -23,7 +23,7 @@ const LocationList = () => {
   const [location, setLocationName] = useState([]);
 
   useEffect(() => {
-    fetch('http://localhost:8080/location/getAll')
+    fetch("http://localhost:8080/location/getAll")
       .then((res) => res.json())
       .then((result) => {
         console.log(result);
@@ -32,18 +32,18 @@ const LocationList = () => {
   }, []);
 
   const deleteLocation = async (id) => {
-    alert('Deleted Successfully!');
+    alert("Deleted Successfully!");
     console.log(id);
     fetch(`http://localhost:8080/location/delete/${id}`, {
-      method: 'DELETE',
-      headers: { 'Content-type': 'application/json' },
+      method: "DELETE",
+      headers: { "Content-type": "application/json" },
       body: JSON.stringify(LocationList),
     })
       .then(() => {
-        console.log('Location Updated');
+        console.log("Location Updated");
       })
       .catch((error) => {
-        console.error('Error updating location:', error);
+        console.error("Error updating location:", error);
       });
   };
   const handleChangePage = (event, newPage) => {
@@ -59,31 +59,36 @@ const LocationList = () => {
     <>
       <Grid>
         <Card
-          color='secondary'
+          color="secondary"
           sx={{
-            width: '100%',
-            borderBottom: '2px solid #ab47bc',
+            width: "100%",
+            borderBottom: "2px solid #ab47bc",
           }}
         >
           <CardContent>
-            <Typography variant='h4' color='secondary' gutterBottom>
+            <Typography
+              variant="h4"
+              color="secondary"
+              gutterBottom
+              style={{ fontFamily: "'EB Garamond'" }}
+            >
               Location/Vessel List
             </Typography>
           </CardContent>
         </Card>
 
-        <Grid sx={{ mt: '33px' }}>
+        <Grid sx={{ mt: "33px" }}>
           <TableContainer
             component={Paper}
-            sx={{ borderRadius: '33px', borderBottom: '2px solid yellow' }}
+            sx={{ borderRadius: "33px", borderBottom: "2px solid yellow" }}
           >
-            <Table sx={{ minWidth: 650 }} aria-label='simple table'>
+            <Table sx={{ minWidth: 650 }} aria-label="simple table">
               <TableHead>
                 <TableRow>
-                  <TableCell align='left' sx={{ fontWeight: 'bold' }}>
+                  <TableCell align="left" sx={{ fontWeight: "bold" }}>
                     LocationName
                   </TableCell>
-                  <TableCell align='left' sx={{ fontWeight: 'bold' }}>
+                  <TableCell align="left" sx={{ fontWeight: "bold" }}>
                     Sub Location
                   </TableCell>
                 </TableRow>
@@ -94,21 +99,21 @@ const LocationList = () => {
                   .map((location) => (
                     <TableRow
                       key={location.name}
-                      sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                      sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                     >
-                      <TableCell align='left'>
+                      <TableCell align="left">
                         {location.locationName}
                       </TableCell>
-                      <TableCell align='left'>{location.address}</TableCell>
+                      <TableCell align="left">{location.address}</TableCell>
                       <Link to={`/updateLocation/${location.id}`}>
-                        <Button variant='contained' color='secondary'>
+                        <Button variant="contained" color="secondary">
                           Update
                         </Button>
                       </Link>
                       <Button
-                        sx={{ marginLeft: '11px' }}
-                        variant='contained'
-                        color='secondary'
+                        sx={{ marginLeft: "11px" }}
+                        variant="contained"
+                        color="secondary"
                         onClick={() => deleteLocation(location.id)}
                       >
                         Delete
@@ -119,7 +124,7 @@ const LocationList = () => {
             </Table>
             <TablePagination
               rowsPerPageOptions={[5, 10, 25]}
-              component='div'
+              component="div"
               count={location.length}
               rowsPerPage={rowsPerPage}
               page={page}

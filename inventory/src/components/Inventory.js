@@ -64,7 +64,12 @@ const Inventory = () => {
           }}
         >
           <CardContent>
-            <Typography variant="h4" color="secondary" gutterBottom>
+            <Typography
+              variant="h4"
+              color="secondary"
+              gutterBottom
+              style={{ fontFamily: "'EB Garamond'" }}
+            >
               Inventory
             </Typography>
           </CardContent>
