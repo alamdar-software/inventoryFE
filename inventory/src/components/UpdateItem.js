@@ -1,36 +1,24 @@
 import {
   Box,
+  Button,
+  Card,
+  CardContent,
   FormControl,
   Grid,
   InputLabel,
   MenuItem,
   Select,
-} from '@mui/material';
-import React from 'react';
-import {
-  Card,
-  CardContent,
   TextField,
-  Button,
   Typography,
 } from '@mui/material';
-import { useSelector } from 'react-redux';
-import { useDispatch } from 'react-redux';
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate, useParams } from 'react-router-dom';
 import { fetchCategory } from '../redux/slice/CategorySlice';
-import { useEffect } from 'react';
 import { fetchUom } from '../redux/slice/UomSlice';
-import { useState } from 'react';
-import { Link } from 'react-router-dom';
 
-const Item = () => {
-  const [formData, setformData] = useState({
-    itemName: '',
-    minimumStock: '',
-    description: '',
-    name: '',
-    unitName: '',
-  });
-  console.log(formData, 'formmmmmmmmm');
+const UpdateItem = () => {
+  const [item, setItem] = useState();
   const state = useSelector((state) => state);
 
   const dispatch = useDispatch();
@@ -39,29 +27,50 @@ const Item = () => {
     dispatch(fetchUom());
   }, []);
 
-  const handleInputChange = (e) => {
-    setformData({
-      ...formData,
-      [e.target.id]: e.target.value,
-    });
-  };
-  console.log(formData, 'heyyyy');
+  const [formData, setformData] = useState({
+    itemName: '',
+    minimumStock: '',
+    description: '',
+    name: '',
+    unitName: '',
+  });
+  //   const [itemName, setItemName] = useState();
 
-  const handleClick = async (e) => {
-    e.preventDefault();
-    try {
-      const res = await fetch('http://localhost:8080/item/add', {
-        method: 'post',
-        headers: {
-          'content-type': 'application/json',
-        },
-        body: JSON.stringify(formData),
+  let navigate = useNavigate();
+
+  const { id } = useParams();
+
+  console.log(id);
+
+  useEffect(() => {
+    fetch(`http://localhost:8080/item/get/${id}`)
+      .then((res) => res.json())
+      .then((result) => {
+        console.log(result);
+        setItem(result);
       });
-      const data = await res.json();
-      console.log(data);
-    } catch (error) {}
-  };
+  }, []);
 
+  const handleClick = (e) => {
+    e.preventDefault();
+    const update = {
+      item,
+    };
+    console.log(update);
+
+    fetch(`http://localhost:8080/item/update/${id}`, {
+      method: 'PUT',
+      headers: { 'Content-type': 'application/json' },
+      body: JSON.stringify(item),
+    })
+      .then(() => {
+        console.log('Class Updated');
+        navigate('/Items');
+      })
+      .catch((error) => {
+        console.error('Error updating class:', error);
+      });
+  };
   return (
     <>
       <Grid>
@@ -75,7 +84,7 @@ const Item = () => {
         >
           <CardContent>
             <Typography variant='h4' color='secondary' gutterBottom>
-              Add Item
+              Update Item
             </Typography>
           </CardContent>
         </Card>
@@ -96,9 +105,14 @@ const Item = () => {
               id='itemName'
               label='Item'
               variant='outlined'
-              onChange={handleInputChange}
-              //   value={location}
-              //   onChange={(e) => setLocation(e.target.value)}
+              value={item ? item.itemName : ''}
+              onChange={(e) => {
+                setItem({
+                  ...item,
+                  itemName: e.target.value,
+                });
+                setformData(e.target.value);
+              }}
               fullWidth
               sx={{ width: '90%' }}
             />
@@ -108,9 +122,14 @@ const Item = () => {
               id='description'
               label='Item Description'
               variant='outlined'
-              onChange={handleInputChange}
-              //   value={subLocation}
-              //   onChange={(e) => setSubLocation(e.target.value)}
+              value={item ? item.description : ''}
+              onChange={(e) => {
+                setItem({
+                  ...item,
+                  description: e.target.value,
+                });
+                setformData(e.target.value);
+              }}
               fullWidth
               sx={{ width: '90%' }}
             />
@@ -177,48 +196,35 @@ const Item = () => {
               id='minimumStock'
               label='Minimum Stock'
               variant='outlined'
-              //   value={subLocation}
-              onChange={handleInputChange}
-              //   onChange={(e) => setSubLocation(e.target.value)}
+              value={item ? item.minimumStock : ''}
+              onChange={(e) => {
+                setItem({
+                  ...item,
+                  minimumStock: e.target.value,
+                });
+                setformData(e.target.value);
+              }}
               fullWidth
               sx={{ width: '90%' }}
             />
           </Grid>
         </Grid>
-        <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-          <Button
-            variant='contained'
-            color='secondary'
-            size='large'
-            onClick={handleClick}
-            sx={{
-              mt: '33px',
-              mb: '17px',
-              mx: 'auto', // Center horizontally
-              display: 'block',
-            }}
-          >
-            Add
+
+        <Box
+          sx={{
+            marginTop: '11px',
+            display: 'flex',
+            justifyContent: 'center',
+            mb: '23px',
+          }}
+        >
+          <Button variant='contained' color='secondary' onClick={handleClick}>
+            Update
           </Button>
-          <Link to='/Items' style={{ textDecoration: 'none' }}>
-            <Button
-              variant='contained'
-              color='secondary'
-              size='large'
-              sx={{
-                mt: '33px',
-                mb: '17px',
-                mx: 'auto', // Center horizontally
-                mr: '70px',
-              }}
-            >
-              View Item
-            </Button>
-          </Link>
         </Box>
       </Card>
     </>
   );
 };
 
-export default Item;
+export default UpdateItem;
