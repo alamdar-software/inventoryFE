@@ -32,14 +32,9 @@ export const Uom = () => {
     const getUom = async () => {
       try {
         const res = await fetch("http://localhost:8080/unit/view");
-        const data = await res.json();
-
-        if (Array.isArray(data)) {
-          setUom(data);
-          console.log(data, "useeffect");
-        } else {
-          console.error("Invalid data format:", data);
-        }
+        const response = await res.json();
+        console.log(response.content, "uom");
+        setUom(response.content);
       } catch (error) {
         console.log(error);
       }
@@ -141,13 +136,13 @@ export const Uom = () => {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {Uom.map((row) => (
+                {Uom?.map((row) => (
                   <TableRow
-                    key={row.name}
+                    key={row.unitName}
                     sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                   >
                     <TableCell component="th" scope="row">
-                      {row.name}
+                      {row.unitName}
                     </TableCell>
                     <TableCell component="th" scope="row">
                       <button>Edit</button>

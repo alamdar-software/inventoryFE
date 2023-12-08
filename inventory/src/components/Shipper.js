@@ -248,7 +248,9 @@ const Shipper = () => {
                     key={shipperList.name}
                     sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                   >
-                    <TableCell align="right">{shipperList.name}</TableCell>
+                    <TableCell align="right">
+                      {shipperList.shipperName}
+                    </TableCell>
 
                     <TableCell align="right">{shipperList.address}</TableCell>
                     <TableCell align="right">

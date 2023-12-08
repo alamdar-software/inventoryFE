@@ -43,6 +43,7 @@ const Consignee = () => {
     deliveryAddress: "",
     locationName: null,
   });
+  console.log(formData, "formmmmmmmmmm");
   const [consignee, setConsignee] = useState([]);
 
   const [page, setPage] = useState(0);
@@ -330,13 +331,15 @@ const Consignee = () => {
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((consignee) => (
                   <TableRow
-                    key={consignee.name}
+                    key={consignee.consigneeName}
                     sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                   >
                     {/* <TableCell component='th' scope='row'>
                   {attendence.name}
                 </TableCell> */}
-                    <TableCell align="right">{consignee.name}</TableCell>
+                    <TableCell align="right">
+                      {consignee.consigneeName}
+                    </TableCell>
                     <TableCell align="right">{consignee.address}</TableCell>
                     <TableCell align="right">{consignee.pincode}</TableCell>
                     <TableCell align="right">{consignee.email}</TableCell>

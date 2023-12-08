@@ -20,7 +20,14 @@ import { fetchShipper } from "../redux/slice/ShipperSlice";
 import { fetchConsignee } from "../redux/slice/ConsigneeSlice";
 import { fetchPickup } from "../redux/slice/PickUpSlice";
 import { fetchCurrency } from "../redux/slice/CurrencySlice";
-
+import { useState } from "react";
+import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import "react-datepicker/dist/react-datepicker.css";
+import { format, startOfDay } from "date-fns";
+import dayjs from "dayjs";
 const Cipl = () => {
   const state = useSelector((state) => state);
   const dispatch = useDispatch();
@@ -32,7 +39,24 @@ const Cipl = () => {
     dispatch(fetchCurrency());
   }, []);
   console.log(state, "cipl");
+  const [selectedDate, setSelectedDate] = useState(null);
+  const [formData, setformData] = useState({
+    repairService: "",
+    transferDate: "",
+    shipperName: "",
+    consigneeName: "",
+    locationName: "",
+    pickupAddress: "",
+    currencyName: "",
+  });
 
+  console.log(formData, "formmmmmmm");
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const res = await fetch("");
+    } catch (error) {}
+  };
   return (
     <>
       <Grid>
@@ -73,6 +97,12 @@ const Cipl = () => {
                   },
                 },
               }}
+              onChange={(e) =>
+                setformData({
+                  ...formData,
+                  locationName: e.target.value,
+                })
+              }
               //onChange={handleChange}
             >
               {state.location.data?.map((item, index) => (
@@ -99,12 +129,18 @@ const Cipl = () => {
                   },
                 },
               }}
+              onChange={(e) =>
+                setformData({
+                  ...formData,
+                  shipperName: e.target.value,
+                })
+              }
               //onChange={handleChange}
             >
               {state.shipper.data?.map((item, index) => (
-                <MenuItem key={index} value={item?.name}>
+                <MenuItem key={index} value={item?.shipperName}>
                   {" "}
-                  {item?.name}
+                  {item?.shipperName}
                 </MenuItem>
               ))}
             </Select>
@@ -113,15 +149,33 @@ const Cipl = () => {
       </Grid>
       <Grid container spacing={2} sx={{ mt: "23px" }}>
         <Grid item xs={12} sm={6}>
-          <TextField
-            sx={{ width: "90%" }}
-            id="outlined-basic"
-            label="Transfer Item"
-            variant="outlined"
-            // value={locationName}
-            // onChange={(e) => setLocation(e.target.value)}
-            fullWidth
-          />
+          <FormControl fullWidth sx={{ width: "90%" }}>
+            <LocalizationProvider dateAdapter={AdapterDayjs}>
+              <DemoContainer components={["DatePicker"]}>
+                <DatePicker
+                  value={formData.transferDate}
+                  label="Select Date"
+                  defaultValue={dayjs("2022-04-17")}
+                  onChange={(newValue) =>
+                    setformData({
+                      ...formData,
+                      transferDate: newValue.format("YYYY-MM-DD"),
+                    })
+                  }
+                  renderInput={(startProps, endProps) => (
+                    <>
+                      <TextField
+                        {...startProps}
+                        variant="outlined"
+                        fullWidth
+                        value={format(formData.transferDate, "yyyy-MM-dd")}
+                      />
+                    </>
+                  )}
+                />
+              </DemoContainer>
+            </LocalizationProvider>
+          </FormControl>
         </Grid>
         <Grid item xs={12} sm={6}>
           <FormControl fullWidth sx={{ width: "90%" }}>
@@ -139,11 +193,17 @@ const Cipl = () => {
                   },
                 },
               }}
+              onChange={(e) =>
+                setformData({
+                  ...formData,
+                  consigneeName: e.target.value,
+                })
+              }
             >
               {state.consignee.data?.map((item, index) => (
-                <MenuItem key={index} value={item?.name}>
+                <MenuItem key={index} value={item?.consigneeName}>
                   {" "}
-                  {item?.name}
+                  {item?.consigneeName}
                 </MenuItem>
               ))}
             </Select>
@@ -169,6 +229,12 @@ const Cipl = () => {
                   },
                 },
               }}
+              onChange={(e) =>
+                setformData({
+                  ...formData,
+                  pickupAddress: e.target.value,
+                })
+              }
             >
               {state.pickup.data?.map((item, index) => (
                 <MenuItem key={index} value={item?.pickupAddress}>
@@ -196,6 +262,12 @@ const Cipl = () => {
                   },
                 },
               }}
+              onChange={(e) =>
+                setformData({
+                  ...formData,
+                  currencyName: e.target.value,
+                })
+              }
               //onChange={handleChange}
             >
               {state.currency.data?.currencyList.map((item, index) => (
@@ -231,6 +303,12 @@ const Cipl = () => {
               //value={age}
               label="Repair/service"
               //onChange={handleChange}
+              onChange={(e) =>
+                setformData({
+                  ...formData,
+                  repairService: e.target.value,
+                })
+              }
             >
               <MenuItem value={true}>Yes</MenuItem>
               <MenuItem value={false}>No</MenuItem>
@@ -240,7 +318,12 @@ const Cipl = () => {
       </Grid>
       <Box sx={{ display: "flex", justifyContent: "center", mt: "33px" }}>
         {" "}
-        <Button variant="contained" size="large" color="secondary">
+        <Button
+          variant="contained"
+          size="large"
+          color="secondary"
+          onClick={handleSubmit}
+        >
           Add
         </Button>
       </Box>
