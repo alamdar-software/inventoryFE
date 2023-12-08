@@ -116,7 +116,14 @@ export default function Sidebar({ children }) {
   };
   const menuItems = [
     { text: "Dashboard", icon: <DashboardIcon /> },
-    { text: "Location/Vessel", icon: <LocationOnIcon /> },
+    {
+      text: "Location/Vessel",
+      icon: <LocationOnIcon />,
+      submenu: [
+        { text: "Add Location", link: "/add-location" },
+        { text: "View Location", link: "/view-location" },
+      ],
+    },
     { text: "Pick up", icon: <IsoIcon /> },
     { text: "Currency", icon: <CurrencyRupeeIcon /> },
     { text: "UOM", icon: <DriveFileRenameOutlineIcon /> },
@@ -159,7 +166,12 @@ export default function Sidebar({ children }) {
           >
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" noWrap component="div">
+          <Typography
+            variant="h6"
+            noWrap
+            component="div"
+            style={{ fontFamily: "'Roboto Serif', serif" }}
+          >
             INVENTORY
           </Typography>
         </Toolbar>

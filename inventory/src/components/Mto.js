@@ -12,6 +12,7 @@ import {
   Typography,
 } from "@mui/material";
 import React from "react";
+import { useState } from "react";
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
@@ -19,6 +20,12 @@ import { fetchConsignee } from "../redux/slice/ConsigneeSlice";
 import { fetchlocation } from "../redux/slice/location";
 
 const Mto = () => {
+  const [formData, setformData] = useState({
+    locationName: "",
+    transferDate: "",
+    consigneeName: "",
+    repairService: "",
+  });
   const state = useSelector((state) => state);
   const dispatch = useDispatch();
   useEffect(() => {
@@ -39,7 +46,12 @@ const Mto = () => {
           }}
         >
           <CardContent>
-            <Typography variant="h4" color="secondary" gutterBottom>
+            <Typography
+              variant="h4"
+              color="secondary"
+              gutterBottom
+              style={{ fontFamily: "'EB Garamond'" }}
+            >
               Transfer Mto
             </Typography>
           </CardContent>
@@ -61,6 +73,12 @@ const Mto = () => {
                   },
                 },
               }}
+              onChange={(e) =>
+                setformData({
+                  ...formData,
+                  locationName: e.target.value,
+                })
+              }
               //onChange={handleChange}
             >
               {state.location.data?.map((item, index) => (

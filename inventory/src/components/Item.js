@@ -74,7 +74,12 @@ const Item = () => {
           }}
         >
           <CardContent>
-            <Typography variant='h4' color='secondary' gutterBottom>
+            <Typography
+              variant='h4'
+              color='secondary'
+              gutterBottom
+              style={{ fontFamily: "'EB Garamond'" }}
+            >
               Add Item
             </Typography>
           </CardContent>

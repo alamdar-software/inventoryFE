@@ -33,6 +33,13 @@ const Cipl = () => {
   }, []);
   console.log(state, 'cipl');
 
+  console.log(formData, 'formmmmmmm');
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const res = await fetch('');
+    } catch (error) {}
+  };
   return (
     <>
       <Grid>
@@ -68,6 +75,12 @@ const Cipl = () => {
                   },
                 },
               }}
+              onChange={(e) =>
+                setformData({
+                  ...formData,
+                  locationName: e.target.value,
+                })
+              }
               //onChange={handleChange}
             >
               {state.location.data?.map((item, index) => (
@@ -94,6 +107,12 @@ const Cipl = () => {
                   },
                 },
               }}
+              onChange={(e) =>
+                setformData({
+                  ...formData,
+                  shipperName: e.target.value,
+                })
+              }
               //onChange={handleChange}
             >
               {state.shipper.data?.map((item, index) => (
@@ -134,6 +153,12 @@ const Cipl = () => {
                   },
                 },
               }}
+              onChange={(e) =>
+                setformData({
+                  ...formData,
+                  consigneeName: e.target.value,
+                })
+              }
             >
               {state.consignee.data?.map((item, index) => (
                 <MenuItem key={index} value={item?.name}>
@@ -164,6 +189,12 @@ const Cipl = () => {
                   },
                 },
               }}
+              onChange={(e) =>
+                setformData({
+                  ...formData,
+                  pickupAddress: e.target.value,
+                })
+              }
             >
               {state.pickup.data?.map((item, index) => (
                 <MenuItem key={index} value={item?.pickupAddress}>
@@ -191,6 +222,12 @@ const Cipl = () => {
                   },
                 },
               }}
+              onChange={(e) =>
+                setformData({
+                  ...formData,
+                  currencyName: e.target.value,
+                })
+              }
               //onChange={handleChange}
             >
               {state.currency.data?.currencyList.map((item, index) => (
@@ -226,6 +263,12 @@ const Cipl = () => {
               //value={age}
               label='Repair/service'
               //onChange={handleChange}
+              onChange={(e) =>
+                setformData({
+                  ...formData,
+                  repairService: e.target.value,
+                })
+              }
             >
               <MenuItem value={true}>Yes</MenuItem>
               <MenuItem value={false}>No</MenuItem>

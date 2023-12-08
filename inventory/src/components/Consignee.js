@@ -34,7 +34,7 @@ const Consignee = () => {
   }, []);
 
   const [formData, setformData] = useState({
-    name: "",
+    consigneeName: "",
     address: "",
     pincode: "",
     email: "",
@@ -43,6 +43,7 @@ const Consignee = () => {
     deliveryAddress: "",
     locationName: null,
   });
+  console.log(formData, "formmmmmmmmmm");
   const [consignee, setConsignee] = useState([]);
 
   const [page, setPage] = useState(0);
@@ -86,18 +87,18 @@ const Consignee = () => {
 
   const deleteConsignee = async (id) => {
     console.log(id);
-    alert('Deleted Successfully!');
+    alert("Deleted Successfully!");
     fetch(`http://localhost:8080/consignee/delete/${id}`, {
-      method: 'DELETE',
-      headers: { 'Content-type': 'application/json' },
+      method: "DELETE",
+      headers: { "Content-type": "application/json" },
       body: JSON.stringify(consignee),
     })
       .then(() => {
-        console.log('Consignee Updated');
+        console.log("Consignee Updated");
         window.location.reload();
       })
       .catch((error) => {
-        console.error('Error updating consignee:', error);
+        console.error("Error updating consignee:", error);
       });
   };
   const handleInputChange = async (e) => {
@@ -119,7 +120,12 @@ const Consignee = () => {
           }}
         >
           <CardContent>
-            <Typography variant="h4" color="secondary" gutterBottom>
+            <Typography
+              variant="h4"
+              color="secondary"
+              gutterBottom
+              style={{ fontFamily: "'EB Garamond'" }}
+            >
               Create Consignee
             </Typography>
           </CardContent>
@@ -138,13 +144,13 @@ const Consignee = () => {
         <Grid container spacing={2} sx={{ ml: "13px" }}>
           <Grid item xs={12} sm={6}>
             <TextField
-              id="outlined-basic"
+              id="consigneeName"
               label="Consignee Name"
               variant="outlined"
               onChange={(e) =>
                 setformData({
                   ...formData,
-                  name: e.target.value,
+                  consigneeName: e.target.value,
                 })
               }
               //   value={location}
@@ -325,13 +331,15 @@ const Consignee = () => {
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((consignee) => (
                   <TableRow
-                    key={consignee.name}
+                    key={consignee.consigneeName}
                     sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                   >
                     {/* <TableCell component='th' scope='row'>
                   {attendence.name}
                 </TableCell> */}
-                    <TableCell align="right">{consignee.name}</TableCell>
+                    <TableCell align="right">
+                      {consignee.consigneeName}
+                    </TableCell>
                     <TableCell align="right">{consignee.address}</TableCell>
                     <TableCell align="right">{consignee.pincode}</TableCell>
                     <TableCell align="right">{consignee.email}</TableCell>
@@ -349,9 +357,9 @@ const Consignee = () => {
                     </Link>
 
                     <Button
-                      sx={{ marginLeft: '11px' }}
-                      variant='contained'
-                      color='secondary'
+                      sx={{ marginLeft: "11px" }}
+                      variant="contained"
+                      color="secondary"
                       onClick={() => deleteConsignee(consignee.id)}
                     >
                       Delete
