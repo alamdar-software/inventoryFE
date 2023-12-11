@@ -293,10 +293,14 @@ const Consignee = () => {
         </Button>
       </Card>
 
-      <Grid sx={{ mt: '33px' }}>
+      <Grid sx={{ mt: '33px', width: '100%', overflowX: 'scroll' }}>
         <TableContainer
           component={Paper}
-          sx={{ borderRadius: '33px', borderBottom: '2px solid yellow' }}
+          sx={{
+            borderRadius: '33px',
+            borderBottom: '2px solid yellow',
+            width: '110%',
+          }}
         >
           <Table sx={{ minWidth: 650 }} aria-label='simple table'>
             <TableHead>
