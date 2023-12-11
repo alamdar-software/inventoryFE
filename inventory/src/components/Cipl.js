@@ -11,7 +11,7 @@ import {
   TextField,
   Typography,
 } from '@mui/material';
-import React from 'react';
+import React, { useState } from 'react';
 import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
@@ -24,6 +24,15 @@ import { fetchCurrency } from '../redux/slice/CurrencySlice';
 const Cipl = () => {
   const state = useSelector((state) => state);
   const dispatch = useDispatch();
+  const [formData, setformData] = useState({
+    repairService: '',
+    transferDate: '',
+    shipperName: '',
+    consigneeName: '',
+    locationName: '',
+    pickupAddress: '',
+    currencyName: '',
+  });
   useEffect(() => {
     dispatch(fetchlocation());
     dispatch(fetchShipper());
