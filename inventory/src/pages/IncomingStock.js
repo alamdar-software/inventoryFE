@@ -1,29 +1,29 @@
-import React from "react";
-import TransferWithinAStationIcon from "@mui/icons-material/TransferWithinAStation";
-import EditNoteIcon from "@mui/icons-material/EditNote";
-import FlipCameraIosIcon from "@mui/icons-material/FlipCameraIos";
+import React from 'react';
+import TransferWithinAStationIcon from '@mui/icons-material/TransferWithinAStation';
+import EditNoteIcon from '@mui/icons-material/EditNote';
+import FlipCameraIosIcon from '@mui/icons-material/FlipCameraIos';
 import {
   Card,
   CardActions,
   CardContent,
   Grid,
   Typography,
-} from "@mui/material";
-import { Link } from "react-router-dom";
+} from '@mui/material';
+import { Link } from 'react-router-dom';
 const IncomingStock = () => {
   return (
     <>
       <Card
-        color="secondary"
+        color='secondary'
         sx={{
-          width: "100%",
-          borderBottom: "2px solid #ab47bc",
+          width: '100%',
+          borderBottom: '2px solid #ab47bc',
         }}
       >
         <CardContent>
           <Typography
-            variant="h4"
-            color="secondary"
+            variant='h4'
+            color='secondary'
             gutterBottom
             style={{ fontFamily: "'EB Garamond'" }}
           >
@@ -31,26 +31,22 @@ const IncomingStock = () => {
           </Typography>
         </CardContent>
       </Card>
-      <Grid sx={{ display: "flex", justifyContent: "center", mt: "23px" }}>
-        <Link to="/singleIncome" style={{ textDecoration: "none" }}>
+      <Grid sx={{ display: 'flex', justifyContent: 'center', mt: '23px' }}>
+        <Link to='/singleIncome' style={{ textDecoration: 'none' }}>
           <Card sx={{ minWidth: 275 }}>
             <CardContent
               sx={{
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-                justifyContent: "center",
-                p: "70px",
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                justifyContent: 'center',
               }}
             >
               <TransferWithinAStationIcon
-                sx={{ fontSize: "60px", color: "#DD7071" }}
+                color='primary'
+                sx={{ fontSize: '70px' }}
               />
-              <Typography
-                variant="h5"
-                component="div"
-                sx={{ fontWeight: "bolder" }}
-              >
+              <Typography component='div' sx={{ fontWeight: 'bolder' }}>
                 Single Income
               </Typography>
             </CardContent>
@@ -58,23 +54,18 @@ const IncomingStock = () => {
           </Card>
         </Link>
 
-        <Link to="/bulkIncome" style={{ textDecoration: "none" }}>
-          <Card sx={{ minWidth: 275, ml: "23px" }}>
+        <Link to='/bulkIncome' style={{ textDecoration: 'none' }}>
+          <Card sx={{ minWidth: 275, ml: '23px' }}>
             <CardContent
               sx={{
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-                justifyContent: "center",
-                p: "70px",
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                justifyContent: 'center',
               }}
             >
-              <EditNoteIcon sx={{ fontSize: "60px", color: "#15A4C3" }} />
-              <Typography
-                variant="h5"
-                component="div"
-                sx={{ fontWeight: "bolder" }}
-              >
+              <EditNoteIcon color='secondary' sx={{ fontSize: '70px' }} />
+              <Typography component='div' sx={{ fontWeight: 'bolder' }}>
                 Bulk Income
               </Typography>
             </CardContent>
