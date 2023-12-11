@@ -16,34 +16,35 @@ import {
   TableRow,
   TextField,
   Typography,
-} from "@mui/material";
-import React from "react";
-import { useEffect } from "react";
-import { useState } from "react";
-import { useSelector } from "react-redux";
-import { useDispatch } from "react-redux";
-import { fetchlocation } from "../redux/slice/location";
-import { Link } from "react-router-dom";
+} from '@mui/material';
+import React from 'react';
+import { useEffect } from 'react';
+import { useState } from 'react';
+import { useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
+import { fetchlocation } from '../redux/slice/location';
+import { Link } from 'react-router-dom';
+import { Box } from '@mui/system';
 
 const Consignee = () => {
   const state = useSelector((state) => state);
-  console.log(state, "location data");
+  console.log(state, 'location data');
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(fetchlocation());
   }, []);
 
   const [formData, setformData] = useState({
-    consigneeName: "",
-    address: "",
-    pincode: "",
-    email: "",
-    phoneNumber: "",
-    notifyParty: "",
-    deliveryAddress: "",
+    consigneeName: '',
+    address: '',
+    pincode: '',
+    email: '',
+    phoneNumber: '',
+    notifyParty: '',
+    deliveryAddress: '',
     locationName: null,
   });
-  console.log(formData, "formmmmmmmmmm");
+  console.log(formData);
   const [consignee, setConsignee] = useState([]);
 
   const [page, setPage] = useState(0);
@@ -62,22 +63,22 @@ const Consignee = () => {
     e.preventDefault();
 
     try {
-      const res = await fetch("http://localhost:8080/consignee/add", {
-        method: "post",
+      const res = await fetch('http://localhost:8080/consignee/add', {
+        method: 'post',
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
         body: JSON.stringify(formData),
       });
       const data = await res.json();
-      console.log(data, "resdata");
+      console.log(data, 'resdata');
       window.location.reload();
     } catch (error) {
-      console.error("Error during fetch:", error);
+      console.error('Error during fetch:', error);
     }
   };
   useEffect(() => {
-    fetch("http://localhost:8080/consignee/view")
+    fetch('http://localhost:8080/consignee/view')
       .then((res) => res.json())
       .then((result) => {
         console.log(result);
@@ -87,18 +88,18 @@ const Consignee = () => {
 
   const deleteConsignee = async (id) => {
     console.log(id);
-    alert("Deleted Successfully!");
+    alert('Deleted Successfully!');
     fetch(`http://localhost:8080/consignee/delete/${id}`, {
-      method: "DELETE",
-      headers: { "Content-type": "application/json" },
+      method: 'DELETE',
+      headers: { 'Content-type': 'application/json' },
       body: JSON.stringify(consignee),
     })
       .then(() => {
-        console.log("Consignee Updated");
+        console.log('Consignee Updated');
         window.location.reload();
       })
       .catch((error) => {
-        console.error("Error updating consignee:", error);
+        console.error('Error updating consignee:', error);
       });
   };
   const handleInputChange = async (e) => {
@@ -107,22 +108,22 @@ const Consignee = () => {
       [e.target.id]: e.target.value,
     });
   };
-  console.log(formData, "hey");
+  console.log(formData, 'hey');
   return (
     <>
       <Grid>
         <Card
-          color="secondary"
+          color='secondary'
           sx={{
-            width: "100%",
-            backgroundColor: "secondary",
-            borderBottom: "2px solid yellow",
+            width: '100%',
+            backgroundColor: 'secondary',
+            borderBottom: '2px solid yellow',
           }}
         >
           <CardContent>
             <Typography
-              variant="h4"
-              color="secondary"
+              variant='h4'
+              color='secondary'
               gutterBottom
               style={{ fontFamily: "'EB Garamond'" }}
             >
@@ -134,19 +135,19 @@ const Consignee = () => {
 
       <Card
         sx={{
-          width: "100%",
-          mt: "33px",
-          pt: "33px",
-          borderBottom: "2px solid yellow",
-          borderRadius: "33px",
+          width: '100%',
+          mt: '33px',
+          pt: '33px',
+          borderBottom: '2px solid yellow',
+          borderRadius: '33px',
         }}
       >
-        <Grid container spacing={2} sx={{ ml: "13px" }}>
+        <Grid container spacing={2} sx={{ ml: '13px' }}>
           <Grid item xs={12} sm={6}>
             <TextField
-              id="consigneeName"
-              label="Consignee Name"
-              variant="outlined"
+              id='consigneeName'
+              label='Consignee Name'
+              variant='outlined'
               onChange={(e) =>
                 setformData({
                   ...formData,
@@ -156,29 +157,29 @@ const Consignee = () => {
               //   value={location}
               //   onChange={(e) => setLocation(e.target.value)}
               fullWidth
-              sx={{ width: "90%" }}
+              sx={{ width: '90%' }}
             />
           </Grid>
           <Grid item xs={12} sm={6}>
             <TextField
-              id="address"
-              label="Address "
-              variant="outlined"
+              id='address'
+              label='Address '
+              variant='outlined'
               onChange={handleInputChange}
               //   value={subLocation}
               //   onChange={(e) => setSubLocation(e.target.value)}
               fullWidth
-              sx={{ width: "90%" }}
+              sx={{ width: '90%' }}
             />
           </Grid>
         </Grid>
 
-        <Grid container spacing={2} sx={{ ml: "13px", mt: "21px" }}>
+        <Grid container spacing={2} sx={{ ml: '13px', mt: '21px' }}>
           <Grid item xs={12} sm={6}>
             <TextField
-              id="outlined-basic"
-              label="Pin Code"
-              variant="outlined"
+              id='outlined-basic'
+              label='Pin Code'
+              variant='outlined'
               onChange={(e) =>
                 setformData({
                   ...formData,
@@ -188,28 +189,28 @@ const Consignee = () => {
               //   value={subLocation}
               //   onChange={(e) => setSubLocation(e.target.value)}
               fullWidth
-              sx={{ width: "90%" }}
+              sx={{ width: '90%' }}
             />
           </Grid>
           <Grid item xs={12} sm={6}>
             <TextField
-              id="email"
-              label="Email"
-              variant="outlined"
+              id='email'
+              label='Email'
+              variant='outlined'
               onChange={handleInputChange}
               //   value={subLocation}
               //   onChange={(e) => setSubLocation(e.target.value)}
               fullWidth
-              sx={{ width: "90%" }}
+              sx={{ width: '90%' }}
             />
           </Grid>
         </Grid>
-        <Grid container spacing={2} sx={{ mt: "21px", ml: "13px" }}>
+        <Grid container spacing={2} sx={{ mt: '21px', ml: '13px' }}>
           <Grid item xs={12} sm={6}>
             <TextField
-              id="outlined-basic"
-              label="Phone Number"
-              variant="outlined"
+              id='outlined-basic'
+              label='Phone Number'
+              variant='outlined'
               onChange={(e) =>
                 setformData({
                   ...formData,
@@ -219,44 +220,44 @@ const Consignee = () => {
               //   value={subLocation}
               //   onChange={(e) => setSubLocation(e.target.value)}
               fullWidth
-              sx={{ width: "90%" }}
+              sx={{ width: '90%' }}
             />
           </Grid>
           <Grid item xs={12} sm={6}>
             <TextField
-              id="deliveryAddress"
-              label="Delivery Address"
-              variant="outlined"
+              id='deliveryAddress'
+              label='Delivery Address'
+              variant='outlined'
               onChange={handleInputChange}
               //   value={subLocation}
               //   onChange={(e) => setSubLocation(e.target.value)}
               fullWidth
-              sx={{ width: "90%" }}
+              sx={{ width: '90%' }}
             />
           </Grid>
         </Grid>
 
-        <Grid container spacing={2} sx={{ mt: "21px", ml: "13px" }}></Grid>
-        <Grid container spacing={2} sx={{ mt: "21px", ml: "13px" }}>
+        <Grid container spacing={2} sx={{ mt: '21px', ml: '13px' }}></Grid>
+        <Grid container spacing={2} sx={{ mt: '21px', ml: '13px' }}>
           <Grid item xs={12} sm={6}>
             <TextField
-              id="notifyParty"
-              label="notifyParty"
-              variant="outlined"
+              id='notifyParty'
+              label='notifyParty'
+              variant='outlined'
               onChange={handleInputChange}
               //   value={subLocation}
               //   onChange={(e) => setSubLocation(e.target.value)}
               fullWidth
-              sx={{ width: "90%" }}
+              sx={{ width: '90%' }}
             />
           </Grid>
           <Grid item xs={10} sm={6}>
-            <InputLabel id="location">Location</InputLabel>
+            <InputLabel id='location'>Location</InputLabel>
             <Select
-              labelId="location"
-              id="location"
-              value={formData?.locationName || "sgr"}
-              label="Location"
+              labelId='location'
+              id='location'
+              value={formData?.locationName || 'sgr'}
+              label='Location'
               fullWidth
               onChange={(e) =>
                 setformData({
@@ -267,7 +268,7 @@ const Consignee = () => {
             >
               {state.location.data?.map((item, index) => (
                 <MenuItem key={index} value={item?.locationName}>
-                  {" "}
+                  {' '}
                   {item?.locationName}
                 </MenuItem>
               ))}
@@ -275,53 +276,53 @@ const Consignee = () => {
           </Grid>
         </Grid>
         <Button
-          variant="contained"
-          color="secondary"
-          size="large"
+          variant='contained'
+          color='secondary'
+          size='large'
           //onClick={handleClick}
           onClick={handleClick}
           sx={{
-            mt: "33px",
-            mb: "17px",
-            marginLeft: "auto",
-            marginRight: "auto",
-            display: "block",
+            mt: '33px',
+            mb: '17px',
+            marginLeft: 'auto',
+            marginRight: 'auto',
+            display: 'block',
           }}
         >
           Add
         </Button>
       </Card>
 
-      <Grid sx={{ mt: "33px" }}>
+      <Grid sx={{ mt: '33px' }}>
         <TableContainer
           component={Paper}
-          sx={{ borderRadius: "33px", borderBottom: "2px solid yellow" }}
+          sx={{ borderRadius: '33px', borderBottom: '2px solid yellow' }}
         >
-          <Table sx={{ minWidth: 650 }} aria-label="simple table">
+          <Table sx={{ minWidth: 650 }} aria-label='simple table'>
             <TableHead>
               <TableRow>
-                <TableCell align="right" sx={{ fontWeight: "bold" }}>
+                <TableCell align='right' sx={{ fontWeight: 'bold' }}>
                   Name
                 </TableCell>
-                <TableCell align="right" sx={{ fontWeight: "bold" }}>
+                <TableCell align='right' sx={{ fontWeight: 'bold' }}>
                   Address
                 </TableCell>
-                <TableCell align="right" sx={{ fontWeight: "bold" }}>
+                <TableCell align='right' sx={{ fontWeight: 'bold' }}>
                   Pincode
                 </TableCell>
-                <TableCell align="right" sx={{ fontWeight: "bold" }}>
+                <TableCell align='right' sx={{ fontWeight: 'bold' }}>
                   Email
                 </TableCell>
-                <TableCell align="right" sx={{ fontWeight: "bold" }}>
+                <TableCell align='right' sx={{ fontWeight: 'bold' }}>
                   Phone Number
                 </TableCell>
-                <TableCell align="right" sx={{ fontWeight: "bold" }}>
+                <TableCell align='right' sx={{ fontWeight: 'bold' }}>
                   Delivery Address
                 </TableCell>
-                <TableCell align="right" sx={{ fontWeight: "bold" }}>
+                <TableCell align='right' sx={{ fontWeight: 'bold' }}>
                   Notify Party
                 </TableCell>
-                <TableCell align="right" sx={{ fontWeight: "bold" }}>
+                <TableCell align='right' sx={{ fontWeight: 'bold' }}>
                   Location
                 </TableCell>
               </TableRow>
@@ -332,38 +333,39 @@ const Consignee = () => {
                 .map((consignee) => (
                   <TableRow
                     key={consignee.consigneeName}
-                    sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                    sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                   >
                     {/* <TableCell component='th' scope='row'>
                   {attendence.name}
                 </TableCell> */}
-                    <TableCell align="right">
+                    <TableCell align='right'>
                       {consignee.consigneeName}
                     </TableCell>
-                    <TableCell align="right">{consignee.address}</TableCell>
-                    <TableCell align="right">{consignee.pincode}</TableCell>
-                    <TableCell align="right">{consignee.email}</TableCell>
-                    <TableCell align="right">{consignee.phoneNumber}</TableCell>
-                    <TableCell align="right">
+                    <TableCell align='right'>{consignee.address}</TableCell>
+                    <TableCell align='right'>{consignee.pincode}</TableCell>
+                    <TableCell align='right'>{consignee.email}</TableCell>
+                    <TableCell align='right'>{consignee.phoneNumber}</TableCell>
+                    <TableCell align='right'>
                       {consignee.deliveryAddress}
                     </TableCell>
-                    <TableCell align="right">{consignee.notifyParty}</TableCell>
-                    <TableCell align="right">
+                    <TableCell align='right'>{consignee.notifyParty}</TableCell>
+                    <TableCell align='right'>
                       {consignee.locationName}
                     </TableCell>
+                    <Box>
+                      <Link to={`/updateConsignee/${consignee.id}`}>
+                        <Button variant='contained'>Update</Button>
+                      </Link>
 
-                    <Link to={`/updateConsignee/${consignee.id}`}>
-                      <Button variant="contained">Update</Button>
-                    </Link>
-
-                    <Button
-                      sx={{ marginLeft: "11px" }}
-                      variant="contained"
-                      color="secondary"
-                      onClick={() => deleteConsignee(consignee.id)}
-                    >
-                      Delete
-                    </Button>
+                      <Button
+                        sx={{ marginLeft: '11px' }}
+                        variant='contained'
+                        color='secondary'
+                        onClick={() => deleteConsignee(consignee.id)}
+                      >
+                        Delete
+                      </Button>
+                    </Box>
                   </TableRow>
                 ))}
             </TableBody>
@@ -371,7 +373,7 @@ const Consignee = () => {
         </TableContainer>
         <TablePagination
           rowsPerPageOptions={[5, 10, 25]}
-          component="div"
+          component='div'
           count={consignee.length}
           rowsPerPage={rowsPerPage}
           page={page}
