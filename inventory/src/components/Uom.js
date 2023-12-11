@@ -17,6 +17,9 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { useEffect } from "react";
+import { Link } from "react-router-dom";
+import ButtonGroup from "@mui/material/ButtonGroup";
+import UomTable from "./UomTable";
 export const Uom = () => {
   const [unit, setunit] = useState({
     unitName: "",
@@ -58,6 +61,28 @@ export const Uom = () => {
     setunit({
       [e.target.id]: e.target.value,
     });
+  };
+  const handleDelete = async (id) => {
+    try {
+      // Perform the delete operation
+      const response = await fetch(`http://localhost:8080/Uom/delete/${id}`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      if (response.ok) {
+        // Update the state or fetch data again after deletion
+        // For simplicity, you can reload the page or fetch data again
+        window.location.reload();
+      } else {
+        // Handle the error if deletion fails
+        console.error("Delete failed");
+      }
+    } catch (error) {
+      console.error("Error during delete:", error);
+    }
   };
 
   return (
@@ -123,35 +148,8 @@ export const Uom = () => {
         >
           Add
         </Button>
-        <div>
-          <TableContainer component={Paper}>
-            <Table
-              sx={{ minWidth: 650, marginLeft: "5px" }}
-              aria-label="simple table"
-            >
-              <TableHead>
-                <TableRow>
-                  <TableCell>Units</TableCell>
-                  <TableCell align="right">Actions</TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {Uom?.map((row) => (
-                  <TableRow
-                    key={row.unitName}
-                    sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-                  >
-                    <TableCell component="th" scope="row">
-                      {row.unitName}
-                    </TableCell>
-                    <TableCell component="th" scope="row">
-                      <button>Edit</button>
-                    </TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </TableContainer>
+        <div sx={{ margin: "20px" }}>
+          <UomTable data={Uom} />
         </div>
       </Card>
     </>
