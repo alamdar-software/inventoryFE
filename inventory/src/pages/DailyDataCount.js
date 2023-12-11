@@ -33,34 +33,34 @@ const DailyDataCount = () => {
         </CardContent>
       </Card>
       <Grid sx={{ display: 'flex', justifyContent: 'center', mt: '23px' }}>
-        <Link to='/singleIncome' style={{ textDecoration: 'none' }}>
-          <Card
+        {/* <Link to='/singleIncome' style={{ textDecoration: 'none' }}> */}
+        <Card
+          sx={{
+            minWidth: 275,
+          }}
+        >
+          <CardContent
             sx={{
-              minWidth: 275,
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
             }}
           >
-            <CardContent
-              sx={{
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-              }}
+            <LocalShippingIcon color='secondary' sx={{ fontSize: '70px' }} />
+            <Typography
+              color='text.secondary'
+              component='div'
+              sx={{ fontWeight: 'bolder' }}
             >
-              <LocalShippingIcon color='secondary' sx={{ fontSize: '70px' }} />
-              <Typography
-                color='text.secondary'
-                component='div'
-                sx={{ fontWeight: 'bolder' }}
-              >
-                Todays incoming Stock
-              </Typography>
-              <Typography sx={{ mb: 1.5 }} color='text.secondary'>
-                Count:
-              </Typography>
-            </CardContent>
-            <CardActions></CardActions>
-          </Card>
-        </Link>
+              Todays incoming Stock
+            </Typography>
+            <Typography sx={{ mb: 1.5 }} color='text.secondary'>
+              Count:
+            </Typography>
+          </CardContent>
+          <CardActions></CardActions>
+        </Card>
+        {/* </Link> */}
 
         {/* <Link to='/singleIncome' style={{ textDecoration: 'none' }}> */}
         <Card sx={{ minWidth: 275, ml: '17px' }}>
