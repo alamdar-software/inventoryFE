@@ -45,7 +45,10 @@ export const Cipl = () => {
     locationName: "",
     pickupAddress: "",
     currencyName: "",
+    SubLocation: [],
   });
+  const [subLocations, setSubLocations] = useState([]);
+
   useEffect(() => {
     dispatch(fetchlocation());
     dispatch(fetchShipper());
@@ -56,7 +59,6 @@ export const Cipl = () => {
   }, []);
   console.log(state, "cipl");
 
-  console.log(formData, "formmmmmmm");
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -66,6 +68,16 @@ export const Cipl = () => {
 
   const [formRows, setFormRows] = useState(1);
   const [formControls, setFormControls] = useState([{ key: 0 }]);
+  const handleSubLocationChange = (index, value) => {
+    updateFormDataSubLocation(index, value);
+    setSubLocations((prevSubLocations) => {
+      const updatedSubLocations = [...prevSubLocations];
+      updatedSubLocations[index] = value;
+      return updatedSubLocations;
+    });
+  };
+  console.log(subLocations, "subbbbbbbbbbbbb");
+  console.log(formData, "nooooooooooo");
 
   const handleAddClick = () => {
     setFormRows((prevRows) => prevRows + 1);
@@ -73,6 +85,8 @@ export const Cipl = () => {
       ...prevControls,
       { key: prevControls.length },
     ]);
+    setSubLocations((prevSubLocations) => [...prevSubLocations, ""]);
+    updateFormDataSubLocation(formControls.length, ""); // Add an empty string to SubLocation
   };
 
   const handleDeleteClick = () => {
@@ -81,9 +95,18 @@ export const Cipl = () => {
       setFormControls((prevControls) => prevControls.slice(0, -1));
     }
   };
-
+  const updateFormDataSubLocation = (index, value) => {
+    setformData((prevFormData) => {
+      const updatedSubLocations = [...prevFormData.SubLocation];
+      updatedSubLocations[index] = value;
+      return {
+        ...prevFormData,
+        SubLocation: updatedSubLocations,
+      };
+    });
+  };
   const renderFormControls = () => {
-    return formControls.map((control) => (
+    return formControls.map((control, index) => (
       <div key={control.key} style={{ display: "flex", marginBottom: "10px" }}>
         <FormControl fullWidth sx={{ width: "50%", marginRight: "10px" }}>
           <InputLabel id="demo-simple-select-label">Sub Location</InputLabel>
@@ -99,18 +122,20 @@ export const Cipl = () => {
                 },
               },
             }}
-            onChange={(e) =>
+            /*  onChange={(e) =>
               setformData({
                 ...formData,
-                locationName: e.target.value,
+                SubLocation: [e.target.value],
               })
-            }
+            } */
+            /*  onChange={(e) => handleSubLocationChange(index, e.target.value)} */
+            onChange={(e) => handleSubLocationChange(index, e.target.value)}
             //onChange={handleChange}
           >
             {state.location.data?.map((item, index) => (
-              <MenuItem key={index} value={item?.locationName}>
+              <MenuItem key={index} value={item?.address}>
                 {" "}
-                {item?.locationName}
+                {item?.address}
               </MenuItem>
             ))}
           </Select>
