@@ -19,6 +19,7 @@ import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import { fetchConsignee } from '../redux/slice/ConsigneeSlice';
 import { fetchlocation } from '../redux/slice/location';
+import { fetchItem } from '../redux/slice/ItemSlice';
 import AddIcon from '@mui/icons-material/Add';
 import DeleteIcon from '@mui/icons-material/Delete';
 
@@ -28,8 +29,20 @@ const Mto = () => {
     transferDate: '',
     consigneeName: '',
     repairService: '',
+    SubLocation: [],
+    item: [],
+    sn: [],
+    purchase: [],
+    quantity: [],
+    remarks: [],
   });
 
+  const [subLocations, setSubLocations] = useState([]);
+  const [item, setItem] = useState([]);
+  const [sn, setSn] = useState([]);
+  const [purchase, setPurchase] = useState([]);
+  const [quantity, setQuantity] = useState([]);
+  const [remarks, setRemarks] = useState([]);
   const state = useSelector((state) => state);
   const [formRows, setFormRows] = useState(1);
   const [formControls, setFormControls] = useState([{ key: 0 }]);
@@ -37,7 +50,128 @@ const Mto = () => {
   useEffect(() => {
     dispatch(fetchConsignee());
     dispatch(fetchlocation());
+    dispatch(fetchItem());
   }, []);
+  console.log(state, 'mto');
+
+  const handleSubLocationChange = (index, value) => {
+    updateFormDataSubLocation(index, value);
+    setSubLocations((prevSubLocations) => {
+      const updatedSubLocations = [...prevSubLocations];
+      updatedSubLocations[index] = value;
+      return updatedSubLocations;
+    });
+  };
+  console.log(subLocations);
+  console.log(formData);
+
+  const handleSnChange = (index, value) => {
+    updateFormDataSn(index, value);
+    setSn((prevSn) => {
+      const updateSn = [...prevSn];
+      updateSn[index] = value;
+      return updateSn;
+    });
+  };
+
+  const updateFormDataSn = (index, value) => {
+    setformData((prevFormData) => {
+      const updateSn = [...prevFormData.sn];
+      updateSn[index] = value;
+      return {
+        ...prevFormData,
+        sn: updateSn,
+      };
+    });
+  };
+  const handlePurchaseChange = (index, value) => {
+    updateFormDataPurchase(index, value);
+    setPurchase((prevPurchase) => {
+      const updatePurchase = [...prevPurchase];
+      updatePurchase[index] = value;
+      return updatePurchase;
+    });
+  };
+  const updateFormDataPurchase = (index, value) => {
+    setformData((prevFormData) => {
+      const updatePurchase = [...prevFormData.purchase];
+      updatePurchase[index] = value;
+      return {
+        ...prevFormData,
+        purchase: updatePurchase,
+      };
+    });
+  };
+  const handleQuantityChange = (index, value) => {
+    updateFormDataQuantity(index, value);
+    setQuantity((prevQuantity) => {
+      const updateQuantity = [...prevQuantity];
+      updateQuantity[index] = value;
+      return updateQuantity;
+    });
+  };
+
+  const updateFormDataQuantity = (index, value) => {
+    setformData((prevFormData) => {
+      const updateQuantity = [...prevFormData.quantity];
+      updateQuantity[index] = value;
+      return {
+        ...prevFormData,
+        quantity: updateQuantity,
+      };
+    });
+  };
+
+  const handleRemarksChange = (index, value) => {
+    updateFormDataRemarks(index, value);
+    setRemarks((prevRemarks) => {
+      const updateRemarks = [...prevRemarks];
+      updateRemarks[index] = value;
+      return updateRemarks;
+    });
+  };
+
+  const updateFormDataRemarks = (index, value) => {
+    setformData((prevFormData) => {
+      const updateRemarks = [...prevFormData.remarks];
+      updateRemarks[index] = value;
+      return {
+        ...prevFormData,
+        remarks: updateRemarks,
+      };
+    });
+  };
+  const handleItemChange = (index, value) => {
+    updateFormDataItem(index, value);
+    setItem((prevItem) => {
+      const updateItem = [...prevItem];
+      updateItem[index] = value;
+      return updateItem;
+    });
+  };
+  console.log(item, 'item');
+  console.log(formData);
+
+  const updateFormDataItem = (index, value) => {
+    setformData((prevFormData) => {
+      const updateItem = [...prevFormData.item];
+      updateItem[index] = value;
+      return {
+        ...prevFormData,
+        item: updateItem,
+      };
+    });
+  };
+  const updateFormDataSubLocation = (index, value) => {
+    setformData((prevFormData) => {
+      const updatedSubLocations = [...prevFormData.SubLocation];
+      updatedSubLocations[index] = value;
+      return {
+        ...prevFormData,
+        SubLocation: updatedSubLocations,
+      };
+    });
+  };
 
   const handleAddClick = () => {
     setFormRows((prevRows) => prevRows + 1);
@@ -45,6 +179,8 @@ const Mto = () => {
       ...prevControls,
       { key: prevControls.length },
     ]);
+    setSubLocations((prevSubLocations) => [...prevSubLocations, '']);
+    updateFormDataSubLocation(formControls.length, '');
   };
 
   const handleDeleteClick = () => {
@@ -54,7 +190,7 @@ const Mto = () => {
     }
   };
   const renderFormControls = () => {
-    return formControls.map((control) => (
+    return formControls.map((control, index) => (
       <div key={control.key} style={{ display: 'flex', marginBottom: '10px' }}>
         <FormControl fullWidth sx={{ width: '50%', marginRight: '10px' }}>
           <InputLabel id='demo-simple-select-label'>Sub Location</InputLabel>
@@ -70,12 +206,13 @@ const Mto = () => {
                 },
               },
             }}
-            onChange={(e) =>
-              setformData({
-                ...formData,
-                locationName: e.target.value,
-              })
-            }
+            onChange={(e) => handleSubLocationChange(index, e.target.value)}
+            // onChange={(e) =>
+            //   setformData({
+            //     ...formData,
+            //     locationName: e.target.value,
+            //   })
+            // }
             //onChange={handleChange}
           >
             {state.location.data?.map((item, index) => (
@@ -93,12 +230,13 @@ const Mto = () => {
             id='itemName'
             //value={age}
             label='itemName'
-            onChange={(e) =>
-              setformData({
-                ...formData,
-                itemName: e.target.value,
-              })
-            }
+            // onChange={(e) =>
+            //   setformData({
+            //     ...formData,
+            //     itemName: e.target.value,
+            //   })
+            // }
+            onChange={(e) => handleItemChange(index, e.target.value)}
             MenuProps={{
               PaperProps: {
                 style: {
@@ -154,8 +292,8 @@ const Mto = () => {
               id='outlined-basic'
               label='S/N'
               variant='outlined'
-              // value={locationName}
-              // onChange={(e) => setLocation(e.target.value)}
+              // value={sn}
+              onChange={(e) => handleSnChange(index, e.target.value)}
               fullWidth
             />
           </Grid>
@@ -169,6 +307,7 @@ const Mto = () => {
               variant='outlined'
               // value={locationName}
               // onChange={(e) => setLocation(e.target.value)}
+              onChange={(e) => handlePurchaseChange(index, e.target.value)}
               fullWidth
             />
           </Grid>
@@ -181,7 +320,7 @@ const Mto = () => {
               label='Quantity'
               variant='outlined'
               // value={locationName}
-              // onChange={(e) => setLocation(e.target.value)}
+              onChange={(e) => handleQuantityChange(index, e.target.value)}
               fullWidth
             />
           </Grid>
@@ -195,6 +334,7 @@ const Mto = () => {
               placeholder='Enter Remarks'
               // value={brandValue} // You can set the value and handle changes as needed
               // onChange={(e) => handleBrandChange(e.target.value)}
+              onChange={(e) => handleRemarksChange(index, e.target.value)}
               minRows={4} // You can adjust the number of rows as needed
             />
           </Grid>
