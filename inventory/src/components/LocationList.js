@@ -12,6 +12,8 @@ import {
   TableRow,
   Typography,
   TablePagination,
+  Select,
+  MenuItem,
 } from "@mui/material";
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
@@ -21,6 +23,8 @@ const LocationList = () => {
   const [rowsPerPage, setRowsPerPage] = useState(5); // Adjust as needed
 
   const [location, setLocationName] = useState([]);
+  const [selectedLocation, setselectedLocation] = useState("");
+  const [selectedLocationId, setselectedLocationId] = useState(null);
 
   useEffect(() => {
     fetch("http://localhost:8080/location/getAll")
@@ -32,7 +36,6 @@ const LocationList = () => {
   }, []);
 
   const deleteLocation = async (id) => {
-    alert("Deleted Successfully!");
     console.log(id);
     fetch(`http://localhost:8080/location/delete/${id}`, {
       method: "DELETE",
@@ -54,6 +57,7 @@ const LocationList = () => {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
+  console.log(selectedLocation, "heyyy");
 
   return (
     <>
@@ -82,7 +86,7 @@ const LocationList = () => {
             component={Paper}
             sx={{ borderRadius: "33px", borderBottom: "2px solid yellow" }}
           >
-            <Table sx={{ minWidth: 650 }} aria-label="simple table">
+            <Table sx={{ minWidth: 500 }} aria-label="simple table">
               <TableHead>
                 <TableRow>
                   <TableCell align="left" sx={{ fontWeight: "bold" }}>
@@ -96,29 +100,67 @@ const LocationList = () => {
               <TableBody>
                 {location
                   .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                  .map((location) => (
-                    <TableRow
-                      key={location.name}
-                      sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-                    >
-                      <TableCell align="left">
-                        {location.locationName}
-                      </TableCell>
-                      <TableCell align="left">{location.address}</TableCell>
-                      <Link to={`/updateLocation/${location.id}`}>
-                        <Button variant="contained" color="secondary">
-                          Update
-                        </Button>
-                      </Link>
-                      <Button
-                        sx={{ marginLeft: "11px" }}
-                        variant="contained"
-                        color="secondary"
-                        onClick={() => deleteLocation(location.id)}
+                  .map((location, index) => (
+                    <React.Fragment key={location.id}>
+                      <TableRow
+                        key={location.name}
+                        /*  sx={{
+                          "&:last-child td, &:last-child th": { border: 0 },
+                        }} */
                       >
-                        Delete
-                      </Button>
-                    </TableRow>
+                        <TableCell align="left">
+                          {location.locationName}
+                        </TableCell>
+
+                        <TableCell align="left">
+                          <Select
+                            labelId="Catagory"
+                            id="name"
+                            /* value={formData?.name} */
+                            //value={age}
+                            value={selectedLocation}
+                            onChange={(e) => {
+                              setselectedLocation(e.target.value);
+                              // Assuming each address has a unique ID, use it here
+                              const selectedAddress = location.addresses.find(
+                                (address) => address.address === e.target.value
+                              );
+                              setselectedLocationId(
+                                selectedAddress ? selectedAddress.id : null
+                              );
+                            }}
+                            label="Sub Location"
+                            style={{ width: "60%" }}
+
+                            //onChange={handleChange}
+                          >
+                            {location?.addresses.map((adress) => (
+                              <MenuItem key={index} value={adress.address}>
+                                {" "}
+                                {adress.address}
+                              </MenuItem>
+                            ))}
+                          </Select>
+                        </TableCell>
+                        <TableCell>
+                          <Link
+                            to={`/updateLocation/${location.id}/addresses/${selectedLocationId}`}
+                          >
+                            <Button variant="contained" color="secondary">
+                              Update
+                            </Button>
+                          </Link>
+                          <Button
+                            sx={{ marginLeft: "11px" }}
+                            variant="contained"
+                            color="secondary"
+                            onClick={() => deleteLocation(location.id)}
+                          >
+                            Delete
+                          </Button>
+                        </TableCell>
+                      </TableRow>
+                    </React.Fragment>
                   ))}
               </TableBody>
             </Table>

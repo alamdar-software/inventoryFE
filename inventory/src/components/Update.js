@@ -6,9 +6,9 @@ import {
   Grid,
   TextField,
   Typography,
-} from '@mui/material';
-import React, { useEffect, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+} from "@mui/material";
+import React, { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 
 const Update = () => {
   const [locationLists, setLocationLists] = useState();
@@ -17,12 +17,14 @@ const Update = () => {
 
   let navigate = useNavigate();
 
-  const { id } = useParams();
+  const { locationId, addressId } = useParams();
 
-  console.log(id);
+  console.log(locationId, addressId, "noppppeee");
 
   useEffect(() => {
-    fetch(`http://localhost:8080/location/get/${id}`)
+    fetch(
+      `http://localhost:8080/location/getLocation/${locationId}/${addressId}`
+    )
       .then((res) => res.json())
       .then((result) => {
         console.log(result);
@@ -36,17 +38,20 @@ const Update = () => {
     };
     console.log(update);
 
-    fetch(`http://localhost:8080/location/update/${id}`, {
-      method: 'PUT',
-      headers: { 'Content-type': 'application/json' },
-      body: JSON.stringify(locationLists),
-    })
+    fetch(
+      `http://localhost:8080/location/update/${locationId}/addresses/${addressId}`,
+      {
+        method: "PUT",
+        headers: { "Content-type": "application/json" },
+        body: JSON.stringify(locationLists),
+      }
+    )
       .then(() => {
-        console.log('Class Updated');
-        navigate('/location-Vessel');
+        console.log("Class Updated");
+        navigate("/location-Vessel");
       })
       .catch((error) => {
-        console.error('Error updating class:', error);
+        console.error("Error updating class:", error);
       });
   };
 
@@ -54,11 +59,11 @@ const Update = () => {
     <>
       <Grid>
         <Card
-          color='secondary'
-          sx={{ width: '100%', backgroundColor: 'secondary' }}
+          color="secondary"
+          sx={{ width: "100%", backgroundColor: "secondary" }}
         >
           <CardContent>
-            <Typography variant='h4' color='secondary' gutterBottom>
+            <Typography variant="h4" color="secondary" gutterBottom>
               Update Location/Vessel
             </Typography>
           </CardContent>
@@ -67,19 +72,19 @@ const Update = () => {
 
       <Card
         sx={{
-          width: '100%',
-          mt: '33px',
-          pt: '33px',
-          borderBottom: '2px solid grey',
+          width: "100%",
+          mt: "33px",
+          pt: "33px",
+          borderBottom: "2px solid grey",
         }}
       >
-        <Grid container spacing={2} sx={{ ml: '11px' }}>
+        <Grid container spacing={2} sx={{ ml: "11px" }}>
           <Grid item xs={12} sm={6}>
             <TextField
-              id='outlined-basic'
-              label='Location/vessel'
-              variant='outlined'
-              value={locationLists ? locationLists.locationName : ''}
+              id="outlined-basic"
+              label="Location/vessel"
+              variant="outlined"
+              value={locationLists ? locationLists.locationName : ""}
               onChange={(e) => {
                 setLocationLists({
                   ...locationLists,
@@ -92,10 +97,10 @@ const Update = () => {
           </Grid>
           <Grid item xs={12} sm={6}>
             <TextField
-              id='outlined-basic'
-              label='SubLocation'
-              variant='outlined'
-              value={locationLists ? locationLists.address : ''}
+              id="outlined-basic"
+              label="SubLocation"
+              variant="outlined"
+              value={locationLists ? locationLists.address.address : ""}
               onChange={(e) => {
                 setLocationLists({
                   ...locationLists,
@@ -108,9 +113,9 @@ const Update = () => {
           </Grid>
         </Grid>
         <Box
-          sx={{ marginTop: '11px', display: 'flex', justifyContent: 'center' }}
+          sx={{ marginTop: "11px", display: "flex", justifyContent: "center" }}
         >
-          <Button variant='contained' color='secondary' onClick={handleClick}>
+          <Button variant="contained" color="secondary" onClick={handleClick}>
             Update
           </Button>
         </Box>

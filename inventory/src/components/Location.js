@@ -25,6 +25,7 @@ export const Location = () => {
       headers: { "Content-type": "application/json" },
       body: JSON.stringify(attendence),
     }).then(() => {
+      alert("location added");
       console.log("Location Added");
     });
   };
