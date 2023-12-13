@@ -10,44 +10,71 @@ import {
   Select,
   TextField,
   Typography,
-} from "@mui/material";
-import React, { useState } from "react";
-import AddIcon from "@mui/icons-material/Add";
-import DeleteIcon from "@mui/icons-material/Delete";
-import { useEffect } from "react";
-import { useSelector } from "react-redux";
-import { useDispatch } from "react-redux";
-import { fetchlocation } from "../redux/slice/location";
-import { fetchShipper } from "../redux/slice/ShipperSlice";
-import { fetchConsignee } from "../redux/slice/ConsigneeSlice";
-import { fetchPickup } from "../redux/slice/PickUpSlice";
-import { fetchCurrency } from "../redux/slice/CurrencySlice";
-import { fetchItem } from "../redux/slice/ItemSlice";
+} from '@mui/material';
+import React, { useState } from 'react';
+import AddIcon from '@mui/icons-material/Add';
+import DeleteIcon from '@mui/icons-material/Delete';
+import { useEffect } from 'react';
+import { useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
+import { fetchlocation } from '../redux/slice/location';
+import { fetchShipper } from '../redux/slice/ShipperSlice';
+import { fetchConsignee } from '../redux/slice/ConsigneeSlice';
+import { fetchPickup } from '../redux/slice/PickUpSlice';
+import { fetchCurrency } from '../redux/slice/CurrencySlice';
+import { fetchItem } from '../redux/slice/ItemSlice';
 
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
-import TableContainer from "@mui/material/TableContainer";
-import TableHead from "@mui/material/TableHead";
-import TableRow from "@mui/material/TableRow";
-import Paper from "@mui/material/Paper";
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import Paper from '@mui/material/Paper';
 
-import TextareaAutosize from "@mui/material/TextareaAutosize";
+import TextareaAutosize from '@mui/material/TextareaAutosize';
 export const Cipl = () => {
   const state = useSelector((state) => state);
+
   const dispatch = useDispatch();
   const [formData, setformData] = useState({
-    itemName: "",
-    repairService: "",
-    transferDate: "",
-    shipperName: "",
-    consigneeName: "",
-    locationName: "",
-    pickupAddress: "",
-    currencyName: "",
+    itemName: '',
+    repairService: '',
+    transferDate: '',
+    shipperName: '',
+    consigneeName: '',
+    locationName: '',
+    pickupAddress: '',
+    currencyName: '',
     SubLocation: [],
+    item: [],
+    hs: [],
+    cor: [],
+    dimension: [],
+    weights: [],
+    sn: [],
+    purchase: [],
+    unitPrice: [],
+    quantity: [],
+    amount: [],
+    brand: [],
+    remarks: [],
+    package: [],
   });
   const [subLocations, setSubLocations] = useState([]);
+  const [item, setItem] = useState([]);
+  const [hs, setHs] = useState([]);
+  const [selectPackage, setPackage] = useState([]);
+  const [dimension, setDimension] = useState([]);
+  const [weights, setWeights] = useState([]);
+  const [countruOfOrigin, setCountryOfOrigin] = useState([]);
+  const [sn, setSn] = useState([]);
+  const [purchase, setPurchase] = useState([]);
+  const [unitPrice, setUnitPrice] = useState([]);
+  const [quantity, setQuantity] = useState([]);
+  const [amount, setAmount] = useState([]);
+  const [brand, setBrand] = useState([]);
+  const [remarks, setRemarks] = useState([]);
 
   useEffect(() => {
     dispatch(fetchlocation());
@@ -57,12 +84,12 @@ export const Cipl = () => {
     dispatch(fetchCurrency());
     dispatch(fetchItem());
   }, []);
-  console.log(state, "cipl");
+  console.log(state, 'cipl');
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await fetch("");
+      const res = await fetch('');
     } catch (error) {}
   };
 
@@ -76,8 +103,8 @@ export const Cipl = () => {
       return updatedSubLocations;
     });
   };
-  console.log(subLocations, "subbbbbbbbbbbbb");
-  console.log(formData, "nooooooooooo");
+  console.log(subLocations, 'subbbbbbbbbbbbb');
+  console.log(formData, 'nooooooooooo');
 
   const handleAddClick = () => {
     setFormRows((prevRows) => prevRows + 1);
@@ -85,8 +112,8 @@ export const Cipl = () => {
       ...prevControls,
       { key: prevControls.length },
     ]);
-    setSubLocations((prevSubLocations) => [...prevSubLocations, ""]);
-    updateFormDataSubLocation(formControls.length, ""); // Add an empty string to SubLocation
+    setSubLocations((prevSubLocations) => [...prevSubLocations, '']);
+    updateFormDataSubLocation(formControls.length, ''); // Add an empty string to SubLocation
   };
 
   const handleDeleteClick = () => {
@@ -105,16 +132,276 @@ export const Cipl = () => {
       };
     });
   };
+
+  const handleItemChange = (index, value) => {
+    updateFormDataItem(index, value);
+    setItem((prevItem) => {
+      const updateItem = [...prevItem];
+      updateItem[index] = value;
+      return updateItem;
+    });
+  };
+  console.log(item, 'item');
+  console.log(formData);
+
+  const updateFormDataItem = (index, value) => {
+    setformData((prevFormData) => {
+      const updateItem = [...prevFormData.item];
+      updateItem[index] = value;
+      return {
+        ...prevFormData,
+        item: updateItem,
+      };
+    });
+  };
+
+  const handleHsChange = (index, value) => {
+    updateFormDataHS(index, value);
+    setHs((prevHs) => {
+      const updateHS = [...prevHs];
+      updateHS[index] = value;
+      return updateHS;
+    });
+  };
+
+  const updateFormDataHS = (index, value) => {
+    setformData((prevFormData) => {
+      const updateHS = [...prevFormData.hs];
+      updateHS[index] = value;
+      return {
+        ...prevFormData,
+        Hs: updateHS,
+      };
+    });
+  };
+  const handlePackageChange = (index, value) => {
+    updateFormDataPackage(index, value);
+    setPackage((prevPackage) => {
+      const updatePackage = [...prevPackage];
+      updatePackage[index] = value;
+      return updatePackage;
+    });
+  };
+
+  const updateFormDataPackage = (index, value) => {
+    setformData((prevFormData) => {
+      const updatePackage = [...prevFormData.package];
+      updatePackage[index] = value;
+      return {
+        ...prevFormData,
+        package: updatePackage,
+      };
+    });
+  };
+  const handleCountryOfOriginChange = (index, value) => {
+    updateFormDataCountryOfOrigin(index, value);
+    setCountryOfOrigin((prevCountryOfOrigin) => {
+      const updateCountryOfOrigin = [...prevCountryOfOrigin];
+      updateCountryOfOrigin[index] = value;
+      return updateCountryOfOrigin;
+    });
+  };
+  console.log(item, 'item');
+  console.log(formData);
+
+  const updateFormDataCountryOfOrigin = (index, value) => {
+    setformData((prevFormData) => {
+      const updateCountryOfOrigin = [...prevFormData.cor];
+      updateCountryOfOrigin[index] = value;
+      return {
+        ...prevFormData,
+        cor: updateCountryOfOrigin,
+      };
+    });
+  };
+  const handleDimensionChange = (index, value) => {
+    updateFormDataDimension(index, value);
+    setDimension((prevDimension) => {
+      const updateDimension = [...prevDimension];
+      updateDimension[index] = value;
+      return updateDimension;
+    });
+  };
+  console.log(dimension, 'dimension');
+  console.log(formData);
+
+  const updateFormDataDimension = (index, value) => {
+    setformData((prevFormData) => {
+      const updateDimension = [...prevFormData.dimension];
+      updateDimension[index] = value;
+      return {
+        ...prevFormData,
+        dimension: updateDimension,
+      };
+    });
+  };
+  const handleWeightsChange = (index, value) => {
+    updateFormDataWeights(index, value);
+    setWeights((prevWeights) => {
+      const updateWeights = [...prevWeights];
+      updateWeights[index] = value;
+      return updateWeights;
+    });
+  };
+  console.log(weights, 'weights');
+  console.log(formData);
+
+  const updateFormDataWeights = (index, value) => {
+    setformData((prevFormData) => {
+      const updateWeights = [...prevFormData.weights];
+      updateWeights[index] = value;
+      return {
+        ...prevFormData,
+        weights: updateWeights,
+      };
+    });
+  };
+
+  const handleSnChange = (index, value) => {
+    updateFormDataSn(index, value);
+    setSn((prevSn) => {
+      const updateSn = [...prevSn];
+      updateSn[index] = value;
+      return updateSn;
+    });
+  };
+
+  const updateFormDataSn = (index, value) => {
+    setformData((prevFormData) => {
+      const updateSn = [...prevFormData.sn];
+      updateSn[index] = value;
+      return {
+        ...prevFormData,
+        sn: updateSn,
+      };
+    });
+  };
+  const handlePurchaseChange = (index, value) => {
+    updateFormDataPurchase(index, value);
+    setPurchase((prevPurchase) => {
+      const updatePurchase = [...prevPurchase];
+      updatePurchase[index] = value;
+      return updatePurchase;
+    });
+  };
+  const updateFormDataPurchase = (index, value) => {
+    setformData((prevFormData) => {
+      const updatePurchase = [...prevFormData.purchase];
+      updatePurchase[index] = value;
+      return {
+        ...prevFormData,
+        purchase: updatePurchase,
+      };
+    });
+  };
+  const handleUnitPriceChange = (index, value) => {
+    updateFormDataUnitPrice(index, value);
+    setUnitPrice((prevUnitPrice) => {
+      const updateUnitPrice = [...prevUnitPrice];
+      updateUnitPrice[index] = value;
+      return updateUnitPrice;
+    });
+  };
+  const updateFormDataUnitPrice = (index, value) => {
+    setformData((prevFormData) => {
+      const updateUnitPrice = [...prevFormData.unitPrice];
+      updateUnitPrice[index] = value;
+      return {
+        ...prevFormData,
+        unitPrice: updateUnitPrice,
+      };
+    });
+  };
+
+  const handleQuantityChange = (index, value) => {
+    updateFormDataQuantity(index, value);
+    setQuantity((prevQuantity) => {
+      const updateQuantity = [...prevQuantity];
+      updateQuantity[index] = value;
+      return updateQuantity;
+    });
+  };
+
+  const updateFormDataQuantity = (index, value) => {
+    setformData((prevFormData) => {
+      const updateQuantity = [...prevFormData.quantity];
+      updateQuantity[index] = value;
+      return {
+        ...prevFormData,
+        quantity: updateQuantity,
+      };
+    });
+  };
+
+  const handleAmountChange = (index, value) => {
+    updateFormDataAmount(index, value);
+    setAmount((prevAmount) => {
+      const updateAmount = [...prevAmount];
+      updateAmount[index] = value;
+      return updateAmount;
+    });
+  };
+
+  const updateFormDataAmount = (index, value) => {
+    setformData((prevFormData) => {
+      const updateAmount = [...prevFormData.amount];
+      updateAmount[index] = value;
+      return {
+        ...prevFormData,
+        amount: updateAmount,
+      };
+    });
+  };
+
+  const handleBrandChange = (index, value) => {
+    updateFormDataBrand(index, value);
+    setBrand((prevBrand) => {
+      const updateBrand = [...prevBrand];
+      updateBrand[index] = value;
+      return updateBrand;
+    });
+  };
+
+  const updateFormDataBrand = (index, value) => {
+    setformData((prevFormData) => {
+      const updateBrand = [...prevFormData.brand];
+      updateBrand[index] = value;
+      return {
+        ...prevFormData,
+        brand: updateBrand,
+      };
+    });
+  };
+
+  const handleRemarksChange = (index, value) => {
+    updateFormDataRemarks(index, value);
+    setRemarks((prevRemarks) => {
+      const updateRemarks = [...prevRemarks];
+      updateRemarks[index] = value;
+      return updateRemarks;
+    });
+  };
+
+  const updateFormDataRemarks = (index, value) => {
+    setformData((prevFormData) => {
+      const updateRemarks = [...prevFormData.remarks];
+      updateRemarks[index] = value;
+      return {
+        ...prevFormData,
+        remarks: updateRemarks,
+      };
+    });
+  };
   const renderFormControls = () => {
     return formControls.map((control, index) => (
-      <div key={control.key} style={{ display: "flex", marginBottom: "10px" }}>
-        <FormControl fullWidth sx={{ width: "50%", marginRight: "10px" }}>
-          <InputLabel id="demo-simple-select-label">Sub Location</InputLabel>
+      <div key={control.key} style={{ display: 'flex', marginBottom: '10px' }}>
+        <FormControl fullWidth sx={{ width: '50%', marginRight: '10px' }}>
+          <InputLabel id='demo-simple-select-label'>Sub Location</InputLabel>
           <Select
-            labelId="demo-simple-select-label"
-            id="demo-simple-select"
+            labelId='demo-simple-select-label'
+            id='demo-simple-select'
             //value={age}
-            label="location"
+            label='location'
             MenuProps={{
               PaperProps: {
                 style: {
@@ -134,25 +421,20 @@ export const Cipl = () => {
           >
             {state.location.data?.map((item, index) => (
               <MenuItem key={index} value={item?.address}>
-                {" "}
+                {' '}
                 {item?.address}
               </MenuItem>
             ))}
           </Select>
         </FormControl>
-        <FormControl fullWidth sx={{ width: "50%", marginRight: "10px" }}>
-          <InputLabel id="demo-simple-select-label">Item Name</InputLabel>
+        <FormControl fullWidth sx={{ width: '50%', marginRight: '10px' }}>
+          <InputLabel id='demo-simple-select-label'>Item Name</InputLabel>
           <Select
-            labelId="demo-simple-select-label"
-            id="itemName"
+            labelId='demo-simple-select-label'
+            id='itemName'
             //value={age}
-            label="itemName"
-            onChange={(e) =>
-              setformData({
-                ...formData,
-                itemName: e.target.value,
-              })
-            }
+            label='itemName'
+            onChange={(e) => handleItemChange(index, e.target.value)}
             MenuProps={{
               PaperProps: {
                 style: {
@@ -164,84 +446,90 @@ export const Cipl = () => {
           >
             {state.item.data?.map((item, index) => (
               <MenuItem key={index} value={item?.itemName}>
-                {" "}
+                {' '}
                 {item?.itemName}
               </MenuItem>
             ))}
           </Select>
         </FormControl>
-        <FormControl fullWidth sx={{ width: "30%", marginRight: "10px" }}>
+        <FormControl fullWidth sx={{ width: '30%', marginRight: '10px' }}>
           <Grid item xs={12} sm={6}>
             <TextField
-              sx={{ width: "90%" }}
-              id="outlined-basic"
-              label="Package Name"
-              variant="outlined"
+              sx={{ width: '90%' }}
+              id='outlined-basic'
+              label='Package Name'
+              variant='outlined'
               // value={locationName}
               // onChange={(e) => setLocation(e.target.value)}
+              onChange={(e) => handlePackageChange(index, e.target.value)}
               fullWidth
             />
           </Grid>
         </FormControl>
-        <FormControl fullWidth sx={{ width: "30%", marginRight: "10px" }}>
+        <FormControl fullWidth sx={{ width: '30%', marginRight: '10px' }}>
           <Grid item xs={12} sm={6}>
             <TextField
-              sx={{ width: "90%" }}
-              id="outlined-basic"
-              label="Hs Code"
-              variant="outlined"
-              // value={locationName}
-              // onChange={(e) => setLocation(e.target.value)}
+              sx={{ width: '90%' }}
+              id='outlined-basic'
+              label='Hs'
+              variant='outlined'
+              // value={sn}
+              onChange={(e) => handleHsChange(index, e.target.value)}
               fullWidth
             />
           </Grid>
         </FormControl>
-        <FormControl fullWidth sx={{ width: "30%", marginRight: "10px" }}>
+        <FormControl fullWidth sx={{ width: '30%', marginRight: '10px' }}>
           <Grid item xs={12} sm={6}>
             <TextField
-              sx={{ width: "90%" }}
-              id="Country Of Origin"
-              label="Country Of Origin"
-              variant="outlined"
+              sx={{ width: '90%' }}
+              id='Country Of Origin'
+              label='Country Of Origin'
+              variant='outlined'
               // value={locationName}
               // onChange={(e) => setLocation(e.target.value)}
+              onChange={(e) =>
+                handleCountryOfOriginChange(index, e.target.value)
+              }
               fullWidth
             />
           </Grid>
         </FormControl>
-        <FormControl fullWidth sx={{ width: "30%", marginRight: "10px" }}>
+        <FormControl fullWidth sx={{ width: '30%', marginRight: '10px' }}>
           <Grid item xs={12} sm={6}>
             <TextField
-              sx={{ width: "90%" }}
-              id="outlined-basic"
-              label="Dimension(CM)"
-              variant="outlined"
+              sx={{ width: '90%' }}
+              id='outlined-basic'
+              label='Dimension(CM)'
+              variant='outlined'
               // value={locationName}
               // onChange={(e) => setLocation(e.target.value)}
+              onChange={(e) => handleDimensionChange(index, e.target.value)}
               fullWidth
             />
           </Grid>
         </FormControl>
-        <FormControl fullWidth sx={{ width: "30%", marginRight: "10px" }}>
+        <FormControl fullWidth sx={{ width: '30%', marginRight: '10px' }}>
           <Grid item xs={12} sm={6}>
             <TextField
-              sx={{ width: "90%" }}
-              id="outlined-basic"
-              label="Weights(Kg)"
-              variant="outlined"
+              sx={{ width: '90%' }}
+              id='outlined-basic'
+              label='Weights(Kg)'
+              variant='outlined'
               // value={locationName}
               // onChange={(e) => setLocation(e.target.value)}
+              onChange={(e) => handleWeightsChange(index, e.target.value)}
               fullWidth
             />
           </Grid>
         </FormControl>
-        <FormControl fullWidth sx={{ width: "50%", marginRight: "10px" }}>
-          <InputLabel id="demo-simple-select-label">Part No</InputLabel>
+        <FormControl fullWidth sx={{ width: '50%', marginRight: '10px' }}>
+          <InputLabel id='demo-simple-select-label'>Part No</InputLabel>
           <Select
-            labelId="demo-simple-select-label"
-            id="demo-simple-select"
+            labelId='demo-simple-select-label'
+            id='demo-simple-select'
             //value={age}
-            label="location"
+            label='location'
             MenuProps={{
               PaperProps: {
                 style: {
@@ -259,114 +547,120 @@ export const Cipl = () => {
           >
             {state.location.data?.map((item, index) => (
               <MenuItem key={index} value={item?.locationName}>
-                {" "}
+                {' '}
                 {item?.locationName}
               </MenuItem>
             ))}
           </Select>
         </FormControl>
-        <FormControl fullWidth sx={{ width: "30%", marginRight: "10px" }}>
+        <FormControl fullWidth sx={{ width: '30%', marginRight: '10px' }}>
           <Grid item xs={12} sm={6}>
             <TextField
-              sx={{ width: "90%" }}
-              id="outlined-basic"
-              label="S/N"
-              variant="outlined"
+              sx={{ width: '90%' }}
+              id='outlined-basic'
+              label='S/N'
+              variant='outlined'
               // value={locationName}
               // onChange={(e) => setLocation(e.target.value)}
+              onChange={(e) => handleSnChange(index, e.target.value)}
               fullWidth
             />
           </Grid>
         </FormControl>
-        <FormControl fullWidth sx={{ width: "30%", marginRight: "10px" }}>
+        <FormControl fullWidth sx={{ width: '30%', marginRight: '10px' }}>
           <Grid item xs={12} sm={6}>
             <TextField
-              sx={{ width: "90%" }}
-              id="outlined-basic"
-              label="Purchase Order(D.O.P)"
-              variant="outlined"
+              sx={{ width: '90%' }}
+              id='outlined-basic'
+              label='Purchase Order(D.O.P)'
+              variant='outlined'
               // value={locationName}
               // onChange={(e) => setLocation(e.target.value)}
+              onChange={(e) => handlePurchaseChange(index, e.target.value)}
               fullWidth
             />
           </Grid>
         </FormControl>
-        <FormControl fullWidth sx={{ width: "30%", marginRight: "10px" }}>
+        <FormControl fullWidth sx={{ width: '30%', marginRight: '10px' }}>
           <Grid item xs={12} sm={6}>
             <TextField
-              sx={{ width: "90%" }}
-              id="outlined-basic"
-              label="Unit Price"
-              variant="outlined"
+              sx={{ width: '90%' }}
+              id='outlined-basic'
+              label='Unit Price'
+              variant='outlined'
               // value={locationName}
               // onChange={(e) => setLocation(e.target.value)}
+              onChange={(e) => handleUnitPriceChange(index, e.target.value)}
               fullWidth
             />
           </Grid>
         </FormControl>
-        <FormControl fullWidth sx={{ width: "30%", marginRight: "10px" }}>
+        <FormControl fullWidth sx={{ width: '30%', marginRight: '10px' }}>
           <Grid item xs={12} sm={6}>
             <TextField
-              sx={{ width: "90%" }}
-              id="outlined-basic"
-              label="Quantity"
-              variant="outlined"
+              sx={{ width: '90%' }}
+              id='outlined-basic'
+              label='Quantity'
+              variant='outlined'
               // value={locationName}
               // onChange={(e) => setLocation(e.target.value)}
+              onChange={(e) => handleQuantityChange(index, e.target.value)}
               fullWidth
             />
           </Grid>
         </FormControl>
-        <FormControl fullWidth sx={{ width: "30%", marginRight: "10px" }}>
+        <FormControl fullWidth sx={{ width: '30%', marginRight: '10px' }}>
           <Grid item xs={12} sm={6}>
             <TextField
-              sx={{ width: "90%" }}
-              id="outlined-basic"
-              label="Amount"
-              variant="outlined"
+              sx={{ width: '90%' }}
+              id='outlined-basic'
+              label='Amount'
+              variant='outlined'
               // value={locationName}
               // onChange={(e) => setLocation(e.target.value)}
+              onChange={(e) => handleAmountChange(index, e.target.value)}
               fullWidth
             />
           </Grid>
         </FormControl>
-        <FormControl fullWidth sx={{ width: "30%", marginRight: "10px" }}>
+        <FormControl fullWidth sx={{ width: '30%', marginRight: '10px' }}>
           <Grid item xs={12} sm={6}>
             <TextField
-              sx={{ width: "90%" }}
-              id="outlined-basic"
-              label="Brand"
-              variant="outlined"
+              sx={{ width: '90%' }}
+              id='outlined-basic'
+              label='Brand'
+              variant='outlined'
               // value={locationName}
               // onChange={(e) => setLocation(e.target.value)}
-              fullWidth
+              onChange={(e) => handleBrandChange(index, e.target.value)}
             />
           </Grid>
         </FormControl>
-        <FormControl fullWidth sx={{ width: "50%", marginRight: "10px" }}>
+        <FormControl fullWidth sx={{ width: '50%', marginRight: '10px' }}>
           <Grid item xs={12} sm={6}>
             <TextareaAutosize
-              sx={{ width: "90%" }}
-              aria-label="Brand"
-              placeholder="Enter Remarks"
+              sx={{ width: '90%' }}
+              aria-label='Brand'
+              placeholder='Enter Remarks'
               // value={brandValue} // You can set the value and handle changes as needed
               // onChange={(e) => handleBrandChange(e.target.value)}
+              onChange={(e) => handleRemarksChange(index, e.target.value)}
               minRows={4} // You can adjust the number of rows as needed
             />
           </Grid>
         </FormControl>
         <div
           style={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
           }}
         >
           <button>
             <AddIcon onClick={handleAddClick} />
           </button>
           <Button onClick={handleDeleteClick}>
-            <DeleteIcon style={{ color: "red" }} />
+            <DeleteIcon style={{ color: 'red' }} />
           </Button>
         </div>
 
@@ -379,16 +673,16 @@ export const Cipl = () => {
     <>
       <Grid>
         <Card
-          color="secondary"
+          color='secondary'
           sx={{
-            width: "100%",
-            backgroundColor: "secondary",
-            borderBottom: "2px solid yellow",
-            mb: "33px",
+            width: '100%',
+            backgroundColor: 'secondary',
+            borderBottom: '2px solid yellow',
+            mb: '33px',
           }}
         >
           <CardContent>
-            <Typography variant="h4" color="secondary" gutterBottom>
+            <Typography variant='h4' color='secondary' gutterBottom>
               CIPL Transfer
             </Typography>
           </CardContent>
@@ -396,13 +690,13 @@ export const Cipl = () => {
       </Grid>
       <Grid container spacing={2}>
         <Grid item xs={21} sm={6}>
-          <FormControl fullWidth sx={{ width: "90%" }}>
-            <InputLabel id="demo-simple-select-label">Location</InputLabel>
+          <FormControl fullWidth sx={{ width: '90%' }}>
+            <InputLabel id='demo-simple-select-label'>Location</InputLabel>
             <Select
-              labelId="demo-simple-select-label"
-              id="demo-simple-select"
+              labelId='demo-simple-select-label'
+              id='demo-simple-select'
               //value={age}
-              label="location"
+              label='location'
               MenuProps={{
                 PaperProps: {
                   style: {
@@ -420,7 +714,7 @@ export const Cipl = () => {
             >
               {state.location.data?.map((item, index) => (
                 <MenuItem key={index} value={item?.locationName}>
-                  {" "}
+                  {' '}
                   {item?.locationName}
                 </MenuItem>
               ))}
@@ -428,13 +722,13 @@ export const Cipl = () => {
           </FormControl>
         </Grid>
         <Grid item xs={21} sm={6}>
-          <FormControl fullWidth sx={{ width: "90%" }}>
-            <InputLabel id="demo-simple-select-label">Shipper</InputLabel>
+          <FormControl fullWidth sx={{ width: '90%' }}>
+            <InputLabel id='demo-simple-select-label'>Shipper</InputLabel>
             <Select
-              labelId="demo-simple-select-label"
-              id="demo-simple-select"
+              labelId='demo-simple-select-label'
+              id='demo-simple-select'
               //value={age}
-              label="shipper"
+              label='shipper'
               MenuProps={{
                 PaperProps: {
                   style: {
@@ -452,7 +746,7 @@ export const Cipl = () => {
             >
               {state.shipper.data?.map((item, index) => (
                 <MenuItem key={index} value={item?.name}>
-                  {" "}
+                  {' '}
                   {item?.name}
                 </MenuItem>
               ))}
@@ -460,26 +754,26 @@ export const Cipl = () => {
           </FormControl>
         </Grid>
       </Grid>
-      <Grid container spacing={2} sx={{ mt: "23px" }}>
+      <Grid container spacing={2} sx={{ mt: '23px' }}>
         <Grid item xs={12} sm={6}>
           <TextField
-            sx={{ width: "90%" }}
-            id="outlined-basic"
-            label="Transfer Date"
-            variant="outlined"
+            sx={{ width: '90%' }}
+            id='outlined-basic'
+            label='Transfer Date'
+            variant='outlined'
             // value={locationName}
             // onChange={(e) => setLocation(e.target.value)}
             fullWidth
           />
         </Grid>
         <Grid item xs={12} sm={6}>
-          <FormControl fullWidth sx={{ width: "90%" }}>
-            <InputLabel id="demo-simple-select-label">Consignee</InputLabel>
+          <FormControl fullWidth sx={{ width: '90%' }}>
+            <InputLabel id='demo-simple-select-label'>Consignee</InputLabel>
             <Select
-              labelId="demo-simple-select-label"
-              id="demo-simple-select"
+              labelId='demo-simple-select-label'
+              id='demo-simple-select'
               //value={age}
-              label="consignee"
+              label='consignee'
               //onChange={handleChange}
               MenuProps={{
                 PaperProps: {
@@ -497,7 +791,7 @@ export const Cipl = () => {
             >
               {state.consignee.data?.map((item, index) => (
                 <MenuItem key={index} value={item?.name}>
-                  {" "}
+                  {' '}
                   {item?.name}
                 </MenuItem>
               ))}
@@ -505,17 +799,17 @@ export const Cipl = () => {
           </FormControl>
         </Grid>
       </Grid>
-      <Grid container spacing={2} sx={{ mt: "23px" }}>
+      <Grid container spacing={2} sx={{ mt: '23px' }}>
         <Grid item xs={12} sm={6}>
-          <FormControl fullWidth sx={{ width: "90%" }}>
-            <InputLabel id="demo-simple-select-label">
+          <FormControl fullWidth sx={{ width: '90%' }}>
+            <InputLabel id='demo-simple-select-label'>
               Pickup Address
             </InputLabel>
             <Select
-              labelId="demo-simple-select-label"
-              id="demo-simple-select"
+              labelId='demo-simple-select-label'
+              id='demo-simple-select'
               //value={age}
-              label="pickupAddress"
+              label='pickupAddress'
               //onChange={handleChange}
               MenuProps={{
                 PaperProps: {
@@ -533,7 +827,7 @@ export const Cipl = () => {
             >
               {state.pickup.data?.map((item, index) => (
                 <MenuItem key={index} value={item?.pickupAddress}>
-                  {" "}
+                  {' '}
                   {item?.pickupAddress}
                 </MenuItem>
               ))}
@@ -541,15 +835,15 @@ export const Cipl = () => {
           </FormControl>
         </Grid>
         <Grid item xs={12} sm={6}>
-          <FormControl fullWidth sx={{ width: "90%" }}>
-            <InputLabel id="demo-simple-select-label">
+          <FormControl fullWidth sx={{ width: '90%' }}>
+            <InputLabel id='demo-simple-select-label'>
               Select Currency
             </InputLabel>
             <Select
-              labelId="demo-simple-select-label"
-              id="demo-simple-select"
+              labelId='demo-simple-select-label'
+              id='demo-simple-select'
               //value={age}
-              label="selectCurrency"
+              label='selectCurrency'
               MenuProps={{
                 PaperProps: {
                   style: {
@@ -567,7 +861,7 @@ export const Cipl = () => {
             >
               {state.currency.data?.currencyList.map((item, index) => (
                 <MenuItem key={index} value={item?.currencyName}>
-                  {" "}
+                  {' '}
                   {item?.currencyName}
                 </MenuItem>
               ))}
@@ -575,28 +869,28 @@ export const Cipl = () => {
           </FormControl>
         </Grid>
       </Grid>
-      <Grid container spacing={2} sx={{ mt: "23px" }}>
+      <Grid container spacing={2} sx={{ mt: '23px' }}>
         <Grid item xs={12} sm={6}>
           <TextField
-            sx={{ width: "90%" }}
-            id="outlined-basic"
-            label="Currency Rate"
-            variant="outlined"
+            sx={{ width: '90%' }}
+            id='outlined-basic'
+            label='Currency Rate'
+            variant='outlined'
             // value={locationName}
             // onChange={(e) => setLocation(e.target.value)}
             fullWidth
           />
         </Grid>
         <Grid item xs={12} sm={6}>
-          <FormControl fullWidth sx={{ width: "90%" }}>
-            <InputLabel id="demo-simple-select-label">
+          <FormControl fullWidth sx={{ width: '90%' }}>
+            <InputLabel id='demo-simple-select-label'>
               Repair/Service
             </InputLabel>
             <Select
-              labelId="demo-simple-select-label"
-              id="demo-simple-select"
+              labelId='demo-simple-select-label'
+              id='demo-simple-select'
               //value={age}
-              label="Repair/service"
+              label='Repair/service'
               //onChange={handleChange}
               onChange={(e) =>
                 setformData({
@@ -613,28 +907,28 @@ export const Cipl = () => {
       </Grid>
       <div
         sx={{
-          marginTop: "5px",
+          marginTop: '5px',
 
-          flexWrap: "wrap",
-          width: "80%",
+          flexWrap: 'wrap',
+          width: '80%',
         }}
       >
         {formData.locationName && (
           <>
-            <div style={{ display: "flex", flexWrap: "wrap" }}>
+            <div style={{ display: 'flex', flexWrap: 'wrap' }}>
               <Grid
-                sx={{ overflowX: "scroll", width: "100%", flexWrap: "wrap" }}
+                sx={{ overflowX: 'scroll', width: '100%', flexWrap: 'wrap' }}
               >
                 <Card
-                  color="secondary"
+                  color='secondary'
                   sx={{
-                    width: "180%",
-                    marginTop: "20px",
-                    backgroundColor: "secondary",
+                    width: '180%',
+                    marginTop: '20px',
+                    backgroundColor: 'secondary',
                   }}
                 >
                   <CardContent
-                    sx={{ minWidth: "100%", display: "flex", flexWrap: "wrap" }}
+                    sx={{ minWidth: '100%', display: 'flex', flexWrap: 'wrap' }}
                   >
                     {renderFormControls()}
                   </CardContent>
@@ -644,9 +938,9 @@ export const Cipl = () => {
           </>
         )}
       </div>
-      <Box sx={{ display: "flex", justifyContent: "center", mt: "33px" }}>
-        {" "}
-        <Button variant="contained" size="large" color="secondary">
+      <Box sx={{ display: 'flex', justifyContent: 'center', mt: '33px' }}>
+        {' '}
+        <Button variant='contained' size='large' color='secondary'>
           Add
         </Button>
       </Box>
