@@ -95,119 +95,13 @@ export const Cipl = () => {
 
   const [formRows, setFormRows] = useState(1);
   const [formControls, setFormControls] = useState([{ key: 0 }]);
-
-  const updateFormDataArray = (field, index, value) => {
-    switch (field) {
-      case 'SubLocations':
-        setSubLocations((prevArray) => {
-          const updatedArray = [...prevArray];
-          updatedArray[index] = value;
-          return updatedArray;
-        });
-        break;
-      case 'itemName':
-        setItemNameArray((prevArray) => {
-          const updatedArray = [...prevArray];
-          updatedArray[index] = value;
-          return updatedArray;
-        });
-        break;
-      case 'packageName':
-        setPackageNameArray((prevArray) => {
-          const updatedArray = [...prevArray];
-          updatedArray[index] = value;
-          return updatedArray;
-        });
-        break;
-      case 'HsCode':
-        setHsCodeArray((prevArray) => {
-          const updatedArray = [...prevArray];
-          updatedArray[index] = value;
-          return updatedArray;
-        });
-        break;
-      case 'CountryOfOrigin':
-        setCountryOfOriginArray((prevArray) => {
-          const updatedArray = [...prevArray];
-          updatedArray[index] = value;
-          return updatedArray;
-        });
-        break;
-      case 'Dimentions':
-        setDimentionsArray((prevArray) => {
-          const updatedArray = [...prevArray];
-          updatedArray[index] = value;
-          return updatedArray;
-        });
-        break;
-      case 'Weight':
-        setWeightArray((prevArray) => {
-          const updatedArray = [...prevArray];
-          updatedArray[index] = value;
-          return updatedArray;
-        });
-        break;
-      case 'PartNo':
-        setPartNoArray((prevArray) => {
-          const updatedArray = [...prevArray];
-          updatedArray[index] = value;
-          return updatedArray;
-        });
-        break;
-      case 'SN':
-        setSNArray((prevArray) => {
-          const updatedArray = [...prevArray];
-          updatedArray[index] = value;
-          return updatedArray;
-        });
-        break;
-      case 'DOP':
-        setDOPArray((prevArray) => {
-          const updatedArray = [...prevArray];
-          updatedArray[index] = value;
-          return updatedArray;
-        });
-        break;
-      case 'UnitPrice':
-        setUnitPriceArray((prevArray) => {
-          const updatedArray = [...prevArray];
-          updatedArray[index] = value;
-          return updatedArray;
-        });
-        break;
-      case 'quantity':
-        setquantityArray((prevArray) => {
-          const updatedArray = [...prevArray];
-          updatedArray[index] = value;
-          return updatedArray;
-        });
-        break;
-      case 'Amount':
-        setAmountArray((prevArray) => {
-          const updatedArray = [...prevArray];
-          updatedArray[index] = value;
-          return updatedArray;
-        });
-        break;
-      case 'Brand':
-        setBrandArray((prevArray) => {
-          const updatedArray = [...prevArray];
-          updatedArray[index] = value;
-          return updatedArray;
-        });
-        break;
-      case 'Remarks':
-        setRemarksArray((prevArray) => {
-          const updatedArray = [...prevArray];
-          updatedArray[index] = value;
-          return updatedArray;
-        });
-        break;
-
-      // ... add similar cases for other fields
-      default:
-        break;
-    }
+  const handleSubLocationChange = (index, value) => {
+    updateFormDataSubLocation(index, value);
+    setSubLocations((prevSubLocations) => {
+      const updatedSubLocations = [...prevSubLocations];
+      updatedSubLocations[index] = value;
+      return updatedSubLocations;
+    });
   };
   console.log(subLocations, 'subbbbbbbbbbbbb');
   console.log(formData, 'nooooooooooo');
@@ -228,7 +122,7 @@ export const Cipl = () => {
       setFormControls((prevControls) => prevControls.slice(0, -1));
     }
   };
-  /*  const updateFormDataSubLocation = (index, value) => {
+  const updateFormDataSubLocation = (index, value) => {
     setformData((prevFormData) => {
       const updatedSubLocations = [...prevFormData.SubLocation];
       updatedSubLocations[index] = value;
@@ -237,13 +131,6 @@ export const Cipl = () => {
         SubLocation: updatedSubLocations,
       };
     });
-  }; */
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      console.log(formData, 'yes');
-      const res = await fetch('');
-    } catch (error) {}
   };
 
   const handleItemChange = (index, value) => {
@@ -528,10 +415,8 @@ export const Cipl = () => {
                 SubLocation: [e.target.value],
               })
             } */
+            /*  onChange={(e) => handleSubLocationChange(index, e.target.value)} */
             onChange={(e) => handleSubLocationChange(index, e.target.value)}
-            /*  onChange={(e) =>
-              updateFormDataArray("SubLocation", index, e.target.value)
-            } */
             //onChange={handleChange}
           >
             {state.location.data?.map((item, index) => (
@@ -652,7 +537,12 @@ export const Cipl = () => {
                 },
               },
             }}
-            onChange={(e) => handlePartNoChange(index, e.target.value)}
+            onChange={(e) =>
+              setformData({
+                ...formData,
+                locationName: e.target.value,
+              })
+            }
             //onChange={handleChange}
           >
             {state.location.data?.map((item, index) => (
@@ -756,7 +646,6 @@ export const Cipl = () => {
               // onChange={(e) => handleBrandChange(e.target.value)}
               onChange={(e) => handleRemarksChange(index, e.target.value)}
               minRows={4} // You can adjust the number of rows as needed
-              onChange={(e) => handleRemarksChange(index, e.target.value)}
             />
           </Grid>
         </FormControl>
