@@ -125,6 +125,7 @@ export default function Sidebar({ children }) {
       ],
     },
     { text: "Pick up", icon: <IsoIcon /> },
+    { text: "Entity", icon: <AddCardIcon /> },
     { text: "Currency", icon: <CurrencyRupeeIcon /> },
     { text: "UOM", icon: <DriveFileRenameOutlineIcon /> },
     { text: "Shipper", icon: <LocalShippingIcon /> },

@@ -40,6 +40,7 @@ import UpdateShipper from './components/UpdateShipper';
 import ViewItem from './components/ViewItem.js';
 import Cipl from './components/Cipl.js';
 
+import UpdateEntity from './components/UpdateEntity';
 const theme = createTheme({
   palette: {
     background: {
