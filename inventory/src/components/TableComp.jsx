@@ -117,7 +117,7 @@ export default function TableComp({ data }) {
       <TablePagination
         rowsPerPageOptions={[5, 25, 100]}
         component="div"
-        count={data.length}
+        count={data.length || 0}
         rowsPerPage={rowsPerPage}
         page={page}
         onPageChange={handleChangePage}

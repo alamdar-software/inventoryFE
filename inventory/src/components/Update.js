@@ -79,7 +79,7 @@ const Update = () => {
         }}
       >
         <Grid container spacing={2} sx={{ ml: "11px" }}>
-          <Grid item xs={12} sm={6}>
+          <Grid item xs={12} sm={4} sx={{ marginLeft: "100px" }}>
             <TextField
               id="outlined-basic"
               label="Location/vessel"
@@ -92,7 +92,7 @@ const Update = () => {
                 });
                 setLocation(e.target.value);
               }}
-              fullWidth
+              width={"50%"}
             />
           </Grid>
           <Grid item xs={12} sm={6}>
@@ -108,12 +108,17 @@ const Update = () => {
                 });
                 setSubLocation(e.target.value);
               }}
-              fullWidth
+              width={"50%"}
             />
           </Grid>
         </Grid>
         <Box
-          sx={{ marginTop: "11px", display: "flex", justifyContent: "center" }}
+          sx={{
+            marginTop: "40px",
+            display: "flex",
+            marginLeft: "400px",
+            marginBottom: "15px",
+          }}
         >
           <Button variant="contained" color="secondary" onClick={handleClick}>
             Update

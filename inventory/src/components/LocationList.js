@@ -14,6 +14,8 @@ import {
   TablePagination,
   Select,
   MenuItem,
+  InputLabel,
+  FormControl,
 } from "@mui/material";
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
@@ -21,17 +23,24 @@ import { Link } from "react-router-dom";
 const LocationList = () => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5); // Adjust as needed
-
+  const [error, setError] = useState(null);
   const [location, setLocationName] = useState([]);
   const [selectedLocation, setselectedLocation] = useState("");
   const [selectedLocationId, setselectedLocationId] = useState(null);
-
+  const [showError, setShowError] = useState(false);
   useEffect(() => {
     fetch("http://localhost:8080/location/getAll")
       .then((res) => res.json())
       .then((result) => {
         console.log(result);
         setLocationName(result);
+        /*  if (result.length > 0 && result[0].addresses.length > 0) {
+          setselectedLocation(result[0].addresses[0].address);
+          setselectedLocationId(result[0].addresses[0].id);
+        } */
+        if (result.length > 0 && result[0].addresses.length > 0) {
+          setselectedLocationId(result[0].addresses[0].id);
+        }
       });
   }, []);
 
@@ -44,6 +53,7 @@ const LocationList = () => {
     })
       .then(() => {
         console.log("Location Updated");
+        window.location.reload();
       })
       .catch((error) => {
         console.error("Error updating location:", error);
@@ -58,6 +68,16 @@ const LocationList = () => {
     setPage(0);
   };
   console.log(selectedLocation, "heyyy");
+  const handleUpdateClick = (locationId) => {
+    if (!selectedLocation) {
+      setShowError(true);
+    } else {
+      // Reset the error if a sublocation is selected
+      setShowError(false);
+      // Redirect to the update page
+      window.location.href = `/updateLocation/${locationId}/addresses/${selectedLocationId}`;
+    }
+  };
 
   return (
     <>
@@ -95,6 +115,9 @@ const LocationList = () => {
                   <TableCell align="left" sx={{ fontWeight: "bold" }}>
                     Sub Location
                   </TableCell>
+                  <TableCell align="left" sx={{ fontWeight: "bold" }}>
+                    Action
+                  </TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -113,40 +136,55 @@ const LocationList = () => {
                         </TableCell>
 
                         <TableCell align="left">
-                          <Select
-                            labelId="Catagory"
-                            id="name"
-                            /* value={formData?.name} */
-                            //value={age}
-                            value={selectedLocation}
-                            onChange={(e) => {
-                              setselectedLocation(e.target.value);
-                              // Assuming each address has a unique ID, use it here
-                              const selectedAddress = location.addresses.find(
-                                (address) => address.address === e.target.value
-                              );
-                              setselectedLocationId(
-                                selectedAddress ? selectedAddress.id : null
-                              );
-                            }}
-                            label="Sub Location"
-                            style={{ width: "60%" }}
+                          <FormControl fullWidth sx={{ width: "20rem" }}>
+                            <InputLabel id="subLocation">
+                              View Sub Location
+                            </InputLabel>
+                            <Select
+                              labelId="subLocation"
+                              id="subLocation"
+                              label="Sub Location"
+                              defaultValue={selectedLocation || ""}
+                              /* value={formData?.name} */
+                              //value={age}
+                              value={selectedLocation}
+                              onChange={(e) => {
+                                setselectedLocation(e.target.value);
+                                // Assuming each address has a unique ID, use it here
+                                const selectedAddress =
+                                  location?.addresses.find(
+                                    (address) =>
+                                      address?.address === e.target.value
+                                  );
+                                setselectedLocationId(
+                                  selectedAddress ? selectedAddress.id : null
+                                );
+                              }}
+                              style={{ width: "60%" }}
 
-                            //onChange={handleChange}
-                          >
-                            {location?.addresses.map((adress) => (
-                              <MenuItem key={index} value={adress.address}>
-                                {" "}
-                                {adress.address}
-                              </MenuItem>
-                            ))}
-                          </Select>
+                              //onChange={handleChange}
+                            >
+                              {location?.addresses.map((adress) => (
+                                <MenuItem key={index} value={adress?.address}>
+                                  {" "}
+                                  {adress?.address}
+                                </MenuItem>
+                              ))}
+                            </Select>
+                          </FormControl>
                         </TableCell>
                         <TableCell>
                           <Link
                             to={`/updateLocation/${location.id}/addresses/${selectedLocationId}`}
                           >
-                            <Button variant="contained" color="secondary">
+                            <Button
+                              variant="contained"
+                              color="secondary"
+                              onClick={(e) => {
+                                e.preventDefault();
+                                handleUpdateClick(location.id);
+                              }}
+                            >
                               Update
                             </Button>
                           </Link>
@@ -163,6 +201,13 @@ const LocationList = () => {
                     </React.Fragment>
                   ))}
               </TableBody>
+              {showError && (
+                <TableRow>
+                  <TableCell colSpan={3} align="center" sx={{ color: "red" }}>
+                    Please select a sublocation
+                  </TableCell>
+                </TableRow>
+              )}
             </Table>
             <TablePagination
               rowsPerPageOptions={[5, 10, 25]}
