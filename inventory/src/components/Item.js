@@ -131,7 +131,7 @@ const Item = () => {
                 id='name'
                 value={formData?.name}
                 //value={age}
-                label='Catagory'
+                // label='Catagory'
                 onChange={(e) =>
                   setformData({
                     ...formData,
