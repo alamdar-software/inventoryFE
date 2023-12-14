@@ -7,6 +7,7 @@ import {
   Button,
   Typography,
 } from "@mui/material";
+import { Link } from "react-router-dom";
 
 export const Location = () => {
   const [locationName, setLocation] = useState();
@@ -58,7 +59,7 @@ export const Location = () => {
           borderBottom: "2px solid grey",
         }}
       >
-        <Grid container spacing={2} sx={{ ml: "11px" }}>
+        <Grid container spacing={2} sx={{ ml: "11px", mR: "15px" }}>
           <Grid item xs={12} sm={6}>
             <TextField
               id="outlined-basic"
@@ -66,7 +67,7 @@ export const Location = () => {
               variant="outlined"
               value={locationName}
               onChange={(e) => setLocation(e.target.value)}
-              fullWidth
+              width={"70px"}
             />
           </Grid>
           <Grid item xs={12} sm={6}>
@@ -76,7 +77,7 @@ export const Location = () => {
               variant="outlined"
               value={address}
               onChange={(e) => setSubLocation(e.target.value)}
-              fullWidth
+              width={"200px"}
             />
           </Grid>
         </Grid>
@@ -88,13 +89,28 @@ export const Location = () => {
           sx={{
             mt: "33px",
             mb: "17px",
-            marginLeft: "auto",
+            marginLeft: "25rem",
             marginRight: "auto",
-            display: "block",
           }}
         >
           Add
         </Button>
+        <Link to={"/Location-Vessel"}>
+          <Button
+            variant="contained"
+            color="secondary"
+            size="large"
+            sx={{
+              mt: "33px",
+              mb: "17px",
+              marginLeft: "2rem",
+              marginRight: "auto",
+              backgroundColor: "green",
+            }}
+          >
+            View
+          </Button>
+        </Link>
       </Card>
     </>
   );
