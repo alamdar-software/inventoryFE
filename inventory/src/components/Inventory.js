@@ -29,12 +29,25 @@ const Inventory = () => {
   });
   const dispatch = useDispatch();
   const state = useSelector((state) => state);
-
+  const [subLocations, setSubLocations] = useState([]);
   useEffect(() => {
     dispatch(fetchlocation());
     dispatch(fetchItem());
   }, []);
+  const handleLocationChange = (e) => {
+    const selectedLocation = e.target.value;
+    setformData({
+      ...formData,
+      locationName: selectedLocation,
+      address: "", // Reset sublocation when location changes
+    });
+    const selectedLocationObj = state.location.data.find(
+      (location) => location.locationName === selectedLocation
+    );
+    setSubLocations(selectedLocationObj ? selectedLocationObj.addresses : []);
+  };
   console.log(formData, "hey");
+  console.log(state, "state");
 
   const handleClick = async (e) => {
     e.preventDefault();
@@ -85,12 +98,13 @@ const Inventory = () => {
               id="demo-simple-select"
               //value={age}
               label="location"
-              onChange={(e) =>
+              /* onChange={(e) =>
                 setformData({
                   ...formData,
                   locationName: e.target.value,
                 })
-              }
+              } */
+              onChange={handleLocationChange}
               MenuProps={{
                 PaperProps: {
                   style: {
@@ -132,10 +146,9 @@ const Inventory = () => {
               }}
               //onChange={handleChange}
             >
-              {state.location.data?.map((item, index) => (
-                <MenuItem key={index} value={item?.address}>
-                  {" "}
-                  {item?.address}
+              {subLocations.map((address, index) => (
+                <MenuItem key={index} value={address?.address}>
+                  {address?.address}
                 </MenuItem>
               ))}
             </Select>

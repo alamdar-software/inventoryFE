@@ -38,7 +38,10 @@ import DailyDataCount from "./pages/DailyDataCount.js";
 import UpdateCurrency from "./pages/UpdateCurrency";
 import UpdateShipper from "./components/UpdateShipper";
 import ViewItem from "./components/ViewItem.js";
+import Cipl from "./components/Cipl";
+import Entity from "./pages/Entity";
 
+import UpdateEntity from "./components/UpdateEntity";
 const theme = createTheme({
   palette: {
     background: {
@@ -71,12 +74,15 @@ function App() {
                 element={<Update />}
               />
               <Route path="/currency" element={<Currency />} />
+              <Route path="/entity" element={<Entity />} />
+              <Route path="/entity/update/:id" element={<UpdateEntity />} />
               <Route path="/currency/update/:id" element={<UpdateCurrency />} />
               <Route path="/brand" element={<Brand />} />
               <Route path="/brand/edit/:id" element={<UpdateBrand />} />
               <Route path="/category" element={<Category />} />
               <Route path="/category/edit/:id" element={<UpdateCategory />} />
               <Route path="/transfer-item" element={<TransferItem />} />
+              <Route path="/cipl" element={<Cipl />} />
 
               <Route path="/mto" element={<Mto />} />
               <Route path="/it" element={<InternalTransfer />} />
