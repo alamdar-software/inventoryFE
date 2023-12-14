@@ -6,9 +6,9 @@ import {
   Grid,
   TextField,
   Typography,
-} from "@mui/material";
-import React, { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+} from '@mui/material';
+import React, { useEffect, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 
 const Update = () => {
   const [locationLists, setLocationLists] = useState();
@@ -19,7 +19,7 @@ const Update = () => {
 
   const { locationId, addressId } = useParams();
 
-  console.log(locationId, addressId, "noppppeee");
+  console.log(locationId, addressId, 'noppppeee');
 
   useEffect(() => {
     fetch(
@@ -41,17 +41,17 @@ const Update = () => {
     fetch(
       `http://localhost:8080/location/update/${locationId}/addresses/${addressId}`,
       {
-        method: "PUT",
-        headers: { "Content-type": "application/json" },
+        method: 'PUT',
+        headers: { 'Content-type': 'application/json' },
         body: JSON.stringify(locationLists),
       }
     )
       .then(() => {
-        console.log("Class Updated");
-        navigate("/location-Vessel");
+        console.log('Class Updated');
+        navigate('/location-Vessel');
       })
       .catch((error) => {
-        console.error("Error updating class:", error);
+        console.error('Error updating class:', error);
       });
   };
 
@@ -59,11 +59,11 @@ const Update = () => {
     <>
       <Grid>
         <Card
-          color="secondary"
-          sx={{ width: "100%", backgroundColor: "secondary" }}
+          color='secondary'
+          sx={{ width: '100%', backgroundColor: 'secondary' }}
         >
           <CardContent>
-            <Typography variant="h4" color="secondary" gutterBottom>
+            <Typography variant='h4' color='secondary' gutterBottom>
               Update Location/Vessel
             </Typography>
           </CardContent>
@@ -72,19 +72,19 @@ const Update = () => {
 
       <Card
         sx={{
-          width: "100%",
-          mt: "33px",
-          pt: "33px",
-          borderBottom: "2px solid grey",
+          width: '100%',
+          mt: '33px',
+          pt: '33px',
+          borderBottom: '2px solid grey',
         }}
       >
-        <Grid container spacing={2} sx={{ ml: "11px" }}>
-          <Grid item xs={12} sm={4} sx={{ marginLeft: "100px" }}>
+        <Grid container spacing={2} sx={{ ml: '11px' }}>
+          <Grid item xs={12} sm={4} sx={{ marginLeft: '100px' }}>
             <TextField
-              id="outlined-basic"
-              label="Location/vessel"
-              variant="outlined"
-              value={locationLists ? locationLists.locationName : ""}
+              id='outlined-basic'
+              label='Location/vessel'
+              variant='outlined'
+              value={locationLists ? locationLists.locationName : ''}
               onChange={(e) => {
                 setLocationLists({
                   ...locationLists,
@@ -92,15 +92,15 @@ const Update = () => {
                 });
                 setLocation(e.target.value);
               }}
-              width={"50%"}
+              width={'50%'}
             />
           </Grid>
           <Grid item xs={12} sm={6}>
             <TextField
-              id="outlined-basic"
-              label="SubLocation"
-              variant="outlined"
-              value={locationLists ? locationLists.address.address : ""}
+              id='outlined-basic'
+              label='SubLocation'
+              variant='outlined'
+              value={locationLists ? locationLists.address.address : ''}
               onChange={(e) => {
                 setLocationLists({
                   ...locationLists,
@@ -108,19 +108,19 @@ const Update = () => {
                 });
                 setSubLocation(e.target.value);
               }}
-              width={"50%"}
+              width={'50%'}
             />
           </Grid>
         </Grid>
         <Box
           sx={{
-            marginTop: "40px",
-            display: "flex",
-            marginLeft: "400px",
-            marginBottom: "15px",
+            marginTop: '40px',
+            display: 'flex',
+            marginLeft: '400px',
+            marginBottom: '15px',
           }}
         >
-          <Button variant="contained" color="secondary" onClick={handleClick}>
+          <Button variant='contained' color='secondary' onClick={handleClick}>
             Update
           </Button>
         </Box>

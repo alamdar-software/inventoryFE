@@ -87,30 +87,38 @@ export default function TableComp({ data }) {
             </TableRow>
           </TableHead>
           <TableBody>
-            {data.currencyList
-              ?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-              .map((row, index) => (
-                <TableRow hover role="checkbox" tabIndex={-1} key={index}>
-                  <TableCell>{row.currencyName}</TableCell>
-                  <TableCell>
-                    <ButtonGroup>
-                      <Link to={`/currency/update/${row.id}`}>
-                        <Button variant="contained" color="primary">
-                          Edit
+            {data.length === 0 ? (
+              <TableRow>
+                <TableCell colSpan={columns.length} align='center'>
+                  No Data Found
+                </TableCell>
+              </TableRow>
+            ) : (
+              data.currencyList
+                ?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                .map((row, index) => (
+                  <TableRow hover role="checkbox" tabIndex={-1} key={index}>
+                    <TableCell>{row.currencyName}</TableCell>
+                    <TableCell>
+                      <ButtonGroup>
+                        <Link to={`/currency/update/${row.id}`}>
+                          <Button variant="contained" color="primary">
+                            Edit
+                          </Button>
+                        </Link>
+                        <Button
+                          variant="contained"
+                          color="secondary"
+                          sx={{ marginLeft: "8px !important" }}
+                          onClick={() => handleDelete(row.id)}
+                        >
+                          Delete
                         </Button>
-                      </Link>
-                      <Button
-                        variant="contained"
-                        color="secondary"
-                        sx={{ marginLeft: "8px !important" }}
-                        onClick={() => handleDelete(row.id)}
-                      >
-                        Delete
-                      </Button>
-                    </ButtonGroup>
-                  </TableCell>
-                </TableRow>
-              ))}
+                      </ButtonGroup>
+                    </TableCell>
+                  </TableRow>
+                ))
+            )}
           </TableBody>
         </Table>
       </TableContainer>

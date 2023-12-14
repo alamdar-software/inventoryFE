@@ -9,6 +9,7 @@ import {
 } from "@mui/material";
 import TableComp from "./TableComp.jsx";
 import { useEffect } from "react";
+import Swal from "sweetalert2";
 // const currency = {
 //   currencyName: "",
 // };
@@ -34,6 +35,17 @@ export const Currency = () => {
     getCurrency();
   }, []);
   const handleClick = async () => {
+    const { currencyName } = currency;
+
+
+    if (!currencyName) {
+      Swal.fire({
+        title: 'Please Fill All Fields',
+        text: 'Fields are Empty?',
+        icon: 'question',
+      });
+      return;
+    }
     const res = await fetch("http://localhost:8080/currency/add", {
       method: "POST",
       headers: {
