@@ -100,7 +100,7 @@ export const Cipl = () => {
     setformData({
       ...formData,
       locationName: selectedLocation,
-      SubLocation: "", // Reset sublocation when location changes
+      // Reset sublocation when location changes
     });
     const selectedLocationObj = state.location.data.find(
       (location) => location.locationName === selectedLocation
@@ -108,6 +108,25 @@ export const Cipl = () => {
     setSubLocations(selectedLocationObj ? selectedLocationObj?.addresses : []);
   };
   console.log(subLocations, "yuuuu");
+
+  const handleSubLocationChange = (e, index) => {
+    const value = e.target.value;
+
+    setSubLocations((prevSubLocations) => {
+      const updatedSubLocations = [...prevSubLocations];
+      updatedSubLocations[index] = value;
+      return updatedSubLocations;
+    });
+
+    setformData((prevFormData) => {
+      const updatedFormData = {
+        ...prevFormData,
+        SubLocation: [...prevFormData.SubLocation],
+      };
+      updatedFormData.SubLocation[index] = value;
+      return updatedFormData;
+    });
+  };
   const updateFormDataSubLocation = (index, value) => {
     setformData((prevFormData) => {
       const updatedSubLocations = [...prevFormData.SubLocation];
@@ -116,15 +135,6 @@ export const Cipl = () => {
         ...prevFormData,
         SubLocation: updatedSubLocations,
       };
-    });
-  };
-
-  const handleSubLocationChange = (e, index, value) => {
-    updateFormDataSubLocation(index, value);
-    setSubLocations((prevSubLocations) => {
-      const updatedSubLocations = [...prevSubLocations];
-      updatedSubLocations[index] = value;
-      return updatedSubLocations;
     });
   };
   console.log(subLocations, "subbbbbbbbbbbbb");
@@ -430,7 +440,7 @@ export const Cipl = () => {
               })
             } */
             /*  onChange={(e) => handleSubLocationChange(index, e.target.value)} */
-            onChange={(e) => handleSubLocationChange(index, e.target.value)}
+            onChange={(e) => handleSubLocationChange(e, index)}
             //onChange={handleChange}
           >
             {subLocations.map((address, index) => (
