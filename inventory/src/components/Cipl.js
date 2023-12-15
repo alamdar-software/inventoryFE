@@ -75,7 +75,7 @@ export const Cipl = () => {
   const [amount, setAmount] = useState([]);
   const [brand, setBrand] = useState([]);
   const [remarks, setRemarks] = useState([]);
-
+  const [selectedSubLocations, setSelectedSubLocations] = useState([]);
   useEffect(() => {
     dispatch(fetchlocation());
     dispatch(fetchShipper());
@@ -108,23 +108,25 @@ export const Cipl = () => {
     setSubLocations(selectedLocationObj && selectedLocationObj?.addresses);
     console.log(selectedLocationObj, "yuuuu");
   };
-  const updateFormDataSubLocation = (index, value) => {
+
+  const handleSubLocationChange = (e, index) => {
+    const selectedSubLocation = e.target.value || ""; // Ensure a default value if undefined
+    setSelectedSubLocations((prevSubLocations) => {
+      const updatedSubLocations = [...prevSubLocations];
+      updatedSubLocations[index] = selectedSubLocation;
+      return updatedSubLocations;
+    });
+
+    updateFormDataSubLocation(index, selectedSubLocation);
+  };
+  const updateFormDataSubLocation = (index, selectedSubLocation) => {
     setformData((prevFormData) => {
       const updatedSubLocations = [...prevFormData.SubLocation];
-      updatedSubLocations[index] = value;
+      updatedSubLocations[index] = selectedSubLocation;
       return {
         ...prevFormData,
         SubLocation: updatedSubLocations,
       };
-    });
-  };
-
-  const handleSubLocationChange = (e, index, value) => {
-    updateFormDataSubLocation(index, value);
-    setSubLocations((prevSubLocations) => {
-      const updatedSubLocations = [...prevSubLocations];
-      updatedSubLocations[index] = value;
-      return updatedSubLocations;
     });
   };
   console.log(subLocations, "subbbbbbbbbbbbb");
@@ -414,7 +416,6 @@ export const Cipl = () => {
           <Select
             labelId="demo-simple-select-label"
             id="demo-simple-select"
-            //value={age}
             label="location"
             MenuProps={{
               PaperProps: {
@@ -423,15 +424,7 @@ export const Cipl = () => {
                 },
               },
             }}
-            /*  onChange={(e) =>
-              setformData({
-                ...formData,
-                SubLocation: [e.target.value],
-              })
-            } */
-            /*  onChange={(e) => handleSubLocationChange(index, e.target.value)} */
-            onChange={(e) => handleSubLocationChange(index, e.target.value)}
-            //onChange={handleChange}
+            onChange={(e) => handleSubLocationChange(e, index)}
           >
             {subLocations.map((address, index) => (
               <MenuItem key={index} value={address?.address}>
