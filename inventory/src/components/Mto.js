@@ -54,16 +54,60 @@ const Mto = () => {
   }, []);
   console.log(state, 'mto');
 
-  const handleSubLocationChange = (index, value) => {
-    updateFormDataSubLocation(index, value);
+  // const handleSubLocationChange = (index, value) => {
+  //   updateFormDataSubLocation(index, value);
+  //   setSubLocations((prevSubLocations) => {
+  //     const updatedSubLocations = [...prevSubLocations];
+  //     updatedSubLocations[index] = value;
+  //     return updatedSubLocations;
+  //   });
+  // };
+  // console.log(subLocations);
+  // console.log(formData);
+
+  const handleLocationChange = (e) => {
+    const selectedLocation = e.target.value;
+    setformData({
+      ...formData,
+      locationName: selectedLocation,
+      // Reset sublocation when location changes
+    });
+    const selectedLocationObj = state.location.data.find(
+      (location) => location.locationName === selectedLocation
+    );
+    setSubLocations(selectedLocationObj ? selectedLocationObj?.addresses : []);
+  };
+  console.log(subLocations, 'subbbbb');
+
+  const handleSubLocationChange = (e, index) => {
+    const value = e.target.value;
+
     setSubLocations((prevSubLocations) => {
       const updatedSubLocations = [...prevSubLocations];
       updatedSubLocations[index] = value;
       return updatedSubLocations;
     });
+
+    setformData((prevFormData) => {
+      const updatedFormData = {
+        ...prevFormData,
+        SubLocation: [...prevFormData.SubLocation],
+      };
+      updatedFormData.SubLocation[index] = value;
+      return updatedFormData;
+    });
   };
-  console.log(subLocations);
-  console.log(formData);
+
+  const updateFormDataSubLocation = (index, value) => {
+    setformData((prevFormData) => {
+      const updatedSubLocations = [...prevFormData.SubLocation];
+      updatedSubLocations[index] = value;
+      return {
+        ...prevFormData,
+        SubLocation: updatedSubLocations,
+      };
+    });
+  };
 
   const handleSnChange = (index, value) => {
     updateFormDataSn(index, value);
@@ -162,16 +206,16 @@ const Mto = () => {
       };
     });
   };
-  const updateFormDataSubLocation = (index, value) => {
-    setformData((prevFormData) => {
-      const updatedSubLocations = [...prevFormData.SubLocation];
-      updatedSubLocations[index] = value;
-      return {
-        ...prevFormData,
-        SubLocation: updatedSubLocations,
-      };
-    });
-  };
+  // const updateFormDataSubLocation = (index, value) => {
+  //   setformData((prevFormData) => {
+  //     const updatedSubLocations = [...prevFormData.SubLocation];
+  //     updatedSubLocations[index] = value;
+  //     return {
+  //       ...prevFormData,
+  //       SubLocation: updatedSubLocations,
+  //     };
+  //   });
+  // };
 
   const handleAddClick = () => {
     setFormRows((prevRows) => prevRows + 1);
@@ -206,7 +250,7 @@ const Mto = () => {
                 },
               },
             }}
-            onChange={(e) => handleSubLocationChange(index, e.target.value)}
+            onChange={(e) => handleSubLocationChange(e, index)}
             // onChange={(e) =>
             //   setformData({
             //     ...formData,
@@ -215,12 +259,17 @@ const Mto = () => {
             // }
             //onChange={handleChange}
           >
-            {state.location.data?.map((item, index) => (
+            {subLocations.map((address, index) => (
+              <MenuItem key={index} value={address?.address}>
+                {address?.address}
+              </MenuItem>
+            ))}
+            {/* {subLocations.location.data?.map((item, index) => (
               <MenuItem key={index} value={item?.locationName}>
                 {' '}
                 {item?.locationName}
               </MenuItem>
-            ))}
+            ))} */}
           </Select>
         </FormControl>
         <FormControl fullWidth sx={{ width: '50%', marginRight: '10px' }}>
@@ -399,12 +448,7 @@ const Mto = () => {
                   },
                 },
               }}
-              onChange={(e) =>
-                setformData({
-                  ...formData,
-                  locationName: e.target.value,
-                })
-              }
+              onChange={handleLocationChange}
               //onChange={handleChange}
             >
               {state.location.data?.map((item, index) => (
