@@ -100,31 +100,20 @@ export const Cipl = () => {
     setformData({
       ...formData,
       locationName: selectedLocation,
-      // Reset sublocation when location changes
+      SubLocation: [""], // Reset sublocation when location changes
     });
     const selectedLocationObj = state.location.data.find(
       (location) => location.locationName === selectedLocation
     );
-    setSubLocations(selectedLocationObj ? selectedLocationObj?.addresses : []);
+    setSubLocations(selectedLocationObj && selectedLocationObj?.addresses);
+    console.log(selectedLocationObj, "yuuuu");
   };
-  console.log(subLocations, "yuuuu");
-
-  const handleSubLocationChange = (e, index) => {
-    const value = e.target.value;
-
+  const handleSubLocationChange = (index, value) => {
+    updateFormDataSubLocation(index, value);
     setSubLocations((prevSubLocations) => {
       const updatedSubLocations = [...prevSubLocations];
       updatedSubLocations[index] = value;
       return updatedSubLocations;
-    });
-
-    setformData((prevFormData) => {
-      const updatedFormData = {
-        ...prevFormData,
-        SubLocation: [...prevFormData.SubLocation],
-      };
-      updatedFormData.SubLocation[index] = value;
-      return updatedFormData;
     });
   };
   const updateFormDataSubLocation = (index, value) => {
@@ -137,6 +126,7 @@ export const Cipl = () => {
       };
     });
   };
+
   console.log(subLocations, "subbbbbbbbbbbbb");
   console.log(formData, "nooooooooooo");
 
@@ -440,10 +430,10 @@ export const Cipl = () => {
               })
             } */
             /*  onChange={(e) => handleSubLocationChange(index, e.target.value)} */
-            onChange={(e) => handleSubLocationChange(e, index)}
+            onChange={(e) => handleSubLocationChange(index, e.target.value)}
             //onChange={handleChange}
           >
-            {subLocations.map((address, index) => (
+            {formData.SubLocation.map((address, index) => (
               <MenuItem key={index} value={address?.address}>
                 {address?.address}
               </MenuItem>
