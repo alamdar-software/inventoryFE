@@ -108,14 +108,6 @@ export const Cipl = () => {
     setSubLocations(selectedLocationObj && selectedLocationObj?.addresses);
     console.log(selectedLocationObj, "yuuuu");
   };
-  const handleSubLocationChange = (index, value) => {
-    updateFormDataSubLocation(index, value);
-    setSubLocations((prevSubLocations) => {
-      const updatedSubLocations = [...prevSubLocations];
-      updatedSubLocations[index] = value;
-      return updatedSubLocations;
-    });
-  };
   const updateFormDataSubLocation = (index, value) => {
     setformData((prevFormData) => {
       const updatedSubLocations = [...prevFormData.SubLocation];
@@ -127,6 +119,14 @@ export const Cipl = () => {
     });
   };
 
+  const handleSubLocationChange = (e, index, value) => {
+    updateFormDataSubLocation(index, value);
+    setSubLocations((prevSubLocations) => {
+      const updatedSubLocations = [...prevSubLocations];
+      updatedSubLocations[index] = value;
+      return updatedSubLocations;
+    });
+  };
   console.log(subLocations, "subbbbbbbbbbbbb");
   console.log(formData, "nooooooooooo");
 
@@ -433,7 +433,7 @@ export const Cipl = () => {
             onChange={(e) => handleSubLocationChange(index, e.target.value)}
             //onChange={handleChange}
           >
-            {formData.SubLocation.map((address, index) => (
+            {subLocations.map((address, index) => (
               <MenuItem key={index} value={address?.address}>
                 {address?.address}
               </MenuItem>
