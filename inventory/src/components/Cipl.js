@@ -89,6 +89,7 @@ export const Cipl = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+      console.log(formData, "formmmm");
       const res = await fetch("");
     } catch (error) {}
   };
@@ -146,8 +147,30 @@ export const Cipl = () => {
     if (formRows > 1) {
       setFormRows((prevRows) => prevRows - 1);
       setFormControls((prevControls) => prevControls.slice(0, -1));
+
+      // Remove the last element from each array in the form data
+      setSubLocations((prevSubLocations) => prevSubLocations.slice(0, -1));
+      setItem((prevItem) => prevItem.slice(0, -1));
+      setHs((prevHs) => prevHs.slice(0, -1));
+      // Repeat the above line for other arrays in your form data
+
+      setSelectedSubLocations((prevSubLocations) =>
+        prevSubLocations.slice(0, -1)
+      );
+
+      // Update formData to remove the last element
+      setformData((prevFormData) => {
+        const updatedFormData = { ...prevFormData };
+        updatedFormData.SubLocation = updatedFormData.SubLocation.slice(0, -1);
+        updatedFormData.item = updatedFormData.item.slice(0, -1);
+        updatedFormData.hs = updatedFormData.hs.slice(0, -1);
+        // Repeat the above line for other arrays in your form data
+
+        return updatedFormData;
+      });
     }
   };
+  console.log(formData, "naya");
 
   const handleItemChange = (index, value) => {
     updateFormDataItem(index, value);
