@@ -7,6 +7,8 @@ import ShipperSlice from "./slice/ShipperSlice";
 import pickupSlice from "./slice/PickUpSlice";
 import CurrencySlice from "./slice/CurrencySlice";
 import ItemSlice from "./slice/ItemSlice";
+import BrandSlice from "./slice/BrandSlice";
+import entitySlice from "./slice/entitySlice";
 
 export const store = configureStore({
   reducer: {
@@ -18,5 +20,7 @@ export const store = configureStore({
     pickup: pickupSlice,
     currency: CurrencySlice,
     item: ItemSlice,
+    brand: BrandSlice,
+    entity: entitySlice,
   },
 });
