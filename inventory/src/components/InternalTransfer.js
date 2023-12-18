@@ -11,21 +11,21 @@ import {
   TextField,
   TextareaAutosize,
   Typography,
-} from "@mui/material";
-import React, { useState } from "react";
-import { useEffect } from "react";
-import { useSelector } from "react-redux";
-import { useDispatch } from "react-redux";
-import { fetchlocation } from "../redux/slice/location";
-import { fetchItem } from "../redux/slice/ItemSlice";
-import AddIcon from "@mui/icons-material/Add";
-import DeleteIcon from "@mui/icons-material/Delete";
+} from '@mui/material';
+import React, { useState } from 'react';
+import { useEffect } from 'react';
+import { useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
+import { fetchlocation } from '../redux/slice/location';
+import { fetchItem } from '../redux/slice/ItemSlice';
+import AddIcon from '@mui/icons-material/Add';
+import DeleteIcon from '@mui/icons-material/Delete';
 const InternalTransfer = () => {
   const [formData, setformData] = useState({
-    locationName: "",
-    transferDate: "",
-    consigneeName: "",
-    repairService: "",
+    locationName: '',
+    transferDate: '',
+    consigneeName: '',
+    repairService: '',
     SubLocation: [],
     item: [],
     sn: [],
@@ -43,6 +43,7 @@ const InternalTransfer = () => {
   const state = useSelector((state) => state);
   const [formControls, setFormControls] = useState([{ key: 0 }]);
   const [formRows, setFormRows] = useState(1);
+  const [selectedSubLocations, setSelectedSubLocations] = useState([]);
 
   useEffect(() => {
     dispatch(fetchlocation());
@@ -62,31 +63,51 @@ const InternalTransfer = () => {
     setSubLocations(selectedLocationObj ? selectedLocationObj?.addresses : []);
   };
 
-  const handleSubLocationChange = (e, index) => {
-    const value = e.target.value;
+  // const handleSubLocationChange = (e, index) => {
+  //   const value = e.target.value;
 
-    setSubLocations((prevSubLocations) => {
+  //   setSubLocations((prevSubLocations) => {
+  //     const updatedSubLocations = [...prevSubLocations];
+  //     updatedSubLocations[index] = value;
+  //     return updatedSubLocations;
+  //   });
+
+  //   setformData((prevFormData) => {
+  //     const updatedFormData = {
+  //       ...prevFormData,
+  //       SubLocation: [...prevFormData.SubLocation],
+  //     };
+  //     updatedFormData.SubLocation[index] = value;
+  //     return updatedFormData;
+  //   });
+  // };
+  // console.log(subLocations);
+  // console.log(formData);
+
+  // const updateFormDataSubLocation = (index, value) => {
+  //   setformData((prevFormData) => {
+  //     const updatedSubLocations = [...prevFormData.SubLocation];
+  //     updatedSubLocations[index] = value;
+  //     return {
+  //       ...prevFormData,
+  //       SubLocation: updatedSubLocations,
+  //     };
+  //   });
+  // };
+  const handleSubLocationChange = (e, index) => {
+    const selectedSubLocation = e.target.value || ''; // Ensure a default value if undefined
+    setSelectedSubLocations((prevSubLocations) => {
       const updatedSubLocations = [...prevSubLocations];
-      updatedSubLocations[index] = value;
+      updatedSubLocations[index] = selectedSubLocation;
       return updatedSubLocations;
     });
 
-    setformData((prevFormData) => {
-      const updatedFormData = {
-        ...prevFormData,
-        SubLocation: [...prevFormData.SubLocation],
-      };
-      updatedFormData.SubLocation[index] = value;
-      return updatedFormData;
-    });
+    updateFormDataSubLocation(index, selectedSubLocation);
   };
-  console.log(subLocations);
-  console.log(formData);
-
-  const updateFormDataSubLocation = (index, value) => {
+  const updateFormDataSubLocation = (index, selectedSubLocation) => {
     setformData((prevFormData) => {
       const updatedSubLocations = [...prevFormData.SubLocation];
-      updatedSubLocations[index] = value;
+      updatedSubLocations[index] = selectedSubLocation;
       return {
         ...prevFormData,
         SubLocation: updatedSubLocations,
@@ -102,7 +123,7 @@ const InternalTransfer = () => {
       return updateItem;
     });
   };
-  console.log(item, "item");
+  console.log(item, 'item');
   console.log(formData);
 
   const updateFormDataItem = (index, value) => {
@@ -197,8 +218,8 @@ const InternalTransfer = () => {
       ...prevControls,
       { key: prevControls.length },
     ]);
-    setSubLocations((prevSubLocations) => [...prevSubLocations, ""]);
-    updateFormDataSubLocation(formControls.length, "");
+    setSubLocations((prevSubLocations) => [...prevSubLocations, '']);
+    updateFormDataSubLocation(formControls.length, '');
   };
 
   const handleDeleteClick = () => {
@@ -209,14 +230,14 @@ const InternalTransfer = () => {
   };
   const renderFormControls = () => {
     return formControls.map((control, index) => (
-      <div key={control.key} style={{ display: "flex", marginBottom: "10px" }}>
-        <FormControl fullWidth sx={{ width: "50%", marginRight: "10px" }}>
-          <InputLabel id="demo-simple-select-label">Sub Location</InputLabel>
+      <div key={control.key} style={{ display: 'flex', marginBottom: '10px' }}>
+        <FormControl fullWidth sx={{ width: '50%', marginRight: '10px' }}>
+          <InputLabel id='demo-simple-select-label'>Sub Location</InputLabel>
           <Select
-            labelId="demo-simple-select-label"
-            id="demo-simple-select"
+            labelId='demo-simple-select-label'
+            id='demo-simple-select'
             //value={age}
-            label="location"
+            label='location'
             MenuProps={{
               PaperProps: {
                 style: {
@@ -240,13 +261,13 @@ const InternalTransfer = () => {
             ))}
           </Select>
         </FormControl>
-        <FormControl fullWidth sx={{ width: "50%", marginRight: "10px" }}>
-          <InputLabel id="demo-simple-select-label">Item Name</InputLabel>
+        <FormControl fullWidth sx={{ width: '50%', marginRight: '10px' }}>
+          <InputLabel id='demo-simple-select-label'>Item Name</InputLabel>
           <Select
-            labelId="demo-simple-select-label"
-            id="itemName"
+            labelId='demo-simple-select-label'
+            id='itemName'
             //value={age}
-            label="itemName"
+            label='itemName'
             // onChange={(e) =>
             //   setformData({
             //     ...formData,
@@ -265,19 +286,19 @@ const InternalTransfer = () => {
           >
             {state.item.data?.map((item, index) => (
               <MenuItem key={index} value={item?.itemName}>
-                {" "}
+                {' '}
                 {item?.itemName}
               </MenuItem>
             ))}
           </Select>
         </FormControl>
-        <FormControl fullWidth sx={{ width: "50%", marginRight: "10px" }}>
-          <InputLabel id="demo-simple-select-label">Part No</InputLabel>
+        <FormControl fullWidth sx={{ width: '50%', marginRight: '10px' }}>
+          <InputLabel id='demo-simple-select-label'>Part No</InputLabel>
           <Select
-            labelId="demo-simple-select-label"
-            id="demo-simple-select"
+            labelId='demo-simple-select-label'
+            id='demo-simple-select'
             //value={age}
-            label="location"
+            label='location'
             MenuProps={{
               PaperProps: {
                 style: {
@@ -295,7 +316,7 @@ const InternalTransfer = () => {
           >
             {state.location.data?.map((item, index) => (
               <MenuItem key={index} value={item?.locationName}>
-                {" "}
+                {' '}
                 {item?.locationName}
                 {item?.locationName}
               </MenuItem>
@@ -303,26 +324,26 @@ const InternalTransfer = () => {
           </Select>
         </FormControl>
 
-        <FormControl fullWidth sx={{ width: "30%", marginRight: "10px" }}>
+        <FormControl fullWidth sx={{ width: '30%', marginRight: '10px' }}>
           <Grid item xs={12} sm={6}>
             <TextField
-              sx={{ width: "90%" }}
-              id="outlined-basic"
-              label="S/N"
-              variant="outlined"
+              sx={{ width: '90%' }}
+              id='outlined-basic'
+              label='S/N'
+              variant='outlined'
               // value={sn}
               onChange={(e) => handleSnChange(index, e.target.value)}
               fullWidth
             />
           </Grid>
         </FormControl>
-        <FormControl fullWidth sx={{ width: "30%", marginRight: "10px" }}>
+        <FormControl fullWidth sx={{ width: '30%', marginRight: '10px' }}>
           <Grid item xs={12} sm={6}>
             <TextField
-              sx={{ width: "90%" }}
-              id="outlined-basic"
-              label="Purchase Order(D.O.P)"
-              variant="outlined"
+              sx={{ width: '90%' }}
+              id='outlined-basic'
+              label='Purchase Order(D.O.P)'
+              variant='outlined'
               // value={locationName}
               // onChange={(e) => setLocation(e.target.value)}
               onChange={(e) => handlePurchaseChange(index, e.target.value)}
@@ -330,13 +351,13 @@ const InternalTransfer = () => {
             />
           </Grid>
         </FormControl>
-        <FormControl fullWidth sx={{ width: "30%", marginRight: "10px" }}>
+        <FormControl fullWidth sx={{ width: '30%', marginRight: '10px' }}>
           <Grid item xs={12} sm={6}>
             <TextField
-              sx={{ width: "90%" }}
-              id="outlined-basic"
-              label="Quantity"
-              variant="outlined"
+              sx={{ width: '90%' }}
+              id='outlined-basic'
+              label='Quantity'
+              variant='outlined'
               // value={locationName}
               onChange={(e) => handleQuantityChange(index, e.target.value)}
               fullWidth
@@ -344,12 +365,12 @@ const InternalTransfer = () => {
           </Grid>
         </FormControl>
 
-        <FormControl fullWidth sx={{ width: "50%", marginRight: "10px" }}>
+        <FormControl fullWidth sx={{ width: '50%', marginRight: '10px' }}>
           <Grid item xs={12} sm={6}>
             <TextareaAutosize
-              sx={{ width: "90%" }}
-              aria-label="Brand"
-              placeholder="Enter Remarks"
+              sx={{ width: '90%' }}
+              aria-label='Brand'
+              placeholder='Enter Remarks'
               // value={brandValue} // You can set the value and handle changes as needed
               // onChange={(e) => handleBrandChange(e.target.value)}
               onChange={(e) => handleRemarksChange(index, e.target.value)}
@@ -359,16 +380,16 @@ const InternalTransfer = () => {
         </FormControl>
         <div
           style={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
           }}
         >
           <button>
             <AddIcon onClick={handleAddClick} />
           </button>
           <Button onClick={handleDeleteClick}>
-            <DeleteIcon style={{ color: "red" }} />
+            <DeleteIcon style={{ color: 'red' }} />
           </Button>
         </div>
 
@@ -380,18 +401,18 @@ const InternalTransfer = () => {
     <>
       <Grid>
         <Card
-          color="secondary"
+          color='secondary'
           sx={{
-            width: "100%",
-            backgroundColor: "secondary",
-            borderBottom: "2px solid yellow",
-            mb: "33px",
+            width: '100%',
+            backgroundColor: 'secondary',
+            borderBottom: '2px solid yellow',
+            mb: '33px',
           }}
         >
           <CardContent>
             <Typography
-              variant="h4"
-              color="secondary"
+              variant='h4'
+              color='secondary'
               gutterBottom
               style={{ fontFamily: "'EB Garamond'" }}
             >
@@ -400,15 +421,15 @@ const InternalTransfer = () => {
           </CardContent>
         </Card>
       </Grid>
-      <Grid container spacing={2} sx={{ mt: "23px" }}>
+      <Grid container spacing={2} sx={{ mt: '23px' }}>
         <Grid item xs={12} sm={6}>
-          <FormControl fullWidth sx={{ width: "90%" }}>
-            <InputLabel id="demo-simple-select-label">Location</InputLabel>
+          <FormControl fullWidth sx={{ width: '90%' }}>
+            <InputLabel id='demo-simple-select-label'>Location</InputLabel>
             <Select
-              labelId="demo-simple-select-label"
-              id="demo-simple-select"
+              labelId='demo-simple-select-label'
+              id='demo-simple-select'
               //value={age}
-              label="location"
+              label='location'
               MenuProps={{
                 PaperProps: {
                   style: {
@@ -421,7 +442,7 @@ const InternalTransfer = () => {
             >
               {state.location.data?.map((item, index) => (
                 <MenuItem key={index} value={item?.locationName}>
-                  {" "}
+                  {' '}
                   {item?.locationName}
                 </MenuItem>
               ))}
@@ -430,27 +451,27 @@ const InternalTransfer = () => {
         </Grid>
         <Grid item xs={12} sm={6}>
           <TextField
-            sx={{ width: "90%" }}
-            id="outlined-basic"
-            label="Transfer Date"
-            variant="outlined"
+            sx={{ width: '90%' }}
+            id='outlined-basic'
+            label='Transfer Date'
+            variant='outlined'
             // value={locationName}
             // onChange={(e) => setLocation(e.target.value)}
             fullWidth
           />
         </Grid>
       </Grid>
-      <Grid container spacing={2} sx={{ mt: "33px" }}>
+      <Grid container spacing={2} sx={{ mt: '33px' }}>
         <Grid item xs={12} sm={6}>
-          <FormControl fullWidth sx={{ width: "90%" }}>
-            <InputLabel id="demo-simple-select-label">
+          <FormControl fullWidth sx={{ width: '90%' }}>
+            <InputLabel id='demo-simple-select-label'>
               Destination/SubLocation
             </InputLabel>
             <Select
-              labelId="demo-simple-select-label"
-              id="demo-simple-select"
+              labelId='demo-simple-select-label'
+              id='demo-simple-select'
               //value={age}
-              label="location"
+              label='location'
               MenuProps={{
                 PaperProps: {
                   style: {
@@ -462,7 +483,7 @@ const InternalTransfer = () => {
             >
               {state.location.data?.map((item, index) => (
                 <MenuItem key={index} value={item?.address}>
-                  {" "}
+                  {' '}
                   {item?.address}
                 </MenuItem>
               ))}
@@ -473,28 +494,28 @@ const InternalTransfer = () => {
 
       <div
         sx={{
-          marginTop: "5px",
+          marginTop: '5px',
 
-          flexWrap: "wrap",
-          width: "80%",
+          flexWrap: 'wrap',
+          width: '80%',
         }}
       >
         {formData.locationName && (
           <>
-            <div style={{ display: "flex", flexWrap: "wrap" }}>
+            <div style={{ display: 'flex', flexWrap: 'wrap' }}>
               <Grid
-                sx={{ overflowX: "scroll", width: "100%", flexWrap: "wrap" }}
+                sx={{ overflowX: 'scroll', width: '100%', flexWrap: 'wrap' }}
               >
                 <Card
-                  color="secondary"
+                  color='secondary'
                   sx={{
-                    width: "111%",
-                    marginTop: "20px",
-                    backgroundColor: "secondary",
+                    width: '111%',
+                    marginTop: '20px',
+                    backgroundColor: 'secondary',
                   }}
                 >
                   <CardContent
-                    sx={{ minWidth: "100%", display: "flex", flexWrap: "wrap" }}
+                    sx={{ minWidth: '100%', display: 'flex', flexWrap: 'wrap' }}
                   >
                     {renderFormControls()}
                   </CardContent>
@@ -504,9 +525,9 @@ const InternalTransfer = () => {
           </>
         )}
       </div>
-      <Box sx={{ display: "flex", justifyContent: "center", mt: "33px" }}>
-        {" "}
-        <Button variant="contained" size="large" color="secondary">
+      <Box sx={{ display: 'flex', justifyContent: 'center', mt: '33px' }}>
+        {' '}
+        <Button variant='contained' size='large' color='secondary'>
           Add
         </Button>
       </Box>

@@ -232,12 +232,44 @@ const Mto = () => {
     updateFormDataSubLocation(formControls.length, '');
   };
 
-  const handleDeleteClick = () => {
+  const handleDeleteClick = (index) => {
     if (formRows > 1) {
       setFormRows((prevRows) => prevRows - 1);
-      setFormControls((prevControls) => prevControls.slice(0, -1));
+      setFormControls((prevControls) =>
+        prevControls.filter((_, i) => i !== index)
+      );
+
+      // Remove the element at the specified index from each array in the form data
+      setSubLocations((prevSubLocations) =>
+        prevSubLocations.filter((_, i) => i !== index)
+      );
+      // setItem((prevItem) => prevItem.filter((_, i) => i !== index));
+
+      // Repeat the above line for other arrays in your form data
+
+      setSelectedSubLocations((prevSubLocations) =>
+        prevSubLocations.filter((_, i) => i !== index)
+      );
+
+      // Update formData to remove the element at the specified index
+      setformData((prevFormData) => {
+        const updatedFormData = { ...prevFormData };
+        updatedFormData.SubLocation = updatedFormData.SubLocation.filter(
+          (_, i) => i !== index
+        );
+        updatedFormData.item = updatedFormData.item.filter(
+          (_, i) => i !== index
+        );
+        // updatedFormData.hs = updatedFormData.hs.filter((_, i) => i !== index);
+        // Repeat the above line for other arrays in your form data
+
+        return updatedFormData;
+      });
     }
   };
+
+  console.log(formData);
+
   const renderFormControls = () => {
     return formControls.map((control, index) => (
       <div key={control.key} style={{ display: 'flex', marginBottom: '10px' }}>
@@ -403,7 +435,7 @@ const Mto = () => {
           <button>
             <AddIcon onClick={handleAddClick} />
           </button>
-          <Button onClick={handleDeleteClick}>
+          <Button onClick={() => handleDeleteClick(index)}>
             <DeleteIcon style={{ color: 'red' }} />
           </Button>
         </div>
