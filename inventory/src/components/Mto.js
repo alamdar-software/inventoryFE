@@ -46,6 +46,7 @@ const Mto = () => {
   const state = useSelector((state) => state);
   const [formRows, setFormRows] = useState(1);
   const [formControls, setFormControls] = useState([{ key: 0 }]);
+  const [selectedSubLocations, setSelectedSubLocations] = useState([]);
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(fetchConsignee());
@@ -80,34 +81,38 @@ const Mto = () => {
   console.log(subLocations, 'subbbbb');
 
   const handleSubLocationChange = (e, index) => {
-    const value = e.target.value;
-
-    setSubLocations((prevSubLocations) => {
+    const selectedSubLocation = e.target.value || ''; // Ensure a default value if undefined
+    setSelectedSubLocations((prevSubLocations) => {
       const updatedSubLocations = [...prevSubLocations];
-      updatedSubLocations[index] = value;
+      updatedSubLocations[index] = selectedSubLocation;
       return updatedSubLocations;
     });
 
-    setformData((prevFormData) => {
-      const updatedFormData = {
-        ...prevFormData,
-        SubLocation: [...prevFormData.SubLocation],
-      };
-      updatedFormData.SubLocation[index] = value;
-      return updatedFormData;
-    });
+    updateFormDataSubLocation(index, selectedSubLocation);
   };
-
-  const updateFormDataSubLocation = (index, value) => {
+  const updateFormDataSubLocation = (index, selectedSubLocation) => {
     setformData((prevFormData) => {
       const updatedSubLocations = [...prevFormData.SubLocation];
-      updatedSubLocations[index] = value;
+      updatedSubLocations[index] = selectedSubLocation;
       return {
         ...prevFormData,
         SubLocation: updatedSubLocations,
       };
     });
   };
+  console.log(subLocations, 'subbbbbbbbbbbbb');
+  console.log(formData, 'nooooooooooo');
+
+  // const updateFormDataSubLocation = (index, value) => {
+  //   setformData((prevFormData) => {
+  //     const updatedSubLocations = [...prevFormData.SubLocation];
+  //     updatedSubLocations[index] = value;
+  //     return {
+  //       ...prevFormData,
+  //       SubLocation: updatedSubLocations,
+  //     };
+  //   });
+  // };
 
   const handleSnChange = (index, value) => {
     updateFormDataSn(index, value);
