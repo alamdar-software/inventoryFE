@@ -76,6 +76,7 @@ export const Cipl = () => {
   const [brand, setBrand] = useState([]);
   const [remarks, setRemarks] = useState([]);
   const [selectedSubLocations, setSelectedSubLocations] = useState([]);
+
   useEffect(() => {
     dispatch(fetchlocation());
     dispatch(fetchShipper());
@@ -143,31 +144,11 @@ export const Cipl = () => {
     updateFormDataSubLocation(formControls.length, ""); // Add an empty string to SubLocation
   };
 
-  const handleDeleteClick = () => {
-    if (formRows > 1) {
-      setFormRows((prevRows) => prevRows - 1);
-      setFormControls((prevControls) => prevControls.slice(0, -1));
-
-      // Remove the last element from each array in the form data
-      setSubLocations((prevSubLocations) => prevSubLocations.slice(0, -1));
-      setItem((prevItem) => prevItem.slice(0, -1));
-      setHs((prevHs) => prevHs.slice(0, -1));
-      // Repeat the above line for other arrays in your form data
-
-      setSelectedSubLocations((prevSubLocations) =>
-        prevSubLocations.slice(0, -1)
+  const handleDeleteClick = (index) => {
+    if (formControls.length > 1) {
+      setFormControls((prevControls) =>
+        prevControls.filter((_, i) => i !== index)
       );
-
-      // Update formData to remove the last element
-      setformData((prevFormData) => {
-        const updatedFormData = { ...prevFormData };
-        updatedFormData.SubLocation = updatedFormData.SubLocation.slice(0, -1);
-        updatedFormData.item = updatedFormData.item.slice(0, -1);
-        updatedFormData.hs = updatedFormData.hs.slice(0, -1);
-        // Repeat the above line for other arrays in your form data
-
-        return updatedFormData;
-      });
     }
   };
   console.log(formData, "naya");
@@ -688,7 +669,7 @@ export const Cipl = () => {
           <button>
             <AddIcon onClick={handleAddClick} />
           </button>
-          <Button onClick={handleDeleteClick}>
+          <Button onClick={() => handleDeleteClick(index)}>
             <DeleteIcon style={{ color: "red" }} />
           </Button>
         </div>
