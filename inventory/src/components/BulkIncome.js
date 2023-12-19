@@ -9,37 +9,37 @@ import {
   Select,
   TextField,
   Typography,
-} from '@mui/material';
-import React from 'react';
+} from "@mui/material";
+import React from "react";
 
 const BulkIncome = () => {
   return (
     <>
       <Grid>
         <Card
-          color='secondary'
+          color="secondary"
           sx={{
-            width: '100%',
-            backgroundColor: 'secondary',
-            borderBottom: '2px solid yellow',
+            width: "100%",
+            backgroundColor: "secondary",
+            borderBottom: "2px solid yellow",
           }}
         >
           <CardContent>
-            <Typography variant='h4' color='secondary' gutterBottom>
+            <Typography variant="h4" color="secondary" gutterBottom>
               Bulk Incoming Stock
             </Typography>
           </CardContent>
         </Card>
       </Grid>
-      <Grid container spacing={2} sx={{ mt: '33px' }}>
+      <Grid container spacing={2} sx={{ mt: "33px" }}>
         <Grid item xs={21} sm={6}>
-          <FormControl fullWidth sx={{ width: '90%' }}>
-            <InputLabel id='demo-simple-select-label'>Location</InputLabel>
+          <FormControl fullWidth sx={{ width: "90%" }}>
+            <InputLabel id="demo-simple-select-label">Location</InputLabel>
             <Select
-              labelId='demo-simple-select-label'
-              id='demo-simple-select'
+              labelId="demo-simple-select-label"
+              id="demo-simple-select"
               //value={age}
-              label='location'
+              label="location"
               //onChange={handleChange}
             >
               <MenuItem value={10}>Ten</MenuItem>
@@ -49,13 +49,13 @@ const BulkIncome = () => {
           </FormControl>
         </Grid>
         <Grid item xs={12} sm={6}>
-          <FormControl fullWidth sx={{ width: '90%' }}>
-            <InputLabel id='demo-simple-select-label'>Sub Location</InputLabel>
+          <FormControl fullWidth sx={{ width: "90%" }}>
+            <InputLabel id="demo-simple-select-label">Sub Location</InputLabel>
             <Select
-              labelId='demo-simple-select-label'
-              id='demo-simple-select'
+              labelId="demo-simple-select-label"
+              id="demo-simple-select"
               //value={age}
-              label='sublocation'
+              label="sublocation"
               //onChange={handleChange}
             >
               <MenuItem value={10}>Ten</MenuItem>
@@ -65,17 +65,17 @@ const BulkIncome = () => {
           </FormControl>
         </Grid>
       </Grid>
-      <Grid container spacing={2} sx={{ mt: '33px' }}>
+      <Grid container spacing={2} sx={{ mt: "33px" }}>
         <Grid item xs={21} sm={6}>
-          <FormControl fullWidth sx={{ width: '90%' }}>
-            <InputLabel id='demo-simple-select-label'>
+          <FormControl fullWidth sx={{ width: "90%" }}>
+            <InputLabel id="demo-simple-select-label">
               Item Description
             </InputLabel>
             <Select
-              labelId='demo-simple-select-label'
-              id='demo-simple-select'
+              labelId="demo-simple-select-label"
+              id="demo-simple-select"
               //value={age}
-              label='itemdescription'
+              label="itemdescription"
               //onChange={handleChange}
             >
               <MenuItem value={10}>Ten</MenuItem>
@@ -86,11 +86,11 @@ const BulkIncome = () => {
         </Grid>
         <Grid item xs={12} sm={6}>
           <TextField
-            id='outlined-basic'
-            label='Purchase Order'
-            variant='outlined'
+            id="outlined-basic"
+            label="Purchase Order"
+            variant="outlined"
             fullWidth
-            sx={{ width: '90%' }}
+            sx={{ width: "90%" }}
             InputProps={{
               readOnly: true,
             }}
@@ -98,15 +98,15 @@ const BulkIncome = () => {
         </Grid>
       </Grid>
 
-      <Grid container spacing={2} sx={{ mt: '33px' }}>
+      <Grid container spacing={2} sx={{ mt: "33px" }}>
         <Grid item xs={21} sm={6}>
-          <FormControl fullWidth sx={{ width: '90%' }}>
-            <InputLabel id='demo-simple-select-label'>Currency</InputLabel>
+          <FormControl fullWidth sx={{ width: "90%" }}>
+            <InputLabel id="demo-simple-select-label">Currency</InputLabel>
             <Select
-              labelId='demo-simple-select-label'
-              id='demo-simple-select'
+              labelId="demo-simple-select-label"
+              id="demo-simple-select"
               //value={age}
-              label='itemdescription'
+              label="itemdescription"
               //onChange={handleChange}
             >
               <MenuItem value={10}>Ten</MenuItem>
@@ -117,25 +117,25 @@ const BulkIncome = () => {
         </Grid>
         <Grid item xs={12} sm={6}>
           <TextField
-            id='outlined-basic'
-            label='Remarks'
-            variant='outlined'
+            id="outlined-basic"
+            label="Remarks"
+            variant="outlined"
             fullWidth
-            sx={{ width: '90%' }}
+            sx={{ width: "90%" }}
             InputProps={{
               readOnly: true,
             }}
           />
         </Grid>
       </Grid>
-      <Grid container spacing={2} sx={{ mt: '23px' }}>
+      <Grid container spacing={2} sx={{ mt: "23px" }}>
         <Grid item xs={12} sm={6}>
           <TextField
-            id='outlined-basic'
-            label='Purchase Date'
-            variant='outlined'
+            id="outlined-basic"
+            label="Purchase Date"
+            variant="outlined"
             fullWidth
-            sx={{ width: '90%' }}
+            sx={{ width: "90%" }}
             InputProps={{
               readOnly: true,
             }}
@@ -143,17 +143,17 @@ const BulkIncome = () => {
         </Grid>
       </Grid>
       <Button
-        variant='contained'
-        color='secondary'
-        size='large'
+        variant="contained"
+        color="secondary"
+        size="large"
         //onClick={handleClick}
 
         sx={{
-          mt: '33px',
-          mb: '17px',
-          marginLeft: 'auto',
-          marginRight: 'auto',
-          display: 'block',
+          mt: "33px",
+          mb: "17px",
+          marginLeft: "auto",
+          marginRight: "auto",
+          display: "block",
         }}
       >
         Add

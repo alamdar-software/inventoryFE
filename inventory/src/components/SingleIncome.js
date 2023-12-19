@@ -147,6 +147,7 @@ const SingleIncome = () => {
       });
       const data = await res.json();
       console.log(data);
+      alert("income added successfully");
     } catch (error) {
       console.log("something happens while adding inventory");
     }
@@ -329,6 +330,7 @@ const SingleIncome = () => {
             variant="outlined"
             fullWidth
             sx={{ width: "90%" }}
+            type="number"
             /*   onChange={(e) =>
               setformData({
                 ...formData,
