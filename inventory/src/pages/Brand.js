@@ -38,14 +38,6 @@ export default function Brand() {
   const handleClick = async () => {
     const { brandName } = Brand;
 
-    if (!brandName) {
-      Swal.fire({
-        title: 'Please Fill All Fields',
-        text: 'Fields are Empty?',
-        icon: 'question',
-      });
-      return;
-    }
     const res = await fetch('http://localhost:8080/brand/add', {
       method: 'POST',
       headers: {
