@@ -17,7 +17,7 @@ import Swal from 'sweetalert2';
 
 export default function Brand() {
   const [Brand, setBrand] = useState({
-    name: '',
+    brandName: '',
   });
   const [Loading, setLoading] = useState(false);
   const [error, seterror] = useState(false);
@@ -36,9 +36,9 @@ export default function Brand() {
     getBrand();
   }, []);
   const handleClick = async () => {
-    const { name } = Brand;
+    const { brandName } = Brand;
 
-    if (!name) {
+    if (!brandName) {
       Swal.fire({
         title: 'Please Fill All Fields',
         text: 'Fields are Empty?',
@@ -111,7 +111,7 @@ export default function Brand() {
               /*  value={currency?.currencyName} */
               onChange={(e) =>
                 setBrand({
-                  name: e.target.value,
+                  brandName: e.target.value,
                 })
               }
               fullWidth

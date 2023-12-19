@@ -96,7 +96,7 @@ export default function BrandTable({ data }) {
                 ?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((row, index) => (
                   <TableRow hover role='checkbox' tabIndex={-1} key={index}>
-                    <TableCell>{row.name}</TableCell>
+                    <TableCell>{row.brandName}</TableCell>
                     <TableCell>
                       <ButtonGroup>
                         <Link to={`/brand/edit/${row.id}`}>
