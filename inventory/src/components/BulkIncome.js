@@ -17,6 +17,7 @@ import { fetchlocation } from '../redux/slice/location';
 import { fetchItem } from '../redux/slice/ItemSlice';
 import { fetchCurrency } from '../redux/slice/CurrencySlice';
 import { fetchBrand } from '../redux/slice/BrandSlice';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 const BulkIncome = () => {
   useEffect(() => {
@@ -42,6 +43,7 @@ const BulkIncome = () => {
   const [entity, setEntity] = useState([]);
   const [store, setStore] = useState([]);
   const [impa, setImpa] = useState([]);
+  const [selectedItems, setSelectedItems] = useState([]);
   const [formData, setformData] = useState({
     locationName: '',
     address: '',
@@ -118,29 +120,56 @@ const BulkIncome = () => {
   };
 
   const handleItemChange = (e) => {
-    const selectedItem = state.item.data.find(
-      (item) => item.description === e.target.value
-    );
+    const selectedDescriptions = e.target.value;
 
-    if (selectedItem) {
-      console.log(selectedItem.category, 'select');
-      setformData({
-        ...formData,
-        description: e.target.value,
-        description: selectedItem.description,
-        unitName: selectedItem.unitName,
-      });
-    } else {
-      setformData({
-        ...formData,
-        description: e.target.value,
-        name: '',
-        unitName: '',
+    if (selectedDescriptions) {
+      setFormControls((prevControls) => [
+        ...prevControls,
+        ...selectedDescriptions
+          .filter(
+            (description) =>
+              !prevControls.some(
+                (control) => control.description === description
+              )
+          )
+          .map((description, index) => ({
+            key: prevControls.length + index,
+            description: description,
+            catagory: '', // You might want to initialize other properties here
+          })),
+      ]);
+
+      setformData((prevFormData) => {
+        const uniqueDescriptions = new Set([
+          ...prevFormData.description,
+          ...selectedDescriptions,
+        ]);
+
+        return {
+          ...prevFormData,
+          description: Array.from(uniqueDescriptions),
+        };
       });
     }
   };
-  console.log(item, 'itemmmm');
-  console.log(formData, 'form dataoooooooo');
+  const handleDescriptionChange = (index, value) => {
+    setFormControls((prevControls) => {
+      const updatedControls = [...prevControls];
+      updatedControls[index] = {
+        ...updatedControls[index],
+        description: value,
+      };
+      return updatedControls;
+    });
+
+    setSelectedItems((prevSelectedItems) => {
+      const updatedSelectedItems = [...prevSelectedItems];
+      updatedSelectedItems[index] = value;
+      return updatedSelectedItems;
+    });
+  };
+  console.log(selectedItems, 'aaaa');
+  console.log(formData);
   // const handleItemChange = (e) => {
   //   const selectedItem = e.target.value;
   //   setformData({
@@ -251,7 +280,7 @@ const BulkIncome = () => {
       updateStandardPrice[index] = value;
       return {
         ...prevFormData,
-        standardPriceom: updateStandardPrice,
+        standardPrice: updateStandardPrice,
       };
     });
   };
@@ -373,6 +402,26 @@ const BulkIncome = () => {
     });
   };
 
+  const handleDeleteClick = (index) => {
+    // Create a copy of the formControls array and remove the item at the specified index
+    const updatedFormControls = [...formControls];
+    updatedFormControls.splice(index, 1);
+
+    // Create a copy of the formData object and remove the corresponding item values
+    const updatedFormData = { ...formData };
+    Object.keys(updatedFormData).forEach((key) => {
+      if (Array.isArray(updatedFormData[key])) {
+        updatedFormData[key].splice(index, 1);
+      }
+    });
+
+    // Update the state with the new formControls and formData
+    setFormControls(updatedFormControls);
+    setformData(updatedFormData);
+
+    // Log the updated formData to the console
+    console.log(updatedFormData);
+  };
   const renderFormControls = () => {
     return formControls.map((control, index) => (
       <div key={control.key} style={{ display: 'flex', marginBottom: '10px' }}>
@@ -383,13 +432,8 @@ const BulkIncome = () => {
             variant='outlined'
             fullWidth
             sx={{ width: '90%' }}
-            value={formData.description}
-            onChange={(e) =>
-              setformData({
-                ...formData,
-                description: e.target.value,
-              })
-            }
+            value={control.description}
+            onChange={(e) => handleDescriptionChange(index, e.target.value)}
           />
         </FormControl>
 
@@ -444,7 +488,7 @@ const BulkIncome = () => {
                 unitCost: e.target.value,
               })
             } */
-              onChange={handleUnitCostChange}
+              onChange={(e) => handleUnitCostChange(index, e.target.value)}
             />
           </Grid>
         </FormControl>
@@ -579,6 +623,20 @@ const BulkIncome = () => {
             />
           </Grid>
         </FormControl>
+        <div
+          style={{
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}
+        >
+          <Button>
+            <DeleteIcon
+              onClick={() => handleDeleteClick(index)}
+              style={{ color: 'red' }}
+            />
+          </Button>
+        </div>
       </div>
     ));
   };
@@ -665,6 +723,8 @@ const BulkIncome = () => {
               id='demo-simple-select'
               //value={age}
               label='Description'
+              multiple
+              value={formData.description}
               //onChange={handleChange}
               onChange={handleItemChange}
             >
