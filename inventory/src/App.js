@@ -42,6 +42,7 @@ import Cipl from "./components/Cipl.js";
 
 import UpdateEntity from "./components/UpdateEntity";
 import Entity from "./pages/Entity";
+import ViewTransferItem from "./pages/ViewTransfer";
 const theme = createTheme({
   palette: {
     background: {
@@ -80,6 +81,7 @@ function App() {
               <Route path="/category" element={<Category />} />
               <Route path="/category/edit/:id" element={<UpdateCategory />} />
               <Route path="/transfer-item" element={<TransferItem />} />
+              <Route path="/view-transfer" element={<ViewTransferItem />} />
               <Route path="/cipl" element={<Cipl />} />
               <Route path="/mto" element={<Mto />} />
               <Route path="/it" element={<InternalTransfer />} />

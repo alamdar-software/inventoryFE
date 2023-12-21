@@ -83,6 +83,7 @@ export const Cipl = () => {
   const [brand, setBrand] = useState([]);
   const [remarks, setRemarks] = useState([]);
   const [selectedSubLocations, setSelectedSubLocations] = useState([]);
+  const [packages, setPackages] = useState(initialPackagesState);
 
   useEffect(() => {
     dispatch(fetchlocation());
@@ -142,6 +143,10 @@ export const Cipl = () => {
   };
   console.log(subLocations, "subbbbbbbbbbbbb");
   console.log(formData, "nooooooooooo");
+  const initialPackagesState = [
+    { name: "", count: 0 },
+    // Add more package objects as needed
+  ];
 
   const handleAddClick = () => {
     setFormRows((prevRows) => prevRows + 1);
@@ -300,6 +305,20 @@ export const Cipl = () => {
       };
     });
   };
+  const updatePackageCount = (packageName) => {
+    setPackages((prevPackages) => {
+      const updatedPackages = [...prevPackages];
+      const packageIndex = updatedPackages.findIndex(
+        (packageObj) => packageObj.name === packageName
+      );
+
+      if (packageIndex !== -1) {
+        updatedPackages[packageIndex].count += 1;
+      }
+
+      return updatedPackages;
+    });
+  };
   const handlePackageChange = (index, value) => {
     updateFormDataPackage(index, value);
     setPackage((prevPackage) => {
@@ -307,6 +326,7 @@ export const Cipl = () => {
       updatePackage[index] = value;
       return updatePackage;
     });
+    updatePackageCount(value);
   };
 
   const updateFormDataPackage = (index, value) => {
@@ -831,8 +851,7 @@ export const Cipl = () => {
             id="outlined-basic"
             label="Total  Package"
             variant="outlined"
-            // value={locationName}
-            // onChange={(e) => setLocation(e.target.value)}
+            value={packageObj.count}
             fullWidth
           />
         </Grid>
