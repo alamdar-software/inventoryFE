@@ -29,7 +29,7 @@ const BulkIncome = () => {
   const [subLocations, setSubLocations] = useState([]);
   const [item, setItem] = useState([]);
   const dispatch = useDispatch();
-  const [formControls, setFormControls] = useState([{ key: 0 }]);
+  const [formControls, setFormControls] = useState([]);
   const [unitCost, setUnitCost] = useState([]);
   const [quantity, setQuantity] = useState([]);
   const [catagory, setCatagory] = useState([]);
@@ -106,6 +106,8 @@ const BulkIncome = () => {
     });
   };
   const state = useSelector((state) => state);
+  const [isItemSelected, setIsItemSelected] = useState(false);
+
   const handleLocationChange = (e) => {
     const selectedLocation = e.target.value;
     setformData({
@@ -151,6 +153,7 @@ const BulkIncome = () => {
         };
       });
     }
+    setIsItemSelected(true);
   };
   const handleDescriptionChange = (index, value) => {
     setFormControls((prevControls) => {
@@ -838,7 +841,7 @@ const BulkIncome = () => {
           width: '80%',
         }}
       >
-        {formData.description && (
+        {isItemSelected && (
           <>
             <div style={{ display: 'flex', flexWrap: 'wrap' }}>
               <Grid
