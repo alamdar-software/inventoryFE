@@ -20,7 +20,7 @@ import { fetchlocation } from "../redux/slice/location";
 
 const Inventory = () => {
   const [formData, setformData] = useState({
-    itemName: "",
+    description: "",
     locationName: "",
     address: "",
     quantity: "",
@@ -159,16 +159,18 @@ const Inventory = () => {
       <Grid container spacing={2} sx={{ mt: "33px" }}>
         <Grid item xs={21} sm={6}>
           <FormControl fullWidth sx={{ width: "90%" }}>
-            <InputLabel id="demo-simple-select-label">Item Name</InputLabel>
+            <InputLabel id="demo-simple-select-label">
+              Item Description
+            </InputLabel>
             <Select
               labelId="demo-simple-select-label"
-              id="itemName"
+              id="description"
               //value={age}
-              label="itemName"
+              label="description"
               onChange={(e) =>
                 setformData({
                   ...formData,
-                  itemName: e.target.value,
+                  description: e.target.value,
                 })
               }
               MenuProps={{
@@ -181,9 +183,9 @@ const Inventory = () => {
               //onChange={handleChange}
             >
               {state.item.data?.map((item, index) => (
-                <MenuItem key={index} value={item?.itemName}>
+                <MenuItem key={index} value={item?.description}>
                   {" "}
-                  {item?.itemName}
+                  {item?.description}
                 </MenuItem>
               ))}
             </Select>

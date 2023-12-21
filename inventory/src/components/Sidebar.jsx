@@ -119,10 +119,7 @@ export default function Sidebar({ children }) {
     {
       text: "Location/Vessel",
       icon: <LocationOnIcon />,
-      submenu: [
-        { text: "Add Location", link: "/add-location" },
-        { text: "View Location", link: "/view-location" },
-      ],
+      submenu: [{ text: "Add Location" }, { text: "View Location" }],
     },
     { text: "Pick up", icon: <IsoIcon /> },
     { text: "Entity", icon: <AddCardIcon /> },
@@ -134,7 +131,18 @@ export default function Sidebar({ children }) {
     { text: "Brand", icon: <BrandingWatermarkIcon /> },
     { text: "Item", icon: <Inventory2Icon /> },
     { text: "Inventory", icon: <TransferWithinAStationIcon /> },
-    { text: "Transfer Item", icon: <WhatshotIcon /> },
+    /* { text: "Transfer Item", icon: <WhatshotIcon /> }, */
+    {
+      text: "Transfer Item",
+      icon: <WhatshotIcon />,
+      submenu: [
+        {
+          text: "transfer-item",
+          icon: <AddCardIcon />,
+        },
+        { text: "View Transfer" },
+      ],
+    },
     { text: "Consume Item", icon: <HighlightOffIcon /> },
     { text: "Scrapped Item", icon: <LocationOnIcon /> },
     { text: "Incoming Stock", icon: <RingVolumeIcon /> },
@@ -142,6 +150,11 @@ export default function Sidebar({ children }) {
     { text: "Settings", icon: <SettingsIcon /> },
     { text: "Reports", icon: <ReportIcon /> },
   ];
+  const [openSubMenu, setOpenSubMenu] = React.useState(null);
+
+  const handleSubMenuClick = (index) => {
+    setOpenSubMenu(openSubMenu === index ? null : index);
+  };
 
   return (
     <Box sx={{ display: "flex" }}>
@@ -190,38 +203,95 @@ export default function Sidebar({ children }) {
         <Divider />
         <List>
           {menuItems.map((item, index) => (
-            <ListItem key={item.text} disablePadding sx={{ display: "block" }}>
-              <Link
-                key={item.text}
-                to={`/${item.text.toLowerCase().replace(" ", "-")}`}
-                style={{ textDecoration: "none", color: "inherit" }}
-              >
-                <ListItemButton
-                  sx={{
-                    minHeight: 48,
-                    justifyContent: open ? "initial" : "center",
-                    px: 2.5,
-                  }}
+            <div key={item.text}>
+              <ListItem disablePadding>
+                <Link
+                  to={
+                    item.submenu
+                      ? "#" // Change this to handle submenu click
+                      : `/${item.text.toLowerCase().replace(" ", "-")}`
+                  }
+                  style={{ textDecoration: "none", color: "inherit" }}
+                  onClick={() => handleSubMenuClick(index)}
                 >
-                  <ListItemIcon
+                  <ListItemButton
                     sx={{
-                      minWidth: 0,
-                      mr: open ? 3 : "auto",
-                      justifyContent: "center",
+                      minHeight: 48,
+                      justifyContent: open ? "initial" : "center",
+                      px: 2.5,
                     }}
                   >
-                    {item.icon}
-                  </ListItemIcon>
-                  <ListItemText
-                    primary={item.text}
-                    sx={{ opacity: open ? 1 : 0 }}
-                  />
-                </ListItemButton>
-              </Link>
-            </ListItem>
+                    <ListItemIcon
+                      sx={{
+                        minWidth: 0,
+                        mr: open ? 3 : "auto",
+                        justifyContent: "center",
+                      }}
+                    >
+                      {item.icon}
+                    </ListItemIcon>
+                    <ListItemText
+                      primary={item.text}
+                      sx={{ opacity: open ? 1 : 0 }}
+                    />
+                    {item.submenu && (
+                      <IconButton
+                        sx={{
+                          marginLeft: "auto",
+                          visibility: open ? "visible" : "hidden",
+                        }}
+                      >
+                        {openSubMenu === index ? (
+                          <ChevronLeftIcon />
+                        ) : (
+                          <ChevronRightIcon />
+                        )}
+                      </IconButton>
+                    )}
+                  </ListItemButton>
+                </Link>
+              </ListItem>
+              {item.submenu && openSubMenu === index && (
+                <List>
+                  {item.submenu.map((subitem) => (
+                    <ListItem
+                      key={subitem.text}
+                      disablePadding
+                      sx={{
+                        display: "block",
+                        paddingLeft: theme.spacing(4),
+                      }}
+                    >
+                      <Link
+                        to={
+                          subitem.link
+                            ? `/${subitem.link}`
+                            : `/${subitem.text.toLowerCase().replace(" ", "-")}` // Use the subitem's text for the link
+                        }
+                        style={{ textDecoration: "none", color: "inherit" }}
+                      >
+                        <ListItemButton
+                          sx={{
+                            minHeight: 48,
+                            justifyContent: open ? "initial" : "center",
+                            px: 2.5,
+                          }}
+                        >
+                          <ListItemText
+                            primary={subitem.text}
+                            sx={{ opacity: open ? 1 : 0 }}
+                          />
+                        </ListItemButton>
+                      </Link>
+                    </ListItem>
+                  ))}
+                </List>
+              )}
+            </div>
           ))}
         </List>
       </Drawer>
+
       <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
         <DrawerHeader />
         <Grid spacing={3} sx={{}}>

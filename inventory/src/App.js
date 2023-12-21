@@ -59,7 +59,7 @@ function App() {
             <Routes>
               <Route path="/" element={<Dashboard />} />
               <Route path="/dashboard" element={<Dashboard />}></Route>
-              <Route path="/location/vessel" element={<Location />} />
+              <Route path="/add-location" element={<Location />} />
               <Route path="/item" element={<Item />} />
               <Route path="/pick-up" element={<Pickup />} />
               <Route path="/updatePickup/:id" element={<Pickup />} />
@@ -67,7 +67,7 @@ function App() {
               <Route path="/shipper" element={<Shipper />} />
               <Route path="/updateShipper/:id" element={<UpdateShipper />} />
               <Route path="/consignee" element={<Consignee />} />
-              <Route path="/Location-Vessel" element={<LocationList />} />
+              <Route path="/view-location" element={<LocationList />} />
               <Route path="/MOC" element={<Moc />} />
               <Route
                 path="/updateLocation/:locationId/addresses/:addressId"

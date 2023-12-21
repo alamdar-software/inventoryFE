@@ -37,6 +37,8 @@ import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import dayjs from "dayjs";
 
 import TextareaAutosize from "@mui/material/TextareaAutosize";
+import { fetchIncome } from "../redux/slice/SingleIncomeSlice";
+import { fetchInventory } from "../redux/slice/InventorySlice";
 export const Cipl = () => {
   const state = useSelector((state) => state);
 
@@ -89,6 +91,8 @@ export const Cipl = () => {
     dispatch(fetchPickup());
     dispatch(fetchCurrency());
     dispatch(fetchItem());
+    dispatch(fetchIncome());
+    dispatch(fetchInventory());
   }, []);
   console.log(state, "cipl");
 
@@ -193,7 +197,62 @@ export const Cipl = () => {
       updatedFormData.SubLocations = prevFormData.SubLocations.filter(
         (subLocation, i) => i !== index
       );
-
+      updatedFormData.itemName = [
+        ...prevFormData.itemName.slice(0, index),
+        ...prevFormData.itemName.slice(index + 1),
+      ];
+      updatedFormData.amount = [
+        ...prevFormData.amount.slice(0, index),
+        ...prevFormData.amount.slice(index + 1),
+      ];
+      updatedFormData.brand = [
+        ...prevFormData.brand.slice(0, index),
+        ...prevFormData.brand.slice(index + 1),
+      ];
+      updatedFormData.cor = [
+        ...prevFormData.cor.slice(0, index),
+        ...prevFormData.cor.slice(index + 1),
+      ];
+      updatedFormData.dimension = [
+        ...prevFormData.dimension.slice(0, index),
+        ...prevFormData.dimension.slice(index + 1),
+      ];
+      updatedFormData.hs = [
+        ...prevFormData.hs.slice(0, index),
+        ...prevFormData.hs.slice(index + 1),
+      ];
+      updatedFormData.item = [
+        ...prevFormData.item.slice(0, index),
+        ...prevFormData.item.slice(index + 1),
+      ];
+      updatedFormData.package = [
+        ...prevFormData.package.slice(0, index),
+        ...prevFormData.package.slice(index + 1),
+      ];
+      updatedFormData.purchase = [
+        ...prevFormData.purchase.slice(0, index),
+        ...prevFormData.purchase.slice(index + 1),
+      ];
+      updatedFormData.quantity = [
+        ...prevFormData.quantity.slice(0, index),
+        ...prevFormData.quantity.slice(index + 1),
+      ];
+      updatedFormData.remarks = [
+        ...prevFormData.remarks.slice(0, index),
+        ...prevFormData.remarks.slice(index + 1),
+      ];
+      updatedFormData.sn = [
+        ...prevFormData.sn.slice(0, index),
+        ...prevFormData.sn.slice(index + 1),
+      ];
+      updatedFormData.unitPrice = [
+        ...prevFormData.unitPrice.slice(0, index),
+        ...prevFormData.unitPrice.slice(index + 1),
+      ];
+      updatedFormData.weights = [
+        ...prevFormData.weights.slice(0, index),
+        ...prevFormData.weights.slice(index + 1),
+      ];
       return updatedFormData;
     });
   };
@@ -213,7 +272,7 @@ export const Cipl = () => {
 
   const updateFormDataItem = (index, value) => {
     setformData((prevFormData) => {
-      const updateItem = [...prevFormData.item];
+      const updateItem = [...prevFormData.itemName];
       updateItem[index] = value;
       return {
         ...prevFormData,
@@ -515,10 +574,10 @@ export const Cipl = () => {
             ))}
           </Select>
         </FormControl>
-        <FormControl fullWidth sx={{ width: "30%", marginRight: "10px" }}>
+        <FormControl fullWidth sx={{ width: "70%", marginRight: "10px" }}>
           <Grid item xs={12} sm={6}>
             <TextField
-              sx={{ width: "90%" }}
+              sx={{ width: "100%" }}
               id="outlined-basic"
               label="Package Name"
               variant="outlined"
@@ -542,7 +601,7 @@ export const Cipl = () => {
             />
           </Grid>
         </FormControl>
-        <FormControl fullWidth sx={{ width: "30%", marginRight: "10px" }}>
+        <FormControl fullWidth sx={{ width: "50%", marginRight: "10px" }}>
           <Grid item xs={12} sm={6}>
             <TextField
               sx={{ width: "90%" }}
@@ -558,7 +617,7 @@ export const Cipl = () => {
             />
           </Grid>
         </FormControl>
-        <FormControl fullWidth sx={{ width: "30%", marginRight: "10px" }}>
+        <FormControl fullWidth sx={{ width: "50%", marginRight: "10px" }}>
           <Grid item xs={12} sm={6}>
             <TextField
               sx={{ width: "90%" }}
@@ -572,7 +631,7 @@ export const Cipl = () => {
             />
           </Grid>
         </FormControl>
-        <FormControl fullWidth sx={{ width: "30%", marginRight: "10px" }}>
+        <FormControl fullWidth sx={{ width: "40%", marginRight: "10px" }}>
           <Grid item xs={12} sm={6}>
             <TextField
               sx={{ width: "90%" }}
@@ -630,7 +689,7 @@ export const Cipl = () => {
             />
           </Grid>
         </FormControl>
-        <FormControl fullWidth sx={{ width: "30%", marginRight: "10px" }}>
+        <FormControl fullWidth sx={{ width: "90%", marginRight: "10px" }}>
           <Grid item xs={12} sm={6}>
             <TextField
               sx={{ width: "90%" }}
@@ -644,7 +703,7 @@ export const Cipl = () => {
             />
           </Grid>
         </FormControl>
-        <FormControl fullWidth sx={{ width: "30%", marginRight: "10px" }}>
+        <FormControl fullWidth sx={{ width: "60%", marginRight: "10px" }}>
           <Grid item xs={12} sm={6}>
             <TextField
               sx={{ width: "90%" }}
@@ -658,7 +717,7 @@ export const Cipl = () => {
             />
           </Grid>
         </FormControl>
-        <FormControl fullWidth sx={{ width: "30%", marginRight: "10px" }}>
+        <FormControl fullWidth sx={{ width: "50%", marginRight: "10px" }}>
           <Grid item xs={12} sm={6}>
             <TextField
               sx={{ width: "90%" }}
@@ -672,7 +731,7 @@ export const Cipl = () => {
             />
           </Grid>
         </FormControl>
-        <FormControl fullWidth sx={{ width: "30%", marginRight: "10px" }}>
+        <FormControl fullWidth sx={{ width: "50%", marginRight: "10px" }}>
           <Grid item xs={12} sm={6}>
             <TextField
               sx={{ width: "90%" }}
@@ -686,7 +745,7 @@ export const Cipl = () => {
             />
           </Grid>
         </FormControl>
-        <FormControl fullWidth sx={{ width: "30%", marginRight: "10px" }}>
+        <FormControl fullWidth sx={{ width: "50%", marginRight: "10px" }}>
           <Grid item xs={12} sm={6}>
             <TextField
               sx={{ width: "90%" }}
@@ -717,6 +776,7 @@ export const Cipl = () => {
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
+            marginLeft: "60px",
           }}
         >
           <button>
