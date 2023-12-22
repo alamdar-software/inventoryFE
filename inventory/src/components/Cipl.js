@@ -156,6 +156,7 @@ export const Cipl = () => {
       return updatedItems;
     });
   };
+  console.log(item, "topibaz");
 
   const updateFormDataSubLocations = (index, selectedSubLocation) => {
     setformData((prevFormData) => {
