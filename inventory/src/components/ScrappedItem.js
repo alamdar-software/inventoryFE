@@ -9,25 +9,35 @@ import {
   Select,
   TextField,
   Typography,
-} from "@mui/material";
-import React from "react";
+} from '@mui/material';
+import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import React, { useState } from 'react';
 
 const ScrappedItem = () => {
+  const [formData, setFormData] = useState([]);
+  const handleDateChange = (date) => {
+    setFormData({
+      ...formData,
+      transferDate: date.format('YYYY-MM-DD'),
+    });
+  };
+  console.log(formData);
   return (
     <>
       <Grid>
         <Card
-          color="secondary"
+          color='secondary'
           sx={{
-            width: "100%",
-            backgroundColor: "secondary",
-            borderBottom: "2px solid yellow",
+            width: '100%',
+            backgroundColor: 'secondary',
+            borderBottom: '2px solid yellow',
           }}
         >
           <CardContent>
             <Typography
-              variant="h4"
-              color="secondary"
+              variant='h4'
+              color='secondary'
               gutterBottom
               style={{ fontFamily: "'EB Garamond'" }}
             >
@@ -37,15 +47,15 @@ const ScrappedItem = () => {
         </Card>
       </Grid>
 
-      <Grid container spacing={2} sx={{ mt: "33px" }}>
+      <Grid container spacing={2} sx={{ mt: '33px' }}>
         <Grid item xs={21} sm={6}>
-          <FormControl fullWidth sx={{ width: "90%" }}>
-            <InputLabel id="demo-simple-select-label">Location</InputLabel>
+          <FormControl fullWidth sx={{ width: '90%' }}>
+            <InputLabel id='demo-simple-select-label'>Location</InputLabel>
             <Select
-              labelId="demo-simple-select-label"
-              id="demo-simple-select"
+              labelId='demo-simple-select-label'
+              id='demo-simple-select'
               //value={age}
-              label="location"
+              label='location'
               //onChange={handleChange}
             >
               <MenuItem value={10}>Ten</MenuItem>
@@ -55,34 +65,27 @@ const ScrappedItem = () => {
           </FormControl>
         </Grid>
         <Grid item xs={12} sm={6}>
-          <TextField
-            id="outlined-basic"
-            label="Date"
-            variant="outlined"
-            //   onChange={(e) =>
-            //     setformData({
-            //       ...formData,
-            //       name: e.target.value,
-            //     })
-            //   }
-
-            fullWidth
-            sx={{ width: "90%" }}
-          />
+          <LocalizationProvider dateAdapter={AdapterDayjs}>
+            <DatePicker
+              onChange={(newDate) => handleDateChange(newDate)}
+              fullWidth
+              sx={{ width: '90%' }}
+            />
+          </LocalizationProvider>
         </Grid>
       </Grid>
       <Button
-        variant="contained"
-        color="secondary"
-        size="large"
+        variant='contained'
+        color='secondary'
+        size='large'
         //onClick={handleClick}
 
         sx={{
-          mt: "33px",
-          mb: "17px",
-          marginLeft: "auto",
-          marginRight: "auto",
-          display: "block",
+          mt: '33px',
+          mb: '17px',
+          marginLeft: 'auto',
+          marginRight: 'auto',
+          display: 'block',
         }}
       >
         Add

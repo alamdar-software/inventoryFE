@@ -594,7 +594,6 @@ const BulkIncome = () => {
               id='outlined-basic'
               label='Entity'
               variant='outlined'
-              // value={sn}
               onChange={(e) => handleEntityChange(index, e.target.value)}
               fullWidth
             />
@@ -669,12 +668,11 @@ const BulkIncome = () => {
             <Select
               labelId='demo-simple-select-label'
               id='demo-simple-select'
-              //value={age}
               label='location'
               MenuProps={{
                 PaperProps: {
                   style: {
-                    maxHeight: 120, // Adjust the height as needed
+                    maxHeight: 120,
                   },
                 },
               }}

@@ -130,7 +130,11 @@ export default function Sidebar({ children }) {
     { text: "Category", icon: <CategoryIcon /> },
     { text: "Brand", icon: <BrandingWatermarkIcon /> },
     { text: "Item", icon: <Inventory2Icon /> },
-    { text: "Inventory", icon: <TransferWithinAStationIcon /> },
+    {
+      text: "Inventory", icon: <TransferWithinAStationIcon />,
+
+      submenu: [{ text: "Add Inventory" }, { text: "View Inventory" }],
+    },
     /* { text: "Transfer Item", icon: <WhatshotIcon /> }, */
     {
       text: "Transfer Item",
