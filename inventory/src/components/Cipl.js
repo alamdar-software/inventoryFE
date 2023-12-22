@@ -67,6 +67,9 @@ export const Cipl = () => {
     remarks: [],
     package: [],
     po: "",
+    totalWeight: "",
+    totalPackage: "",
+    totalAmount: "",
   });
   const [subLocations, setSubLocations] = useState([]);
   const [item, setItem] = useState([]);
@@ -83,8 +86,8 @@ export const Cipl = () => {
   const [brand, setBrand] = useState([]);
   const [remarks, setRemarks] = useState([]);
   const [selectedSubLocations, setSelectedSubLocations] = useState([]);
-  const [packages, setPackages] = useState(initialPackagesState);
-
+  const [amounts, setAmounts] = useState([]);
+  const [selectedItem, setSelectedItem] = useState([]);
   useEffect(() => {
     dispatch(fetchlocation());
     dispatch(fetchShipper());
@@ -122,19 +125,42 @@ export const Cipl = () => {
   };
 
   const handleSubLocationChange = (e, index) => {
-    const selectedSubLocations = e.target.value || ""; // Ensure a default value if undefined
+    const selectedSubLocation = e.target.value || "";
+
+    // Update formData with the selected sublocation
+    updateFormDataSubLocations(index, selectedSubLocation);
+
+    // Ensure a default value if undefined
     setSelectedSubLocations((prevSubLocations) => {
       const updatedSubLocations = [...prevSubLocations];
-      updatedSubLocations[index] = selectedSubLocations;
+      updatedSubLocations[index] = selectedSubLocation;
       return updatedSubLocations;
     });
 
-    updateFormDataSubLocations(index, selectedSubLocations);
+    // Find the corresponding item descriptions in the inventory data
+    const selectedInventoryData = state.inventory.data.filter(
+      (inventoryItem) => inventoryItem.address?.address === selectedSubLocation
+    );
+    console.log(selectedInventoryData, "22");
+
+    // Extract item descriptions from the selected inventory data
+    const itemDescriptions = selectedInventoryData.map(
+      (inventoryItem) => inventoryItem.description
+    );
+    console.log(itemDescriptions, "33");
+
+    // Update the item state with the selected item descriptions
+    setItem((prevItems) => {
+      const updatedItems = [...prevItems];
+      updatedItems[index] = itemDescriptions; // This line is updated
+      return updatedItems;
+    });
   };
-  const updateFormDataSubLocations = (index, selectedSubLocations) => {
+
+  const updateFormDataSubLocations = (index, selectedSubLocation) => {
     setformData((prevFormData) => {
       const updatedSubLocations = [...prevFormData.SubLocations];
-      updatedSubLocations[index] = selectedSubLocations;
+      updatedSubLocations[index] = selectedSubLocation;
       return {
         ...prevFormData,
         SubLocations: updatedSubLocations,
@@ -143,10 +169,6 @@ export const Cipl = () => {
   };
   console.log(subLocations, "subbbbbbbbbbbbb");
   console.log(formData, "nooooooooooo");
-  const initialPackagesState = [
-    { name: "", count: 0 },
-    // Add more package objects as needed
-  ];
 
   const handleAddClick = () => {
     setFormRows((prevRows) => prevRows + 1);
@@ -264,24 +286,25 @@ export const Cipl = () => {
 
   console.log(formData, "naya");
 
-  const handleItemChange = (index, value) => {
-    updateFormDataItem(index, value);
-    setItem((prevItem) => {
-      const updateItem = [...prevItem];
-      updateItem[index] = value;
-      return updateItem;
+  const handleItemChange = (index, selectedSubLocation, selectedItem) => {
+    // Update formData with the selected item
+    updateFormDataItem(index, selectedItem);
+
+    // Ensure a default value if undefined
+    setSelectedItem((prevSelectedItems) => {
+      const updatedSelectedItems = [...prevSelectedItems];
+      updatedSelectedItems[index] = selectedItem;
+      return updatedSelectedItems;
     });
   };
-  console.log(item, "item");
-  console.log(formData);
 
-  const updateFormDataItem = (index, value) => {
+  const updateFormDataItem = (index, selectedItem) => {
     setformData((prevFormData) => {
-      const updateItem = [...prevFormData.itemName];
-      updateItem[index] = value;
+      const updatedItems = [...prevFormData.item];
+      updatedItems[index] = selectedItem;
       return {
         ...prevFormData,
-        itemName: updateItem,
+        item: updatedItems,
       };
     });
   };
@@ -305,20 +328,6 @@ export const Cipl = () => {
       };
     });
   };
-  const updatePackageCount = (packageName) => {
-    setPackages((prevPackages) => {
-      const updatedPackages = [...prevPackages];
-      const packageIndex = updatedPackages.findIndex(
-        (packageObj) => packageObj.name === packageName
-      );
-
-      if (packageIndex !== -1) {
-        updatedPackages[packageIndex].count += 1;
-      }
-
-      return updatedPackages;
-    });
-  };
   const handlePackageChange = (index, value) => {
     updateFormDataPackage(index, value);
     setPackage((prevPackage) => {
@@ -326,7 +335,6 @@ export const Cipl = () => {
       updatePackage[index] = value;
       return updatePackage;
     });
-    updatePackageCount(value);
   };
 
   const updateFormDataPackage = (index, value) => {
@@ -457,6 +465,7 @@ export const Cipl = () => {
         unitPrice: updateUnitPrice,
       };
     });
+    calculateAndUpdateAmount(index);
   };
 
   const handleQuantityChange = (index, value) => {
@@ -465,6 +474,19 @@ export const Cipl = () => {
       const updateQuantity = [...prevQuantity];
       updateQuantity[index] = value;
       return updateQuantity;
+    });
+    calculateAndUpdateAmount(index);
+  };
+  const calculateAndUpdateAmount = (index) => {
+    const calculatedAmount = calculateAmount(
+      formData.unitPrice[index],
+      formData.quantity[index]
+    );
+
+    setAmounts((prevAmounts) => {
+      const updatedAmounts = [...prevAmounts];
+      updatedAmounts[index] = calculatedAmount;
+      return updatedAmounts;
     });
   };
 
@@ -481,11 +503,17 @@ export const Cipl = () => {
 
   const handleAmountChange = (index, value) => {
     updateFormDataAmount(index, value);
-    setAmount((prevAmount) => {
-      const updateAmount = [...prevAmount];
-      updateAmount[index] = value;
-      return updateAmount;
-    });
+  };
+
+  const calculateAmount = (quantity, unitCost) => {
+    const parsedQuantity = parseFloat(quantity);
+    const parsedUnitCost = parseFloat(unitCost);
+
+    if (!isNaN(parsedQuantity) && !isNaN(parsedUnitCost)) {
+      return parsedQuantity * parsedUnitCost;
+    } else {
+      return "";
+    }
   };
 
   const updateFormDataAmount = (index, value) => {
@@ -544,6 +572,8 @@ export const Cipl = () => {
       };
     });
   };
+
+  console.log("All Items Data:", state.item.data);
   const renderFormControls = () => {
     return formControls.map((control, index) => (
       <div key={control.key} style={{ display: "flex", marginBottom: "10px" }}>
@@ -576,7 +606,13 @@ export const Cipl = () => {
             id="itemName"
             //value={age}
             label="itemName"
-            onChange={(e) => handleItemChange(index, e.target.value)}
+            onChange={(e) =>
+              handleItemChange(
+                index,
+                selectedSubLocations[index],
+                e.target.value
+              )
+            }
             MenuProps={{
               PaperProps: {
                 style: {
@@ -586,12 +622,13 @@ export const Cipl = () => {
             }}
             //onChange={handleChange}
           >
-            {state.item.data?.map((item, index) => (
-              <MenuItem key={index} value={item?.description}>
-                {" "}
-                {item?.description}
-              </MenuItem>
-            ))}
+            {state.item.data
+              .filter((item) => item.address === selectedSubLocations[index])
+              .map((filteredItem, index) => (
+                <MenuItem key={index} value={filteredItem?.description}>
+                  {filteredItem?.description}
+                </MenuItem>
+              ))}
           </Select>
         </FormControl>
         <FormControl fullWidth sx={{ width: "70%", marginRight: "10px" }}>
@@ -754,14 +791,16 @@ export const Cipl = () => {
         <FormControl fullWidth sx={{ width: "50%", marginRight: "10px" }}>
           <Grid item xs={12} sm={6}>
             <TextField
-              sx={{ width: "90%" }}
+              sx={{ width: "80%" }}
               id="outlined-basic"
               label="Amount"
               variant="outlined"
+              value={amounts[index] || ""}
               // value={locationName}
               // onChange={(e) => setLocation(e.target.value)}
               onChange={(e) => handleAmountChange(index, e.target.value)}
               fullWidth
+              readOnly
             />
           </Grid>
         </FormControl>
@@ -829,8 +868,27 @@ export const Cipl = () => {
 
     return totalWeight.toFixed(2); // Adjust the precision as needed
   };
+
+  const calculateTotalAmount = () => {
+    // Assuming you have quantities and unit prices arrays in your formData
+    const totalAmountFromFormData = formData.quantity.reduce(
+      (acc, quantity, index) => {
+        const unitPrice = parseFloat(formData.unitPrice[index]) || 0;
+        return acc + quantity * unitPrice;
+      },
+      0
+    );
+
+    return totalAmountFromFormData.toFixed(2); // Adjust the precision as needed
+  };
+
   const renderweightandTotal = () => {
     const totalWeight = calculateTotalWeight();
+    const uniquePackageNames = [...new Set(formData.package)];
+    const totalAmount = calculateTotalAmount();
+    // Calculate the total package count
+    const totalPackageCount = uniquePackageNames.length;
+
     return (
       <Grid container spacing={1} sx={{ mt: "23px" }}>
         <Grid item xs={12} sm={4}>
@@ -842,6 +900,12 @@ export const Cipl = () => {
             value={totalWeight}
             // value={locationName}
             // onChange={(e) => setLocation(e.target.value)}
+            onChange={(e) =>
+              setformData({
+                ...formData,
+                totalWeight: totalWeight,
+              })
+            }
             fullWidth
           />
         </Grid>
@@ -851,7 +915,7 @@ export const Cipl = () => {
             id="outlined-basic"
             label="Total  Package"
             variant="outlined"
-            value={packageObj.count}
+            value={totalPackageCount}
             fullWidth
           />
         </Grid>
@@ -861,7 +925,7 @@ export const Cipl = () => {
             id="outlined-basic"
             label="Total  Amount"
             variant="outlined"
-            // value={locationName}
+            value={totalAmount}
             // onChange={(e) => setLocation(e.target.value)}
             fullWidth
             readOnly
