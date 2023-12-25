@@ -18,6 +18,8 @@ import { fetchItem } from '../redux/slice/ItemSlice';
 import { fetchCurrency } from '../redux/slice/CurrencySlice';
 import { fetchBrand } from '../redux/slice/BrandSlice';
 import DeleteIcon from '@mui/icons-material/Delete';
+import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 
 const BulkIncome = () => {
   useEffect(() => {
@@ -27,6 +29,7 @@ const BulkIncome = () => {
     dispatch(fetchBrand());
   }, []);
   const [subLocations, setSubLocations] = useState([]);
+  const [locationName, setLocationName] = useState();
   const [item, setItem] = useState([]);
   const dispatch = useDispatch();
   const [formControls, setFormControls] = useState([]);
@@ -65,12 +68,38 @@ const BulkIncome = () => {
     impa: [],
   });
 
+  const handleDateChange = (date) => {
+    setformData({
+      ...formData,
+      transferDate: date.format('YYYY-MM-DD'),
+    });
+  };
+  console.log(formData);
+
   const handleUnitCostChange = (index, value) => {
     updateFormDataUnitCost(index, value);
     setUnitCost((prevUnitCost) => {
       const updateUnitCost = [...prevUnitCost];
       updateUnitCost[index] = value;
       return updateUnitCost;
+    });
+  };
+  const handleClick = (e) => {
+    e.preventDefault();
+
+    // const formData = {
+    //   locationName,
+    // };
+
+    console.log(formData);
+
+    fetch('http://localhost:8080/bulkstock/add', {
+      method: 'POST',
+      headers: { 'Content-type': 'application/json' },
+      body: JSON.stringify(formData),
+    }).then(() => {
+      console.log('Bulk Added');
+      window.location.reload();
     });
   };
 
@@ -745,9 +774,9 @@ const BulkIncome = () => {
             variant='outlined'
             fullWidth
             sx={{ width: '90%' }}
-            InputProps={{
-              readOnly: true,
-            }}
+            // InputProps={{
+            //   readOnly: true,
+            // }}
           />
         </Grid>
       </Grid>
@@ -795,32 +824,28 @@ const BulkIncome = () => {
             variant='outlined'
             fullWidth
             sx={{ width: '90%' }}
-            InputProps={{
-              readOnly: true,
-            }}
+            // InputProps={{
+            //   readOnly: true,
+            // }}
           />
         </Grid>
       </Grid>
       <Grid container spacing={2} sx={{ mt: '23px' }}>
         <Grid item xs={12} sm={6}>
-          <TextField
-            id='outlined-basic'
-            label='Purchase Date'
-            variant='outlined'
-            fullWidth
-            sx={{ width: '90%' }}
-            InputProps={{
-              readOnly: true,
-            }}
-          />
+          <LocalizationProvider dateAdapter={AdapterDayjs}>
+            <DatePicker
+              onChange={(newDate) => handleDateChange(newDate)}
+              fullWidth
+              sx={{ width: '90%' }}
+            />
+          </LocalizationProvider>
         </Grid>
       </Grid>
       <Button
         variant='contained'
         color='secondary'
         size='large'
-        //onClick={handleClick}
-
+        onClick={handleClick}
         sx={{
           mt: '33px',
           mb: '17px',
