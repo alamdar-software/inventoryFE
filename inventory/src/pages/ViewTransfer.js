@@ -33,7 +33,7 @@ const ViewTransferItem = () => {
         </CardContent>
       </Card>
       <Grid sx={{ display: "flex", justifyContent: "center", mt: "23px" }}>
-        <Link to="/cipl" style={{ textDecoration: "none" }}>
+        <Link to="/view-cipl" style={{ textDecoration: "none" }}>
           <Card sx={{ minWidth: 275 }}>
             <CardContent
               sx={{

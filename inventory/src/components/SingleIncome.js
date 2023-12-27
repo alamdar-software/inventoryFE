@@ -146,7 +146,7 @@ const SingleIncome = () => {
         body: JSON.stringify(formData),
       });
       const data = await res.json();
-      console.log(data);
+      console.log(data, "came from backend");
       alert("income added successfully");
     } catch (error) {
       console.log("something happens while adding inventory");

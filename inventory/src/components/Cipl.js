@@ -70,6 +70,7 @@ export const Cipl = () => {
     totalWeight: "",
     totalPackage: "",
     totalAmount: "",
+    partNo: [],
   });
   const [subLocations, setSubLocations] = useState([]);
   const [item, setItem] = useState([]);
@@ -88,6 +89,13 @@ export const Cipl = () => {
   const [selectedSubLocations, setSelectedSubLocations] = useState([]);
   const [amounts, setAmounts] = useState([]);
   const [selectedItem, setSelectedItem] = useState([]);
+  const [formRows, setFormRows] = useState(1);
+  const [formControls, setFormControls] = useState([{ key: 0 }]);
+  const [selectedPartNo, setselectedPartNo] = useState([]);
+  const [partNo, setPartNo] = useState(
+    Array.from({ length: formRows }, () => [])
+  );
+  const [partNumbersData, setPartNumbersData] = useState([]);
   useEffect(() => {
     dispatch(fetchlocation());
     dispatch(fetchShipper());
@@ -108,8 +116,6 @@ export const Cipl = () => {
     } catch (error) {}
   };
 
-  const [formRows, setFormRows] = useState(1);
-  const [formControls, setFormControls] = useState([{ key: 0 }]);
   const handleLocationChange = (e) => {
     const selectedLocation = e.target.value;
     setformData({
@@ -297,7 +303,28 @@ export const Cipl = () => {
       updatedSelectedItems[index] = selectedItem;
       return updatedSelectedItems;
     });
+
+    // Find the corresponding data in state.singleincome for the selected item
+    const selectedIncomeData = state.singleIncome?.data.filter(
+      (incomeItem) => incomeItem.description === selectedItem
+    );
+    console.log(selectedIncomeData, "selectttttt");
+    console.log(selectedItem, "selected item");
+
+    // Extract part numbers from the selected income data
+    const partNumbers = selectedIncomeData.map(
+      (incomeItem) => incomeItem.pn || []
+    );
+
+    // Update the partNumbers state with the selected part numbers
+    setPartNo((prevPartNumbers) => {
+      const updatedPartNumbers = [...prevPartNumbers];
+      updatedPartNumbers[index] = partNumbers.flat(); // Use flat to flatten the nested arrays
+      return updatedPartNumbers;
+    });
   };
+
+  console.log(partNo, "formmgasi");
 
   const updateFormDataItem = (index, selectedItem) => {
     setformData((prevFormData) => {
@@ -309,6 +336,37 @@ export const Cipl = () => {
       };
     });
   };
+
+  const handlePartNoChange = async (
+    index,
+    selectedSubLocation,
+    selectedPartNo
+  ) => {
+    // ... (your existing code)
+
+    // Find the corresponding data in state.singleIncome for the selected part number
+    const selectedIncomeData = state.singleIncome?.data.find(
+      (incomeItem) => incomeItem.pn === selectedPartNo
+    );
+
+    // Extract the necessary data from the selected income data
+    const partNumberData = {
+      date: selectedIncomeData?.date || "",
+      unitPrice: selectedIncomeData?.unitCost || "",
+      amount: selectedIncomeData?.amount || "",
+      sn: selectedIncomeData?.sn || "",
+      brand: selectedIncomeData?.brand || "",
+    };
+
+    // Update the partNumbersData state with the selected part number data
+    setPartNumbersData((prevPartNumbersData) => {
+      const updatedPartNumbersData = [...prevPartNumbersData];
+      updatedPartNumbersData[index] = partNumberData;
+      return updatedPartNumbersData;
+    });
+  };
+
+  console.log(partNumbersData, "partNumbersData");
 
   const handleHsChange = (index, value) => {
     updateFormDataHS(index, value);
@@ -692,13 +750,17 @@ export const Cipl = () => {
             />
           </Grid>
         </FormControl>
-        <FormControl fullWidth sx={{ width: "50%", marginRight: "10px" }}>
-          <InputLabel id="demo-simple-select-label">Part No</InputLabel>
+
+        <FormControl
+          fullWidth
+          sx={{ width: "50%", marginRight: "10px" }}
+          key={control.key}
+        >
+          <InputLabel id={`part-no-label-${index}`}>Part No</InputLabel>
           <Select
-            labelId="demo-simple-select-label"
-            id="demo-simple-select"
-            //value={age}
-            label="location"
+            labelId={`part-no-label-${index}`}
+            id={`part-no-select-${index}`}
+            label="Part No"
             MenuProps={{
               PaperProps: {
                 style: {
@@ -707,17 +769,12 @@ export const Cipl = () => {
               },
             }}
             onChange={(e) =>
-              setformData({
-                ...formData,
-                locationName: e.target.value,
-              })
+              handlePartNoChange(index, selectedPartNo[index], e.target.value)
             }
-            //onChange={handleChange}
           >
-            {state.location.data?.map((item, index) => (
-              <MenuItem key={index} value={item?.locationName}>
-                {" "}
-                {item?.locationName}
+            {partNo[index].map((partNo, partIndex) => (
+              <MenuItem key={partIndex} value={partNo}>
+                {partNo}
               </MenuItem>
             ))}
           </Select>
