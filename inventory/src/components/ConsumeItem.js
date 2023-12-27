@@ -12,10 +12,15 @@ import {
 } from '@mui/material';
 import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
+import { fetchlocation } from '../redux/slice/location';
 
 const ConsumeItem = () => {
   const [formData, setFormData] = useState([]);
+  const state = useSelector((state) => state);
+  const dispatch = useDispatch();
 
   const handleDateChange = (date) => {
     setFormData({
@@ -23,6 +28,9 @@ const ConsumeItem = () => {
       transferDate: date.format('YYYY-MM-DD'),
     });
   };
+  useEffect(() => {
+    dispatch(fetchlocation());
+  }, []);
 
   return (
     <>
@@ -57,11 +65,28 @@ const ConsumeItem = () => {
               id='demo-simple-select'
               //value={age}
               label='location'
+              /* onChange={(e) =>
+                setformData({
+                  ...formData,
+                  locationName: e.target.value,
+                })
+              } */
+              // onChange={handleLocationChange}
+              MenuProps={{
+                PaperProps: {
+                  style: {
+                    maxHeight: 120, // Adjust the height as needed
+                  },
+                },
+              }}
               //onChange={handleChange}
             >
-              <MenuItem value={10}>Ten</MenuItem>
-              <MenuItem value={20}>Twenty</MenuItem>
-              <MenuItem value={30}>Thirty</MenuItem>
+              {state.location.data?.map((item, index) => (
+                <MenuItem key={index} value={item?.locationName}>
+                  {' '}
+                  {item?.locationName}
+                </MenuItem>
+              ))}
             </Select>
           </FormControl>
         </Grid>

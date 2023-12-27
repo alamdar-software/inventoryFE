@@ -12,10 +12,14 @@ import {
 } from '@mui/material';
 import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchlocation } from '../redux/slice/location';
 
 const ScrappedItem = () => {
   const [formData, setFormData] = useState([]);
+  const state = useSelector((state) => state);
+  const dispatch = useDispatch();
   const handleDateChange = (date) => {
     setFormData({
       ...formData,
@@ -23,6 +27,10 @@ const ScrappedItem = () => {
     });
   };
   console.log(formData);
+
+  useEffect(() => {
+    dispatch(fetchlocation());
+  }, []);
   return (
     <>
       <Grid>
@@ -58,9 +66,12 @@ const ScrappedItem = () => {
               label='location'
               //onChange={handleChange}
             >
-              <MenuItem value={10}>Ten</MenuItem>
-              <MenuItem value={20}>Twenty</MenuItem>
-              <MenuItem value={30}>Thirty</MenuItem>
+              {state.location.data?.map((item, index) => (
+                <MenuItem key={index} value={item?.locationName}>
+                  {' '}
+                  {item?.locationName}
+                </MenuItem>
+              ))}
             </Select>
           </FormControl>
         </Grid>
