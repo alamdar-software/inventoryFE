@@ -600,12 +600,11 @@ export const Cipl = () => {
             ))}
           </Select>
         </FormControl>
-        <FormControl fullWidth sx={{ width: '50%', marginRight: '10px' }}>
+        <FormControl fullWidth>
           <InputLabel id='demo-simple-select-label'>Item Desc</InputLabel>
           <Select
             labelId='demo-simple-select-label'
             id='itemName'
-            //value={age}
             label='itemName'
             onChange={(e) =>
               handleItemChange(
@@ -614,22 +613,12 @@ export const Cipl = () => {
                 e.target.value
               )
             }
-            MenuProps={{
-              PaperProps: {
-                style: {
-                  maxHeight: 120, // Adjust the height as needed
-                },
-              },
-            }}
-            //onChange={handleChange}
           >
-            {state.item.data
-              .filter((item) => item.address === selectedSubLocations[index])
-              .map((filteredItem, index) => (
-                <MenuItem key={index} value={filteredItem?.description}>
-                  {filteredItem?.description}
-                </MenuItem>
-              ))}
+            {item[index]?.map((filteredItem, itemIndex) => (
+              <MenuItem key={itemIndex} value={filteredItem}>
+                {filteredItem}
+              </MenuItem>
+            ))}
           </Select>
         </FormControl>
         <FormControl fullWidth sx={{ width: '70%', marginRight: '10px' }}>
