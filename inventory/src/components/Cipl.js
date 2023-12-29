@@ -71,6 +71,7 @@ export const Cipl = () => {
     totalPackage: "",
     totalAmount: "",
     partNo: [],
+    date: [],
   });
   const [subLocations, setSubLocations] = useState([]);
   const [item, setItem] = useState([]);
@@ -287,6 +288,14 @@ export const Cipl = () => {
         ...prevFormData.weights.slice(0, index),
         ...prevFormData.weights.slice(index + 1),
       ];
+      updatedFormData.date = [
+        ...prevFormData.date.slice(0, index),
+        ...prevFormData.date.slice(index + 1),
+      ];
+      updatedFormData.partNo = [
+        ...prevFormData.partNo.slice(0, index),
+        ...prevFormData.partNo.slice(index + 1),
+      ];
       return updatedFormData;
     });
   };
@@ -353,12 +362,12 @@ export const Cipl = () => {
     const partNumberData = {
       date: selectedIncomeData?.date || "",
       unitPrice: selectedIncomeData?.unitCost || "",
-      amount: selectedIncomeData?.amount || "",
-      sn: selectedIncomeData?.sn || "",
-      brand: selectedIncomeData?.brand || "",
-    };
 
-    // Update the partNumbersData state with the selected part number data
+      sn: selectedIncomeData?.sn || "",
+      brand: selectedIncomeData?.brandName || "",
+    };
+    updateFormDataPart(index, selectedPartNo, partNumberData);
+    // Update formData with the selected part number data
     setPartNumbersData((prevPartNumbersData) => {
       const updatedPartNumbersData = [...prevPartNumbersData];
       updatedPartNumbersData[index] = partNumberData;
@@ -366,7 +375,30 @@ export const Cipl = () => {
     });
   };
 
+  const updateFormDataPart = (index, selectedPartNo, partNumberData) => {
+    setformData((prevFormData) => {
+      const updatedPartNumbersData = [...prevFormData.partNo];
+      updatedPartNumbersData[index] = selectedPartNo;
+
+      // Update other relevant properties in formData
+      return {
+        ...prevFormData,
+        partNo: updatedPartNumbersData,
+
+        brand: [...(prevFormData.brand || []), partNumberData.brand],
+        sn: [...(prevFormData.sn || []), partNumberData.sn], // Keep the previous sn values
+        amount: [...(prevFormData.amount || []), partNumberData.amount],
+        date: [...(prevFormData.date || []), partNumberData.date],
+        unitPrice: [
+          ...(prevFormData.unitPrice || []),
+          String(partNumberData.unitPrice),
+        ],
+      };
+    });
+  };
+
   console.log(partNumbersData, "partNumbersData");
+  console.log(partNumbersData?.date, "dateeee");
 
   const handleHsChange = (index, value) => {
     updateFormDataHS(index, value);
@@ -481,7 +513,7 @@ export const Cipl = () => {
 
   const updateFormDataSn = (index, value) => {
     setformData((prevFormData) => {
-      const updateSn = [...prevFormData.sn];
+      const updateSn = [...(prevFormData.sn || [])]; // Ensure sn is an array
       updateSn[index] = value;
       return {
         ...prevFormData,
@@ -490,20 +522,29 @@ export const Cipl = () => {
     });
   };
   const handlePurchaseChange = (index, value) => {
+    // Update formData with the selected purchase order value
     updateFormDataPurchase(index, value);
-    setPurchase((prevPurchase) => {
-      const updatePurchase = [...prevPurchase];
-      updatePurchase[index] = value;
-      return updatePurchase;
-    });
   };
+
   const updateFormDataPurchase = (index, value) => {
     setformData((prevFormData) => {
-      const updatePurchase = [...prevFormData.purchase];
-      updatePurchase[index] = value;
+      const updatedPurchaseOrders = [...prevFormData.purchase];
+      updatedPurchaseOrders[index] = value;
+
+      // Assuming partNumbersData is an array with objects
+      // Make sure index is valid for partNumbersData array
+      const selectedPartNumberData = partNumbersData[index];
+
+      // Update other relevant properties in formData
       return {
         ...prevFormData,
-        purchase: updatePurchase,
+        purchase: updatedPurchaseOrders,
+        // Update other properties based on selectedPartNumberData
+        date: selectedPartNumberData?.date || "",
+        unitPrice: selectedPartNumberData?.unitPrice || "",
+        amount: selectedPartNumberData?.amount || "",
+        brand: selectedPartNumberData?.brand || "",
+        sn: selectedPartNumberData?.sn || "",
       };
     });
   };
@@ -569,7 +610,7 @@ export const Cipl = () => {
     const parsedUnitCost = parseFloat(unitCost);
 
     if (!isNaN(parsedQuantity) && !isNaN(parsedUnitCost)) {
-      return parsedQuantity * parsedUnitCost;
+      return (parsedQuantity * parsedUnitCost).toFixed(2);
     } else {
       return "";
     }
@@ -634,7 +675,8 @@ export const Cipl = () => {
 
   console.log("All Items Data:", state.item.data);
   const renderFormControls = () => {
-    return formControls.map((control, index) => (
+    console.log(formControls, "yayerfgyu");
+    return formControls?.map((control, index) => (
       <div key={control.key} style={{ display: "flex", marginBottom: "10px" }}>
         <FormControl fullWidth sx={{ width: "50%", marginRight: "10px" }}>
           <InputLabel id="demo-simple-select-label">Sub Location</InputLabel>
@@ -772,7 +814,7 @@ export const Cipl = () => {
               handlePartNoChange(index, selectedPartNo[index], e.target.value)
             }
           >
-            {partNo[index].map((partNo, partIndex) => (
+            {partNo[index]?.map((partNo, partIndex) => (
               <MenuItem key={partIndex} value={partNo}>
                 {partNo}
               </MenuItem>
@@ -786,6 +828,7 @@ export const Cipl = () => {
               id="outlined-basic"
               label="S/N"
               variant="outlined"
+              value={partNumbersData[index]?.sn || ""}
               // value={locationName}
               // onChange={(e) => setLocation(e.target.value)}
               onChange={(e) => handleSnChange(index, e.target.value)}
@@ -800,7 +843,7 @@ export const Cipl = () => {
               id="outlined-basic"
               label="Purchase Order(D.O.P)"
               variant="outlined"
-              // value={locationName}
+              value={partNumbersData[index]?.date || ""}
               // onChange={(e) => setLocation(e.target.value)}
               onChange={(e) => handlePurchaseChange(index, e.target.value)}
               fullWidth
@@ -814,6 +857,7 @@ export const Cipl = () => {
               id="outlined-basic"
               label="Unit Price"
               variant="outlined"
+              value={partNumbersData[index]?.unitPrice || ""}
               // value={locationName}
               // onChange={(e) => setLocation(e.target.value)}
               onChange={(e) => handleUnitPriceChange(index, e.target.value)}
@@ -858,6 +902,7 @@ export const Cipl = () => {
               id="outlined-basic"
               label="Brand"
               variant="outlined"
+              value={partNumbersData[index]?.brand || ""}
               // value={locationName}
               // onChange={(e) => setLocation(e.target.value)}
               onChange={(e) => handleBrandChange(index, e.target.value)}
@@ -929,12 +974,27 @@ export const Cipl = () => {
     return totalAmountFromFormData.toFixed(2); // Adjust the precision as needed
   };
 
+  useEffect(() => {
+    const totalWeight = calculateTotalWeight();
+    const uniquePackageNames = [...new Set(formData.package)];
+    const totalPackageCount = uniquePackageNames.length;
+    const totalAmount = calculateTotalAmount();
+
+    setformData((prevFormData) => ({
+      ...prevFormData,
+      totalWeight: totalWeight,
+      totalPackage: String(totalPackageCount),
+      totalAmount: totalAmount,
+    }));
+  }, [formData.package, formData.quantity, formData.unitPrice]);
   const renderweightandTotal = () => {
     const totalWeight = calculateTotalWeight();
     const uniquePackageNames = [...new Set(formData.package)];
     const totalAmount = calculateTotalAmount();
     // Calculate the total package count
     const totalPackageCount = uniquePackageNames.length;
+
+    // Update the formData with calculated values
 
     return (
       <Grid container spacing={1} sx={{ mt: "23px" }}>
