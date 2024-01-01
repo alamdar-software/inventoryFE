@@ -162,19 +162,34 @@ const BulkIncome = () => {
     const selectedDescriptions = e.target.value;
 
     if (selectedDescriptions) {
+      const selectedItemsInfo = selectedDescriptions.map((description) => {
+        const selectedItem = state.item.data.find(
+          (item) => item.description === description
+        );
+        console.log(
+          `Selected Item for Description "${description}":`,
+          selectedItem
+        );
+        return {
+          description: description,
+          unitName: selectedItem ? selectedItem.unitName : '',
+        };
+      });
+
       setFormControls((prevControls) => [
         ...prevControls,
-        ...selectedDescriptions
+        ...selectedItemsInfo
           .filter(
-            (description) =>
+            (itemInfo) =>
               !prevControls.some(
-                (control) => control.description === description
+                (control) => control.description === itemInfo.description
               )
           )
-          .map((description, index) => ({
+          .map((itemInfo, index) => ({
             key: prevControls.length + index,
-            description: description,
-            catagory: '', // You might want to initialize other properties here
+            description: itemInfo.description,
+
+            unitName: itemInfo.unitName,
           })),
       ]);
 
@@ -184,14 +199,21 @@ const BulkIncome = () => {
           ...selectedDescriptions,
         ]);
 
+        const uniqueUnits = selectedItemsInfo.map(
+          (itemInfo) => itemInfo.unitName
+        );
+
         return {
           ...prevFormData,
           description: Array.from(uniqueDescriptions),
+          unitName: uniqueUnits, // Assign the array directly
         };
       });
+
+      setIsItemSelected(true);
     }
-    setIsItemSelected(true);
   };
+
   const handleDescriptionChange = (index, value) => {
     setFormControls((prevControls) => {
       const updatedControls = [...prevControls];
@@ -525,6 +547,7 @@ const BulkIncome = () => {
               id='outlined-basic'
               label='Unit Cost'
               variant='outlined'
+              type='number'
               fullWidth
               sx={{ width: '90%' }}
               /*   onChange={(e) =>
@@ -544,6 +567,7 @@ const BulkIncome = () => {
               id='outlined-basic'
               label='Quantity'
               variant='outlined'
+              type='number'
               // value={locationName}
               onChange={(e) => handleQuantityChange(index, e.target.value)}
               fullWidth
@@ -557,6 +581,7 @@ const BulkIncome = () => {
               id='outlined-basic'
               label='Total Price'
               variant='outlined'
+              type='number'
               // value={locationName}
               onChange={(e) => handleTotalPriceChange(index, e.target.value)}
               fullWidth
@@ -582,7 +607,7 @@ const BulkIncome = () => {
             ))}
           </Grid>
         </FormControl> */}
-        <FormControl fullWidth sx={{ width: '70%', marginRight: '10px' }}>
+        {/* <FormControl fullWidth sx={{ width: '70%', marginRight: '10px' }}>
           <InputLabel id='unitName'>UOM</InputLabel>
           <Select
             labelId='unitName'
@@ -605,6 +630,28 @@ const BulkIncome = () => {
               </MenuItem>
             ))}
           </Select>
+        </FormControl> */}
+
+        <FormControl fullWidth sx={{ width: '70%', marginRight: '10px' }}>
+          <Grid item xs={21} sm={6}>
+            <TextField
+              id='outlined-basic'
+              label='Unit of Measure'
+              variant='outlined'
+              fullWidth
+              sx={{ width: '90%' }}
+              InputProps={{
+                readOnly: true,
+              }}
+              value={control.unitName || ''}
+              // onChange={(e) =>
+              //   setformData({
+              //     ...formData,
+              //     unitName: e.target.value,
+              //   })
+              // }
+            />
+          </Grid>
         </FormControl>
         <FormControl fullWidth sx={{ width: '90%', marginRight: '10px' }}>
           <Grid item xs={12} sm={6}>
@@ -613,6 +660,7 @@ const BulkIncome = () => {
               id='outlined-basic'
               label='Standard Price'
               variant='outlined'
+              type='number'
               // value={locationName}
               onChange={(e) => handleStandardPriceChange(index, e.target.value)}
               fullWidth
@@ -626,6 +674,7 @@ const BulkIncome = () => {
               id='outlined-basic'
               label='Extended Value'
               variant='outlined'
+              type='number'
               // value={locationName}
               onChange={(e) => handleExtendedValueChange(index, e.target.value)}
               fullWidth
