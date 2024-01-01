@@ -72,6 +72,7 @@ export const Cipl = () => {
     totalAmount: "",
     partNo: [],
     date: [],
+    currencyRate: "",
   });
   const [subLocations, setSubLocations] = useState([]);
   const [item, setItem] = useState([]);
@@ -112,9 +113,19 @@ export const Cipl = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      console.log(formData, "formmmm");
-      const res = await fetch("");
-    } catch (error) {}
+      const res = await fetch("http://localhost:8080/cipl/add", {
+        method: "post",
+        headers: {
+          "content-type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+      const data = await res.json();
+      console.log(data, "came from backend");
+      alert("cipl added successfully");
+    } catch (error) {
+      console.log("something happens while adding cipl");
+    }
   };
 
   const handleLocationChange = (e) => {
@@ -579,8 +590,8 @@ export const Cipl = () => {
   };
   const calculateAndUpdateAmount = (index) => {
     const calculatedAmount = calculateAmount(
-      formData.unitPrice[index],
-      formData.quantity[index]
+      formData.quantity[index],
+      partNumbersData[index]?.unitPrice || 0
     );
 
     setAmounts((prevAmounts) => {
@@ -588,6 +599,8 @@ export const Cipl = () => {
       updatedAmounts[index] = calculatedAmount;
       return updatedAmounts;
     });
+
+    updateFormDataAmount(index, calculatedAmount);
   };
 
   const updateFormDataQuantity = (index, value) => {
@@ -605,6 +618,23 @@ export const Cipl = () => {
     updateFormDataAmount(index, value);
   };
 
+  const updateFormDataAmount = (index, value) => {
+    setformData((prevFormData) => {
+      const updateAmount = calculateAmount(
+        prevFormData.quantity[index],
+        partNumbersData[index]?.unitPrice || 0
+      );
+
+      const updatedAmounts = [...prevFormData.amount];
+      updatedAmounts[index] = updateAmount;
+      console.log(updateAmount, "rusiiiiiiiiiiiiiiii");
+      console.log(updatedAmounts, "ruseeeeeeeeeeeeee");
+      return {
+        ...prevFormData,
+        amount: updatedAmounts,
+      };
+    });
+  };
   const calculateAmount = (quantity, unitCost) => {
     const parsedQuantity = parseFloat(quantity);
     const parsedUnitCost = parseFloat(unitCost);
@@ -614,17 +644,6 @@ export const Cipl = () => {
     } else {
       return "";
     }
-  };
-
-  const updateFormDataAmount = (index, value) => {
-    setformData((prevFormData) => {
-      const updateAmount = [...prevFormData.amount];
-      updateAmount[index] = value;
-      return {
-        ...prevFormData,
-        amount: updateAmount,
-      };
-    });
   };
 
   const handleBrandChange = (index, value) => {
@@ -886,10 +905,10 @@ export const Cipl = () => {
               id="outlined-basic"
               label="Amount"
               variant="outlined"
-              value={amounts[index] || ""}
+              value={formData.amount[index] || ""}
               // value={locationName}
               // onChange={(e) => setLocation(e.target.value)}
-              onChange={(e) => handleAmountChange(index, e.target.value)}
+              /* onChange={(e) => handleAmountChange(index, e.target.value)} */
               fullWidth
               readOnly
             />
@@ -1281,6 +1300,12 @@ export const Cipl = () => {
             variant="outlined"
             // value={locationName}
             // onChange={(e) => setLocation(e.target.value)}
+            onChange={(e) =>
+              setformData({
+                ...formData,
+                currencyRate: e.target.value,
+              })
+            }
             fullWidth
           />
         </Grid>
@@ -1346,7 +1371,12 @@ export const Cipl = () => {
       </div>
       <Box sx={{ display: "flex", justifyContent: "center", mt: "33px" }}>
         {" "}
-        <Button variant="contained" size="large" color="secondary">
+        <Button
+          variant="contained"
+          size="large"
+          color="secondary"
+          onClick={handleSubmit}
+        >
           Add
         </Button>
       </Box>

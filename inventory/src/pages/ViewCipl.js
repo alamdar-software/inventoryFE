@@ -18,18 +18,36 @@ import {
   Table,
   TableBody,
   TablePagination,
+  Box,
 } from "@mui/material";
 import { Link } from "react-router-dom";
-const ViewCipl = () => {
+import { fetchlocation } from "../redux/slice/location";
+import { fetchItem } from "../redux/slice/ItemSlice";
+import { useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+export const ViewCipl = () => {
+  const dispatch = useDispatch();
+  const state = useSelector((state) => state);
   const [itemDescription, setitemDescription] = useState();
   const [locationName, setlocationName] = useState();
   const [transferDate, settransferDate] = useState();
-
   const [cipl, setcipl] = useState([]);
+
+  useEffect(() => {
+    dispatch(fetchlocation());
+    dispatch(fetchItem());
+  }, []);
 
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
-
+  const [formData, setformData] = useState({
+    itemDescription: "",
+    date: "",
+    location: "",
+  });
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
@@ -38,7 +56,7 @@ const ViewCipl = () => {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
-
+  console.log(formData, "heyyy");
   // const handleClick = () => {
   //   try {
   //     const formData = {
@@ -84,7 +102,7 @@ const ViewCipl = () => {
     });
   };
   useEffect(() => {
-    fetch("http://localhost:8080/pickup/view")
+    fetch('http://localhost:8080/pickup/view')
       .then((res) => {
         if (!res.ok) {
           throw new Error(`HTTP error! Status: ${res.status}`);
@@ -96,7 +114,7 @@ const ViewCipl = () => {
         setPickUp(result);
       })
       .catch((error) => {
-        console.error("Error fetching pickup data:", error);
+        console.error('Error fetching pickup data:', error);
       });
   }, []);
 
@@ -116,6 +134,28 @@ const ViewCipl = () => {
         console.error("Error updating pickup:", error);
       });
   }; */
+  useEffect(() => {
+    fetch("http://localhost:8080/cipl/view")
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error(`HTTP error! Status: ${res.status}`);
+        }
+        return res.json();
+      })
+      .then((result) => {
+        console.log(result);
+        setcipl(result);
+      })
+      .catch((error) => {
+        console.error("Error fetching pickup data:", error);
+      });
+  }, []);
+  const handleDateChange = (date) => {
+    setformData({
+      ...formData,
+      date: date.format("YYYY-MM-DD"),
+    });
+  };
   return (
     <>
       <Grid>
@@ -136,7 +176,7 @@ const ViewCipl = () => {
               gutterBottom
               style={{ fontFamily: "'EB Garamond'" }}
             >
-              Add PickUp
+              View Cipl
             </Typography>
           </CardContent>
         </Card>
@@ -159,6 +199,12 @@ const ViewCipl = () => {
                 labelId="demo-simple-select-label"
                 id="itemName"
                 label="itemName"
+                onChange={(e) => {
+                  setformData({
+                    ...formData,
+                    itemDescription: e.target.value,
+                  });
+                }}
                 /* onChange={(e) =>
                   handleItemChange(
                     index,
@@ -167,9 +213,10 @@ const ViewCipl = () => {
                   )
                 } */
               >
-                {item[index]?.map((filteredItem, itemIndex) => (
-                  <MenuItem key={itemIndex} value={filteredItem}>
-                    {filteredItem}
+                {state.item.data?.map((item, index) => (
+                  <MenuItem key={index} value={item?.description}>
+                    {" "}
+                    {item?.description}
                   </MenuItem>
                 ))}
               </Select>
@@ -182,7 +229,7 @@ const ViewCipl = () => {
                 labelId="demo-simple-select-label"
                 id="demo-simple-select"
                 //value={age}
-                value={formData.locationName || ""}
+
                 label="location"
                 MenuProps={{
                   PaperProps: {
@@ -191,7 +238,13 @@ const ViewCipl = () => {
                     },
                   },
                 }}
-                onChange={handleLocationChange}
+                onChange={(e) => {
+                  setformData({
+                    ...formData,
+                    locationName: e.target.value,
+                  });
+                }}
+
                 //onChange={handleChange}
               >
                 {state.location.data?.map((item, index) => (
@@ -203,13 +256,30 @@ const ViewCipl = () => {
               </Select>
             </FormControl>
           </Grid>
+          <Grid item xs={12} sm={6}>
+            <FormControl fullWidth sx={{ width: "90%" }}>
+              <Grid item xs={12} sm={6}>
+                <LocalizationProvider dateAdapter={AdapterDayjs}>
+                  <DatePicker
+                    /* value={
+                formData.purchaseDate ? dayjs(formData.purchaseDate) : null
+              } */
+                    onChange={(newDate) => handleDateChange(newDate)}
+                    // onChange={(newDate) => handleDateChange(newDate)}
+                    fullWidth
+                    sx={{ width: "90%" }}
+                    /* format="yyyy-MM-dd" */
+                  />
+                </LocalizationProvider>
+              </Grid>
+            </FormControl>
+          </Grid>
         </Grid>
 
         <Button
           variant="contained"
           color="secondary"
           size="large"
-          onClick={handleClick}
           sx={{
             mt: "33px",
             mb: "17px",
@@ -218,62 +288,83 @@ const ViewCipl = () => {
             display: "block",
           }}
         >
-          Add
+          Search
         </Button>
       </Card>
-      <Grid sx={{ mt: "33px" }}>
+      <Grid sx={{ mt: "33px", width: "100%", overflowX: "scroll" }}>
         <TableContainer
           component={Paper}
-          sx={{ borderRadius: "33px", borderBottom: "2px solid yellow" }}
+          sx={{
+            borderRadius: "33px",
+            borderBottom: "2px solid yellow",
+            width: "110%",
+          }}
         >
           <Table sx={{ minWidth: 650 }} aria-label="simple table">
             <TableHead>
               <TableRow>
                 <TableCell align="right" sx={{ fontWeight: "bold" }}>
-                  PickupAddress
+                  Source Location
                 </TableCell>
                 <TableCell align="right" sx={{ fontWeight: "bold" }}>
-                  Pic
+                  SubLocations
                 </TableCell>
                 <TableCell align="right" sx={{ fontWeight: "bold" }}>
-                  CompanyName
+                  Shipper
                 </TableCell>
                 <TableCell align="right" sx={{ fontWeight: "bold" }}>
-                  CountryCode
+                  Consignee
                 </TableCell>
                 <TableCell align="right" sx={{ fontWeight: "bold" }}>
-                  ContactNumber
+                  Ref Number
+                </TableCell>
+                <TableCell align="right" sx={{ fontWeight: "bold" }}>
+                  Status
+                </TableCell>
+                <TableCell align="right" sx={{ fontWeight: "bold" }}>
+                  Transfer Date
+                </TableCell>
+                <TableCell align="right" sx={{ fontWeight: "bold" }}>
+                  Select Print
+                </TableCell>
+                <TableCell align="right" sx={{ fontWeight: "bold" }}>
+                  Print
+                </TableCell>
+                <TableCell align="right" sx={{ fontWeight: "bold" }}>
+                  Action
                 </TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
-              {pickup
+              {cipl
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                .map((pickup) => (
+                .map((cipl) => (
                   <TableRow
-                    key={pickup.name}
+                    key={cipl.id}
                     sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                   >
                     {/* <TableCell component='th' scope='row'>
-                  {attendence.name}
-                </TableCell> */}
-                    <TableCell align="right">{pickup.pickupAddress}</TableCell>
-                    <TableCell align="right">{pickup.pic}</TableCell>
-                    <TableCell align="right">{pickup.companyName}</TableCell>
-                    <TableCell align="right">{pickup.countryCode}</TableCell>
-                    <TableCell align="right">{pickup.contactNumber}</TableCell>
+                {attendence.name}
+              </TableCell> */}
+                    <TableCell align="right">{cipl.locationName}</TableCell>
+                    <TableCell align="right">{cipl.SubLocations}</TableCell>
+                    <TableCell align="right">{cipl.shipperName}</TableCell>
+                    <TableCell align="right">{cipl.consigneeName}</TableCell>
 
-                    <Link to={`/updatePickup/${pickup.id}`}>
-                      <Button variant="contained">Update</Button>
-                    </Link>
-                    <Button
-                      sx={{ marginLeft: "11px" }}
-                      variant="contained"
-                      color="secondary"
-                      onClick={() => deletePickup(pickup.id)}
-                    >
-                      Delete
-                    </Button>
+                    <Box>
+                      <Link to={`/updateConsignee/${cipl.id}`}>
+                        <Button variant="contained">Update</Button>
+                      </Link>
+
+                      <Button
+                        sx={{ marginLeft: "11px" }}
+                        variant="contained"
+                        color="secondary"
+                        /*  onClick={() => deleteConsignee(consignee.id)} */
+                      >
+                        Delete
+                      </Button>
+                    </Box>
                   </TableRow>
                 ))}
             </TableBody>
@@ -282,7 +373,7 @@ const ViewCipl = () => {
         <TablePagination
           rowsPerPageOptions={[5, 10, 25]}
           component="div"
-          count={pickup.length}
+          count={cipl.length}
           rowsPerPage={rowsPerPage}
           page={page}
           onPageChange={handleChangePage}
