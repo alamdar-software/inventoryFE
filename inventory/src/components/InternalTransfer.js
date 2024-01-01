@@ -24,11 +24,11 @@ const InternalTransfer = () => {
   const [formData, setformData] = useState({
     locationName: '',
     transferDate: '',
-    consigneeName: '',
-    repairService: '',
+    destination: '',
     SubLocation: [],
     item: [],
     sn: [],
+    partNumber: [],
     purchase: [],
     quantity: [],
     remarks: [],
