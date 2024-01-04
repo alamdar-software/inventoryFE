@@ -159,7 +159,7 @@ export const ViewCipl = () => {
       date: date.format("YYYY-MM-DD"),
     });
   };
-  const generatePDF = async (rowData, index) => {
+  /*   const generatePDF = async (rowData, index) => {
     console.log("Generate PDF clicked");
     const pdf = new jsPDF();
 
@@ -171,7 +171,7 @@ export const ViewCipl = () => {
       pdf.addImage(imgData, "PNG", 10, 10, 190, 0);
       pdf.save("table.pdf");
     }
-  };
+  }; */
   return (
     <>
       <Grid>
@@ -376,7 +376,7 @@ export const ViewCipl = () => {
                           <Button
                             variant="contained"
                             color="primary"
-                            onClick={() => generatePDF(ciplRow.id, index)}
+                            /*  onClick={() => generatePDF(ciplRow.id, index)} */
                           >
                             {<PictureAsPdfIcon />}
                           </Button>

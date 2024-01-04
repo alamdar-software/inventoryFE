@@ -1,9 +1,12 @@
 
-  @media print {
-    body {
-      margin: 0;
-      padding: 0;
-    }
+@media print {
+  body {
+    transform: scale(0.8); /* Adjust the scale factor as needed */
+    transform-origin: top left;
+  }
+
+  /* Add other necessary styles for printing */
+
   
     /* Adjust other styles as needed */
   }
@@ -12,6 +15,26 @@
       page-break-before: always;
     }
   }
+  /* Your regular screen styles here */
+
+@media print {
+  /* Print-specific styles */
+  body {
+      font-size: 10px !important; /* Adjust font size as needed for print */
+  }
+
+  .col-md-4,
+  .col-md-8,
+  .col-md-3,
+  .col-md-9,
+  .col-md-5,
+  .col-md-7 {
+      display: block !important;
+      width: 50% !important;
+      height: 50vh
+  }
+}
+
 
 
   .full_container {
@@ -26,3 +49,9 @@
     margin: 0;
     display: flex;
 }
+
+@page {
+  margin: 1cm; /* Adjust margins as needed */
+  height: 100%; /* Set a specific height for the printable area */
+}
+

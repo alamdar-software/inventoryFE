@@ -24,47 +24,49 @@ function PrintCipl() {
 
   const [transferItem, settransferItem] = useState();
   const [sourceLocation, setsourceLocation] = useState();
-  console.log(data, "rusiii");
   const handlePrint = () => {
     const printWindow = window.open();
 
     printWindow.document.write(`
       <html>
         <head>
-          <title>Print</title>
-          <link
-          href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
-          rel="stylesheet"
-          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
-          crossorigin="anonymous"
-        />
-        <script
-          src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
-          integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
-          crossorigin="anonymous"
-        ></script>
           <link rel="stylesheet" href="./styles.css">
           <link rel="stylesheet" type="text/css" href="./printStyles.css" media="print" />
-          <!-- Other stylesheets and head elements -->
+          <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous" />
+          <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
         </head>
         <body>
           ${document.getElementById("printableArea").innerHTML}
-          <script
-          src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
-          integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
-          crossorigin="anonymous"
-        ></script>
+          <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
         </body>
       </html>
     `);
 
     printWindow.document.close();
-    printWindow.print();
+
+    // Wait for the content to be fully rendered before printing
+    printWindow.onload = () => {
+      // Apply additional styling for print
+      const printStyles = printWindow.document.createElement("style");
+      printStyles.innerHTML = `
+        body {
+          margin: 0 !important;
+        }
+      `;
+      printWindow.document.head.appendChild(printStyles);
+
+      printWindow.print();
+
+      printWindow.onafterprint = () => {
+        // Close the print window after printing is complete
+        printWindow.close();
+      };
+    };
   };
 
   return (
     <>
-      <div className="full_container">
+      <div className="full_container print-cipl-container">
         <div className="inner_container">
           <div id="content">
             <div className="midde_cont">

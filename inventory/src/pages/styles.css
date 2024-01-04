@@ -1,100 +1,102 @@
-
-th {
-	width: 5rem;
-}
-
-.tbl th, .tbl td {
-	border-top: none !important;
-	border-bottom: none !important;
-}
-
-.tbl th {
-	border-top: 1px solid black !important;
-	border-bottom: 1px solid black !important;
-}
-
-.tbl th, .tbl td {
-	border-right: 1px solid black !important; /* Add vertical lines */
-	border-left: 1px solid black !important; /* Add vertical lines */
-}
-
-.tbl1 {
-	border: 2px solid black !important; /* Keep vertical lines */
-}
-
-.tbl {
-	border: 2px solid black !important;
-}
-.tbody1{
-border-bottom:2px solid black !important;
-}
-.quantity-gap {
-    margin-right: 10px;  /* Adjust the value as needed */
+.print-cipl-container th {
+    width: 5rem;
+  }
+  
+  .print-cipl-container .tbl th,
+  .print-cipl-container .tbl td {
+    border-top: none !important;
+    border-bottom: none !important;
+  }
+  
+  .print-cipl-container .tbl th {
+    border-top: 1px solid black !important;
+    border-bottom: 1px solid black !important;
+  }
+  
+  .print-cipl-container .tbl th,
+  .print-cipl-container .tbl td {
+    border-right: 1px solid black !important; /* Add vertical lines */
+    border-left: 1px solid black !important; /* Add vertical lines */
+  }
+  
+  .print-cipl-container .tbl1 {
+    border: 2px solid black !important; /* Keep vertical lines */
+  }
+  
+  .print-cipl-container .tbl {
+    border: 2px solid black !important;
+  }
+  
+  .print-cipl-container .tbody1 {
+    border-bottom: 2px solid black !important;
+  }
+  
+  .print-cipl-container .quantity-gap {
+    margin-right: 10px; /* Adjust the value as needed */
     display: inline-block; /* Ensures the spacing is applied horizontally */
   }
-
-
-
+  
   @media print {
-	tr {
-		page-break-inside: avoid;
-	}
-	#printButton {
-		display: none !important;
-	}
-	.print-hr {
-		border: 1px solid black !important;
-	}
-	
+    .print-cipl-container tr {
+      page-break-inside: avoid;
+    }
+    .print-cipl-container #printButton {
+      display: none !important;
+    }
+    .print-cipl-container .print-hr {
+      border: 1px solid black !important;
+    }
+  }
+  
+  @media print {
+    .print-cipl-container .col-md-5 {
+      display: inline-block;
+      width: 30%; /* Adjust the width as needed */
+      vertical-align: top; /* Align elements to the top */
+    }
+  
+    .print-cipl-container .col-md-7 {
+      display: inline-block;
+      width: 50%;
+    }
+  
+    .print-cipl-container .col-md-4 {
+      display: inline-block;
+      width: 30%; /* Adjust the width as needed */
+      vertical-align: top; /* Align elements to the top */
+    }
+  
+    .print-cipl-container .col-md-8 {
+      display: inline-block;
+      width: 50%;
+    }
+    .print-cipl-container .col-md-3 {
+      display: inline-block;
+      width: 20%; /* Adjust the width as needed */
+      vertical-align: top; /* Align elements to the top */
+    }
+  
+    .print-cipl-container .col-md-9 {
+      display: inline-block;
+      width: 50%;
+    }
+    .print-cipl-container body {
+      margin: 3px !important;
+    }
+  }
+  @media print {
+    /* Print-specific styles */
+    body {
+        font-size: 5px !important;
+    }
+
+    .col-md-4,
+    .col-md-8,
+    .col-md-3,
+    .col-md-9,
+    .col-md-5,
+    .col-md-7 {
+        display: block;
+        width: 100%;
+    }
 }
-
-@page {
-	margin-top: 2rem !important;
-	margin-bottom: 0px !important;
-		 margin-left: 3rem !important; 
-}
-
-
- @media print {
-            .col-md-5 {
-                display: inline-block;
-                width: 30%; /* Adjust the width as needed */
-                
-                vertical-align: top; /* Align elements to the top */
-            }
-          
-             .col-md-7 {
-                display: inline-block;
-                width: 50%; 
-              
-            }
-            
-            .col-md-4 {
-                display: inline-block;
-                width: 30%; /* Adjust the width as needed */
-                
-                vertical-align: top; /* Align elements to the top */
-            }
-          
-             .col-md-8 {
-                display: inline-block;
-                width: 50%; 
-              
-            }
-            .col-md-3 {
-                display: inline-block;
-                width: 20%; /* Adjust the width as needed */
-                
-                vertical-align: top; /* Align elements to the top */
-            }
-          
-             .col-md-9 {
-                display: inline-block;
-                width: 50%; 
-              
-            }
-			body {
-			  margin: 3px !important;
-			  }
-            
-        }
