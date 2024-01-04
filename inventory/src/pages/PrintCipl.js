@@ -2,8 +2,7 @@ import React from "react";
 import { useEffect } from "react";
 import { useState } from "react";
 import { useParams } from "react-router-dom";
-import "./styles.css";
-import "./printStyles.css";
+
 
 function PrintCipl() {
   const [data, setdata] = useState([]);
