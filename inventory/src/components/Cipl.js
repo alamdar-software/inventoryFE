@@ -65,7 +65,7 @@ export const Cipl = () => {
     amount: [],
     brand: [],
     remarks: [],
-    package: [],
+    packageName: [],
     po: "",
     totalWeight: "",
     totalPackage: "",
@@ -271,9 +271,9 @@ export const Cipl = () => {
         ...prevFormData.item.slice(0, index),
         ...prevFormData.item.slice(index + 1),
       ];
-      updatedFormData.package = [
-        ...prevFormData.package.slice(0, index),
-        ...prevFormData.package.slice(index + 1),
+      updatedFormData.packageName = [
+        ...prevFormData.packageName.slice(0, index),
+        ...prevFormData.packageName.slice(index + 1),
       ];
       updatedFormData.purchase = [
         ...prevFormData.purchase.slice(0, index),
@@ -441,11 +441,11 @@ export const Cipl = () => {
 
   const updateFormDataPackage = (index, value) => {
     setformData((prevFormData) => {
-      const updatePackage = [...prevFormData.package];
+      const updatePackage = [...prevFormData.packageName];
       updatePackage[index] = value;
       return {
         ...prevFormData,
-        package: updatePackage,
+        packageName: updatePackage,
       };
     });
   };
@@ -1005,10 +1005,10 @@ export const Cipl = () => {
       totalPackage: String(totalPackageCount),
       totalAmount: totalAmount,
     }));
-  }, [formData.package, formData.quantity, formData.unitPrice]);
+  }, [formData.packageName, formData.quantity, formData.unitPrice]);
   const renderweightandTotal = () => {
     const totalWeight = calculateTotalWeight();
-    const uniquePackageNames = [...new Set(formData.package)];
+    const uniquePackageNames = [...new Set(formData.packageName)];
     const totalAmount = calculateTotalAmount();
     // Calculate the total package count
     const totalPackageCount = uniquePackageNames.length;

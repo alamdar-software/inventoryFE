@@ -28,6 +28,9 @@ import { useSelector } from "react-redux";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import PictureAsPdfIcon from "@mui/icons-material/PictureAsPdf";
+import jsPDF from "jspdf";
+import html2canvas from "html2canvas";
 export const ViewCipl = () => {
   const dispatch = useDispatch();
   const state = useSelector((state) => state);
@@ -155,6 +158,19 @@ export const ViewCipl = () => {
       ...formData,
       date: date.format("YYYY-MM-DD"),
     });
+  };
+  const generatePDF = async (rowData, index) => {
+    console.log("Generate PDF clicked");
+    const pdf = new jsPDF();
+
+    const tableRow = document.getElementById(`${rowData.id}-${index}`);
+    if (tableRow) {
+      const canvas = await html2canvas(tableRow);
+      const imgData = canvas.toDataURL("image/png");
+
+      pdf.addImage(imgData, "PNG", 10, 10, 190, 0);
+      pdf.save("table.pdf");
+    }
   };
   return (
     <>
@@ -318,19 +334,15 @@ export const ViewCipl = () => {
                 <TableCell align="right" sx={{ fontWeight: "bold" }}>
                   Ref Number
                 </TableCell>
-                <TableCell align="right" sx={{ fontWeight: "bold" }}>
-                  Status
-                </TableCell>
+
                 <TableCell align="right" sx={{ fontWeight: "bold" }}>
                   Transfer Date
                 </TableCell>
-                <TableCell align="right" sx={{ fontWeight: "bold" }}>
-                  Select Print
-                </TableCell>
+
                 <TableCell align="right" sx={{ fontWeight: "bold" }}>
                   Print
                 </TableCell>
-                <TableCell align="right" sx={{ fontWeight: "bold" }}>
+                <TableCell align="left" sx={{ fontWeight: "bold" }}>
                   Action
                 </TableCell>
               </TableRow>
@@ -338,35 +350,61 @@ export const ViewCipl = () => {
             <TableBody>
               {cipl
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                .map((cipl) => (
-                  <TableRow
-                    key={cipl.id}
-                    sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-                  >
-                    {/* <TableCell component='th' scope='row'>
-                {attendence.name}
-              </TableCell> */}
-                    <TableCell align="right">{cipl.locationName}</TableCell>
-                    <TableCell align="right">{cipl.SubLocations}</TableCell>
-                    <TableCell align="right">{cipl.shipperName}</TableCell>
-                    <TableCell align="right">{cipl.consigneeName}</TableCell>
+                .map((ciplRow) =>
+                  // Render a row for each sublocation
+                  ciplRow.SubLocations.map((subLocation, index) => (
+                    <TableRow
+                      key={`${ciplRow.id}-${index}`} // Use a unique key for each row
+                      sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                    >
+                      <TableCell align="right">
+                        {ciplRow.locationName}
+                      </TableCell>
+                      <TableCell align="right">{subLocation}</TableCell>
+                      <TableCell align="right">{ciplRow.shipperName}</TableCell>
+                      <TableCell align="right">
+                        {ciplRow.consigneeName}
+                      </TableCell>
+                      <TableCell align="right">
+                        {ciplRow.consigneeName}
+                      </TableCell>
+                      <TableCell align="right">
+                        {ciplRow.transferDate}
+                      </TableCell>
+                      <TableCell align="right">
+                        <Link to={`/cipl/createpdf/${ciplRow.id}`}>
+                          <Button
+                            variant="contained"
+                            color="primary"
+                            onClick={() => generatePDF(ciplRow.id, index)}
+                          >
+                            {<PictureAsPdfIcon />}
+                          </Button>
+                        </Link>
+                      </TableCell>
 
-                    <Box>
-                      <Link to={`/updateConsignee/${cipl.id}`}>
-                        <Button variant="contained">Update</Button>
-                      </Link>
+                      <Box>
+                        <Link to={`/updateConsignee/${ciplRow.id}`}>
+                          <Button
+                            sx={{ marginLeft: "11px" }}
+                            variant="contained"
+                          >
+                            Update
+                          </Button>
+                        </Link>
 
-                      <Button
-                        sx={{ marginLeft: "11px" }}
-                        variant="contained"
-                        color="secondary"
-                        /*  onClick={() => deleteConsignee(consignee.id)} */
-                      >
-                        Delete
-                      </Button>
-                    </Box>
-                  </TableRow>
-                ))}
+                        <Button
+                          sx={{ marginLeft: "11px" }}
+                          variant="contained"
+                          color="secondary"
+                          /*  onClick={() => deleteConsignee(consignee.id)} */
+                        >
+                          Delete
+                        </Button>
+                      </Box>
+                    </TableRow>
+                  ))
+                )}
             </TableBody>
           </Table>
         </TableContainer>

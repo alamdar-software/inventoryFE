@@ -1,0 +1,696 @@
+<!DOCTYPE html>
+<html >
+<head>
+<!-- basic -->
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<!-- mobile metas -->
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="initial-scale=1, maximum-scale=1">
+<!-- site metas -->
+<title>Print Cipl</title>
+<meta name="keywords" content="">
+<meta name="description" content="">
+<meta name="author" content="">
+<!-- site icon -->
+<link rel="icon" th:href="@{/images/logo/logoim.png}" type="image/png" />
+<!-- bootstrap css -->
+<link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />
+<!-- site css -->
+<link rel="stylesheet" th:href="@{/css/style.css}" />
+<!-- responsive css -->
+<link rel="stylesheet" th:href="@{/css/responsive.css}" />
+<!-- color css -->
+<link rel="stylesheet" th:href="@{/css/colors.css}" />
+<!-- select bootstrap -->
+<link rel="stylesheet" th:href="@{/css/bootstrap-select.css}" />
+<!-- scrollbar css -->
+<link rel="stylesheet" th:href="@{/css/perfect-scrollbar.css}" />
+<!-- custom css -->
+<link rel="stylesheet" th:href="@{/css/custom.css}" />
+<link rel="stylesheet" th:href="@{/css/flatpickr.min.css}" />
+<link rel="stylesheet"
+	href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.css" />
+
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+	integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
+	crossorigin="anonymous" referrerpolicy="no-referrer" />
+<script type="text/javascript">
+	/* 	window.print(); */
+
+	function printDiv(divName) {
+		
+		document.getElementById('printableArea').style.display = "block";
+		
+		// Store the current CSS media type
+		/*  var originalMediaType = document.body.style.media;
+		document.body.style.media = "print"; */ // Set the media type to 'print'
+
+		/* var printContents = document.getElementById(divName).innerHTML;
+		var originalContents = document.body.innerHTML;
+		document.body.innerHTML = printContents; 
+	
+		*/
+		window.print(); 
+		
+		
+		 /* document.body.style.media = originalMediaType;
+		document.body.innerHTML = originalContents;  */
+	}
+</script>
+<!--   
+    <style>
+      th{
+      width:10rem;
+      }
+      
+      .tbl th, .tbl td,.tbl{
+	border: 2px solid black !important;
+}
+
+  .tbl td {
+	border: 1px solid black !important;
+}
+
+.tbl1 {
+	border: 2px solid black !important;
+}
+
+@media print {
+	tr {
+		page-break-inside: avoid;
+	}
+	#printButton {
+		display: none !important;
+	}
+	.print-hr {
+		border: 1px solid black !important;
+	}
+}
+
+@page {
+	margin-top: 2rem !important;
+	margin-bottom: 0px !important;
+}
+      </style>
+       -->
+
+<style>
+th {
+	width: 10rem;
+}
+
+.tbl th, .tbl td {
+	border-top: none !important;
+	border-bottom: none !important;
+}
+
+.tbl th {
+	border-top: 1px solid black !important;
+	border-bottom: 1px solid black !important;
+}
+
+.tbl th, .tbl td {
+	border-right: 1px solid black !important; /* Add vertical lines */
+	border-left: 1px solid black !important; /* Add vertical lines */
+}
+
+.tbl1 {
+	border: 2px solid black !important; /* Keep vertical lines */
+}
+
+.tbl {
+	border: 2px solid black !important;
+}
+.tbody1{
+border-bottom:2px solid black !important;
+}
+
+
+@media print {
+	tr {
+		page-break-inside: avoid;
+	}
+	#printButton {
+		display: none !important;
+	}
+	.print-hr {
+		border: 1px solid black !important;
+	}
+	
+}
+
+@page {
+	margin-top: 2rem !important;
+	margin-bottom: 0px !important;
+		/* margin-left: 3rem !important; */
+}
+
+
+ @media print {
+            .col-md-5 {
+                display: inline-block;
+                width: 30%; /* Adjust the width as needed */
+                
+                vertical-align: top; /* Align elements to the top */
+            }
+          
+             .col-md-7 {
+                display: inline-block;
+                width: 60%; 
+              
+            }
+            
+            .col-md-4 {
+                display: inline-block;
+                width: 40%; /* Adjust the width as needed */
+                
+                vertical-align: top; /* Align elements to the top */
+            }
+          
+             .col-md-8 {
+                display: inline-block;
+                width: 60%; 
+              
+            }
+            .col-md-3 {
+                display: inline-block;
+                width: 30%; /* Adjust the width as needed */
+                
+                vertical-align: top; /* Align elements to the top */
+            }
+          
+             .col-md-9 {
+                display: inline-block;
+                width: 70%; 
+              
+            }
+            
+        }
+</style>
+</head>
+
+<body class="dashboard dashboard_1">
+	<div class="full_container">
+		<div class="inner_container">
+			<!-- Sidebar  -->
+			<div th:replace="fragments/sidebar :: sidebar"></div>
+
+			<!-- end sidebar -->
+			<!-- right content -->
+			<div id="content">
+				<!-- topbar -->
+				<div th:replace="fragments/header :: myHeader" id="sidebar"></div>
+
+				<!-- end topbar -->
+				<!-- dashboard inner -->
+				<div class="midde_cont">
+					<div class="container-fluid" id="printableArea">
+						<div class="row mt-3">
+							<div class="col-md-12 mt-4">
+
+
+								<div class="row">
+									<div class="col-md-8">
+										<img th:src="@{/images/logo/indo.png}" alt=""
+											style="width: 5rem;"> <span><h1
+												class="text-uppercase text-bold">
+												<b> PT. Satrya Maritim Indonesia </b>
+											</h1></span>
+									</div>
+									<div class="col-md-4">
+										<h5 class="mt-3">
+											<b class="text-uppercase"> Commercial Invoice /packing
+												list</b>
+										</h5>
+									</div>
+								</div>
+
+							</div>
+
+							<div class="col-md-7 mt-2">
+								<div class="row">
+									<div class="col-md-3">
+										<h5 class="mt-2">
+											<b class="text-uppercase">consignee:</b>
+										</h5>
+									</div>
+									<div class="col-md-9">
+										<h6 class="mt-2">
+											<b class="text-uppercase"
+												th:text="${transferItem.consignee.name}"> </b><br> <b
+												class="text-uppercase"
+												th:text="${transferItem.consignee.address}"></b><br> <b
+												class="text-uppercase"
+												th:text="${transferItem.consignee.pincode}"></b>
+										</h6>
+									</div>
+								</div>
+							</div>
+
+							<div class="col-md-5 mt-2">
+
+
+								<h6 class="mt-2">
+									<b class="text-uppercase"> REF.NO :&nbsp;<strong
+										th:text="${transferItem.referenceNo}"></strong>
+									</b>
+
+								</h6>
+								<h6 class="mt-2">
+									<b class="text-uppercase"> Date :&nbsp;<strong
+										th:text="${transferItem.transferDate}"></strong>
+									</b>
+								</h6>
+
+
+							</div>
+
+							<div class="col-md-7 mt-2">
+
+
+								<div class="row">
+									<div class="col-md-3">
+										<h5 class="">
+											<b class="text-uppercase"> Shipper:</b>
+										</h5>
+									</div>
+									<div class="col-md-9">
+										<h6 class="">
+											<b class="text-uppercase"
+												th:text="${transferItem.Shipper.name}"> </b><br> <b
+												class="text-uppercase"
+												th:text="${transferItem.Shipper.address}"></b><br> <b
+												class="text-uppercase"
+												th:text="${transferItem.Shipper.postalCode}"></b>
+										</h6>
+									</div>
+								</div>
+
+								
+
+							</div>
+
+							<!-- <div class="col-md-5 mt-2">
+								<h6 class="mt-2">
+									<b class="text-uppercase">Pickup Address:&nbsp; <strong
+										th:if="${transferItem.pickUp != null}"
+										th:text="${transferItem.pickUp.pickupAddress}"></strong> <strong
+										th:if="${transferItem.pickUp == null}">N/A</strong>
+									</b>
+								</h6>
+
+							</div> -->
+							
+							<div class="col-md-5 mt-2" th:if="${transferItem.pickUp != null}">
+								<h6 class="mt-2">
+									<b class="text-uppercase">Pickup Address:&nbsp; <strong
+										th:text="${transferItem.pickUp.pickupAddress}"></strong>
+									</b>
+								</h6>
+
+							</div>
+							
+							<div class="col-md-7 mt-2">
+							<div class="row">
+									<div class="col-md-3">
+										<h5 class="mt-2">
+											<b class="text-uppercase">Location <small><b>/</b></small> Vessel:</b>
+										</h5>
+									</div>
+									<div class="col-md-9">
+										<h6 class="mt-2">
+											<b class="text-uppercase"
+												th:each="location : ${sourceLocation}" th:text="${location.locationName}"> </b><br>
+											<!--  <b class="text-uppercase" th:text="${transferItem.sourceLocation.address}"></b><br> -->
+
+										</h6>
+									</div>
+								</div>
+								</div>
+								
+								<!-- <div class="col-md-5 mt-2">
+								<h6 class="mt-2">
+									<b class="text-uppercase">PO <small><b>/</b></small> SO Number (For Repair) :&nbsp; <strong
+										th:if="${transferItem.posoNo != null}"
+										th:text="${transferItem.posoNo}"></strong> <strong
+										th:if="${transferItem.posoNo == null}">N/A</strong>
+									</b>
+								</h6>
+
+							</div> -->
+							
+							<div class="col-md-5 mt-2" th:if="${transferItem.posoNo != null}">
+                             <h6 class="mt-2">
+                             <b class="text-uppercase">PO <small><b>/</b></small> SO Number <small>(For Repair)</small> :&nbsp; 
+                             <strong th:text="${transferItem.posoNo}"></strong>
+							    </h6>
+							</div>
+
+							<div class=" col-md-12 table table-responsive">
+								<table class="table table-bordered mt-3 tbl">
+									<thead>
+										<tr>
+											<th class="font-weight-bold">S.No</th>
+											<th class="font-weight-bold">Qty</th>
+											<th class="font-weight-bold w-100">Item Description</th>
+											<th class="font-weight-bold">Part No/Serial No</th>
+											<th class="font-weight-bold">HS CODE</th>
+											<th class="font-weight-bold">COUNTRY OF ORIGIN</th>
+											<th class="font-weight-bold">DIMENSION<br>(CM)
+											</th>
+											<th class="font-weight-bold">WEIGHT<br>(KG)
+											</th>
+											<th class="font-weight-bold">Unit Price</th>
+											<th class="font-weight-bold">Amount</th>
+
+										</tr>
+									</thead>
+									<tbody id="" class="tbody1" >
+
+										<!-- <tr th:each="transferItemDetail ,i : ${transferitemList}">
+										<td class="font-weight-bold" th:text="${i.count}"></td>
+										<td class="font-weight-bold" >
+										<h6 class="mt-">
+										<b class="text-capitalise hidden"> <strong th:text="${transferItemDetail.packageName}"></strong>  </b>  </h6>
+										<h6 class="mt-">
+								          <b class="text-capitalise"> <strong th:text="${transferItemDetail.quantity}"></strong>  </b>  </h6>
+										</td>
+										<td class="font-weight-bold">
+										   <h6 class="" th:text="${transferItemDetail.packageName}" >
+								           </h6>
+										    <ol>
+											 <li class="text-capitalise ml-2" th:text="${transferItemDetail.item.description}"></li>
+											</ol>
+										 </td>
+										<td  rowspan="" class="font-weight-bold" >
+										     <h6 class="hidden" th:text="${transferItemDetail.partNo}" >
+								           </h6> 
+										 <ul>
+											 <li class="text-capitalise ml-2" th:text="${transferItemDetail.partNo}"></li>
+											</ul>
+										</td>
+										<td  rowspan="" class="font-weight-bold" th:text="${transferItemDetail.hscode}"></td>
+										<td  rowspan="" class="font-weight-bold" th:text="${transferItemDetail.countryOfOrigin}" ></td>
+										<td  rowspan="" class="font-weight-bold" th:text="${transferItemDetail.dimension}" ></td>
+										<td  rowspan="" class="font-weight-bold" >
+										 <h6 class="hidden" th:text="${transferItemDetail.weight}" >
+								           </h6> 
+										 <ul>
+											 <li class="text-capitalise ml-2" th:text="${transferItemDetail.weight}"></li>
+											</ul>
+										</td>
+										<td class="font-weight-bold" >
+										
+										 <h6 class="hidden" th:text="${transferItemDetail.unit}" >
+								           </h6> 
+										 <ul>
+											 <li class="text-capitalise ml-2" th:text="${transferItemDetail.unit}"></li>
+											</ul>
+										</td>
+										<td class="font-weight-bold amount" >
+										   <h6 class="hidden" th:text="${transferItemDetail.amount}" >
+								           </h6> 
+										 <ul>
+											 <li class="text-capitalise ml-2" th:text="${transferItemDetail.amount}"></li>
+											</ul>
+										</td>
+										
+									</tr> -->
+
+
+									</tbody>
+									<tr>
+										<td colspan="3"
+											class=" font-weight-bold text-right text-uppercase">Total
+											Weight </td>
+										<td colspan="7" id="" class="font-weight-bold "
+											th:text="${transferItem.totalWeight}+'Kg'"></td>
+									</tr>
+									<tr>
+										<td colspan="3"
+											class=" font-weight-bold text-right text-uppercase ">Total
+											Packages <span class="currency"></span><span
+											class="totalPackages"></span>
+										</td>
+										<td colspan="7" id="" class="font-weight-bold "
+											th:text="${transferItem.totalPackages}"></td>
+									</tr>
+
+									<tr>
+										<th colspan="3"
+											class=" font-weight-bold text-right text-uppercase ">Total
+											amount <span class="currency"></span>&nbsp;&nbsp;<span
+											class="totalAmount"></span>
+										</th>
+										<th colspan="7" id="" class="font-weight-bold "><span
+											class="currency"
+											th:text="${transferItem.currency.currencyName}+' '+${transferItem.totalAmount}"></span>&nbsp;&nbsp;<span
+											class="totalAmount"></span></th>
+									</tr>
+
+                                           					<tr>
+											<th colspan="3">
+												<h5 class="font-weight-bold ">
+													<b>Prepared By :</b>&nbsp;<strong class="font-weight-normal" th:text="${transferItem.user.name}"></strong><br>
+													<b class="hidden">Contact No :</b>&nbsp;<strong class="font-weight-normal" th:text="${transferItem.user.contactNumber}"></strong>
+												</h5> 
+												 
+											</th>
+
+
+											<th colspan="7">
+												<h6 class=" ">
+													<b>Important Notice For Receiver <br> Please
+														Sign/Stamp & Email This CIPL To:
+													</b>&nbsp;<strong class="text-lowercase"> <a th:href="'mailto:' + ${transferItem.user.email}" style="color:blue;" th:text="${transferItem.user.email}"></a></strong>
+												</h6>
+												<h5 class=" mt-4">
+													<b>Received By:</b> &nbsp;<strong class="float-right"></strong>
+												</h5>
+											</th>
+										</tr>
+
+								</table>
+							</div>
+
+
+
+							<div class=" col-md-12 table table-responsive">
+								<table class="table table-borderless mt-4">
+									<h5>
+										<strong class=" font-weight-bold"> PT. SATRYA MARITIM
+											INDONESIA</strong>
+									</h5>
+									<h6>
+										<strong class=" font-weight-bold"> Horizon Industrial
+											Park Type F Lot 3A, Sei Lekop, Kec. Sagulung, Batam 29422,
+											Indonesia</strong>
+									</h6>
+
+									<h6>
+										<b>Phone No:</b>&nbsp;<strong class=" font-weight-bold ml-5">+62
+											778 6000 113</strong>
+									</h6>
+									<h6>
+										<b>Tax ID Number:</b>&nbsp;&nbsp;<strong
+											class="font-weight-bold"> 62.086.146.8-225.000</strong>
+									</h6>
+
+								</table>
+							</div>
+						</div>
+
+					</div>
+					<div class="row m-2">
+						<div class="col-lg-12 ">
+							<button class="btn-primary float-right" id="printButton"
+								onclick="printDiv('printableArea')">
+								<i class="fa fa-print" aria-hidden="true"> Print</i>
+							</button>
+						</div>
+					</div>
+
+
+				</div>
+
+				<!-- footer -->
+
+				<!-- end dashboard inner -->
+			</div>
+		</div>
+	</div>
+	<!-- jQuery -->
+	<script th:src="@{/js/jquery.min.js}"></script>
+	<script th:src="@{/js/popper.min.js}"></script>
+	<script th:src="@{/js/bootstrap.min.js}"></script>
+	<!-- wow animation -->
+	<script th:src="@{/js/animate.js}"></script>
+	<!-- select country -->
+	<script th:src="@{/js/bootstrap-select.js}"></script>
+	<!-- owl carousel -->
+	<script th:src="@{/js/owl.carousel.js}"></script>
+	<!-- chart js -->
+	<script th:src="@{/js/Chart.min.js}"></script>
+	<script th:src="@{/js/Chart.bundle.min.js}"></script>
+	<script th:src="@{/js/utils.js}"></script>
+	<script th:src="@{/js/analyser.js}"></script>
+	<script th:src="@{/js/alertClose.js}"></script>
+	<script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.js"></script>
+	<script th:src="@{/js/flatpickr.js}"></script>
+	<script th:src="@{/js/chart_custom_style1.js}"></script>
+	<script th:src="@{/js/custom.js}"></script>
+	<script th:src="@{/js/tooltip.js}"></script>
+
+
+	<!-- nice scrollbar -->
+	<script th:src="@{/js/perfect-scrollbar.min.js}"></script>
+	<script>
+		var arrOfAmounts = [];
+		$('.amount').each(function(item) {
+			arrOfAmounts.push(parseFloat($(this).text()));
+			var sum = 0;
+			arrOfAmounts.forEach(function(data) {
+				sum = sum + data;
+
+			});
+			$('.totalAmount').text(sum);
+
+		});
+
+		$(document).ready(function() {
+			$('#example').DataTable({
+				scrollY : '400px',
+				scrollCollapse : true,
+				paging : false,
+				responsive : true,
+				searching : false
+			});
+			$('#item,#location').selectpicker();
+
+		});
+
+		var ps = new PerfectScrollbar('#sidebar');
+	</script>
+	
+
+	<script th:inline="javascript">
+		var itemList = /*[[${transferitemList}]]*/[];
+		/* console.log("gggggggg", itemList); */
+
+		var itemsByPackage = {};
+
+		// Group items by package name
+		itemList.forEach(function(item) {
+			if (!itemsByPackage[item.packageName]) {
+				itemsByPackage[item.packageName] = [];
+			}
+			itemsByPackage[item.packageName].push(item);
+		});
+
+		// Clear the current table
+		var table = document.querySelector('.tbl tbody');
+		table.innerHTML = '';
+		
+		// Iterate through grouped items and append them to the table
+		var index = 0;
+		for ( var packageName in itemsByPackage) {
+			if (itemsByPackage.hasOwnProperty(packageName)) {
+				var items = itemsByPackage[packageName];
+			
+				index++;
+
+				// Add the package name as a header row
+				var packageRow = document.createElement('tr');
+				var packageCell1 = document.createElement('td');
+				var packageCell2 = document.createElement('td');
+				var packageCell = document.createElement('td');
+				var packageCell3 = document.createElement('td');
+				var packageCell4 = document.createElement('td');
+				var packageCell5 = document.createElement('td');
+				var packageCell6 = document.createElement('td');
+				var packageCell7 = document.createElement('td');
+				var packageCell8 = document.createElement('td');
+				var packageCell9 = document.createElement('td');
+
+				packageRow.appendChild(packageCell1);
+				packageRow.appendChild(packageCell2);
+				packageRow.appendChild(packageCell);
+				packageRow.appendChild(packageCell3);
+				packageRow.appendChild(packageCell4);
+				packageRow.appendChild(packageCell5);
+				packageRow.appendChild(packageCell6);
+				packageRow.appendChild(packageCell7);
+				packageRow.appendChild(packageCell8);
+				packageRow.appendChild(packageCell9);
+				packageCell.setAttribute('colspan', '1'); // Adjust the colspan as needed
+				packageCell1.innerHTML = '<b style="font-size: 14px;font-weight:bold;">'
+						+ index;
+				+'</b>';
+				packageCell.innerHTML = '<b style="font-size: 14px;font-weight:bold;text-transform: uppercase;">'
+						+ packageName + '</b>';
+				packageCell6.innerHTML = '<b style="font-size: 14px;font-weight:bold;">'
+						+ items[0].dimension + '</b>';
+				packageCell7.innerHTML = '<b style="font-size: 14px;font-weight:bold;">'
+						+ items[0].weight + '</b>';
+				table.appendChild(packageRow);
+
+				// Add items under the package name
+				items
+						.forEach(function(item, index) {
+							var row = document.createElement('tr');
+							var countCell = document.createElement('td');
+							countCell.textContent = '';
+							row.appendChild(countCell);
+							var quantityCell = document.createElement('td');
+							quantityCell.textContent = item.quantity;
+							row.appendChild(quantityCell);
+							var descriptionCell = document.createElement('td');
+							descriptionCell.innerHTML = '<b style="text-transform:capitalize ">'
+									+ item.item.description + '</b>';
+							row.appendChild(descriptionCell);
+							var partNo = document.createElement('td');
+							partNo.textContent = item.partNo;
+							row.appendChild(partNo);
+							var hscode = document.createElement('td');
+							hscode.textContent = item.hscode;
+							row.appendChild(hscode);
+							var coOrigin = document.createElement('td');
+							coOrigin.innerHTML = '<b style="text-transform:capitalize ">'
+									+ item.countryOfOrigin + '</b>';
+							row.appendChild(coOrigin);
+							var dimension = document.createElement('td');
+							dimension.textContent = '';
+							row.appendChild(dimension);
+							var weight = document.createElement('td');
+							weight.textContent = '';
+							row.appendChild(weight);
+							var unitCost = document.createElement('td');
+							var unitPr =parseFloat(item.unit).toFixed(2);
+							unitCost.textContent = unitPr;
+							row.appendChild(unitCost);
+							var amount = document.createElement('td');
+							var amt = parseFloat(item.amount).toFixed(2);
+							amount.textContent = amt;
+							row.appendChild(amount);
+							table.appendChild(row);
+						});
+			}
+		}
+	</script>
+	<script>
+		$(".picker").flatpickr({
+			format : "Y-m-d",
+			altFormat : "Y-m-d",
+			altInput : true,
+			allowInput : true,
+		});
+		$('#sourceLocation,#destLocation,#items').selectpicker();
+		var ps = new PerfectScrollbar("#sidebar");
+	</script>
+
+
+</body>
+
+</html>
