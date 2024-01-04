@@ -51,7 +51,7 @@ function PrintCipl() {
       printStyles.innerHTML = `
   @media print {
     @page {
-      margin: 0;
+      margin: 1px !important;
     }
 
     .col-md-4,
@@ -62,8 +62,9 @@ function PrintCipl() {
     .col-md-7 {
       display: inline-block !important;
       width: 48% !important; /* Adjust the width as needed */
-      margin: 0 !important;
+      margin: 1px !important;
     }
+    
   }
 `;
       printWindow.document.head.appendChild(printStyles);
@@ -221,7 +222,7 @@ function PrintCipl() {
                           <th className="font-weight-bold w-100">
                             Item Description
                           </th>
-                          <th className="font-weight-bold ">
+                          <th className="font-weight-bold part-number-column ">
                             Part No/Serial No
                           </th>
                           <th className="font-weight-bold">HS CODE</th>
@@ -245,19 +246,45 @@ function PrintCipl() {
                       <tbody id="" className="tbody1">
                         {/* Use data.map() to render rows */}
 
-                        <td className="font-weight-bold">{data.id}</td>
+                        <td className="font-weight-bold">
+                          {data.quantity?.map((value, index) => (
+                            <React.Fragment key={index}>
+                              <h6>{index + 1}</h6>
+                              {index < data.quantity.length - 1 && (
+                                <span
+                                  className="quantity-gap"
+                                  style={{
+                                    padding: "10px",
+                                    fontWeight: "bold",
+                                  }}
+                                />
+                              )}
+                            </React.Fragment>
+                          ))}
+                        </td>
 
                         <td className="font-weight-bold">
-                          <h6 className="mt-">
+                          <div
+                            className="mt-"
+                            style={{
+                              display: "flex",
+                              flexDirection: "column",
+                            }}
+                          >
                             {data.quantity?.map((value, index) => (
                               <React.Fragment key={index}>
-                                <b className="text-capitalise">{value}</b>
-                                {index < data.quantity.length - 1 && (
+                                <b
+                                  className="text-capitalise"
+                                  style={{ marginBottom: "25px" }}
+                                >
+                                  {value}
+                                </b>
+                                {index < data.quantity?.length - 1 && (
                                   <span className="quantity-gap" />
                                 )}
                               </React.Fragment>
                             ))}
-                          </h6>
+                          </div>
                         </td>
 
                         <td className="font-weight-bold">
@@ -272,7 +299,7 @@ function PrintCipl() {
                               <React.Fragment key={index}>
                                 <b
                                   className="text-capitalise"
-                                  style={{ marginBottom: "15px" }}
+                                  style={{ marginBottom: "25px" }}
                                 >
                                   {value}
                                 </b>
@@ -285,23 +312,29 @@ function PrintCipl() {
                         </td>
 
                         <td className="font-weight-bold">
-                          <h6 className="mt-">
+                          <div
+                            className="mt-"
+                            style={{
+                              display: "flex",
+                              flexDirection: "column",
+                            }}
+                          >
                             {data.partNo?.map((value, index) => (
                               <React.Fragment key={index}>
                                 <b
+                                  className="text-capitalise"
                                   style={{
-                                    textTransform: "capitalize",
-                                    fontSize: "0.80rem",
-                                    paddingBottom: "50px !important",
+                                    marginBottom: "25px",
                                   }}
                                 >
                                   {value}
                                 </b>
-                                {index < data.partNo?.length - 1 && <br />}{" "}
-                                {/* Add line break if it's not the last element */}
+                                {index < data.partNo?.length - 1 && (
+                                  <span className="quantity-gap" />
+                                )}
                               </React.Fragment>
                             ))}
-                          </h6>
+                          </div>
                         </td>
 
                         <td className="font-weight-bold">
