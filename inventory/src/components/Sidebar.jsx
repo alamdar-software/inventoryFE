@@ -149,7 +149,11 @@ export default function Sidebar({ children }) {
     },
     { text: "Consume Item", icon: <HighlightOffIcon /> },
     { text: "Scrapped Item", icon: <LocationOnIcon /> },
-    { text: "Incoming Stock", icon: <RingVolumeIcon /> },
+    {
+      text: "Incoming Stock",
+      icon: <RingVolumeIcon />,
+      submenu: [{ text: "Add Incoming" }, { text: "View Incoming" }],
+    },
     { text: "User", icon: <PersonIcon /> },
     { text: "Settings", icon: <SettingsIcon /> },
     { text: "Reports", icon: <ReportIcon /> },

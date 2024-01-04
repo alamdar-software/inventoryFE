@@ -44,6 +44,8 @@ import UpdateEntity from './components/UpdateEntity';
 import Entity from './pages/Entity';
 import InventoryList from './components/InventoryList.js';
 import UpdateInventory from './components/UpdateInventory.js';
+import ViewIncoming from './components/ViewIncoming.js';
+import UpdateIncoming from './components/UpdateIncoming.js';
 const theme = createTheme({
   palette: {
     background: {
@@ -100,7 +102,9 @@ function App() {
                 element={<UpdateInventory />}
               />
               <Route path='/scrapped-item' element={<ScrappedItem />} />
-              <Route path='/incoming-stock' element={<IncomingStock />} />
+              <Route path='/add-incoming' element={<IncomingStock />} />
+              <Route path='/view-incoming' element={<ViewIncoming />} />
+              <Route path='/updateIncoming/:id' element={<UpdateIncoming />} />
               <Route path='/singleIncome' element={<SingleIncome />} />
               <Route path='/bulkIncome' element={<BulkIncome />} />
               <Route path='/user' element={<User />} />
