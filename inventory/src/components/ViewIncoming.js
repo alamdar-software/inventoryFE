@@ -230,7 +230,7 @@ const ViewIncoming = () => {
           variant='contained'
           color='secondary'
           size='large'
-          //onClick={handleClick}
+          onClick={handleSearch}
           sx={{
             mt: '33px',
             mb: '17px',
