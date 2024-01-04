@@ -49,10 +49,23 @@ function PrintCipl() {
       // Apply additional styling for print
       const printStyles = printWindow.document.createElement("style");
       printStyles.innerHTML = `
-        body {
-          margin: 0 !important;
-        }
-      `;
+  @media print {
+    @page {
+      margin: 0;
+    }
+
+    .col-md-4,
+    .col-md-8,
+    .col-md-3,
+    .col-md-9,
+    .col-md-5,
+    .col-md-7 {
+      display: inline-block !important;
+      width: 48% !important; /* Adjust the width as needed */
+      margin: 0 !important;
+    }
+  }
+`;
       printWindow.document.head.appendChild(printStyles);
 
       printWindow.print();
