@@ -43,6 +43,8 @@ const ViewIncoming = () => {
   const state = useSelector((state) => state);
   const dispatch = useDispatch();
   const [totalCount, setTotalCount] = useState(0);
+  const [highlightedRows, setHighlightedRows] = useState([]);
+
   useEffect(() => {
     dispatch(fetchlocation());
     dispatch(fetchItem());
@@ -69,6 +71,35 @@ const ViewIncoming = () => {
         setIncoming([]);
       });
   }, []);
+
+  const handleSearch = async () => {
+    try {
+      const response = await fetch('http://localhost:8080/bulkstock/search', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+
+      const result = await response.json();
+      console.log('Search Result:', result);
+
+      // Update your state with the search result
+      setIncoming(result);
+
+      // Highlight the matching rows
+      const matchingRows = result.map((item) => item.id);
+      setHighlightedRows(matchingRows);
+    } catch (error) {
+      console.error('Error searching data:', error.message);
+      // Handle the error as needed
+    }
+  };
 
   const handleLocationChange = (e) => {
     const selectedLocation = e.target.value;
@@ -230,7 +261,7 @@ const ViewIncoming = () => {
           variant='contained'
           color='secondary'
           size='large'
-          //onClick={handleClick}
+          onClick={handleSearch}
           sx={{
             mt: '33px',
             mb: '17px',
