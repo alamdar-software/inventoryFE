@@ -53,6 +53,11 @@ import StockReportDashboard from "./pages/StockReportDashboard";
 import SearchInventory from "./pages/SearchInventory";
 import SearchIncoming from "./pages/SearchIncoming";
 import StockReport from "./pages/StockReport";
+import ViewMto from "./components/ViewMto.js";
+import PrintMto from "./components/PrintMto.js";
+import UpdateMto from "./components/UpdateMto.js";
+import ViewInternal from "./components/ViewInternal.js";
+import PrintInternal from "./components/PrintInternal.js";
 const theme = createTheme({
   palette: {
     background: {
@@ -129,6 +134,15 @@ function App() {
               <Route path="/searchInventory" element={<SearchInventory />} />
               <Route path="/searchIncoming" element={<SearchIncoming />} />
               <Route path="/stockReport" element={<StockReport />} />
+
+              <Route path="/viewMto" element={<ViewMto />} />
+              <Route path="/mto/createpdf/:id" element={<PrintMto />} />
+              <Route path="/updateMto/:id" element={<UpdateMto />} />
+              <Route path="/viewInternal" element={<ViewInternal />} />
+              <Route
+                path="/internal/createpdf/:id"
+                element={<PrintInternal />}
+              />
 
               {/* <Route
                 path='/consignee/consignee/view'

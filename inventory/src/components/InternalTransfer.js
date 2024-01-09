@@ -20,11 +20,14 @@ import { fetchlocation } from '../redux/slice/location';
 import { fetchItem } from '../redux/slice/ItemSlice';
 import AddIcon from '@mui/icons-material/Add';
 import DeleteIcon from '@mui/icons-material/Delete';
+import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 const InternalTransfer = () => {
   const [formData, setformData] = useState({
     locationName: '',
     transferDate: '',
     destination: '',
+
     SubLocation: [],
     item: [],
     sn: [],
@@ -50,6 +53,26 @@ const InternalTransfer = () => {
     dispatch(fetchItem());
   }, []);
   console.log(state);
+
+  const handleClick = (e) => {
+    e.preventDefault();
+
+    // const formData = {
+    //   locationName,
+    // };
+
+    console.log(formData);
+
+    fetch('http://localhost:8080/internaltransfer/add', {
+      method: 'POST',
+      headers: { 'Content-type': 'application/json' },
+      body: JSON.stringify(formData),
+    }).then(() => {
+      console.log('Internal Transfer Added');
+      //window.location.reload();
+    });
+  };
+
   const handleLocationChange = (e) => {
     const selectedLocation = e.target.value;
     setformData({
@@ -94,6 +117,14 @@ const InternalTransfer = () => {
   //     };
   //   });
   // };
+
+  const handleDateChange = (transferDate) => {
+    setformData({
+      ...formData,
+      transferDate: transferDate.format('YYYY-MM-DD'),
+    });
+  };
+  console.log(formData);
   const handleSubLocationChange = (e, index) => {
     const selectedSubLocation = e.target.value || ''; // Ensure a default value if undefined
     setSelectedSubLocations((prevSubLocations) => {
@@ -397,6 +428,7 @@ const InternalTransfer = () => {
       </div>
     ));
   };
+  console.log(state, 'statesss');
   return (
     <>
       <Grid>
@@ -450,15 +482,14 @@ const InternalTransfer = () => {
           </FormControl>
         </Grid>
         <Grid item xs={12} sm={6}>
-          <TextField
-            sx={{ width: '90%' }}
-            id='outlined-basic'
-            label='Transfer Date'
-            variant='outlined'
-            // value={locationName}
-            // onChange={(e) => setLocation(e.target.value)}
-            fullWidth
-          />
+          <LocalizationProvider dateAdapter={AdapterDayjs}>
+            <DatePicker
+              value={formData.transferDate}
+              onChange={(newDate) => handleDateChange(newDate)}
+              fullWidth
+              sx={{ width: '90%' }}
+            />
+          </LocalizationProvider>
         </Grid>
       </Grid>
       <Grid container spacing={2} sx={{ mt: '33px' }}>
@@ -479,14 +510,20 @@ const InternalTransfer = () => {
                   },
                 },
               }}
-              //onChange={handleChange}
+              onChange={(e) =>
+                setformData({
+                  ...formData,
+                  destination: e.target.value,
+                })
+              }
             >
-              {state.location.data?.map((item, index) => (
-                <MenuItem key={index} value={item?.address}>
-                  {' '}
-                  {item?.address}
-                </MenuItem>
-              ))}
+              {state.location.data?.flatMap((location) =>
+                location.addresses.map((subLocation) => (
+                  <MenuItem key={subLocation.id} value={subLocation.address}>
+                    {subLocation.address}
+                  </MenuItem>
+                ))
+              )}
             </Select>
           </FormControl>
         </Grid>
@@ -527,7 +564,12 @@ const InternalTransfer = () => {
       </div>
       <Box sx={{ display: 'flex', justifyContent: 'center', mt: '33px' }}>
         {' '}
-        <Button variant='contained' size='large' color='secondary'>
+        <Button
+          variant='contained'
+          size='large'
+          color='secondary'
+          onClick={handleClick}
+        >
           Add
         </Button>
       </Box>
