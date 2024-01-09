@@ -16,83 +16,62 @@ import {
   TableContainer,
   TableHead,
   TableRow,
-  TextField,
   Typography,
 } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchentity } from '../redux/slice/entitySlice';
-import { fetchCurrency } from '../redux/slice/CurrencySlice';
 import { fetchItem } from '../redux/slice/ItemSlice';
 import { fetchlocation } from '../redux/slice/location';
 import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import DeleteIcon from '@mui/icons-material/Delete';
-import BorderColorSharpIcon from '@mui/icons-material/BorderColorSharp';
 import { Link } from 'react-router-dom';
+import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
+import BorderColorSharpIcon from '@mui/icons-material/BorderColorSharp';
 
-const ViewIncoming = () => {
+const ViewMto = () => {
   const [formData, setformData] = useState({
     description: '',
     locationName: '',
-    date: '',
-    purchaseOrder: '',
-    entityName: '',
+    transferDate: '',
   });
-  const [incoming, setIncoming] = useState([]);
+  console.log(formData);
   const state = useSelector((state) => state);
   const dispatch = useDispatch();
+  const [mto, setMto] = useState([]);
   const [totalCount, setTotalCount] = useState(0);
-  const [highlightedRows, setHighlightedRows] = useState([]);
-
   useEffect(() => {
     dispatch(fetchlocation());
     dispatch(fetchItem());
-    dispatch(fetchCurrency());
-    dispatch(fetchentity());
   }, []);
 
   useEffect(() => {
-    fetch('http://localhost:8080/bulkstock/view')
-      .then((res) => res.json())
+    fetch('http://localhost:8080/mto/view')
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error(`HTTP error! Status: ${res.status}`);
+        }
+        return res.json();
+      })
       .then((result) => {
-        console.log(result);
-
-        if (Array.isArray(result.stockViewList)) {
-          setIncoming(result.stockViewList);
-          setTotalCount(result.totalCount); // Set the total count
+        if (result.mtoList && Array.isArray(result.mtoList)) {
+          setMto(result.mtoList);
+          setTotalCount(result.totalCount);
         } else {
-          console.error('Received data does not contain an array:', result);
-          setIncoming([]);
+          console.error('Invalid data structure:', result);
+          // Handle the situation where the expected data is not available
+          setMto([]);
         }
       })
       .catch((error) => {
-        console.error('Error fetching data:', error);
-        setIncoming([]);
+        console.error('Error fetching MTO data:', error);
+        // Handle the error by setting an empty array or showing an error message
+        setMto([]);
       });
   }, []);
 
-  const handleLocationChange = (e) => {
-    const selectedLocation = e.target.value;
-    setformData({
-      ...formData,
-      locationName: selectedLocation,
-      //   address: [], // Reset sublocation when location changes
-    });
-    const selectedLocationObj = state.location.data.find(
-      (location) => location.locationName === selectedLocation
-    );
-  };
-  console.log(formData);
-
-  const handleDateChange = (date) => {
-    setformData({
-      ...formData,
-      date: date.format('YYYY-MM-DD'),
-    });
-  };
+  console.log(mto);
   const handleSearch = () => {
-    fetch('http://localhost:8080/bulkstock/search', {
+    fetch('http://localhost:8080/mto/search', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -102,18 +81,25 @@ const ViewIncoming = () => {
       .then((res) => res.json())
       .then((result) => {
         if (Array.isArray(result)) {
-          setIncoming(result);
+          setMto(result);
         } else {
           console.error('Received data does not contain an array:', result);
-          setIncoming([]);
+          setMto([]);
         }
       })
       .catch((error) => {
         console.error('Error searching data:', error);
-        setIncoming([]);
+        setMto([]);
       });
   };
 
+  const handleDateChange = (transferDate) => {
+    setformData({
+      ...formData,
+      transferDate: transferDate.format('YYYY-MM-DD'),
+    });
+  };
+  console.log(formData);
   return (
     <>
       <Box>
@@ -133,7 +119,7 @@ const ViewIncoming = () => {
               gutterBottom
               style={{ fontFamily: "'EB Garamond'" }}
             >
-              Incoming Stock
+              View Mto
             </Typography>
           </CardContent>
         </Card>
@@ -142,7 +128,7 @@ const ViewIncoming = () => {
           label={`Total Incoming Stock: ${totalCount}`}
           variant='outlined'
         />
-        <Grid container spaciing={2}>
+        <Grid container spacing={2}>
           <Grid item xs={12} sm={6}>
             <FormControl fullWidth sx={{ width: '90%' }}>
               <InputLabel id='demo-simple-select-label'>
@@ -168,14 +154,28 @@ const ViewIncoming = () => {
               </Select>
             </FormControl>
           </Grid>
-          <Grid item xs={21} sm={6}>
+          <Grid item xs={12} sm={6}>
             <FormControl fullWidth sx={{ width: '90%' }}>
               <InputLabel id='demo-simple-select-label'>Location</InputLabel>
               <Select
                 labelId='demo-simple-select-label'
                 id='demo-simple-select'
+                //value={age}
                 label='location'
-                onChange={handleLocationChange}
+                MenuProps={{
+                  PaperProps: {
+                    style: {
+                      maxHeight: 120, // Adjust the height as needed
+                    },
+                  },
+                }}
+                // onChange={handleLocationChange}
+                onChange={(e) =>
+                  setformData({
+                    ...formData,
+                    locationName: e.target.value,
+                  })
+                }
               >
                 {state.location.data?.map((item, index) => (
                   <MenuItem key={index} value={item?.locationName}>
@@ -187,68 +187,16 @@ const ViewIncoming = () => {
             </FormControl>
           </Grid>
         </Grid>
-        <Grid container spacing={2} sx={{ mt: '33px' }}>
-          <Grid item xs={21} sm={6}>
+        <Grid container spacing={2} sx={{ mt: '23px' }}>
+          <Grid item xs={12} sm={6}>
             <LocalizationProvider dateAdapter={AdapterDayjs}>
               <DatePicker
-                /* value={
-                formData.purchaseDate ? dayjs(formData.purchaseDate) : null
-              } */
+                value={formData.transferDate}
                 onChange={(newDate) => handleDateChange(newDate)}
                 fullWidth
                 sx={{ width: '90%' }}
-                /* format="yyyy-MM-dd" */
               />
             </LocalizationProvider>
-          </Grid>
-          <Grid item xs={21} sm={6}>
-            <TextField
-              id='outlined-basic'
-              label='PO Number'
-              variant='outlined'
-              fullWidth
-              sx={{ width: '90%' }}
-              onChange={(e) =>
-                setformData({
-                  ...formData,
-                  purchaseOrder: e.target.value,
-                })
-              }
-            />
-          </Grid>
-        </Grid>
-        <Grid container spacing={2} sx={{ mt: '33px' }}>
-          <Grid item xs={21} sm={6}>
-            <FormControl fullWidth sx={{ width: '90%' }}>
-              <InputLabel id='demo-simple-select-label'>Entity</InputLabel>
-              <Select
-                labelId='demo-simple-select-label'
-                id='demo-simple-select'
-                label='entity'
-                onChange={(e) =>
-                  setformData({
-                    ...formData,
-                    entityName: e.target.value,
-                  })
-                }
-                MenuProps={{
-                  PaperProps: {
-                    style: {
-                      maxHeight: 120, // Adjust the height as needed
-                    },
-                  },
-                }}
-
-                //onChange={handleChange}
-              >
-                {state.entity.data?.map((item, index) => (
-                  <MenuItem key={index} value={item?.entityName}>
-                    {' '}
-                    {item?.entityName}
-                  </MenuItem>
-                ))}
-              </Select>
-            </FormControl>
           </Grid>
         </Grid>
         <Button
@@ -273,48 +221,57 @@ const ViewIncoming = () => {
           sx={{
             borderRadius: '33px',
             borderBottom: '2px solid yellow',
-            // width: '110%',
+            width: '110%',
           }}
         >
           <Table sx={{ minWidth: 650 }} aria-label='simple table'>
             <TableHead>
               <TableRow>
                 <TableCell align='right' sx={{ fontWeight: 'bold' }}>
-                  Item Description
-                </TableCell>
-                <TableCell align='right' sx={{ fontWeight: 'bold' }}>
                   Location
                 </TableCell>
+
                 <TableCell align='right' sx={{ fontWeight: 'bold' }}>
                   SubLocation
                 </TableCell>
                 <TableCell align='right' sx={{ fontWeight: 'bold' }}>
-                  Entity
+                  Consignee
                 </TableCell>
                 <TableCell align='right' sx={{ fontWeight: 'bold' }}>
-                  Quantity
+                  Ref Number
                 </TableCell>
                 <TableCell align='right' sx={{ fontWeight: 'bold' }}>
-                  PO Number
+                  Transfer Date
                 </TableCell>
+
                 <TableCell align='right' sx={{ fontWeight: 'bold' }}>
-                  Purchase Date
+                  Print
                 </TableCell>
               </TableRow>
             </TableHead>
-            <TableBody>
-              {incoming.length > 0 ? (
-                incoming.map((item) => (
-                  <TableRow key={item.id}>
-                    <TableCell align='right'>{item.description}</TableCell>
-                    <TableCell align='right'>{item.locationName}</TableCell>
-                    <TableCell align='right'>{item.address}</TableCell>
-                    <TableCell align='right'>{item.entityName}</TableCell>
-                    <TableCell align='right'>{item.quantity}</TableCell>
-                    <TableCell align='right'>{item.purchaseOrder}</TableCell>
-                    <TableCell align='right'>{item.date}</TableCell>
 
-                    <Link to={`/updateIncoming/${item.id}`}>
+            <TableBody>
+              {mto.length > 0 ? (
+                mto.map((mto) => (
+                  <TableRow key={mto.id}>
+                    <TableCell align='right'>{mto.locationName}</TableCell>
+                    <TableCell align='right'>{mto.SubLocation}</TableCell>
+                    <TableCell align='right'>{mto.consigneeName}</TableCell>
+                    <TableCell align='right'>{mto.referenceNo}</TableCell>
+                    <TableCell align='right'>{mto.transferDate}</TableCell>
+                    <TableCell align='right'>
+                      <Link to={`/mto/createpdf/${mto.id}`}>
+                        <Button
+                          variant='contained'
+                          color='primary'
+                          /*  onClick={() => generatePDF(ciplRow.id, index)} */
+                        >
+                          {<PictureAsPdfIcon />}
+                        </Button>
+                      </Link>
+                    </TableCell>
+
+                    <Link to={`/updateMto/${mto.id}`}>
                       <Button>
                         <BorderColorSharpIcon
                           // onClick={() => handleDeleteClick(index)}
@@ -350,4 +307,4 @@ const ViewIncoming = () => {
   );
 };
 
-export default ViewIncoming;
+export default ViewMto;

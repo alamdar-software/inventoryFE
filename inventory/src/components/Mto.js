@@ -22,6 +22,8 @@ import { fetchlocation } from '../redux/slice/location';
 import { fetchItem } from '../redux/slice/ItemSlice';
 import AddIcon from '@mui/icons-material/Add';
 import DeleteIcon from '@mui/icons-material/Delete';
+import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 
 const Mto = () => {
   const [formData, setformData] = useState({
@@ -65,6 +67,24 @@ const Mto = () => {
   // };
   // console.log(subLocations);
   // console.log(formData);
+  const handleClick = (e) => {
+    e.preventDefault();
+
+    // const formData = {
+    //   locationName,
+    // };
+
+    console.log(formData);
+
+    fetch('http://localhost:8080/mto/add', {
+      method: 'POST',
+      headers: { 'Content-type': 'application/json' },
+      body: JSON.stringify(formData),
+    }).then(() => {
+      console.log('MTO Added');
+      //window.location.reload();
+    });
+  };
 
   const handleLocationChange = (e) => {
     const selectedLocation = e.target.value;
@@ -102,6 +122,13 @@ const Mto = () => {
   };
   console.log(subLocations, 'subbbbbbbbbbbbb');
   console.log(formData, 'nooooooooooo');
+  const handleDateChange = (transferDate) => {
+    setformData({
+      ...formData,
+      transferDate: transferDate.format('YYYY-MM-DD'),
+    });
+  };
+  console.log(formData);
 
   // const updateFormDataSubLocation = (index, value) => {
   //   setformData((prevFormData) => {
@@ -233,35 +260,52 @@ const Mto = () => {
   };
 
   const handleDeleteClick = (index) => {
-    if (formRows > 1) {
-      setFormRows((prevRows) => prevRows - 1);
+    if (formControls.length > 1) {
       setFormControls((prevControls) =>
         prevControls.filter((_, i) => i !== index)
       );
 
-      // Remove the element at the specified index from each array in the form data
-      setSubLocations((prevSubLocations) =>
-        prevSubLocations.filter((_, i) => i !== index)
-      );
-      // setItem((prevItem) => prevItem.filter((_, i) => i !== index));
-
-      // Repeat the above line for other arrays in your form data
-
-      setSelectedSubLocations((prevSubLocations) =>
-        prevSubLocations.filter((_, i) => i !== index)
+      // Update other state variables accordingly
+      setSubLocations((prevSubLocations) => {
+        // No need to remove any sublocations
+        return prevSubLocations;
+      });
+      setSelectedSubLocations((prevSelectedSubLocations) =>
+        prevSelectedSubLocations.filter((_, i) => i !== index)
       );
 
-      // Update formData to remove the element at the specified index
       setformData((prevFormData) => {
         const updatedFormData = { ...prevFormData };
-        updatedFormData.SubLocation = updatedFormData.SubLocation.filter(
-          (_, i) => i !== index
-        );
-        updatedFormData.item = updatedFormData.item.filter(
-          (_, i) => i !== index
-        );
-        // updatedFormData.hs = updatedFormData.hs.filter((_, i) => i !== index);
+
+        // Remove the entry at the specified index from formData.SubLocation
+        updatedFormData.SubLocation = [
+          ...prevFormData.SubLocation.slice(0, index),
+          ...prevFormData.SubLocation.slice(index + 1),
+        ];
+
         // Repeat the above line for other arrays in your form data
+        updatedFormData.item = [
+          ...prevFormData.item.slice(0, index),
+          ...prevFormData.item.slice(index + 1),
+        ];
+        updatedFormData.sn = [
+          ...prevFormData.sn.slice(0, index),
+          ...prevFormData.sn.slice(index + 1),
+        ];
+        updatedFormData.purchase = [
+          ...prevFormData.purchase.slice(0, index),
+          ...prevFormData.purchase.slice(index + 1),
+        ];
+        updatedFormData.quantity = [
+          ...prevFormData.quantity.slice(0, index),
+          ...prevFormData.quantity.slice(index + 1),
+        ];
+        updatedFormData.remarks = [
+          ...prevFormData.remarks.slice(0, index),
+          ...prevFormData.remarks.slice(index + 1),
+        ];
+
+        // Update other arrays in formData as needed
 
         return updatedFormData;
       });
@@ -444,6 +488,34 @@ const Mto = () => {
       </div>
     ));
   };
+  const renderAdditionalFields = () => {
+    if (formData.repairService === true) {
+      return (
+        <>
+          {/* Additional fields for 'Repair/Service' Yes */}
+          <Grid item xs={21} sm={6}>
+            <TextField
+              id='outlined-basic'
+              label='Po/SO No'
+              variant='outlined'
+              fullWidth
+              sx={{ width: '90%' }}
+              onChange={(e) =>
+                setformData({
+                  ...formData,
+                  po: e.target.value,
+                })
+              }
+            />
+          </Grid>
+          {/* Add more additional fields as needed */}
+        </>
+      );
+    } else {
+      // No additional fields for 'Repair/Service' No
+      return null;
+    }
+  };
 
   return (
     <>
@@ -498,15 +570,14 @@ const Mto = () => {
           </FormControl>
         </Grid>
         <Grid item xs={12} sm={6}>
-          <TextField
-            sx={{ width: '90%' }}
-            id='outlined-basic'
-            label='Transfer Date'
-            variant='outlined'
-            // value={locationName}
-            // onChange={(e) => setLocation(e.target.value)}
-            fullWidth
-          />
+          <LocalizationProvider dateAdapter={AdapterDayjs}>
+            <DatePicker
+              value={formData.transferDate}
+              onChange={(newDate) => handleDateChange(newDate)}
+              fullWidth
+              sx={{ width: '90%' }}
+            />
+          </LocalizationProvider>
         </Grid>
       </Grid>
       <Grid container spacing={2} sx={{ mt: '23px' }}>
@@ -518,7 +589,12 @@ const Mto = () => {
               id='demo-simple-select'
               //value={age}
               label='consignee'
-              //onChange={handleChange}
+              onChange={(e) =>
+                setformData({
+                  ...formData,
+                  consigneeName: e.target.value,
+                })
+              }
               MenuProps={{
                 PaperProps: {
                   style: {
@@ -528,9 +604,9 @@ const Mto = () => {
               }}
             >
               {state.consignee.data?.map((item, index) => (
-                <MenuItem key={index} value={item?.name}>
+                <MenuItem key={index} value={item?.consigneeName}>
                   {' '}
-                  {item?.name}
+                  {item?.consigneeName}
                 </MenuItem>
               ))}
             </Select>
@@ -545,14 +621,22 @@ const Mto = () => {
               labelId='demo-simple-select-label'
               id='demo-simple-select'
               //value={age}
+              value={formData.repairService || ''}
               label='Repair/service'
               //onChange={handleChange}
+              onChange={(e) =>
+                setformData({
+                  ...formData,
+                  repairService: e.target.value,
+                })
+              }
             >
-              <MenuItem value={'Yes'}>Yes</MenuItem>
-              <MenuItem value={'No'}>No</MenuItem>
+              <MenuItem value={true}>Yes</MenuItem>
+              <MenuItem value={false}>No</MenuItem>
             </Select>
           </FormControl>
         </Grid>
+        {renderAdditionalFields()}
       </Grid>
 
       <div
@@ -591,7 +675,12 @@ const Mto = () => {
 
       <Box sx={{ display: 'flex', justifyContent: 'center', mt: '33px' }}>
         {' '}
-        <Button variant='contained' size='large' color='secondary'>
+        <Button
+          variant='contained'
+          size='large'
+          color='secondary'
+          onClick={handleClick}
+        >
           Add
         </Button>
       </Box>
