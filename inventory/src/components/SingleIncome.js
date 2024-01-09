@@ -151,11 +151,14 @@ const SingleIncome = () => {
     });
   };
   const handleItemChange = (e) => {
-    const selectedItem = state.inventory?.data.find(
-      (item) => item.description === e.target.value
+    console.log(e.target.value);
+    const selectedDescription = e.target.value.match(/^[^(]*/)[0].trim();
+    const selectedItem = state.item?.data.find(
+      (item) => item.description === selectedDescription
     );
 
     if (selectedItem) {
+      console.log(selectedItem, "i have selected");
       console.log(selectedItem.category, "select");
       setformData({
         ...formData,

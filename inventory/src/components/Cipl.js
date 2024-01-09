@@ -326,7 +326,8 @@ export const Cipl = () => {
 
     // Find the corresponding data in state.singleincome for the selected item
     const selectedIncomeData = state.singleIncome?.data.filter(
-      (incomeItem) => incomeItem.description === selectedItem
+      (incomeItem) =>
+        incomeItem.description === selectedItem.match(/^[^(]*/)[0].trim()
     );
     console.log(selectedIncomeData, "selectttttt");
     console.log(selectedItem, "selected item");

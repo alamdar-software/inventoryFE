@@ -100,7 +100,7 @@ const StockReportDashboard = () => {
         </Link>
       </Grid>
       <Grid sx={{ display: "flex", justifyContent: "center", mt: "23px" }}>
-        <Link to="/cipl" style={{ textDecoration: "none" }}>
+        <Link to="/reportItem" style={{ textDecoration: "none" }}>
           <Card sx={{ minWidth: 300 }}>
             <CardContent
               sx={{
@@ -122,7 +122,7 @@ const StockReportDashboard = () => {
             <CardActions></CardActions>
           </Card>
         </Link>
-        <Link to="/mto" style={{ textDecoration: "none" }}>
+        <Link to="/locationReport" style={{ textDecoration: "none" }}>
           <Card sx={{ minWidth: 300, ml: "31px" }}>
             <CardContent
               sx={{

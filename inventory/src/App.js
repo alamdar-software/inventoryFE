@@ -58,6 +58,8 @@ import PrintMto from "./components/PrintMto.js";
 import UpdateMto from "./components/UpdateMto.js";
 import ViewInternal from "./components/ViewInternal.js";
 import PrintInternal from "./components/PrintInternal.js";
+import ReportItem from "./pages/Reports/ReportItem.js";
+import LocationReport from "./pages/Reports/locationReport";
 const theme = createTheme({
   palette: {
     background: {
@@ -134,6 +136,8 @@ function App() {
               <Route path="/searchInventory" element={<SearchInventory />} />
               <Route path="/searchIncoming" element={<SearchIncoming />} />
               <Route path="/stockReport" element={<StockReport />} />
+              <Route path="/reportItem" element={<ReportItem />} />
+              <Route path="/locationReport" element={<LocationReport />} />
 
               <Route path="/viewMto" element={<ViewMto />} />
               <Route path="/mto/createpdf/:id" element={<PrintMto />} />
