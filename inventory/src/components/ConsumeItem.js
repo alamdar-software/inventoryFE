@@ -263,18 +263,20 @@ const ConsumeItem = () => {
 
   const handleItemChange = (index, selectedSubLocation, selectedItem) => {
     // Update formData with the selected item
-    updateFormDataItem(index, selectedItem);
+    updateFormDataItem(index, selectedItem.match(/^[^(]*/)[0].trim());
+    console.log(selectedItem.match(/^[^(]*/)[0].trim(), "meingoonselected");
 
     // Ensure a default value if undefined
     setSelectedItem((prevSelectedItems) => {
       const updatedSelectedItems = [...prevSelectedItems];
-      updatedSelectedItems[index] = selectedItem;
+      updatedSelectedItems[index] = selectedItem.match(/^[^(]*/)[0].trim();
       return updatedSelectedItems;
     });
 
     // Find the corresponding data in state.singleincome for the selected item
     const selectedIncomeData = state.singleIncome?.data.filter(
-      (incomeItem) => incomeItem.description === selectedItem
+      (incomeItem) =>
+        incomeItem.description === selectedItem.match(/^[^(]*/)[0].trim()
     );
     console.log(selectedIncomeData, "selectttttt");
     console.log(selectedItem, "selected item");
