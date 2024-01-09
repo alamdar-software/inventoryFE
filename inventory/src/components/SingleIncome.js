@@ -26,6 +26,7 @@ import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import dayjs from "dayjs";
 import { fetchCurrency } from "../redux/slice/CurrencySlice";
 import { fetchentity } from "../redux/slice/entitySlice";
+import { fetchInventory } from "../redux/slice/InventorySlice";
 const SingleIncome = () => {
   const [formData, setformData] = useState({
     locationName: "",
@@ -52,11 +53,13 @@ const SingleIncome = () => {
   const dispatch = useDispatch();
   const state = useSelector((state) => state);
   const [subLocations, setSubLocations] = useState([]);
+  const [selectedSubLocations, setSelectedSubLocations] = useState([]);
+  const [item, setItem] = useState([]);
   useEffect(() => {
     dispatch(fetchlocation());
     dispatch(fetchItem());
     dispatch(fetchBrand());
-    dispatch(fetchItem());
+    dispatch(fetchInventory());
     dispatch(fetchCurrency());
     dispatch(fetchentity());
   }, []);
@@ -65,12 +68,48 @@ const SingleIncome = () => {
     setformData({
       ...formData,
       locationName: selectedLocation,
-      address: [], // Reset sublocation when location changes
+      SubLocations: [""], // Reset sublocation when location changes
     });
     const selectedLocationObj = state.location.data.find(
       (location) => location.locationName === selectedLocation
     );
-    setSubLocations(selectedLocationObj ? selectedLocationObj.addresses : []);
+    setSubLocations(selectedLocationObj && selectedLocationObj?.addresses);
+    console.log(selectedLocationObj, "yuuuu");
+  };
+  const handleSubLocationChange = (e) => {
+    const selectedSubLocation = e.target.value || "";
+
+    // Update formData with the selected sublocation
+    updateFormDataSubLocations(selectedSubLocation);
+
+    // Ensure a default value if undefined
+    setSelectedSubLocations([selectedSubLocation]); // Wrap in an array if it's a single value
+
+    // Find the corresponding item descriptions in the inventory data
+    const selectedInventoryData = state.inventory?.data.filter(
+      (inventoryItem) => inventoryItem.address?.address === selectedSubLocation
+    );
+    console.log(selectedInventoryData, "22");
+
+    // Extract item descriptions from the selected inventory data
+    const itemDescriptions = selectedInventoryData.map(
+      (inventoryItem) => inventoryItem.description
+    );
+    console.log(itemDescriptions, "33");
+
+    // Update the item state with the selected item descriptions
+    setItem(itemDescriptions);
+  };
+
+  const updateFormDataSubLocations = (index, selectedSubLocation) => {
+    setformData((prevFormData) => {
+      const updatedSubLocations = [...prevFormData.SubLocations];
+      updatedSubLocations[index] = selectedSubLocation;
+      return {
+        ...prevFormData,
+        SubLocations: updatedSubLocations,
+      };
+    });
   };
   const handleQuantityChange = (e) => {
     const quantity = parseFloat(e.target.value);
@@ -112,7 +151,7 @@ const SingleIncome = () => {
     });
   };
   const handleItemChange = (e) => {
-    const selectedItem = state.item.data.find(
+    const selectedItem = state.inventory?.data.find(
       (item) => item.description === e.target.value
     );
 
@@ -206,12 +245,7 @@ const SingleIncome = () => {
               id="demo-simple-select"
               //value={age}
               label="sublocation"
-              onChange={(e) =>
-                setformData({
-                  ...formData,
-                  address: e.target.value,
-                })
-              }
+              onChange={(e) => handleSubLocationChange(e)}
               //onChange={handleChange}
             >
               {subLocations.map((address, index) => (
@@ -238,10 +272,9 @@ const SingleIncome = () => {
               //onChange={handleChange}
               onChange={handleItemChange}
             >
-              {state.item.data?.map((item, index) => (
-                <MenuItem key={index} value={item?.description}>
-                  {" "}
-                  {item?.description}
+              {item?.map((filteredItem, itemIndex) => (
+                <MenuItem key={itemIndex} value={filteredItem}>
+                  {filteredItem}
                 </MenuItem>
               ))}
             </Select>

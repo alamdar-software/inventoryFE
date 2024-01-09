@@ -48,6 +48,16 @@ import InventoryList from "./components/InventoryList.js";
 import UpdateInventory from "./components/UpdateInventory.js";
 import ViewIncoming from "./components/ViewIncoming.js";
 import UpdateIncoming from "./components/UpdateIncoming.js";
+import ReportsDashboard from "./pages/ReportsDashboard";
+import StockReportDashboard from "./pages/StockReportDashboard";
+import SearchInventory from "./pages/SearchInventory";
+import SearchIncoming from "./pages/SearchIncoming";
+import StockReport from "./pages/StockReport";
+import ViewMto from "./components/ViewMto.js";
+import PrintMto from "./components/PrintMto.js";
+import UpdateMto from "./components/UpdateMto.js";
+import ViewInternal from "./components/ViewInternal.js";
+import PrintInternal from "./components/PrintInternal.js";
 const theme = createTheme({
   palette: {
     background: {
@@ -71,6 +81,7 @@ function App() {
               <Route path="/updatePickup/:id" element={<Pickup />} />
               <Route path="/uom" element={<Uom />} />
               <Route path="/shipper" element={<Shipper />} />
+
               <Route path="/updateShipper/:id" element={<UpdateShipper />} />
               <Route path="/consignee" element={<Consignee />} />
               <Route path="/view-location" element={<LocationList />} />
@@ -100,7 +111,7 @@ function App() {
                 path="/updateConsignee/:id"
                 element={<UpdateConsignee />}
               />
-              <Route path="/consume-item" element={<ConsumeItem />} />
+              <Route path="/add-consumeditem" element={<ConsumeItem />} />
               <Route path="/add-inventory" element={<Inventory />} />
               <Route path="/view-inventory" element={<InventoryList />} />
               <Route
@@ -115,6 +126,23 @@ function App() {
               <Route path="/bulkIncome" element={<BulkIncome />} />
               <Route path="/user" element={<User />} />
               <Route path="/datacount" element={<DailyDataCount />} />
+              <Route path="/reports" element={<ReportsDashboard />} />
+              <Route
+                path="/StockReportDashboard"
+                element={<StockReportDashboard />}
+              />
+              <Route path="/searchInventory" element={<SearchInventory />} />
+              <Route path="/searchIncoming" element={<SearchIncoming />} />
+              <Route path="/stockReport" element={<StockReport />} />
+
+              <Route path="/viewMto" element={<ViewMto />} />
+              <Route path="/mto/createpdf/:id" element={<PrintMto />} />
+              <Route path="/updateMto/:id" element={<UpdateMto />} />
+              <Route path="/viewInternal" element={<ViewInternal />} />
+              <Route
+                path="/internal/createpdf/:id"
+                element={<PrintInternal />}
+              />
 
               {/* <Route
                 path='/consignee/consignee/view'
