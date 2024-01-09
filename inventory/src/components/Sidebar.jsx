@@ -131,7 +131,8 @@ export default function Sidebar({ children }) {
     { text: "Brand", icon: <BrandingWatermarkIcon /> },
     { text: "Item", icon: <Inventory2Icon /> },
     {
-      text: "Inventory", icon: <TransferWithinAStationIcon />,
+      text: "Inventory",
+      icon: <TransferWithinAStationIcon />,
 
       submenu: [{ text: "Add Inventory" }, { text: "View Inventory" }],
     },
@@ -147,15 +148,24 @@ export default function Sidebar({ children }) {
         { text: "View Transfer" },
       ],
     },
-    { text: "Consume Item", icon: <HighlightOffIcon /> },
+    {
+      text: "Consume Item",
+      icon: <HighlightOffIcon />,
+      submenu: [
+        {
+          text: "Add ConsumedItem",
+          icon: <AddCardIcon />,
+        },
+        { text: "View ConsumedItem" },
+      ],
+    },
     { text: "Scrapped Item", icon: <LocationOnIcon /> },
     {
       text: "Incoming Stock",
       icon: <RingVolumeIcon />,
       submenu: [{ text: "Add Incoming" }, { text: "View Incoming" }],
     },
-    { text: "User", icon: <PersonIcon /> },
-    { text: "Settings", icon: <SettingsIcon /> },
+
     { text: "Reports", icon: <ReportIcon /> },
   ];
   const [openSubMenu, setOpenSubMenu] = React.useState(null);

@@ -19,6 +19,7 @@ import {
   TableBody,
   TablePagination,
   Box,
+  FormLabel,
 } from "@mui/material";
 import { Link } from "react-router-dom";
 import { fetchlocation } from "../redux/slice/location";
@@ -30,7 +31,7 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import PictureAsPdfIcon from "@mui/icons-material/PictureAsPdf";
 
-export const ViewCipl = () => {
+export const StockReport = () => {
   const dispatch = useDispatch();
   const state = useSelector((state) => state);
   const [item, setitem] = useState();
@@ -48,9 +49,10 @@ export const ViewCipl = () => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [formData, setformData] = useState({
-    item: "",
-    transferDate: "",
-    locationName: "",
+    FromDate: "",
+    ToDate: "",
+    entity: "",
+    repairService: "",
   });
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -138,18 +140,6 @@ export const ViewCipl = () => {
         console.error("Error updating pickup:", error);
       });
     }; */
-  useEffect(() => {
-    fetch("http://localhost:8080/cipl/view")
-      .then((res) => res.json())
-      .then((result) => {
-        console.log(result);
-        setAllCipl(result);
-        setFilteredCipl(result);
-      })
-      .catch((error) => {
-        console.error("Error fetching cipl data:", error);
-      });
-  }, []);
 
   const handleClick = async (e) => {
     e.preventDefault();
@@ -174,13 +164,19 @@ export const ViewCipl = () => {
       alert("data not found");
     }
   };
-
   const handleDateChange = (date) => {
     setformData({
       ...formData,
-      transferDate: date.format("YYYY-MM-DD"),
+      FromDate: date.format("YYYY-MM-DD"),
     });
   };
+  const handleToDateChange = (date) => {
+    setformData({
+      ...formData,
+      ToDate: date.format("YYYY-MM-DD"),
+    });
+  };
+
   /*   const generatePDF = async (rowData, index) => {
     console.log("Generate PDF clicked");
     const pdf = new jsPDF();
@@ -214,7 +210,7 @@ export const ViewCipl = () => {
               gutterBottom
               style={{ fontFamily: "'EB Garamond'" }}
             >
-              View Cipl
+              Stock Report
             </Typography>
           </CardContent>
         </Card>
@@ -231,77 +227,14 @@ export const ViewCipl = () => {
       >
         <Grid container spacing={2} sx={{ ml: "13px" }}>
           <Grid item xs={12} sm={6}>
-            <FormControl fullWidth>
-              <InputLabel id="demo-simple-select-label">Item Desc</InputLabel>
-              <Select
-                labelId="demo-simple-select-label"
-                id="itemName"
-                label="itemName"
-                onChange={(e) => {
-                  setformData({
-                    ...formData,
-                    item: e.target.value,
-                  });
-                }}
-                /* onChange={(e) =>
-                  handleItemChange(
-                    index,
-                    selectedSubLocations[index],
-                    e.target.value
-                  )
-                } */
-              >
-                {state.item.data?.map((item, index) => (
-                  <MenuItem key={index} value={item?.description}>
-                    {" "}
-                    {item?.description}
-                  </MenuItem>
-                ))}
-              </Select>
-            </FormControl>
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <FormControl fullWidth sx={{ width: "90%" }}>
-              <InputLabel id="demo-simple-select-label">Location</InputLabel>
-              <Select
-                labelId="demo-simple-select-label"
-                id="demo-simple-select"
-                //value={age}
-
-                label="location"
-                MenuProps={{
-                  PaperProps: {
-                    style: {
-                      maxHeight: 120, // Adjust the height as needed
-                    },
-                  },
-                }}
-                onChange={(e) => {
-                  setformData({
-                    ...formData,
-                    locationName: e.target.value,
-                  });
-                }}
-
-                //onChange={handleChange}
-              >
-                {state.location.data?.map((item, index) => (
-                  <MenuItem key={index} value={item?.locationName}>
-                    {" "}
-                    {item?.locationName}
-                  </MenuItem>
-                ))}
-              </Select>
-            </FormControl>
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <FormControl fullWidth sx={{ width: "90%" }}>
+            <FormControl fullWidth sx={{ width: "100%" }}>
+              <FormLabel>From Date</FormLabel>
               <Grid item xs={12} sm={6}>
                 <LocalizationProvider dateAdapter={AdapterDayjs}>
                   <DatePicker
                     /* value={
-                formData.purchaseDate ? dayjs(formData.purchaseDate) : null
-              } */
+            formData.purchaseDate ? dayjs(formData.purchaseDate) : null
+          } */
                     onChange={(newDate) => handleDateChange(newDate)}
                     // onChange={(newDate) => handleDateChange(newDate)}
                     fullWidth
@@ -312,23 +245,130 @@ export const ViewCipl = () => {
               </Grid>
             </FormControl>
           </Grid>
+          <Grid item xs={12} sm={6}>
+            <FormControl fullWidth sx={{ width: "100%" }}>
+              <FormLabel>To Date</FormLabel>
+              <Grid item xs={12} sm={6}>
+                <LocalizationProvider dateAdapter={AdapterDayjs}>
+                  <DatePicker
+                    /* value={
+          formData.purchaseDate ? dayjs(formData.purchaseDate) : null
+        } */
+                    onChange={(newDate) => handleToDateChange(newDate)}
+                    // onChange={(newDate) => handleDateChange(newDate)}
+                    fullWidth
+                    sx={{ width: "90%" }}
+                    /* format="yyyy-MM-dd" */
+                  />
+                </LocalizationProvider>
+              </Grid>
+            </FormControl>
+          </Grid>
+          <Grid container spacing={2} sx={{ ml: "5px", mt: "20px" }}>
+            <Grid item xs={12} sm={6}>
+              <FormControl fullWidth sx={{ width: "100%" }}>
+                <Grid item xs={12} sm={6}>
+                  <FormControl fullWidth sx={{ width: "90%" }}>
+                    <InputLabel id="demo-simple-select-label">
+                      Entity
+                    </InputLabel>
+                    <Select
+                      labelId="demo-simple-select-label"
+                      id="demo-simple-select"
+                      //value={age}
+                      value={formData?.entity}
+                      label="location"
+                      MenuProps={{
+                        PaperProps: {
+                          style: {
+                            maxHeight: 120, // Adjust the height as needed
+                          },
+                        },
+                      }}
+                      onChange={(e) => {
+                        setformData({
+                          ...formData,
+                          entity: e.target.value,
+                        });
+                      }}
+
+                      //onChange={handleChange}
+                    >
+                      {state.location.data?.map((item, index) => (
+                        <MenuItem key={index} value={item?.locationName}>
+                          {" "}
+                          {item?.locationName}
+                        </MenuItem>
+                      ))}
+                    </Select>
+                  </FormControl>
+                </Grid>
+              </FormControl>
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <FormControl fullWidth sx={{ width: "45%" }}>
+                <InputLabel id="demo-simple-select-label">
+                  Repair/Service
+                </InputLabel>
+                <Select
+                  labelId="demo-simple-select-label"
+                  id="demo-simple-select"
+                  value={formData?.repairService}
+                  //value={age}
+
+                  label="Repair/service"
+                  //onChange={handleChange}
+                  onChange={(e) =>
+                    setformData({
+                      ...formData,
+                      repairService: e.target.value,
+                    })
+                  }
+                >
+                  <MenuItem value={true}>Yes</MenuItem>
+                  <MenuItem value={false}>No</MenuItem>
+                </Select>
+              </FormControl>
+            </Grid>
+          </Grid>
         </Grid>
 
-        <Button
-          variant="contained"
-          color="secondary"
-          size="large"
+        <Box
           sx={{
+            display: "flex",
+            justifyContent: "center",
+            flexDirection: "row",
             mt: "33px",
             mb: "17px",
-            marginLeft: "auto",
-            marginRight: "auto",
-            display: "block",
           }}
-          onClick={handleClick}
         >
-          Search
-        </Button>
+          <Button
+            variant="contained"
+            color="secondary"
+            size="large"
+            onClick={handleClick}
+            sx={{ marginRight: "8px" }}
+          >
+            Preview
+          </Button>
+          <Button
+            variant="contained"
+            color="secondary"
+            size="large"
+            onClick={handleClick}
+            sx={{ marginRight: "8px" }}
+          >
+            Dwnload Excel
+          </Button>
+          <Button
+            variant="contained"
+            color="secondary"
+            size="large"
+            onClick={handleClick}
+          >
+            Download Pdf
+          </Button>
+        </Box>
       </Card>
       <Grid sx={{ mt: "33px", width: "100%", overflowX: "scroll" }}>
         <TableContainer
@@ -339,33 +379,45 @@ export const ViewCipl = () => {
             width: "110%",
           }}
         >
-          <Table sx={{ minWidth: 650 }} aria-label="simple table">
+          <Table sx={{ minWidth: 500 }} aria-label="simple table">
             <TableHead>
               <TableRow>
+                <TableCell align="right" sx={{ fontWeight: "bold" }}>
+                  Reference No
+                </TableCell>
+                <TableCell align="right" sx={{ fontWeight: "bold" }}>
+                  Repair/Service
+                </TableCell>
                 <TableCell align="right" sx={{ fontWeight: "bold" }}>
                   Source Location
                 </TableCell>
                 <TableCell align="right" sx={{ fontWeight: "bold" }}>
-                  SubLocations
+                  SubLocation
                 </TableCell>
                 <TableCell align="right" sx={{ fontWeight: "bold" }}>
-                  Shipper
+                  Item
                 </TableCell>
+
+                <TableCell align="right" sx={{ fontWeight: "bold" }}>
+                  Purchase
+                </TableCell>
+                <TableCell align="right" sx={{ fontWeight: "bold" }}>
+                  P/N
+                </TableCell>
+
                 <TableCell align="right" sx={{ fontWeight: "bold" }}>
                   Consignee
                 </TableCell>
                 <TableCell align="right" sx={{ fontWeight: "bold" }}>
-                  Ref Number
+                  Entity
                 </TableCell>
-
+                <TableCell align="right" sx={{ fontWeight: "bold" }}>
+                  Status
+                </TableCell>
                 <TableCell align="right" sx={{ fontWeight: "bold" }}>
                   Transfer Date
                 </TableCell>
-
                 <TableCell align="right" sx={{ fontWeight: "bold" }}>
-                  Print
-                </TableCell>
-                <TableCell align="left" sx={{ fontWeight: "bold" }}>
                   Action
                 </TableCell>
               </TableRow>
@@ -395,6 +447,9 @@ export const ViewCipl = () => {
                         {ciplRow.transferDate}
                       </TableCell>
                       <TableCell align="right">
+                        {ciplRow.transferDate}
+                      </TableCell>
+                      <TableCell align="right">
                         <Link to={`/cipl/createpdf/${ciplRow.id}`}>
                           <Button
                             variant="contained"
@@ -405,26 +460,6 @@ export const ViewCipl = () => {
                           </Button>
                         </Link>
                       </TableCell>
-
-                      <Box>
-                        <Link to={`/updateConsignee/${ciplRow.id}`}>
-                          <Button
-                            sx={{ marginLeft: "11px", marginTop: "15px" }}
-                            variant="contained"
-                          >
-                            Update
-                          </Button>
-                        </Link>
-
-                        <Button
-                          sx={{ marginLeft: "11px", marginTop: "15px" }}
-                          variant="contained"
-                          color="secondary"
-                          /*  onClick={() => deleteConsignee(consignee.id)} */
-                        >
-                          Delete
-                        </Button>
-                      </Box>
                     </TableRow>
                   ))
                 )}
@@ -445,4 +480,4 @@ export const ViewCipl = () => {
   );
 };
 
-export default ViewCipl;
+export default StockReport;

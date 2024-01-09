@@ -30,7 +30,7 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import PictureAsPdfIcon from "@mui/icons-material/PictureAsPdf";
 
-export const ViewCipl = () => {
+export const SearchInventory = () => {
   const dispatch = useDispatch();
   const state = useSelector((state) => state);
   const [item, setitem] = useState();
@@ -49,7 +49,7 @@ export const ViewCipl = () => {
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [formData, setformData] = useState({
     item: "",
-    transferDate: "",
+
     locationName: "",
   });
   const handleChangePage = (event, newPage) => {
@@ -138,18 +138,6 @@ export const ViewCipl = () => {
         console.error("Error updating pickup:", error);
       });
     }; */
-  useEffect(() => {
-    fetch("http://localhost:8080/cipl/view")
-      .then((res) => res.json())
-      .then((result) => {
-        console.log(result);
-        setAllCipl(result);
-        setFilteredCipl(result);
-      })
-      .catch((error) => {
-        console.error("Error fetching cipl data:", error);
-      });
-  }, []);
 
   const handleClick = async (e) => {
     e.preventDefault();
@@ -175,12 +163,6 @@ export const ViewCipl = () => {
     }
   };
 
-  const handleDateChange = (date) => {
-    setformData({
-      ...formData,
-      transferDate: date.format("YYYY-MM-DD"),
-    });
-  };
   /*   const generatePDF = async (rowData, index) => {
     console.log("Generate PDF clicked");
     const pdf = new jsPDF();
@@ -214,7 +196,7 @@ export const ViewCipl = () => {
               gutterBottom
               style={{ fontFamily: "'EB Garamond'" }}
             >
-              View Cipl
+              Inventory Report
             </Typography>
           </CardContent>
         </Card>
@@ -294,41 +276,44 @@ export const ViewCipl = () => {
               </Select>
             </FormControl>
           </Grid>
-          <Grid item xs={12} sm={6}>
-            <FormControl fullWidth sx={{ width: "90%" }}>
-              <Grid item xs={12} sm={6}>
-                <LocalizationProvider dateAdapter={AdapterDayjs}>
-                  <DatePicker
-                    /* value={
-                formData.purchaseDate ? dayjs(formData.purchaseDate) : null
-              } */
-                    onChange={(newDate) => handleDateChange(newDate)}
-                    // onChange={(newDate) => handleDateChange(newDate)}
-                    fullWidth
-                    sx={{ width: "90%" }}
-                    /* format="yyyy-MM-dd" */
-                  />
-                </LocalizationProvider>
-              </Grid>
-            </FormControl>
-          </Grid>
         </Grid>
 
-        <Button
-          variant="contained"
-          color="secondary"
-          size="large"
+        <Box
           sx={{
+            display: "flex",
+            justifyContent: "center",
+            flexDirection: "row",
             mt: "33px",
             mb: "17px",
-            marginLeft: "auto",
-            marginRight: "auto",
-            display: "block",
           }}
-          onClick={handleClick}
         >
-          Search
-        </Button>
+          <Button
+            variant="contained"
+            color="secondary"
+            size="large"
+            onClick={handleClick}
+            sx={{ marginRight: "8px" }}
+          >
+            Preview
+          </Button>
+          <Button
+            variant="contained"
+            color="secondary"
+            size="large"
+            onClick={handleClick}
+            sx={{ marginRight: "8px" }}
+          >
+            Dwnload Excel
+          </Button>
+          <Button
+            variant="contained"
+            color="secondary"
+            size="large"
+            onClick={handleClick}
+          >
+            Download Pdf
+          </Button>
+        </Box>
       </Card>
       <Grid sx={{ mt: "33px", width: "100%", overflowX: "scroll" }}>
         <TableContainer
@@ -343,30 +328,30 @@ export const ViewCipl = () => {
             <TableHead>
               <TableRow>
                 <TableCell align="right" sx={{ fontWeight: "bold" }}>
-                  Source Location
+                  Item Description
                 </TableCell>
                 <TableCell align="right" sx={{ fontWeight: "bold" }}>
-                  SubLocations
+                  Location/Vessel
                 </TableCell>
                 <TableCell align="right" sx={{ fontWeight: "bold" }}>
-                  Shipper
+                  Sub Location
                 </TableCell>
                 <TableCell align="right" sx={{ fontWeight: "bold" }}>
-                  Consignee
+                  Quantity
                 </TableCell>
                 <TableCell align="right" sx={{ fontWeight: "bold" }}>
-                  Ref Number
+                  Minimum
                 </TableCell>
 
                 <TableCell align="right" sx={{ fontWeight: "bold" }}>
-                  Transfer Date
+                  Consumed Qty
+                </TableCell>
+                <TableCell align="right" sx={{ fontWeight: "bold" }}>
+                  Scrapped Qty
                 </TableCell>
 
                 <TableCell align="right" sx={{ fontWeight: "bold" }}>
                   Print
-                </TableCell>
-                <TableCell align="left" sx={{ fontWeight: "bold" }}>
-                  Action
                 </TableCell>
               </TableRow>
             </TableHead>
@@ -395,6 +380,9 @@ export const ViewCipl = () => {
                         {ciplRow.transferDate}
                       </TableCell>
                       <TableCell align="right">
+                        {ciplRow.transferDate}
+                      </TableCell>
+                      <TableCell align="right">
                         <Link to={`/cipl/createpdf/${ciplRow.id}`}>
                           <Button
                             variant="contained"
@@ -405,26 +393,6 @@ export const ViewCipl = () => {
                           </Button>
                         </Link>
                       </TableCell>
-
-                      <Box>
-                        <Link to={`/updateConsignee/${ciplRow.id}`}>
-                          <Button
-                            sx={{ marginLeft: "11px", marginTop: "15px" }}
-                            variant="contained"
-                          >
-                            Update
-                          </Button>
-                        </Link>
-
-                        <Button
-                          sx={{ marginLeft: "11px", marginTop: "15px" }}
-                          variant="contained"
-                          color="secondary"
-                          /*  onClick={() => deleteConsignee(consignee.id)} */
-                        >
-                          Delete
-                        </Button>
-                      </Box>
                     </TableRow>
                   ))
                 )}
@@ -445,4 +413,4 @@ export const ViewCipl = () => {
   );
 };
 
-export default ViewCipl;
+export default SearchInventory;

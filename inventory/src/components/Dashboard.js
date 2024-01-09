@@ -39,33 +39,51 @@ const Dashboard = () => {
         <Card
           sx={{
             border: "2px solid yellow",
-            minWidth: 20,
+
             flex: 1,
             marginRight: 3,
             marginLeft: 3,
             marginTop: 3,
-            borderRadius: 8,
+            borderRadius: 5,
+            width: "100px !important",
+            transition: "transform 0.3s",
             "&:hover": {
               transform: "scale(1.1)", // Adjust the scaling factor as needed
             },
           }}
         >
-          <Link to={"/MOC"} style={{ textDecoration: "none" }}>
-            <CardContent
-              sx={{
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "Start",
-              }}
-            >
+          <Link
+            to={"/MOC"}
+            style={{ textDecoration: "none", position: "relative" }}
+          >
+            <CardContent>
+              {/* Your small box */}
+              <Box
+                sx={{
+                  position: "absolute",
+                  top: 0,
+                  left: 0,
+                  backgroundColor: "white", // Set your desired color
+                  color: "white", // Set your desired text color
+                  padding: 2,
+                  // Adjust the border-radius to match the card
+                }}
+              >
+                <CountertopsIcon
+                  fontSize="large"
+                  color="primary"
+                  sx={{ fontSize: "70px" }}
+                />
+              </Box>
+
               <CountertopsIcon
                 fontSize="large"
                 color="primary"
-                sx={{ alignItems: "Center" }}
+                sx={{ alignItems: "center", marginTop: 2, fontSize: "50px" }}
               />
 
               <Typography
-                sx={{ mb: 1.5, textAlign: "right" }}
+                sx={{ mb: 1.5, textAlign: "center" }}
                 color="text.secondary"
                 variant="h5"
                 component="div"
@@ -82,11 +100,12 @@ const Dashboard = () => {
         <Card
           sx={{
             border: "2px solid yellow",
-            minWidth: 20,
+            minWidth: 40,
             flex: 1,
             marginTop: 3,
             marginLeft: 3,
             borderRadius: 8,
+            transition: "transform 0.3s",
             "&:hover": {
               transform: "scale(1.1)", // Adjust the scaling factor as needed
             },
@@ -112,6 +131,7 @@ const Dashboard = () => {
             marginLeft: 3,
             borderRadius: 8,
             marginTop: 3,
+            transition: "transform 0.3s",
             "&:hover": {
               transform: "scale(1.1)", // Adjust the scaling factor as needed
             },
@@ -134,6 +154,7 @@ const Dashboard = () => {
             marginLeft: 3,
             borderRadius: 8,
             marginTop: 3,
+            transition: "transform 0.3s",
             "&:hover": {
               transform: "scale(1.1)", // Adjust the scaling factor as needed
             },
@@ -159,6 +180,7 @@ const Dashboard = () => {
             marginLeft: 3,
             marginTop: 3,
             borderRadius: 8,
+            transition: "transform 0.3s",
             "&:hover": {
               transform: "scale(1.1)", // Adjust the scaling factor as needed
             },
@@ -197,6 +219,7 @@ const Dashboard = () => {
             marginLeft: 3,
             marginTop: 3,
             borderRadius: 8,
+            transition: "transform 0.3s",
             "&:hover": {
               transform: "scale(1.1)", // Adjust the scaling factor as needed
             },
@@ -235,6 +258,7 @@ const Dashboard = () => {
             marginLeft: 3,
             marginTop: 3,
             borderRadius: 8,
+            transition: "transform 0.3s",
             "&:hover": {
               transform: "scale(1.1)", // Adjust the scaling factor as needed
             },
@@ -273,6 +297,7 @@ const Dashboard = () => {
             marginLeft: 3,
             marginTop: 3,
             borderRadius: 8,
+            transition: "transform 0.3s",
             "&:hover": {
               transform: "scale(1.1)", // Adjust the scaling factor as needed
             },
@@ -314,6 +339,7 @@ const Dashboard = () => {
             marginTop: 3,
             borderRadius: 8,
             width: "23%",
+            transition: "transform 0.3s",
             "&:hover": {
               transform: "scale(1.1)", // Adjust the scaling factor as needed
             },
@@ -353,6 +379,7 @@ const Dashboard = () => {
             marginTop: 3,
             borderRadius: 8,
             width: "23%",
+            transition: "transform 0.3s",
             "&:hover": {
               transform: "scale(1.1)", // Adjust the scaling factor as needed
             },
