@@ -29,7 +29,7 @@ const InternalTransfer = () => {
     destination: '',
 
     SubLocation: [],
-    item: [],
+    description: [],
     sn: [],
     partNumber: [],
     purchase: [],
@@ -38,7 +38,7 @@ const InternalTransfer = () => {
   });
   const dispatch = useDispatch();
   const [subLocations, setSubLocations] = useState([]);
-  const [item, setItem] = useState([]);
+  const [description, setDescription] = useState([]);
   const [sn, setSn] = useState([]);
   const [purchase, setPurchase] = useState([]);
   const [quantity, setQuantity] = useState([]);
@@ -146,24 +146,24 @@ const InternalTransfer = () => {
     });
   };
 
-  const handleItemChange = (index, value) => {
-    updateFormDataItem(index, value);
-    setItem((prevItem) => {
-      const updateItem = [...prevItem];
-      updateItem[index] = value;
-      return updateItem;
+  const handleDescriptionChange = (index, value) => {
+    updateFormDataDescription(index, value);
+    setDescription((prevDescription) => {
+      const updateDescription = [...prevDescription];
+      updateDescription[index] = value;
+      return updateDescription;
     });
   };
-  console.log(item, 'item');
+  console.log(description, 'item');
   console.log(formData);
 
-  const updateFormDataItem = (index, value) => {
+  const updateFormDataDescription = (index, value) => {
     setformData((prevFormData) => {
-      const updateItem = [...prevFormData.item];
-      updateItem[index] = value;
+      const updateDescription = [...prevFormData.description];
+      updateDescription[index] = value;
       return {
         ...prevFormData,
-        item: updateItem,
+        description: updateDescription,
       };
     });
   };
@@ -293,19 +293,15 @@ const InternalTransfer = () => {
           </Select>
         </FormControl>
         <FormControl fullWidth sx={{ width: '50%', marginRight: '10px' }}>
-          <InputLabel id='demo-simple-select-label'>Item Name</InputLabel>
+          <InputLabel id='demo-simple-select-label'>
+            Item Description
+          </InputLabel>
           <Select
             labelId='demo-simple-select-label'
-            id='itemName'
+            id='description'
             //value={age}
-            label='itemName'
-            // onChange={(e) =>
-            //   setformData({
-            //     ...formData,
-            //     itemName: e.target.value,
-            //   })
-            // }
-            onChange={(e) => handleItemChange(index, e.target.value)}
+            label='description'
+            onChange={(e) => handleDescriptionChange(index, e.target.value)}
             MenuProps={{
               PaperProps: {
                 style: {
@@ -315,10 +311,10 @@ const InternalTransfer = () => {
             }}
             //onChange={handleChange}
           >
-            {state.item.data?.map((item, index) => (
-              <MenuItem key={index} value={item?.itemName}>
+            {state.item.data?.map((item, arrayIndex) => (
+              <MenuItem key={arrayIndex} value={item?.description}>
                 {' '}
-                {item?.itemName}
+                {item?.description}
               </MenuItem>
             ))}
           </Select>

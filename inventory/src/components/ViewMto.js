@@ -243,6 +243,9 @@ const ViewMto = () => {
                 <TableCell align='right' sx={{ fontWeight: 'bold' }}>
                   Transfer Date
                 </TableCell>
+                <TableCell align='right' sx={{ fontWeight: 'bold' }}>
+                  Item Description
+                </TableCell>
 
                 <TableCell align='right' sx={{ fontWeight: 'bold' }}>
                   Print
@@ -258,7 +261,9 @@ const ViewMto = () => {
                     <TableCell align='right'>{mto.SubLocation}</TableCell>
                     <TableCell align='right'>{mto.consigneeName}</TableCell>
                     <TableCell align='right'>{mto.referenceNo}</TableCell>
+
                     <TableCell align='right'>{mto.transferDate}</TableCell>
+                    <TableCell align='right'>{mto.description}</TableCell>
                     <TableCell align='right'>
                       <Link to={`/mto/createpdf/${mto.id}`}>
                         <Button
