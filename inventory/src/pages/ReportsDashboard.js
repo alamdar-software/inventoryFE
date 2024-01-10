@@ -58,7 +58,7 @@ const ReportsDashboard = () => {
             <CardActions></CardActions>
           </Card>
         </Link>
-        <Link to="/mto" style={{ textDecoration: "none" }}>
+        <Link to="/masterReport" style={{ textDecoration: "none" }}>
           <Card sx={{ minWidth: 300, ml: "31px" }}>
             <CardContent
               sx={{

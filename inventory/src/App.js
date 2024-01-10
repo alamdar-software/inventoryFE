@@ -61,6 +61,7 @@ import PrintInternal from "./components/PrintInternal.js";
 import ReportItem from "./pages/Reports/ReportItem.js";
 import LocationReport from "./pages/Reports/locationReport";
 import TransferItemDashboard from "./pages/Dashboards/transferItemDashboard";
+import MasterReports from "./components/MasterReports.js";
 const theme = createTheme({
   palette: {
     background: {
@@ -149,7 +150,7 @@ function App() {
                 path="/internal/createpdf/:id"
                 element={<PrintInternal />}
               />
-
+              <Route path="/masterReport" element={<MasterReports />} />
               {/* <Route
                 path='/consignee/consignee/view'
                 element={<ViewConsignee />}
