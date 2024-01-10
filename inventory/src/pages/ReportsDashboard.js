@@ -100,7 +100,7 @@ const ReportsDashboard = () => {
         </Link>
       </Grid>
       <Grid sx={{ display: 'flex', justifyContent: 'center', mt: '23px' }}>
-        <Link to='/cipl' style={{ textDecoration: 'none' }}>
+        <Link to='/consumeReport' style={{ textDecoration: 'none' }}>
           <Card sx={{ minWidth: 300 }}>
             <CardContent
               sx={{
@@ -122,7 +122,7 @@ const ReportsDashboard = () => {
             <CardActions></CardActions>
           </Card>
         </Link>
-        <Link to='/mto' style={{ textDecoration: 'none' }}>
+        <Link to='/scrappedReport' style={{ textDecoration: 'none' }}>
           <Card sx={{ minWidth: 300, ml: '31px' }}>
             <CardContent
               sx={{
@@ -142,7 +142,7 @@ const ReportsDashboard = () => {
             <CardActions></CardActions>
           </Card>
         </Link>
-        <Link to='/it' style={{ textDecoration: 'none' }}>
+        <Link to='/itemService' style={{ textDecoration: 'none' }}>
           <Card sx={{ minWidth: 300, ml: '31px' }}>
             <CardContent
               sx={{

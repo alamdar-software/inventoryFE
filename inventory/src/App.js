@@ -59,6 +59,9 @@ import UpdateMto from './components/UpdateMto.js';
 import ViewInternal from './components/ViewInternal.js';
 import PrintInternal from './components/PrintInternal.js';
 import MasterReports from './components/MasterReports.js';
+import ConsumeReport from './components/ConsumeReport.js';
+import ScrappedReport from './components/ScrappedReport.js';
+import ItemServiceReport from './components/ItemServiceReport.js';
 const theme = createTheme({
   palette: {
     background: {
@@ -145,6 +148,9 @@ function App() {
                 element={<PrintInternal />}
               />
               <Route path='/masterReport' element={<MasterReports />} />
+              <Route path='/consumeReport' element={<ConsumeReport />} />
+              <Route path='/scrappedReport' element={<ScrappedReport />} />
+              <Route path='/itemService' element={<ItemServiceReport />} />
               {/* <Route
                 path='/consignee/consignee/view'
                 element={<ViewConsignee />}

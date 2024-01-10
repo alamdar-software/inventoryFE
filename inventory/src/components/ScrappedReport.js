@@ -1,21 +1,24 @@
 import {
+  Box,
   Button,
+  Card,
+  CardContent,
   FormControl,
-  FormLabel,
+  Grid,
+  InputLabel,
   MenuItem,
   Select,
+  Typography,
 } from '@mui/material';
-import { Card, CardContent, Grid, InputLabel, Typography } from '@mui/material';
-import { Box } from '@mui/system';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchlocation } from '../redux/slice/location';
 import { fetchItem } from '../redux/slice/ItemSlice';
+import { fetchentity } from '../redux/slice/entitySlice';
 import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import { fetchentity } from '../redux/slice/entitySlice';
 
-const MasterReports = () => {
+const ScrappedReport = () => {
   const [formData, setformData] = useState({
     description: '',
     locationName: '',
@@ -23,7 +26,6 @@ const MasterReports = () => {
     dateTo: '',
     entityName: '',
   });
-
   const dispatch = useDispatch();
   const state = useSelector((state) => state);
 
@@ -32,7 +34,6 @@ const MasterReports = () => {
     dispatch(fetchItem());
     dispatch(fetchentity());
   }, [dispatch]);
-
   const handleDateChange = (date) => {
     setformData({
       ...formData,
@@ -66,11 +67,11 @@ const MasterReports = () => {
             gutterBottom
             style={{ fontFamily: "'EB Garamond'" }}
           >
-            Master Report (Incoming Stock)
+            Scrapped Item Report
           </Typography>
         </CardContent>
       </Card>
-      <Card sx={{ borderBottom: '2px solid #ab47bc', borderRadius: '33px' }}>
+      <Card>
         <CardContent>
           <Grid container spacing={2}>
             <Grid item xs={21} sm={6}>
@@ -139,33 +140,8 @@ const MasterReports = () => {
               </FormControl>
             </Grid>
           </Grid>
-          <Grid container spacing={2} sx={{ mt: '23px' }}>
-            <Grid item xs={12} sm={6}>
-              <InputLabel id='date-picker-label'>From date</InputLabel>
-
-              <LocalizationProvider dateAdapter={AdapterDayjs}>
-                <DatePicker
-                  //value={formData.date}
-                  onChange={(newDate) => handleDateChange(newDate)}
-                  fullWidth
-                  sx={{ width: '90%' }}
-                />
-              </LocalizationProvider>
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <InputLabel id='date-picker-label'>To Date</InputLabel>
-              <LocalizationProvider dateAdapter={AdapterDayjs}>
-                <DatePicker
-                  //value={formData.date}
-                  onChange={(newDate) => handleDateChangeTo(newDate)}
-                  fullWidth
-                  sx={{ width: '90%' }}
-                />
-              </LocalizationProvider>
-            </Grid>
-          </Grid>
           <Grid container spacing={2} sx={{ mt: '21px' }}>
-            <Grid item xs={21} sm={6}>
+            <Grid item xs={21} sm={6} sx={{ mt: '17px' }}>
               <FormControl fullWidth sx={{ width: '90%' }}>
                 <InputLabel id='demo-simple-select-label'>Entity</InputLabel>
                 <Select
@@ -189,7 +165,33 @@ const MasterReports = () => {
                 </Select>
               </FormControl>
             </Grid>
+            <Grid item xs={12} sm={6}>
+              <InputLabel id='date-picker-label'>From date</InputLabel>
+
+              <LocalizationProvider dateAdapter={AdapterDayjs}>
+                <DatePicker
+                  //value={formData.date}
+                  onChange={(newDate) => handleDateChange(newDate)}
+                  fullWidth
+                  sx={{ width: '90%' }}
+                />
+              </LocalizationProvider>
+            </Grid>
           </Grid>
+          <Grid container spacing={2} sx={{ mt: '23px' }}>
+            <Grid item xs={12} sm={6}>
+              <InputLabel id='date-picker-label'>To Date</InputLabel>
+              <LocalizationProvider dateAdapter={AdapterDayjs}>
+                <DatePicker
+                  //value={formData.date}
+                  onChange={(newDate) => handleDateChangeTo(newDate)}
+                  fullWidth
+                  sx={{ width: '90%' }}
+                />
+              </LocalizationProvider>
+            </Grid>
+          </Grid>
+
           <Box
             sx={{
               display: 'flex',
@@ -232,4 +234,4 @@ const MasterReports = () => {
   );
 };
 
-export default MasterReports;
+export default ScrappedReport;
