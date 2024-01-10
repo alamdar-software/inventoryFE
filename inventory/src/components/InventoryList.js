@@ -39,7 +39,7 @@ const InventoryList = () => {
     consumedItem: "",
     scrappedItem: "",
   });
-
+  console.log(inventoryData, "datesssss");
   useEffect(() => {
     fetch("http://localhost:8080/inventory/view")
       .then((res) => res.json())
@@ -132,7 +132,7 @@ const InventoryList = () => {
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((inventory) => (
                   <TableRow
-                    key={inventory.consigneeName}
+                    key={inventory.id}
                     sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                   >
                     {/* <TableCell component='th' scope='row'>
@@ -154,7 +154,7 @@ const InventoryList = () => {
                       {inventory.scrappedItem}
                     </TableCell>
                     <Box>
-                      <Link to={`/updateInventory/${inventory.id}`}>
+                      <Link to={`/updateInventory/${inventory?.id}`}>
                         <Button variant="contained">Update</Button>
                       </Link>
 

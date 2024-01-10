@@ -72,30 +72,30 @@ const ViewInternal = () => {
         setInternal([]);
       });
   }, []);
-  //   const handleSearch = () => {
-  //     fetch('http://localhost:8080/mto/search', {
-  //       method: 'POST',
-  //       headers: {
-  //         'Content-Type': 'application/json',
-  //       },
-  //       body: JSON.stringify(formData),
-  //     })
-  //       .then((res) => res.json())
-  //       .then((result) => {
-  //         if (Array.isArray(result)) {
-  //           setMto(result);
-  //         } else {
-  //           console.error('Received data does not contain an array:', result);
-  //           setMto([]);
-  //         }
-  //       })
-  //       .catch((error) => {
-  //         console.error('Error searching data:', error);
-  //         setMto([]);
-  //       });
-  //   };
+  const handleSearch = () => {
+    fetch('http://localhost:8080/internaltransfer/search', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(formData),
+    })
+      .then((res) => res.json())
+      .then((result) => {
+        if (Array.isArray(result)) {
+          setInternal(result);
+        } else {
+          console.error('Received data does not contain an array:', result);
+          setInternal([]);
+        }
+      })
+      .catch((error) => {
+        console.error('Error searching data:', error);
+        setInternal([]);
+      });
+  };
 
-  //   console.log(internal);
+  console.log(internal);
   return (
     <>
       <Box>
@@ -199,7 +199,7 @@ const ViewInternal = () => {
           variant='contained'
           color='secondary'
           size='large'
-          //onClick={handleSearch}
+          onClick={handleSearch}
           sx={{
             mt: '33px',
             mb: '17px',
@@ -243,6 +243,9 @@ const ViewInternal = () => {
                 <TableCell align='right' sx={{ fontWeight: 'bold' }}>
                   Transfer Date
                 </TableCell>
+                <TableCell align='right' sx={{ fontWeight: 'bold' }}>
+                  Item Description
+                </TableCell>
 
                 <TableCell align='right' sx={{ fontWeight: 'bold' }}>
                   Print
@@ -260,6 +263,7 @@ const ViewInternal = () => {
                     <TableCell align='right'>{internal.destination}</TableCell>
                     <TableCell align='right'>{internal.referenceNo}</TableCell>
                     <TableCell align='right'>{internal.transferDate}</TableCell>
+                    <TableCell align='right'>{internal.description}</TableCell>
                     <TableCell align='right'>
                       <Link to={`/internal/createpdf/${internal.id}`}>
                         <Button
