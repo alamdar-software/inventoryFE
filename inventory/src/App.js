@@ -60,6 +60,7 @@ import ViewInternal from "./components/ViewInternal.js";
 import PrintInternal from "./components/PrintInternal.js";
 import ReportItem from "./pages/Reports/ReportItem.js";
 import LocationReport from "./pages/Reports/locationReport";
+import TransferItemDashboard from "./pages/Dashboards/transferItemDashboard";
 const theme = createTheme({
   palette: {
     background: {
@@ -138,6 +139,7 @@ function App() {
               <Route path="/stockReport" element={<StockReport />} />
               <Route path="/reportItem" element={<ReportItem />} />
               <Route path="/locationReport" element={<LocationReport />} />
+              <Route path="/transferItem" element={<TransferItemDashboard />} />
 
               <Route path="/viewMto" element={<ViewMto />} />
               <Route path="/mto/createpdf/:id" element={<PrintMto />} />

@@ -16,7 +16,7 @@ import AccountBalanceWalletIcon from "@mui/icons-material/AccountBalanceWallet";
 import AnalyticsIcon from "@mui/icons-material/Analytics";
 import ArchiveIcon from "@mui/icons-material/Archive";
 import { Link } from "react-router-dom";
-const ReportsDashboard = () => {
+const TransferItemDashboard = () => {
   return (
     <>
       <Card
@@ -33,12 +33,12 @@ const ReportsDashboard = () => {
             gutterBottom
             style={{ fontFamily: "'EB Garamond'" }}
           >
-            Reports
+            Transfer Item Report
           </Typography>
         </CardContent>
       </Card>
       <Grid sx={{ display: "flex", justifyContent: "center", mt: "23px" }}>
-        <Link to="/StockReportDashboard" style={{ textDecoration: "none" }}>
+        <Link to="/searchInventory" style={{ textDecoration: "none" }}>
           <Card sx={{ minWidth: 300 }}>
             <CardContent
               sx={{
@@ -52,13 +52,13 @@ const ReportsDashboard = () => {
                 component="div"
                 sx={{ fontWeight: "bolder", fontSize: "20px" }}
               >
-                Stock Report
+                MTO REPORT
               </Typography>
             </CardContent>
             <CardActions></CardActions>
           </Card>
         </Link>
-        <Link to="/mto" style={{ textDecoration: "none" }}>
+        <Link to="/searchIncoming" style={{ textDecoration: "none" }}>
           <Card sx={{ minWidth: 300, ml: "31px" }}>
             <CardContent
               sx={{
@@ -72,13 +72,13 @@ const ReportsDashboard = () => {
                 component="div"
                 sx={{ fontWeight: "bolder", fontSize: "20px" }}
               >
-                Master Report
+                INTERNAL TRANSFER REPORT
               </Typography>
             </CardContent>
             <CardActions></CardActions>
           </Card>
         </Link>
-        <Link to="/transferItem" style={{ textDecoration: "none" }}>
+        <Link to="/stockReport" style={{ textDecoration: "none" }}>
           <Card sx={{ minWidth: 300, ml: "31px" }}>
             <CardContent
               sx={{
@@ -92,71 +92,7 @@ const ReportsDashboard = () => {
                 component="div"
                 sx={{ fontWeight: "bolder", fontSize: "20px" }}
               >
-                Transfer Item Report
-              </Typography>
-            </CardContent>
-            <CardActions></CardActions>
-          </Card>
-        </Link>
-      </Grid>
-      <Grid sx={{ display: "flex", justifyContent: "center", mt: "23px" }}>
-        <Link to="/cipl" style={{ textDecoration: "none" }}>
-          <Card sx={{ minWidth: 300 }}>
-            <CardContent
-              sx={{
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-              }}
-            >
-              <AccountBalanceWalletIcon
-                sx={{ fontSize: "70px", color: "#91E96B" }}
-              />
-              <Typography
-                component="div"
-                sx={{ fontWeight: "bolder", fontSize: "20px" }}
-              >
-                Consumed Item Report
-              </Typography>
-            </CardContent>
-            <CardActions></CardActions>
-          </Card>
-        </Link>
-        <Link to="/mto" style={{ textDecoration: "none" }}>
-          <Card sx={{ minWidth: 300, ml: "31px" }}>
-            <CardContent
-              sx={{
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-              }}
-            >
-              <AnalyticsIcon sx={{ fontSize: "70px", color: "#DD7071" }} />
-              <Typography
-                component="div"
-                sx={{ fontWeight: "bolder", fontSize: "20px" }}
-              >
-                Scrapped Item Report
-              </Typography>
-            </CardContent>
-            <CardActions></CardActions>
-          </Card>
-        </Link>
-        <Link to="/it" style={{ textDecoration: "none" }}>
-          <Card sx={{ minWidth: 300, ml: "31px" }}>
-            <CardContent
-              sx={{
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-              }}
-            >
-              <ArchiveIcon sx={{ fontSize: "70px", color: "#15A4C3" }} />
-              <Typography
-                component="div"
-                sx={{ fontWeight: "bolder", fontSize: "20px" }}
-              >
-                Item Service Report
+                CIPL REPORT
               </Typography>
             </CardContent>
             <CardActions></CardActions>
@@ -167,4 +103,4 @@ const ReportsDashboard = () => {
   );
 };
 
-export default ReportsDashboard;
+export default TransferItemDashboard;
