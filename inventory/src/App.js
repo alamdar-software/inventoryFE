@@ -138,6 +138,9 @@ function App() {
               <Route path='/searchInventory' element={<SearchInventory />} />
               <Route path='/searchIncoming' element={<SearchIncoming />} />
               <Route path='/stockReport' element={<StockReport />} />
+              <Route path='/reportItem' element={<ReportItem />} />
+              <Route path='/locationReport' element={<LocationReport />} />
+              <Route path='/transferItem' element={<TransferItemDashboard />} />
 
               <Route path='/viewMto' element={<ViewMto />} />
               <Route path='/mto/createpdf/:id' element={<PrintMto />} />

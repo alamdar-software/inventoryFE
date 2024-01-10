@@ -233,7 +233,7 @@ const LocationReport = () => {
                   )
                 } */
               >
-                {state.item.data?.map((item, index) => (
+                {state.location.data?.map((item, index) => (
                   <MenuItem key={index} value={item?.description}>
                     {" "}
                     {item?.description}

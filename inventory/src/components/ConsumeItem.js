@@ -299,7 +299,7 @@ const ConsumeItem = () => {
   const updateFormDataItem = (index, selectedItem) => {
     setformData((prevFormData) => {
       const updatedItems = [...prevFormData.item];
-      updatedItems[index] = selectedItem;
+      updatedItems[index] = selectedItem.match(/^[^(]*/)[0].trim();
       return {
         ...prevFormData,
         item: updatedItems,
