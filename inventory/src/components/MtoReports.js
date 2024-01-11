@@ -25,15 +25,16 @@ import { fetchentity } from '../redux/slice/entitySlice';
 import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 
-const ConsumeReport = () => {
+const MtoReports = () => {
   const [formData, setformData] = useState({
     description: '',
     locationName: '',
     date: '',
     dateTo: '',
     entityName: '',
+    repairService: '',
   });
-  const [consume, setConsume] = useState([]);
+  const [mtoReport, setmtoReport] = useState([]);
   const dispatch = useDispatch();
   const state = useSelector((state) => state);
 
@@ -75,7 +76,7 @@ const ConsumeReport = () => {
             gutterBottom
             style={{ fontFamily: "'EB Garamond'" }}
           >
-            Consumed Item Report
+            Mto Reports
           </Typography>
         </CardContent>
       </Card>
@@ -198,6 +199,30 @@ const ConsumeReport = () => {
                 />
               </LocalizationProvider>
             </Grid>
+            <Grid item xs={12} sm={6} sx={{ mt: '17px' }}>
+              <FormControl fullWidth sx={{ width: '90%' }}>
+                <InputLabel id='demo-simple-select-label'>
+                  Repair/Service
+                </InputLabel>
+                <Select
+                  labelId='demo-simple-select-label'
+                  id='demo-simple-select'
+                  //value={age}
+                  value={formData.repairService || ''}
+                  label='Repair/service'
+                  //onChange={handleChange}
+                  onChange={(e) =>
+                    setformData({
+                      ...formData,
+                      repairService: e.target.value,
+                    })
+                  }
+                >
+                  <MenuItem value={true}>Yes</MenuItem>
+                  <MenuItem value={false}>No</MenuItem>
+                </Select>
+              </FormControl>
+            </Grid>
           </Grid>
 
           <Box
@@ -238,7 +263,6 @@ const ConsumeReport = () => {
           </Box>
         </CardContent>
       </Card>
-
       <Grid sx={{ mt: '33px', width: '100%', overflowX: 'scroll' }}>
         <TableContainer
           component={Paper}
@@ -252,47 +276,41 @@ const ConsumeReport = () => {
             <TableHead>
               <TableRow>
                 <TableCell align='right' sx={{ fontWeight: 'bold' }}>
-                  Item Description
+                  Ref No
                 </TableCell>
                 <TableCell align='right' sx={{ fontWeight: 'bold' }}>
-                  Location
+                  Consignee
                 </TableCell>
                 <TableCell align='right' sx={{ fontWeight: 'bold' }}>
-                  SubLocation
+                  Repair Service
                 </TableCell>
 
                 <TableCell align='right' sx={{ fontWeight: 'bold' }}>
-                  Entity
+                  Transfer Date
                 </TableCell>
                 <TableCell align='right' sx={{ fontWeight: 'bold' }}>
-                  Consumed Quantity
-                </TableCell>
-                <TableCell align='right' sx={{ fontWeight: 'bold' }}>
-                  Date
-                </TableCell>
-                <TableCell align='right' sx={{ fontWeight: 'bold' }}>
-                  Remarks
+                  Transfer Item
                 </TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
-              {consume.map((consume) => (
+              {mtoReport.map((mtoReport) => (
                 <TableRow
-                  key={consume.name}
+                  key={mtoReport.name}
                   sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                 >
                   {/* <TableCell component='th' scope='row'>
                   {attendenceconsume
                 </TableCell> */}
-                  <TableCell align='right'>{consume.description}</TableCell>
-                  <TableCell align='right'>{consume.locationName}</TableCell>
-                  <TableCell align='right'>{consume.subLocation}</TableCell>
-                  <TableCell align='right'>{consume.entity}</TableCell>
+                  <TableCell align='right'>{mtoReport.description}</TableCell>
+                  <TableCell align='right'>{mtoReport.locationName}</TableCell>
+                  <TableCell align='right'>{mtoReport.subLocation}</TableCell>
+                  <TableCell align='right'>{mtoReport.entity}</TableCell>
                   <TableCell align='right'>
-                    {consume.consumedQuantity}
+                    {mtoReport.consumedQuantity}
                   </TableCell>
-                  <TableCell align='right'>{consume.date}</TableCell>
-                  <TableCell align='right'>{consume.remarks}</TableCell>
+                  <TableCell align='right'>{mtoReport.date}</TableCell>
+                  <TableCell align='right'>{mtoReport.remarks}</TableCell>
 
                   {/* <Link to={`/updatePickup/${master.id}`}>
                       <Button variant='contained'>Update</Button>
@@ -324,4 +342,4 @@ const ConsumeReport = () => {
   );
 };
 
-export default ConsumeReport;
+export default MtoReports;

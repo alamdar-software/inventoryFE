@@ -62,6 +62,12 @@ import MasterReports from './components/MasterReports.js';
 import ConsumeReport from './components/ConsumeReport.js';
 import ScrappedReport from './components/ScrappedReport.js';
 import ItemServiceReport from './components/ItemServiceReport.js';
+import ReportItem from './pages/Reports/ReportItem.js';
+import LocationReport from './pages/Reports/locationReport.js';
+import TransferItemDashboard from './pages/Dashboards/transferItemDashboard.js';
+import MtoReports from './components/MtoReports.js';
+import InternalTransferReport from './components/InternalTransferReport.js';
+import CiplReport from './components/CiplReport.js';
 const theme = createTheme({
   palette: {
     background: {
@@ -154,6 +160,9 @@ function App() {
               <Route path='/consumeReport' element={<ConsumeReport />} />
               <Route path='/scrappedReport' element={<ScrappedReport />} />
               <Route path='/itemService' element={<ItemServiceReport />} />
+              <Route path='/mtoReports' element={<MtoReports />} />
+              <Route path='/itReport' element={<InternalTransferReport />} />
+              <Route path='/ciplReport' element={<CiplReport />} />
               {/* <Route
                 path='/consignee/consignee/view'
                 element={<ViewConsignee />}

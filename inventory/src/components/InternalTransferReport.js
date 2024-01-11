@@ -1,11 +1,7 @@
 import {
-  Box,
   Button,
-  Card,
-  CardContent,
   FormControl,
-  Grid,
-  InputLabel,
+  FormLabel,
   MenuItem,
   Paper,
   Select,
@@ -15,17 +11,18 @@ import {
   TableContainer,
   TableHead,
   TableRow,
-  Typography,
 } from '@mui/material';
+import { Card, CardContent, Grid, InputLabel, Typography } from '@mui/material';
+import { Box } from '@mui/system';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchlocation } from '../redux/slice/location';
 import { fetchItem } from '../redux/slice/ItemSlice';
-import { fetchentity } from '../redux/slice/entitySlice';
 import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { fetchentity } from '../redux/slice/entitySlice';
 
-const ConsumeReport = () => {
+const InternalTransferReport = () => {
   const [formData, setformData] = useState({
     description: '',
     locationName: '',
@@ -33,7 +30,8 @@ const ConsumeReport = () => {
     dateTo: '',
     entityName: '',
   });
-  const [consume, setConsume] = useState([]);
+
+  const [internalTransfer, setInternalTransfer] = useState([]);
   const dispatch = useDispatch();
   const state = useSelector((state) => state);
 
@@ -42,6 +40,7 @@ const ConsumeReport = () => {
     dispatch(fetchItem());
     dispatch(fetchentity());
   }, [dispatch]);
+
   const handleDateChange = (date) => {
     setformData({
       ...formData,
@@ -75,11 +74,11 @@ const ConsumeReport = () => {
             gutterBottom
             style={{ fontFamily: "'EB Garamond'" }}
           >
-            Consumed Item Report
+            Internal Transfer Report
           </Typography>
         </CardContent>
       </Card>
-      <Card>
+      <Card sx={{ borderBottom: '2px solid #ab47bc', borderRadius: '33px' }}>
         <CardContent>
           <Grid container spacing={2}>
             <Grid item xs={21} sm={6}>
@@ -148,8 +147,33 @@ const ConsumeReport = () => {
               </FormControl>
             </Grid>
           </Grid>
+          <Grid container spacing={2} sx={{ mt: '23px' }}>
+            <Grid item xs={12} sm={6}>
+              <InputLabel id='date-picker-label'>From date</InputLabel>
+
+              <LocalizationProvider dateAdapter={AdapterDayjs}>
+                <DatePicker
+                  //value={formData.date}
+                  onChange={(newDate) => handleDateChange(newDate)}
+                  fullWidth
+                  sx={{ width: '90%' }}
+                />
+              </LocalizationProvider>
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <InputLabel id='date-picker-label'>To Date</InputLabel>
+              <LocalizationProvider dateAdapter={AdapterDayjs}>
+                <DatePicker
+                  //value={formData.date}
+                  onChange={(newDate) => handleDateChangeTo(newDate)}
+                  fullWidth
+                  sx={{ width: '90%' }}
+                />
+              </LocalizationProvider>
+            </Grid>
+          </Grid>
           <Grid container spacing={2} sx={{ mt: '21px' }}>
-            <Grid item xs={21} sm={6} sx={{ mt: '17px' }}>
+            <Grid item xs={21} sm={6}>
               <FormControl fullWidth sx={{ width: '90%' }}>
                 <InputLabel id='demo-simple-select-label'>Entity</InputLabel>
                 <Select
@@ -173,33 +197,7 @@ const ConsumeReport = () => {
                 </Select>
               </FormControl>
             </Grid>
-            <Grid item xs={12} sm={6}>
-              <InputLabel id='date-picker-label'>From date</InputLabel>
-
-              <LocalizationProvider dateAdapter={AdapterDayjs}>
-                <DatePicker
-                  //value={formData.date}
-                  onChange={(newDate) => handleDateChange(newDate)}
-                  fullWidth
-                  sx={{ width: '90%' }}
-                />
-              </LocalizationProvider>
-            </Grid>
           </Grid>
-          <Grid container spacing={2} sx={{ mt: '23px' }}>
-            <Grid item xs={12} sm={6}>
-              <InputLabel id='date-picker-label'>To Date</InputLabel>
-              <LocalizationProvider dateAdapter={AdapterDayjs}>
-                <DatePicker
-                  //value={formData.date}
-                  onChange={(newDate) => handleDateChangeTo(newDate)}
-                  fullWidth
-                  sx={{ width: '90%' }}
-                />
-              </LocalizationProvider>
-            </Grid>
-          </Grid>
-
           <Box
             sx={{
               display: 'flex',
@@ -238,7 +236,6 @@ const ConsumeReport = () => {
           </Box>
         </CardContent>
       </Card>
-
       <Grid sx={{ mt: '33px', width: '100%', overflowX: 'scroll' }}>
         <TableContainer
           component={Paper}
@@ -252,47 +249,49 @@ const ConsumeReport = () => {
             <TableHead>
               <TableRow>
                 <TableCell align='right' sx={{ fontWeight: 'bold' }}>
-                  Item Description
+                  Ref No
                 </TableCell>
                 <TableCell align='right' sx={{ fontWeight: 'bold' }}>
-                  Location
+                  Transfer Date
                 </TableCell>
                 <TableCell align='right' sx={{ fontWeight: 'bold' }}>
-                  SubLocation
+                  Destination Location
                 </TableCell>
 
                 <TableCell align='right' sx={{ fontWeight: 'bold' }}>
-                  Entity
+                  Destination SubLocation
                 </TableCell>
                 <TableCell align='right' sx={{ fontWeight: 'bold' }}>
-                  Consumed Quantity
-                </TableCell>
-                <TableCell align='right' sx={{ fontWeight: 'bold' }}>
-                  Date
-                </TableCell>
-                <TableCell align='right' sx={{ fontWeight: 'bold' }}>
-                  Remarks
+                  Transfer Items
                 </TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
-              {consume.map((consume) => (
+              {internalTransfer.map((internalTransfer) => (
                 <TableRow
-                  key={consume.name}
+                  key={internalTransfer.name}
                   sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                 >
                   {/* <TableCell component='th' scope='row'>
                   {attendenceconsume
                 </TableCell> */}
-                  <TableCell align='right'>{consume.description}</TableCell>
-                  <TableCell align='right'>{consume.locationName}</TableCell>
-                  <TableCell align='right'>{consume.subLocation}</TableCell>
-                  <TableCell align='right'>{consume.entity}</TableCell>
                   <TableCell align='right'>
-                    {consume.consumedQuantity}
+                    {internalTransfer.description}
                   </TableCell>
-                  <TableCell align='right'>{consume.date}</TableCell>
-                  <TableCell align='right'>{consume.remarks}</TableCell>
+                  <TableCell align='right'>
+                    {internalTransfer.locationName}
+                  </TableCell>
+                  <TableCell align='right'>
+                    {internalTransfer.subLocation}
+                  </TableCell>
+                  <TableCell align='right'>{internalTransfer.entity}</TableCell>
+                  <TableCell align='right'>
+                    {internalTransfer.consumedQuantity}
+                  </TableCell>
+                  <TableCell align='right'>{internalTransfer.date}</TableCell>
+                  <TableCell align='right'>
+                    {internalTransfer.remarks}
+                  </TableCell>
 
                   {/* <Link to={`/updatePickup/${master.id}`}>
                       <Button variant='contained'>Update</Button>
@@ -324,4 +323,4 @@ const ConsumeReport = () => {
   );
 };
 
-export default ConsumeReport;
+export default InternalTransferReport;
