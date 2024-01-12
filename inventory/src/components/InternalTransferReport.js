@@ -22,7 +22,7 @@ import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { fetchentity } from '../redux/slice/entitySlice';
 
-const MasterReports = () => {
+const InternalTransferReport = () => {
   const [formData, setformData] = useState({
     description: '',
     locationName: '',
@@ -30,8 +30,8 @@ const MasterReports = () => {
     dateTo: '',
     entityName: '',
   });
-  const [master, setMaster] = useState([]);
 
+  const [internalTransfer, setInternalTransfer] = useState([]);
   const dispatch = useDispatch();
   const state = useSelector((state) => state);
 
@@ -74,7 +74,7 @@ const MasterReports = () => {
             gutterBottom
             style={{ fontFamily: "'EB Garamond'" }}
           >
-            Master Report (Incoming Stock)
+            Internal Transfer Report
           </Typography>
         </CardContent>
       </Card>
@@ -249,76 +249,49 @@ const MasterReports = () => {
             <TableHead>
               <TableRow>
                 <TableCell align='right' sx={{ fontWeight: 'bold' }}>
-                  Item Description
+                  Ref No
                 </TableCell>
                 <TableCell align='right' sx={{ fontWeight: 'bold' }}>
-                  Location
+                  Transfer Date
                 </TableCell>
                 <TableCell align='right' sx={{ fontWeight: 'bold' }}>
-                  SubLocation
+                  Destination Location
+                </TableCell>
+
+                <TableCell align='right' sx={{ fontWeight: 'bold' }}>
+                  Destination SubLocation
                 </TableCell>
                 <TableCell align='right' sx={{ fontWeight: 'bold' }}>
-                  Catagory
-                </TableCell>
-                <TableCell align='right' sx={{ fontWeight: 'bold' }}>
-                  Brand
-                </TableCell>
-                <TableCell align='right' sx={{ fontWeight: 'bold' }}>
-                  Entity
-                </TableCell>
-                <TableCell align='right' sx={{ fontWeight: 'bold' }}>
-                  Purchase Date
-                </TableCell>
-                <TableCell align='right' sx={{ fontWeight: 'bold' }}>
-                  Purchase Order
-                </TableCell>
-                <TableCell align='right' sx={{ fontWeight: 'bold' }}>
-                  Part Number
-                </TableCell>
-                <TableCell align='right' sx={{ fontWeight: 'bold' }}>
-                  Serial Number
-                </TableCell>
-                <TableCell align='right' sx={{ fontWeight: 'bold' }}>
-                  Quantity
-                </TableCell>
-                <TableCell align='right' sx={{ fontWeight: 'bold' }}>
-                  Extended Value
-                </TableCell>
-                <TableCell align='right' sx={{ fontWeight: 'bold' }}>
-                  Unit Cost
-                </TableCell>
-                <TableCell align='right' sx={{ fontWeight: 'bold' }}>
-                  Price
-                </TableCell>
-                <TableCell align='right' sx={{ fontWeight: 'bold' }}>
-                  Currency
+                  Transfer Items
                 </TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
-              {master.map((master) => (
+              {internalTransfer.map((internalTransfer) => (
                 <TableRow
-                  key={master.name}
+                  key={internalTransfer.name}
                   sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                 >
                   {/* <TableCell component='th' scope='row'>
-                  {attendence.name}
+                  {attendenceconsume
                 </TableCell> */}
-                  <TableCell align='right'>{master.description}</TableCell>
-                  <TableCell align='right'>{master.locationName}</TableCell>
-                  <TableCell align='right'>{master.subLocation}</TableCell>
-                  <TableCell align='right'>{master.catagory}</TableCell>
-                  <TableCell align='right'>{master.brandName}</TableCell>
-                  <TableCell align='right'>{master.entityName}</TableCell>
-                  <TableCell align='right'>{master.date}</TableCell>
-                  <TableCell align='right'>{master.purchaseOrder}</TableCell>
-                  <TableCell align='right'>{master.partNumber}</TableCell>
-                  <TableCell align='right'>{master.serialNumber}</TableCell>
-                  <TableCell align='right'>{master.quantity}</TableCell>
-                  <TableCell align='right'>{master.extendedValue}</TableCell>
-                  <TableCell align='right'>{master.unitCost}</TableCell>
-                  <TableCell align='right'>{master.price}</TableCell>
-                  <TableCell align='right'>{master.currency}</TableCell>
+                  <TableCell align='right'>
+                    {internalTransfer.description}
+                  </TableCell>
+                  <TableCell align='right'>
+                    {internalTransfer.locationName}
+                  </TableCell>
+                  <TableCell align='right'>
+                    {internalTransfer.subLocation}
+                  </TableCell>
+                  <TableCell align='right'>{internalTransfer.entity}</TableCell>
+                  <TableCell align='right'>
+                    {internalTransfer.consumedQuantity}
+                  </TableCell>
+                  <TableCell align='right'>{internalTransfer.date}</TableCell>
+                  <TableCell align='right'>
+                    {internalTransfer.remarks}
+                  </TableCell>
 
                   {/* <Link to={`/updatePickup/${master.id}`}>
                       <Button variant='contained'>Update</Button>
@@ -350,4 +323,4 @@ const MasterReports = () => {
   );
 };
 
-export default MasterReports;
+export default InternalTransferReport;

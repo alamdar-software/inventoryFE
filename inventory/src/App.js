@@ -162,6 +162,12 @@ function App() {
                 element={<PrintInternal />}
               />
               <Route path="/masterReport" element={<MasterReports />} />
+              <Route path="/consumeReport" element={<ConsumeReport />} />
+              <Route path="/scrappedReport" element={<ScrappedReport />} />
+              <Route path="/itemService" element={<ItemServiceReport />} />
+              <Route path="/mtoReports" element={<MtoReports />} />
+              <Route path="/itReport" element={<InternalTransferReport />} />
+              <Route path="/ciplReport" element={<CiplReport />} />
               {/* <Route
                 path='/consignee/consignee/view'
                 element={<ViewConsignee />}

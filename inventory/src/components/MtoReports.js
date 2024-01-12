@@ -1,7 +1,11 @@
 import {
+  Box,
   Button,
+  Card,
+  CardContent,
   FormControl,
-  FormLabel,
+  Grid,
+  InputLabel,
   MenuItem,
   Paper,
   Select,
@@ -11,27 +15,26 @@ import {
   TableContainer,
   TableHead,
   TableRow,
+  Typography,
 } from '@mui/material';
-import { Card, CardContent, Grid, InputLabel, Typography } from '@mui/material';
-import { Box } from '@mui/system';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchlocation } from '../redux/slice/location';
 import { fetchItem } from '../redux/slice/ItemSlice';
+import { fetchentity } from '../redux/slice/entitySlice';
 import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import { fetchentity } from '../redux/slice/entitySlice';
 
-const MasterReports = () => {
+const MtoReports = () => {
   const [formData, setformData] = useState({
     description: '',
     locationName: '',
     date: '',
     dateTo: '',
     entityName: '',
+    repairService: '',
   });
-  const [master, setMaster] = useState([]);
-
+  const [mtoReport, setmtoReport] = useState([]);
   const dispatch = useDispatch();
   const state = useSelector((state) => state);
 
@@ -40,7 +43,6 @@ const MasterReports = () => {
     dispatch(fetchItem());
     dispatch(fetchentity());
   }, [dispatch]);
-
   const handleDateChange = (date) => {
     setformData({
       ...formData,
@@ -74,11 +76,11 @@ const MasterReports = () => {
             gutterBottom
             style={{ fontFamily: "'EB Garamond'" }}
           >
-            Master Report (Incoming Stock)
+            Mto Reports
           </Typography>
         </CardContent>
       </Card>
-      <Card sx={{ borderBottom: '2px solid #ab47bc', borderRadius: '33px' }}>
+      <Card>
         <CardContent>
           <Grid container spacing={2}>
             <Grid item xs={21} sm={6}>
@@ -147,33 +149,8 @@ const MasterReports = () => {
               </FormControl>
             </Grid>
           </Grid>
-          <Grid container spacing={2} sx={{ mt: '23px' }}>
-            <Grid item xs={12} sm={6}>
-              <InputLabel id='date-picker-label'>From date</InputLabel>
-
-              <LocalizationProvider dateAdapter={AdapterDayjs}>
-                <DatePicker
-                  //value={formData.date}
-                  onChange={(newDate) => handleDateChange(newDate)}
-                  fullWidth
-                  sx={{ width: '90%' }}
-                />
-              </LocalizationProvider>
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <InputLabel id='date-picker-label'>To Date</InputLabel>
-              <LocalizationProvider dateAdapter={AdapterDayjs}>
-                <DatePicker
-                  //value={formData.date}
-                  onChange={(newDate) => handleDateChangeTo(newDate)}
-                  fullWidth
-                  sx={{ width: '90%' }}
-                />
-              </LocalizationProvider>
-            </Grid>
-          </Grid>
           <Grid container spacing={2} sx={{ mt: '21px' }}>
-            <Grid item xs={21} sm={6}>
+            <Grid item xs={21} sm={6} sx={{ mt: '17px' }}>
               <FormControl fullWidth sx={{ width: '90%' }}>
                 <InputLabel id='demo-simple-select-label'>Entity</InputLabel>
                 <Select
@@ -197,7 +174,57 @@ const MasterReports = () => {
                 </Select>
               </FormControl>
             </Grid>
+            <Grid item xs={12} sm={6}>
+              <InputLabel id='date-picker-label'>From date</InputLabel>
+
+              <LocalizationProvider dateAdapter={AdapterDayjs}>
+                <DatePicker
+                  //value={formData.date}
+                  onChange={(newDate) => handleDateChange(newDate)}
+                  fullWidth
+                  sx={{ width: '90%' }}
+                />
+              </LocalizationProvider>
+            </Grid>
           </Grid>
+          <Grid container spacing={2} sx={{ mt: '23px' }}>
+            <Grid item xs={12} sm={6}>
+              <InputLabel id='date-picker-label'>To Date</InputLabel>
+              <LocalizationProvider dateAdapter={AdapterDayjs}>
+                <DatePicker
+                  //value={formData.date}
+                  onChange={(newDate) => handleDateChangeTo(newDate)}
+                  fullWidth
+                  sx={{ width: '90%' }}
+                />
+              </LocalizationProvider>
+            </Grid>
+            <Grid item xs={12} sm={6} sx={{ mt: '17px' }}>
+              <FormControl fullWidth sx={{ width: '90%' }}>
+                <InputLabel id='demo-simple-select-label'>
+                  Repair/Service
+                </InputLabel>
+                <Select
+                  labelId='demo-simple-select-label'
+                  id='demo-simple-select'
+                  //value={age}
+                  value={formData.repairService || ''}
+                  label='Repair/service'
+                  //onChange={handleChange}
+                  onChange={(e) =>
+                    setformData({
+                      ...formData,
+                      repairService: e.target.value,
+                    })
+                  }
+                >
+                  <MenuItem value={true}>Yes</MenuItem>
+                  <MenuItem value={false}>No</MenuItem>
+                </Select>
+              </FormControl>
+            </Grid>
+          </Grid>
+
           <Box
             sx={{
               display: 'flex',
@@ -249,76 +276,41 @@ const MasterReports = () => {
             <TableHead>
               <TableRow>
                 <TableCell align='right' sx={{ fontWeight: 'bold' }}>
-                  Item Description
+                  Ref No
                 </TableCell>
                 <TableCell align='right' sx={{ fontWeight: 'bold' }}>
-                  Location
+                  Consignee
                 </TableCell>
                 <TableCell align='right' sx={{ fontWeight: 'bold' }}>
-                  SubLocation
+                  Repair Service
+                </TableCell>
+
+                <TableCell align='right' sx={{ fontWeight: 'bold' }}>
+                  Transfer Date
                 </TableCell>
                 <TableCell align='right' sx={{ fontWeight: 'bold' }}>
-                  Catagory
-                </TableCell>
-                <TableCell align='right' sx={{ fontWeight: 'bold' }}>
-                  Brand
-                </TableCell>
-                <TableCell align='right' sx={{ fontWeight: 'bold' }}>
-                  Entity
-                </TableCell>
-                <TableCell align='right' sx={{ fontWeight: 'bold' }}>
-                  Purchase Date
-                </TableCell>
-                <TableCell align='right' sx={{ fontWeight: 'bold' }}>
-                  Purchase Order
-                </TableCell>
-                <TableCell align='right' sx={{ fontWeight: 'bold' }}>
-                  Part Number
-                </TableCell>
-                <TableCell align='right' sx={{ fontWeight: 'bold' }}>
-                  Serial Number
-                </TableCell>
-                <TableCell align='right' sx={{ fontWeight: 'bold' }}>
-                  Quantity
-                </TableCell>
-                <TableCell align='right' sx={{ fontWeight: 'bold' }}>
-                  Extended Value
-                </TableCell>
-                <TableCell align='right' sx={{ fontWeight: 'bold' }}>
-                  Unit Cost
-                </TableCell>
-                <TableCell align='right' sx={{ fontWeight: 'bold' }}>
-                  Price
-                </TableCell>
-                <TableCell align='right' sx={{ fontWeight: 'bold' }}>
-                  Currency
+                  Transfer Item
                 </TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
-              {master.map((master) => (
+              {mtoReport.map((mtoReport) => (
                 <TableRow
-                  key={master.name}
+                  key={mtoReport.name}
                   sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                 >
                   {/* <TableCell component='th' scope='row'>
-                  {attendence.name}
+                  {attendenceconsume
                 </TableCell> */}
-                  <TableCell align='right'>{master.description}</TableCell>
-                  <TableCell align='right'>{master.locationName}</TableCell>
-                  <TableCell align='right'>{master.subLocation}</TableCell>
-                  <TableCell align='right'>{master.catagory}</TableCell>
-                  <TableCell align='right'>{master.brandName}</TableCell>
-                  <TableCell align='right'>{master.entityName}</TableCell>
-                  <TableCell align='right'>{master.date}</TableCell>
-                  <TableCell align='right'>{master.purchaseOrder}</TableCell>
-                  <TableCell align='right'>{master.partNumber}</TableCell>
-                  <TableCell align='right'>{master.serialNumber}</TableCell>
-                  <TableCell align='right'>{master.quantity}</TableCell>
-                  <TableCell align='right'>{master.extendedValue}</TableCell>
-                  <TableCell align='right'>{master.unitCost}</TableCell>
-                  <TableCell align='right'>{master.price}</TableCell>
-                  <TableCell align='right'>{master.currency}</TableCell>
+                  <TableCell align='right'>{mtoReport.description}</TableCell>
+                  <TableCell align='right'>{mtoReport.locationName}</TableCell>
+                  <TableCell align='right'>{mtoReport.subLocation}</TableCell>
+                  <TableCell align='right'>{mtoReport.entity}</TableCell>
+                  <TableCell align='right'>
+                    {mtoReport.consumedQuantity}
+                  </TableCell>
+                  <TableCell align='right'>{mtoReport.date}</TableCell>
+                  <TableCell align='right'>{mtoReport.remarks}</TableCell>
 
                   {/* <Link to={`/updatePickup/${master.id}`}>
                       <Button variant='contained'>Update</Button>
@@ -350,4 +342,4 @@ const MasterReports = () => {
   );
 };
 
-export default MasterReports;
+export default MtoReports;
