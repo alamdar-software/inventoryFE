@@ -62,6 +62,11 @@ import ReportItem from "./pages/Reports/ReportItem.js";
 import LocationReport from "./pages/Reports/locationReport";
 import TransferItemDashboard from "./pages/Dashboards/transferItemDashboard";
 import MasterReports from "./components/MasterReports.js";
+import ViewConsume from "./pages/ViewConsume";
+import UpdateConsumed from "./pages/UpdateConsumed";
+import UpdatePickup from "./components/UpdatePickup";
+import ViewScrapp from "./pages/ViewScrap";
+import UpdateScrapped from "./pages/UpdateScrapped";
 const theme = createTheme({
   palette: {
     background: {
@@ -82,7 +87,7 @@ function App() {
               <Route path="/add-location" element={<Location />} />
               <Route path="/item" element={<Item />} />
               <Route path="/pick-up" element={<Pickup />} />
-              <Route path="/updatePickup/:id" element={<Pickup />} />
+              <Route path="/updatePickup/:id" element={<UpdatePickup />} />
               <Route path="/uom" element={<Uom />} />
               <Route path="/shipper" element={<Shipper />} />
 
@@ -116,13 +121,19 @@ function App() {
                 element={<UpdateConsignee />}
               />
               <Route path="/add-consumeditem" element={<ConsumeItem />} />
+              <Route path="/view-consumeditem" element={<ViewConsume />} />
+              <Route path="/updateConsumed/:id" element={<UpdateConsumed />} />
+
               <Route path="/add-inventory" element={<Inventory />} />
               <Route path="/view-inventory" element={<InventoryList />} />
               <Route
                 path="/updateInventory/:id"
                 element={<UpdateInventory />}
               />
-              <Route path="/scrapped-item" element={<ScrappedItem />} />
+              <Route path="/add-scrappeditem" element={<ScrappedItem />} />
+              <Route path="/view-scrappeditem" element={<ViewScrapp />} />
+              <Route path="/updateScapped/:id" element={<UpdateScrapped />} />
+
               <Route path="/add-incoming" element={<IncomingStock />} />
               <Route path="/view-incoming" element={<ViewIncoming />} />
               <Route path="/updateIncoming/:id" element={<UpdateIncoming />} />

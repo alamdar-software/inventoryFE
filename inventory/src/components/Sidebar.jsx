@@ -159,7 +159,17 @@ export default function Sidebar({ children }) {
         { text: "View ConsumedItem" },
       ],
     },
-    { text: "Scrapped Item", icon: <LocationOnIcon /> },
+    {
+      text: "Scrapped Item",
+      icon: <LocationOnIcon />,
+      submenu: [
+        {
+          text: "Add ScrappedItem",
+          icon: <AddCardIcon />,
+        },
+        { text: "View ScrappedItem" },
+      ],
+    },
     {
       text: "Incoming Stock",
       icon: <RingVolumeIcon />,
