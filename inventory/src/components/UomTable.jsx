@@ -13,7 +13,7 @@ import ButtonGroup from "@mui/material/ButtonGroup";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 const columns = [
-  { id: "Currency", label: "Currency", minWidth: 200 },
+  { id: "Unit Name", label: "Unit Name", minWidth: 200 },
   { id: "Actions", label: "Actions", minWidth: 100 },
 ];
 
@@ -38,7 +38,7 @@ export default function UomTable({ data }) {
     try {
       // Perform the delete operation
       const response = await fetch(
-        `http://localhost:8080/currency/delete/${id}`,
+        `http://localhost:8080/unit/delete/${id}`,
         {
           method: "DELETE",
           headers: {

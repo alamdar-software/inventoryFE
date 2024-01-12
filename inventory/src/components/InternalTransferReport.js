@@ -223,7 +223,7 @@ const InternalTransferReport = () => {
               //onClick={handleClick}
               sx={{ marginRight: '8px' }}
             >
-              Dwnload Excel
+              Download Excel
             </Button>
             <Button
               variant='contained'

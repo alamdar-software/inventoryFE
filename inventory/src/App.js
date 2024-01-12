@@ -68,6 +68,9 @@ import TransferItemDashboard from './pages/Dashboards/transferItemDashboard.js';
 import MtoReports from './components/MtoReports.js';
 import InternalTransferReport from './components/InternalTransferReport.js';
 import CiplReport from './components/CiplReport.js';
+import UpdatePickup from './components/UpdatePickup.js';
+import UpdateUom from './components/UpdateUom.js';
+import UpdateItem from './components/UpdateItem.js';
 const theme = createTheme({
   palette: {
     background: {
@@ -87,6 +90,7 @@ function App() {
               <Route path='/dashboard' element={<Dashboard />}></Route>
               <Route path='/add-location' element={<Location />} />
               <Route path='/item' element={<Item />} />
+              <Route path='/updateItem/:id' element={<UpdateItem />} />
               <Route path='/pick-up' element={<Pickup />} />
               <Route path='/updatePickup/:id' element={<Pickup />} />
               <Route path='/uom' element={<Uom />} />
@@ -116,7 +120,7 @@ function App() {
               <Route path='/it' element={<InternalTransfer />} />
               <Route path='/Items' element={<ViewItem />} />
               <Route path='/entity' element={<Entity />} />
-
+              <Route path='/entity/update/:id' element={<UpdateEntity />} />
               <Route
                 path='/updateConsignee/:id'
                 element={<UpdateConsignee />}
@@ -152,10 +156,13 @@ function App() {
               <Route path='/mto/createpdf/:id' element={<PrintMto />} />
               <Route path='/updateMto/:id' element={<UpdateMto />} />
               <Route path='/viewInternal' element={<ViewInternal />} />
+              <Route path='/updatePickup/:id' element={<UpdatePickup />} />
               <Route
                 path='/internal/createpdf/:id'
                 element={<PrintInternal />}
               />
+              <Route path='/Uom/update/:id' element={<UpdateUom />} />
+
               <Route path='/masterReport' element={<MasterReports />} />
               <Route path='/consumeReport' element={<ConsumeReport />} />
               <Route path='/scrappedReport' element={<ScrappedReport />} />

@@ -252,10 +252,10 @@ const Consignee = () => {
             />
           </Grid>
           <Grid item xs={10} sm={6}>
-            <InputLabel id='location'>Location</InputLabel>
             <Select
               labelId='location'
               id='location'
+              sx={{ width: '90%' }}
               value={formData?.locationName || 'sgr'}
               label='Location'
               fullWidth
@@ -266,6 +266,9 @@ const Consignee = () => {
                 })
               }
             >
+              <MenuItem value='sgr' disabled>
+                Location
+              </MenuItem>
               {state.location.data?.map((item, index) => (
                 <MenuItem key={index} value={item?.locationName}>
                   {' '}
