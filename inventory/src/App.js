@@ -126,13 +126,19 @@ function App() {
                 element={<UpdateConsignee />}
               />
               <Route path='/add-consumeditem' element={<ConsumeItem />} />
+              <Route path='/view-consumeditem' element={<ViewConsume />} />
+              <Route path='/updateConsumed/:id' element={<UpdateConsumed />} />
+
               <Route path='/add-inventory' element={<Inventory />} />
               <Route path='/view-inventory' element={<InventoryList />} />
               <Route
                 path='/updateInventory/:id'
                 element={<UpdateInventory />}
               />
-              <Route path='/scrapped-item' element={<ScrappedItem />} />
+              <Route path='/add-scrappeditem' element={<ScrappedItem />} />
+              <Route path='/view-scrappeditem' element={<ViewScrapp />} />
+              <Route path='/updateScapped/:id' element={<UpdateScrapped />} />
+
               <Route path='/add-incoming' element={<IncomingStock />} />
               <Route path='/view-incoming' element={<ViewIncoming />} />
               <Route path='/updateIncoming/:id' element={<UpdateIncoming />} />

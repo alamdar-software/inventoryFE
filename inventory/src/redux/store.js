@@ -11,6 +11,7 @@ import BrandSlice from "./slice/BrandSlice";
 import entitySlice from "./slice/entitySlice";
 import SingleIncomeSlice from "./slice/SingleIncomeSlice";
 import InventorySlice from "./slice/InventorySlice";
+import ConsumeItemSlice from "./slice/ConsumeItemSlice";
 
 export const store = configureStore({
   reducer: {
@@ -26,5 +27,6 @@ export const store = configureStore({
     entity: entitySlice,
     singleIncome: SingleIncomeSlice,
     inventory: InventorySlice,
+    consumedItem: ConsumeItemSlice,
   },
 });
