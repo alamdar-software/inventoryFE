@@ -58,6 +58,59 @@ import PrintMto from "./components/PrintMto.js";
 import UpdateMto from "./components/UpdateMto.js";
 import ViewInternal from "./components/ViewInternal.js";
 import PrintInternal from "./components/PrintInternal.js";
+import MasterReports from "./components/MasterReports.js";
+import ConsumeReport from "./components/ConsumeReport.js";
+import ScrappedReport from "./components/ScrappedReport.js";
+import ItemServiceReport from "./components/ItemServiceReport.js";
+import ReportItem from "./pages/Reports/ReportItem.js";
+import LocationReport from "./pages/Reports/locationReport.js";
+import TransferItemDashboard from "./pages/Dashboards/transferItemDashboard.js";
+import MtoReports from "./components/MtoReports.js";
+import InternalTransferReport from "./components/InternalTransferReport.js";
+import CiplReport from "./components/CiplReport.js";
+import UpdatePickup from "./components/UpdatePickup.js";
+import UpdateUom from "./components/UpdateUom.js";
+import UpdateItem from "./components/UpdateItem.js";
+import UpdateConsumed from "./pages/UpdateConsumed.js";
+import ViewConsume from "./pages/ViewConsume.js";
+import ViewScrapp from "./pages/ViewScrap";
+import UpdateScrapped from "./pages/UpdateScrapped";
+
+import Mto from "./components/Mto.js";
+import InternalTransfer from "./components/InternalTransfer.js";
+import ViewConsignee from "./pages/ViewConsignee";
+import UpdateConsignee from "./components/UpdateConsignee.js";
+import ConsumeItem from "./components/ConsumeItem.js";
+import Inventory from "./components/Inventory.js";
+import ScrappedItem from "./components/ScrappedItem.js";
+import IncomingStock from "./pages/IncomingStock.js";
+import SingleIncome from "./components/SingleIncome.js";
+import BulkIncome from "./components/BulkIncome.js";
+import User from "./components/User.js";
+import DailyDataCount from "./pages/DailyDataCount.js";
+import UpdateCurrency from "./pages/UpdateCurrency";
+import UpdateShipper from "./components/UpdateShipper";
+import ViewItem from "./components/ViewItem.js";
+import Cipl from "./components/Cipl.js";
+import ViewCipl from "./pages/ViewCipl";
+import PrintCipl from "./pages/PrintCipl";
+import ViewTransfer from "./pages/ViewTransfer";
+import UpdateEntity from "./components/UpdateEntity";
+import Entity from "./pages/Entity";
+import InventoryList from "./components/InventoryList.js";
+import UpdateInventory from "./components/UpdateInventory.js";
+import ViewIncoming from "./components/ViewIncoming.js";
+import UpdateIncoming from "./components/UpdateIncoming.js";
+import ReportsDashboard from "./pages/ReportsDashboard";
+import StockReportDashboard from "./pages/StockReportDashboard";
+import SearchInventory from "./pages/SearchInventory";
+import SearchIncoming from "./pages/SearchIncoming";
+import StockReport from "./pages/StockReport";
+import ViewMto from "./components/ViewMto.js";
+import PrintMto from "./components/PrintMto.js";
+import UpdateMto from "./components/UpdateMto.js";
+import ViewInternal from "./components/ViewInternal.js";
+import PrintInternal from "./components/PrintInternal.js";
 import ReportItem from "./pages/Reports/ReportItem.js";
 import LocationReport from "./pages/Reports/locationReport";
 import TransferItemDashboard from "./pages/Dashboards/transferItemDashboard";
@@ -94,8 +147,9 @@ function App() {
               <Route path="/dashboard" element={<Dashboard />}></Route>
               <Route path="/add-location" element={<Location />} />
               <Route path="/item" element={<Item />} />
+              <Route path="/updateItem/:id" element={<UpdateItem />} />
               <Route path="/pick-up" element={<Pickup />} />
-              <Route path="/updatePickup/:id" element={<UpdatePickup />} />
+              <Route path="/updatePickup/:id" element={<Pickup />} />
               <Route path="/uom" element={<Uom />} />
               <Route path="/shipper" element={<Shipper />} />
 
@@ -123,7 +177,7 @@ function App() {
               <Route path="/it" element={<InternalTransfer />} />
               <Route path="/Items" element={<ViewItem />} />
               <Route path="/entity" element={<Entity />} />
-
+              <Route path="/entity/update/:id" element={<UpdateEntity />} />
               <Route
                 path="/updateConsignee/:id"
                 element={<UpdateConsignee />}
@@ -165,10 +219,13 @@ function App() {
               <Route path="/mto/createpdf/:id" element={<PrintMto />} />
               <Route path="/updateMto/:id" element={<UpdateMto />} />
               <Route path="/viewInternal" element={<ViewInternal />} />
+              <Route path="/updatePickup/:id" element={<UpdatePickup />} />
               <Route
                 path="/internal/createpdf/:id"
                 element={<PrintInternal />}
               />
+              <Route path="/Uom/update/:id" element={<UpdateUom />} />
+
               <Route path="/masterReport" element={<MasterReports />} />
               <Route path="/consumeReport" element={<ConsumeReport />} />
               <Route path="/scrappedReport" element={<ScrappedReport />} />

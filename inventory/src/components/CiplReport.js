@@ -7,7 +7,14 @@ import {
   Grid,
   InputLabel,
   MenuItem,
+  Paper,
   Select,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
   Typography,
 } from '@mui/material';
 import React, { useEffect, useState } from 'react';
@@ -29,6 +36,7 @@ const CiplReport = () => {
     date: '',
     dateTo: '',
   });
+  const [ciplReport, setCiplReport] = useState([]);
   const dispatch = useDispatch();
   const state = useSelector((state) => state);
 
@@ -290,6 +298,86 @@ const CiplReport = () => {
           Download Pdf
         </Button>
       </Box>
+
+      <Grid sx={{ mt: '33px', width: '100%', overflowX: 'scroll' }}>
+        <TableContainer
+          component={Paper}
+          sx={{
+            borderRadius: '33px',
+            borderBottom: '2px solid yellow',
+            width: '110%',
+          }}
+        >
+          <Table sx={{ minWidth: 650 }} aria-label='simple table'>
+            <TableHead>
+              <TableRow>
+                <TableCell align='right' sx={{ fontWeight: 'bold' }}>
+                  Ref No
+                </TableCell>
+                <TableCell align='right' sx={{ fontWeight: 'bold' }}>
+                  Consignee
+                </TableCell>
+                <TableCell align='right' sx={{ fontWeight: 'bold' }}>
+                  Repair Service
+                </TableCell>
+
+                <TableCell align='right' sx={{ fontWeight: 'bold' }}>
+                  Shipper
+                </TableCell>
+                <TableCell align='right' sx={{ fontWeight: 'bold' }}>
+                  Transfer Date
+                </TableCell>
+                <TableCell align='right' sx={{ fontWeight: 'bold' }}>
+                  Transfer Items
+                </TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {ciplReport.map((ciplReport) => (
+                <TableRow
+                  key={ciplReport.name}
+                  sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                >
+                  {/* <TableCell component='th' scope='row'>
+                  {attendenceconsume
+                </TableCell> */}
+                  <TableCell align='right'>{ciplReport.refNo}</TableCell>
+                  <TableCell align='right'>
+                    {ciplReport.consigneeName}
+                  </TableCell>
+                  <TableCell align='right'>
+                    {ciplReport.repairService}
+                  </TableCell>
+                  <TableCell align='right'>{ciplReport.shipperName}</TableCell>
+                  <TableCell align='right'>{ciplReport.date}</TableCell>
+                  <TableCell align='right'>{ciplReport.transferItem}</TableCell>
+
+                  {/* <Link to={`/updatePickup/${master.id}`}>
+                      <Button variant='contained'>Update</Button>
+                    </Link>
+                    <Button
+                      sx={{ marginLeft: '11px' }}
+                      variant='contained'
+                      color='secondary'
+                      onClick={() => deletePickup(pickup.id)}
+                    >
+                      Delete
+                    </Button> */}
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+        {/* <TablePagination
+          rowsPerPageOptions={[5, 10, 25]}
+          component='div'
+          count={pickup.length}
+          rowsPerPage={rowsPerPage}
+          page={page}
+          onPageChange={handleChangePage}
+          onRowsPerPageChange={handleChangeRowsPerPage}
+        /> */}
+      </Grid>
     </>
   );
 };
