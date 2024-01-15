@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from 'react';
 import {
   Card,
   CardContent,
@@ -19,16 +19,16 @@ import {
   TableBody,
   TablePagination,
   Box,
-} from "@mui/material";
-import { Link } from "react-router-dom";
-import { fetchlocation } from "../redux/slice/location";
-import { fetchItem } from "../redux/slice/ItemSlice";
-import { useDispatch } from "react-redux";
-import { useSelector } from "react-redux";
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-import { DatePicker } from "@mui/x-date-pickers/DatePicker";
-import PictureAsPdfIcon from "@mui/icons-material/PictureAsPdf";
+} from '@mui/material';
+import { Link } from 'react-router-dom';
+import { fetchlocation } from '../redux/slice/location';
+import { fetchItem } from '../redux/slice/ItemSlice';
+import { useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
 
 export const ViewCipl = () => {
   const dispatch = useDispatch();
@@ -48,9 +48,9 @@ export const ViewCipl = () => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [formData, setformData] = useState({
-    item: "",
-    transferDate: "",
-    locationName: "",
+    itemDescription: '',
+    date: '',
+    location: '',
   });
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -60,7 +60,7 @@ export const ViewCipl = () => {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
-  console.log(formData, "heyyy");
+  console.log(formData, 'heyyy');
   // const handleClick = () => {
   //   try {
   //     const formData = {
@@ -139,15 +139,20 @@ export const ViewCipl = () => {
       });
     }; */
   useEffect(() => {
-    fetch("http://localhost:8080/cipl/view")
-      .then((res) => res.json())
+    fetch('http://localhost:8080/cipl/view')
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error(`HTTP error! Status: ${res.status}`);
+        }
+        return res.json();
+      })
       .then((result) => {
         console.log(result);
         setAllCipl(result);
         setFilteredCipl(result);
       })
       .catch((error) => {
-        console.error("Error fetching cipl data:", error);
+        console.error('Error fetching pickup data:', error);
       });
   }, []);
 
@@ -178,39 +183,38 @@ export const ViewCipl = () => {
   const handleDateChange = (date) => {
     setformData({
       ...formData,
-      transferDate: date.format("YYYY-MM-DD"),
+      date: date.format('YYYY-MM-DD'),
     });
   };
-  /*   const generatePDF = async (rowData, index) => {
-    console.log("Generate PDF clicked");
-    const pdf = new jsPDF();
+  const generatePDF = async (rowData, index) => {
+    console.log('Generate PDF clicked');
+    // const pdf = new jsPDF();
 
     const tableRow = document.getElementById(`${rowData.id}-${index}`);
     if (tableRow) {
-      const canvas = await html2canvas(tableRow);
-      const imgData = canvas.toDataURL("image/png");
-
-      pdf.addImage(imgData, "PNG", 10, 10, 190, 0);
-      pdf.save("table.pdf");
+      // const canvas = await html2canvas(tableRow);
+      // const imgData = canvas.toDataURL('image/png');
+      // pdf.addImage(imgData, 'PNG', 10, 10, 190, 0);
+      // pdf.save('table.pdf');
     }
-  }; */
+  };
   return (
     <>
       <Grid>
         <Card
-          color="secondary"
+          color='secondary'
           sx={{
-            width: "100%",
+            width: '100%',
             // background:
             //   'linear-gradient(217deg, rgba(255,0,0,.8), rgba(255,0,0,0) 70.71%)',
 
-            borderBottom: "2px solid #ab47bc",
+            borderBottom: '2px solid #ab47bc',
           }}
         >
           <CardContent>
             <Typography
-              variant="h4"
-              color="secondary"
+              variant='h4'
+              color='secondary'
               gutterBottom
               style={{ fontFamily: "'EB Garamond'" }}
             >
@@ -222,21 +226,21 @@ export const ViewCipl = () => {
 
       <Card
         sx={{
-          width: "100%",
-          mt: "33px",
-          pt: "33px",
-          borderBottom: "2px solid #ab47bc",
-          borderRadius: "33px",
+          width: '100%',
+          mt: '33px',
+          pt: '33px',
+          borderBottom: '2px solid #ab47bc',
+          borderRadius: '33px',
         }}
       >
-        <Grid container spacing={2} sx={{ ml: "13px" }}>
+        <Grid container spacing={2} sx={{ ml: '13px' }}>
           <Grid item xs={12} sm={6}>
             <FormControl fullWidth>
-              <InputLabel id="demo-simple-select-label">Item Desc</InputLabel>
+              <InputLabel id='demo-simple-select-label'>Item Desc</InputLabel>
               <Select
-                labelId="demo-simple-select-label"
-                id="itemName"
-                label="itemName"
+                labelId='demo-simple-select-label'
+                id='itemName'
+                label='itemName'
                 onChange={(e) => {
                   setformData({
                     ...formData,
@@ -253,7 +257,7 @@ export const ViewCipl = () => {
               >
                 {state.item.data?.map((item, index) => (
                   <MenuItem key={index} value={item?.description}>
-                    {" "}
+                    {' '}
                     {item?.description}
                   </MenuItem>
                 ))}
@@ -261,14 +265,14 @@ export const ViewCipl = () => {
             </FormControl>
           </Grid>
           <Grid item xs={12} sm={6}>
-            <FormControl fullWidth sx={{ width: "90%" }}>
-              <InputLabel id="demo-simple-select-label">Location</InputLabel>
+            <FormControl fullWidth sx={{ width: '90%' }}>
+              <InputLabel id='demo-simple-select-label'>Location</InputLabel>
               <Select
-                labelId="demo-simple-select-label"
-                id="demo-simple-select"
+                labelId='demo-simple-select-label'
+                id='demo-simple-select'
                 //value={age}
 
-                label="location"
+                label='location'
                 MenuProps={{
                   PaperProps: {
                     style: {
@@ -287,7 +291,7 @@ export const ViewCipl = () => {
               >
                 {state.location.data?.map((item, index) => (
                   <MenuItem key={index} value={item?.locationName}>
-                    {" "}
+                    {' '}
                     {item?.locationName}
                   </MenuItem>
                 ))}
@@ -295,7 +299,7 @@ export const ViewCipl = () => {
             </FormControl>
           </Grid>
           <Grid item xs={12} sm={6}>
-            <FormControl fullWidth sx={{ width: "90%" }}>
+            <FormControl fullWidth sx={{ width: '90%' }}>
               <Grid item xs={12} sm={6}>
                 <LocalizationProvider dateAdapter={AdapterDayjs}>
                   <DatePicker
@@ -305,7 +309,7 @@ export const ViewCipl = () => {
                     onChange={(newDate) => handleDateChange(newDate)}
                     // onChange={(newDate) => handleDateChange(newDate)}
                     fullWidth
-                    sx={{ width: "90%" }}
+                    sx={{ width: '90%' }}
                     /* format="yyyy-MM-dd" */
                   />
                 </LocalizationProvider>
@@ -315,57 +319,57 @@ export const ViewCipl = () => {
         </Grid>
 
         <Button
-          variant="contained"
-          color="secondary"
-          size="large"
+          variant='contained'
+          color='secondary'
+          size='large'
           sx={{
-            mt: "33px",
-            mb: "17px",
-            marginLeft: "auto",
-            marginRight: "auto",
-            display: "block",
+            mt: '33px',
+            mb: '17px',
+            marginLeft: 'auto',
+            marginRight: 'auto',
+            display: 'block',
           }}
           onClick={handleClick}
         >
           Search
         </Button>
       </Card>
-      <Grid sx={{ mt: "33px", width: "100%", overflowX: "scroll" }}>
+      <Grid sx={{ mt: '33px', width: '100%', overflowX: 'scroll' }}>
         <TableContainer
           component={Paper}
           sx={{
-            borderRadius: "33px",
-            borderBottom: "2px solid yellow",
-            width: "110%",
+            borderRadius: '33px',
+            borderBottom: '2px solid yellow',
+            width: '110%',
           }}
         >
-          <Table sx={{ minWidth: 650 }} aria-label="simple table">
+          <Table sx={{ minWidth: 650 }} aria-label='simple table'>
             <TableHead>
               <TableRow>
-                <TableCell align="right" sx={{ fontWeight: "bold" }}>
+                <TableCell align='right' sx={{ fontWeight: 'bold' }}>
                   Source Location
                 </TableCell>
-                <TableCell align="right" sx={{ fontWeight: "bold" }}>
+                <TableCell align='right' sx={{ fontWeight: 'bold' }}>
                   SubLocations
                 </TableCell>
-                <TableCell align="right" sx={{ fontWeight: "bold" }}>
+                <TableCell align='right' sx={{ fontWeight: 'bold' }}>
                   Shipper
                 </TableCell>
-                <TableCell align="right" sx={{ fontWeight: "bold" }}>
+                <TableCell align='right' sx={{ fontWeight: 'bold' }}>
                   Consignee
                 </TableCell>
-                <TableCell align="right" sx={{ fontWeight: "bold" }}>
+                <TableCell align='right' sx={{ fontWeight: 'bold' }}>
                   Ref Number
                 </TableCell>
 
-                <TableCell align="right" sx={{ fontWeight: "bold" }}>
+                <TableCell align='right' sx={{ fontWeight: 'bold' }}>
                   Transfer Date
                 </TableCell>
 
-                <TableCell align="right" sx={{ fontWeight: "bold" }}>
+                <TableCell align='right' sx={{ fontWeight: 'bold' }}>
                   Print
                 </TableCell>
-                <TableCell align="left" sx={{ fontWeight: "bold" }}>
+                <TableCell align='left' sx={{ fontWeight: 'bold' }}>
                   Action
                 </TableCell>
               </TableRow>
@@ -378,28 +382,28 @@ export const ViewCipl = () => {
                   ciplRow.SubLocations.map((subLocation, index) => (
                     <TableRow
                       key={`${ciplRow.id}-${index}`} // Use a unique key for each row
-                      sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                      sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                     >
-                      <TableCell align="right">
+                      <TableCell align='right'>
                         {ciplRow.locationName}
                       </TableCell>
-                      <TableCell align="right">{subLocation}</TableCell>
-                      <TableCell align="right">{ciplRow.shipperName}</TableCell>
-                      <TableCell align="right">
+                      <TableCell align='right'>{subLocation}</TableCell>
+                      <TableCell align='right'>{ciplRow.shipperName}</TableCell>
+                      <TableCell align='right'>
                         {ciplRow.consigneeName}
                       </TableCell>
-                      <TableCell align="right">
+                      <TableCell align='right'>
                         {ciplRow.consigneeName}
                       </TableCell>
-                      <TableCell align="right">
+                      <TableCell align='right'>
                         {ciplRow.transferDate}
                       </TableCell>
-                      <TableCell align="right">
+                      <TableCell align='right'>
                         <Link to={`/cipl/createpdf/${ciplRow.id}`}>
                           <Button
-                            variant="contained"
-                            color="primary"
-                            /*  onClick={() => generatePDF(ciplRow.id, index)} */
+                            variant='contained'
+                            color='primary'
+                            onClick={() => generatePDF(ciplRow.id, index)}
                           >
                             {<PictureAsPdfIcon />}
                           </Button>
@@ -409,17 +413,17 @@ export const ViewCipl = () => {
                       <Box>
                         <Link to={`/updateConsignee/${ciplRow.id}`}>
                           <Button
-                            sx={{ marginLeft: "11px", marginTop: "15px" }}
-                            variant="contained"
+                            sx={{ marginLeft: '11px', marginTop: '10px' }}
+                            variant='contained'
                           >
                             Update
                           </Button>
                         </Link>
 
                         <Button
-                          sx={{ marginLeft: "11px", marginTop: "15px" }}
-                          variant="contained"
-                          color="secondary"
+                          sx={{ marginLeft: '11px' }}
+                          variant='contained'
+                          color='secondary'
                           /*  onClick={() => deleteConsignee(consignee.id)} */
                         >
                           Delete
@@ -433,7 +437,7 @@ export const ViewCipl = () => {
         </TableContainer>
         <TablePagination
           rowsPerPageOptions={[5, 10, 25]}
-          component="div"
+          component='div'
           count={cipl.length}
           rowsPerPage={rowsPerPage}
           page={page}

@@ -1,9 +1,7 @@
-import React from "react";
-import { useEffect } from "react";
-import { useState } from "react";
-import { useParams } from "react-router-dom";
-import "./styles.css";
-import "./printStyles.css";
+import React from 'react';
+import { useEffect } from 'react';
+import { useState } from 'react';
+import { useParams } from 'react-router-dom';
 
 function PrintCipl() {
   const [data, setdata] = useState([]);
@@ -15,7 +13,7 @@ function PrintCipl() {
       const data = await res.json();
       setdata(data);
 
-      console.log(data, "backdata");
+      console.log(data, 'backdata');
 
       /* setdata(data); */
     };
@@ -24,20 +22,36 @@ function PrintCipl() {
 
   const [transferItem, settransferItem] = useState();
   const [sourceLocation, setsourceLocation] = useState();
+  console.log(data, 'rusiii');
   const handlePrint = () => {
     const printWindow = window.open();
 
     printWindow.document.write(`
       <html>
         <head>
+          <title>Print</title>
+          <link
+          href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+          crossorigin="anonymous"
+        />
+        <script
+          src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+          integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+          crossorigin="anonymous"
+        ></script>
           <link rel="stylesheet" href="./styles.css">
           <link rel="stylesheet" type="text/css" href="./printStyles.css" media="print" />
-          <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous" />
-          <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+          <!-- Other stylesheets and head elements -->
         </head>
         <body>
-          ${document.getElementById("printableArea").innerHTML}
-          <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+          ${document.getElementById('printableArea').innerHTML}
+          <script
+          src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+          integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+          crossorigin="anonymous"
+        ></script>
         </body>
       </html>
     `);
@@ -47,7 +61,7 @@ function PrintCipl() {
     // Wait for the content to be fully rendered before printing
     printWindow.onload = () => {
       // Apply additional styling for print
-      const printStyles = printWindow.document.createElement("style");
+      const printStyles = printWindow.document.createElement('style');
       printStyles.innerHTML = `
   @media print {
     @page {
@@ -80,26 +94,26 @@ function PrintCipl() {
 
   return (
     <>
-      <div className="full_container print-cipl-container">
-        <div className="inner_container">
-          <div id="content">
-            <div className="midde_cont">
-              <div className="container-fluid" id="printableArea">
-                <div className="row mt-3">
-                  <div className="col-md-12 mt-4">
-                    <div className="row">
-                      <div className="col-md-8 d-flex align-items-center gap-2">
-                        <img src="/logo/logo.jpg" />
+      <div className='full_container'>
+        <div className='inner_container'>
+          <div id='content'>
+            <div className='midde_cont'>
+              <div className='container-fluid' id='printableArea'>
+                <div className='row mt-3'>
+                  <div className='col-md-12 mt-4'>
+                    <div className='row'>
+                      <div className='col-md-8 d-flex align-items-center gap-2'>
+                        <img src='/logo/logo.jpg' />
                         <span>
-                          <h3 className="text-uppercase text-bold">
+                          <h3 className='text-uppercase text-bold'>
                             <b>PT. Satrya Maritim Indonesia</b>
                           </h3>
                         </span>
                       </div>
-                      <div className="col-md-4">
-                        <h5 className="mt-3">
-                          <b className="text-uppercase">
-                            {" "}
+                      <div className='col-md-4'>
+                        <h5 className='mt-3'>
+                          <b className='text-uppercase'>
+                            {' '}
                             Commercial Invoice /packing list
                           </b>
                         </h5>
@@ -107,54 +121,54 @@ function PrintCipl() {
                     </div>
                   </div>
 
-                  <div className="col-md-7 mt-2">
-                    <div className="row">
-                      <div className="col-md-3">
-                        <h5 className="mt-2">
-                          <b className="text-uppercase">consignee:</b>
+                  <div className='col-md-7 mt-2'>
+                    <div className='row'>
+                      <div className='col-md-3'>
+                        <h5 className='mt-2'>
+                          <b className='text-uppercase'>consignee:</b>
                         </h5>
                       </div>
-                      <div className="col-md-9">
-                        <h6 className="mt-2">
-                          <b className="text-uppercase">{data.consigneeName}</b>
+                      <div className='col-md-9'>
+                        <h6 className='mt-2'>
+                          <b className='text-uppercase'>{data.consigneeName}</b>
                           <br />
-                          <b className="text-uppercase">{data.pickupAddress}</b>
+                          <b className='text-uppercase'>{data.pickupAddress}</b>
                           <br />
                         </h6>
                       </div>
                     </div>
                   </div>
 
-                  <div className="col-md-5 mt-2">
-                    <h6 className="mt-2">
-                      <b className="text-uppercase">
-                        {" "}
+                  <div className='col-md-5 mt-2'>
+                    <h6 className='mt-2'>
+                      <b className='text-uppercase'>
+                        {' '}
                         REF.NO :&nbsp;
                         <strong>{data.referenceNo}</strong>
                       </b>
                     </h6>
 
-                    <h6 className="mt-2">
-                      <b className="text-uppercase">
-                        {" "}
+                    <h6 className='mt-2'>
+                      <b className='text-uppercase'>
+                        {' '}
                         Date :&nbsp;
                         <strong>{data.transferDate}</strong>
                       </b>
                     </h6>
                   </div>
 
-                  <div className="col-md-7 mt-2">
-                    <div className="row">
-                      <div className="col-md-3">
-                        <h5 className="">
-                          <b className="text-uppercase"> Shipper:</b>
+                  <div className='col-md-7 mt-2'>
+                    <div className='row'>
+                      <div className='col-md-3'>
+                        <h5 className=''>
+                          <b className='text-uppercase'> Shipper:</b>
                         </h5>
                       </div>
-                      <div className="col-md-9">
-                        <h6 className="">
-                          <b className="text-uppercase">{data.shipperName}</b>
+                      <div className='col-md-9'>
+                        <h6 className=''>
+                          <b className='text-uppercase'>{data.shipperName}</b>
                           <br />
-                          <b className="text-uppercase">{data.locationName}</b>
+                          <b className='text-uppercase'>{data.locationName}</b>
                           <br />
                         </h6>
                       </div>
@@ -162,9 +176,9 @@ function PrintCipl() {
                   </div>
 
                   {data.pickupAddress != null && (
-                    <div className="col-md-5 mt-2">
-                      <h6 className="mt-2">
-                        <b className="text-uppercase">
+                    <div className='col-md-5 mt-2'>
+                      <h6 className='mt-2'>
+                        <b className='text-uppercase'>
                           Pickup Address:&nbsp;
                           <strong>{data.pickupAddress}</strong>
                         </b>
@@ -172,23 +186,23 @@ function PrintCipl() {
                     </div>
                   )}
 
-                  <div className="col-md-7 mt-2">
-                    <div className="row">
-                      <div className="col-md-3">
-                        <h5 className="mt-2">
-                          <b className="text-uppercase">
-                            Location{" "}
+                  <div className='col-md-7 mt-2'>
+                    <div className='row'>
+                      <div className='col-md-3'>
+                        <h5 className='mt-2'>
+                          <b className='text-uppercase'>
+                            Location{' '}
                             <small>
                               <b>/</b>
-                            </small>{" "}
+                            </small>{' '}
                             Vessel:
                           </b>
                         </h5>
                       </div>
-                      <div className="col-md-9">
-                        <h6 className="mt-2">
+                      <div className='col-md-9'>
+                        <h6 className='mt-2'>
                           <React.Fragment key={data.locationName}>
-                            <b className="text-uppercase">
+                            <b className='text-uppercase'>
                               {data.locationName}
                             </b>
                             <br />
@@ -198,14 +212,14 @@ function PrintCipl() {
                     </div>
                   </div>
 
-                  <div className="col-md-5 mt-2">
+                  <div className='col-md-5 mt-2'>
                     {data.po != null && (
-                      <h6 className="mt-2">
-                        <b className="text-uppercase">
-                          PO{" "}
+                      <h6 className='mt-2'>
+                        <b className='text-uppercase'>
+                          PO{' '}
                           <small>
                             <b>/</b>
-                          </small>{" "}
+                          </small>{' '}
                           SO Number <small>(For Repair)</small> :&nbsp;
                           <strong>{data.po}</strong>
                         </b>
@@ -213,49 +227,49 @@ function PrintCipl() {
                     )}
                   </div>
 
-                  <div className="col-md-12 table table-responsive">
-                    <table className="table table-bordered mt-3 tbl">
+                  <div className='col-md-12 table table-responsive'>
+                    <table className='table table-bordered mt-3 tbl'>
                       <thead>
                         <tr>
-                          <th className="font-weight-bold">S.No</th>
-                          <th className="font-weight-bold">Qty</th>
-                          <th className="font-weight-bold w-100">
+                          <th className='font-weight-bold'>S.No</th>
+                          <th className='font-weight-bold'>Qty</th>
+                          <th className='font-weight-bold w-100'>
                             Item Description
                           </th>
-                          <th className="font-weight-bold part-number-column ">
+                          <th className='font-weight-bold part-number-column '>
                             Part No/Serial No
                           </th>
-                          <th className="font-weight-bold">HS CODE</th>
-                          <th className="font-weight-bold">
+                          <th className='font-weight-bold'>HS CODE</th>
+                          <th className='font-weight-bold'>
                             COUNTRY OF ORIGIN
                           </th>
-                          <th className="font-weight-bold">
+                          <th className='font-weight-bold'>
                             DIMENSION
                             <br />
                             (CM)
                           </th>
-                          <th className="font-weight-bold">
+                          <th className='font-weight-bold'>
                             WEIGHT
                             <br />
                             (KG)
                           </th>
-                          <th className="font-weight-bold">Unit Price</th>
-                          <th className="font-weight-bold">Amount</th>
+                          <th className='font-weight-bold'>Unit Price</th>
+                          <th className='font-weight-bold'>Amount</th>
                         </tr>
                       </thead>
-                      <tbody id="" className="tbody1">
+                      <tbody id='' className='tbody1'>
                         {/* Use data.map() to render rows */}
 
-                        <td className="font-weight-bold">
+                        <td className='font-weight-bold'>
                           {data.quantity?.map((value, index) => (
                             <React.Fragment key={index}>
                               <h6>{index + 1}</h6>
                               {index < data.quantity.length - 1 && (
                                 <span
-                                  className="quantity-gap"
+                                  className='quantity-gap'
                                   style={{
-                                    padding: "10px",
-                                    fontWeight: "bold",
+                                    padding: '10px',
+                                    fontWeight: 'bold',
                                   }}
                                 />
                               )}
@@ -263,213 +277,213 @@ function PrintCipl() {
                           ))}
                         </td>
 
-                        <td className="font-weight-bold">
+                        <td className='font-weight-bold'>
                           <div
-                            className="mt-"
+                            className='mt-'
                             style={{
-                              display: "flex",
-                              flexDirection: "column",
+                              display: 'flex',
+                              flexDirection: 'column',
                             }}
                           >
                             {data.quantity?.map((value, index) => (
                               <React.Fragment key={index}>
                                 <b
-                                  className="text-capitalise"
-                                  style={{ marginBottom: "25px" }}
+                                  className='text-capitalise'
+                                  style={{ marginBottom: '25px' }}
                                 >
                                   {value}
                                 </b>
                                 {index < data.quantity?.length - 1 && (
-                                  <span className="quantity-gap" />
+                                  <span className='quantity-gap' />
                                 )}
                               </React.Fragment>
                             ))}
                           </div>
                         </td>
 
-                        <td className="font-weight-bold">
+                        <td className='font-weight-bold'>
                           <div
-                            className="mt-"
+                            className='mt-'
                             style={{
-                              display: "flex",
-                              flexDirection: "column",
+                              display: 'flex',
+                              flexDirection: 'column',
                             }}
                           >
                             {data.item?.map((value, index) => (
                               <React.Fragment key={index}>
                                 <b
-                                  className="text-capitalise"
-                                  style={{ marginBottom: "25px" }}
+                                  className='text-capitalise'
+                                  style={{ marginBottom: '25px' }}
                                 >
                                   {value}
                                 </b>
                                 {index < data.item?.length - 1 && (
-                                  <span className="quantity-gap" />
+                                  <span className='quantity-gap' />
                                 )}
                               </React.Fragment>
                             ))}
                           </div>
                         </td>
 
-                        <td className="font-weight-bold">
+                        <td className='font-weight-bold'>
                           <div
-                            className="mt-"
+                            className='mt-'
                             style={{
-                              display: "flex",
-                              flexDirection: "column",
+                              display: 'flex',
+                              flexDirection: 'column',
                             }}
                           >
                             {data.partNo?.map((value, index) => (
                               <React.Fragment key={index}>
                                 <b
-                                  className="text-capitalise"
+                                  className='text-capitalise'
                                   style={{
-                                    marginBottom: "25px",
+                                    marginBottom: '25px',
                                   }}
                                 >
                                   {value}
                                 </b>
                                 {index < data.partNo?.length - 1 && (
-                                  <span className="quantity-gap" />
+                                  <span className='quantity-gap' />
                                 )}
                               </React.Fragment>
                             ))}
                           </div>
                         </td>
 
-                        <td className="font-weight-bold">
+                        <td className='font-weight-bold'>
                           <div
-                            className="mt-"
+                            className='mt-'
                             style={{
-                              display: "flex",
-                              flexDirection: "column",
+                              display: 'flex',
+                              flexDirection: 'column',
                             }}
                           >
                             {data.hs?.map((value, index) => (
                               <React.Fragment key={index}>
                                 <b
-                                  className="text-capitalise"
-                                  style={{ marginBottom: "15px" }}
+                                  className='text-capitalise'
+                                  style={{ marginBottom: '15px' }}
                                 >
                                   {value}
                                 </b>
                                 {index < data.hs?.length - 1 && (
-                                  <span className="quantity-gap" />
+                                  <span className='quantity-gap' />
                                 )}
                               </React.Fragment>
                             ))}
                           </div>
                         </td>
-                        <td className="font-weight-bold">
+                        <td className='font-weight-bold'>
                           <div
-                            className="mt-"
+                            className='mt-'
                             style={{
-                              display: "flex",
-                              flexDirection: "column",
+                              display: 'flex',
+                              flexDirection: 'column',
                             }}
                           >
                             {data.cor?.map((value, index) => (
                               <React.Fragment key={index}>
                                 <b
-                                  className="text-capitalise"
-                                  style={{ marginBottom: "15px" }}
+                                  className='text-capitalise'
+                                  style={{ marginBottom: '15px' }}
                                 >
                                   {value}
                                 </b>
                                 {index < data.cor?.length - 1 && (
-                                  <span className="quantity-gap" />
+                                  <span className='quantity-gap' />
                                 )}
                               </React.Fragment>
                             ))}
                           </div>
                         </td>
-                        <td className="font-weight-bold">
+                        <td className='font-weight-bold'>
                           <div
-                            className="mt-"
+                            className='mt-'
                             style={{
-                              display: "flex",
-                              flexDirection: "column",
+                              display: 'flex',
+                              flexDirection: 'column',
                             }}
                           >
                             {data.dimension?.map((value, index) => (
                               <React.Fragment key={index}>
                                 <b
-                                  className="text-capitalise"
-                                  style={{ marginBottom: "15px" }}
+                                  className='text-capitalise'
+                                  style={{ marginBottom: '15px' }}
                                 >
                                   {value}
                                 </b>
                                 {index < data.dimension?.length - 1 && (
-                                  <span className="quantity-gap" />
+                                  <span className='quantity-gap' />
                                 )}
                               </React.Fragment>
                             ))}
                           </div>
                         </td>
-                        <td className="font-weight-bold">
+                        <td className='font-weight-bold'>
                           <div
-                            className="mt-"
+                            className='mt-'
                             style={{
-                              display: "flex",
-                              flexDirection: "column",
+                              display: 'flex',
+                              flexDirection: 'column',
                             }}
                           >
                             {data.weights?.map((value, index) => (
                               <React.Fragment key={index}>
                                 <b
-                                  className="text-capitalise"
-                                  style={{ marginBottom: "15px" }}
+                                  className='text-capitalise'
+                                  style={{ marginBottom: '15px' }}
                                 >
                                   {value}
                                 </b>
                                 {index < data.weights?.length - 1 && (
-                                  <span className="quantity-gap" />
+                                  <span className='quantity-gap' />
                                 )}
                               </React.Fragment>
                             ))}
                           </div>
                         </td>
-                        <td className="font-weight-bold">
+                        <td className='font-weight-bold'>
                           <div
-                            className="mt-"
+                            className='mt-'
                             style={{
-                              display: "flex",
-                              flexDirection: "column",
+                              display: 'flex',
+                              flexDirection: 'column',
                             }}
                           >
                             {data.unitPrice?.map((value, index) => (
                               <React.Fragment key={index}>
                                 <b
-                                  className="text-capitalise"
-                                  style={{ marginBottom: "15px" }}
+                                  className='text-capitalise'
+                                  style={{ marginBottom: '15px' }}
                                 >
                                   {value}
                                 </b>
                                 {index < data.unitPrice?.length - 1 && (
-                                  <span className="quantity-gap" />
+                                  <span className='quantity-gap' />
                                 )}
                               </React.Fragment>
                             ))}
                           </div>
                         </td>
-                        <td className="font-weight-bold">
+                        <td className='font-weight-bold'>
                           <div
-                            className="mt-"
+                            className='mt-'
                             style={{
-                              display: "flex",
-                              flexDirection: "column",
+                              display: 'flex',
+                              flexDirection: 'column',
                             }}
                           >
                             {data.amount?.map((value, index) => (
                               <React.Fragment key={index}>
                                 <b
-                                  className="text-capitalise"
-                                  style={{ marginBottom: "15px" }}
+                                  className='text-capitalise'
+                                  style={{ marginBottom: '15px' }}
                                 >
                                   {value}
                                 </b>
                                 {index < data.amount?.length - 1 && (
-                                  <span className="quantity-gap" />
+                                  <span className='quantity-gap' />
                                 )}
                               </React.Fragment>
                             ))}
@@ -478,90 +492,90 @@ function PrintCipl() {
                       </tbody>
                       <tr>
                         <td
-                          colSpan="3"
-                          className="font-weight-bold text-right text-uppercase"
+                          colSpan='3'
+                          className='font-weight-bold text-right text-uppercase'
                         >
                           Total Weight
                         </td>
-                        <td colSpan="7" id="" className="font-weight-bold">
+                        <td colSpan='7' id='' className='font-weight-bold'>
                           {data.totalWeight} Kg
                         </td>
                       </tr>
                       <tr>
                         <td
-                          colSpan="3"
-                          className="font-weight-bold text-right text-uppercase"
+                          colSpan='3'
+                          className='font-weight-bold text-right text-uppercase'
                         >
-                          Total Packages<span className="currency"></span>
-                          <span className="totalPackages"></span>
+                          Total Packages<span className='currency'></span>
+                          <span className='totalPackages'></span>
                         </td>
-                        <td colSpan="7" id="" className="font-weight-bold">
+                        <td colSpan='7' id='' className='font-weight-bold'>
                           {data.totalPackage}
                         </td>
                       </tr>
                       <tr>
                         <th
-                          colSpan="3"
-                          className="font-weight-bold text-right text-uppercase"
+                          colSpan='3'
+                          className='font-weight-bold text-right text-uppercase'
                         >
-                          Total amount<span className="currency"></span>
-                          &nbsp;&nbsp;<span className="totalAmount"></span>
+                          Total amount<span className='currency'></span>
+                          &nbsp;&nbsp;<span className='totalAmount'></span>
                         </th>
-                        <th colSpan="7" id="" className="font-weight-bold">
-                          <span className="currency">{data.currencyName} </span>
+                        <th colSpan='7' id='' className='font-weight-bold'>
+                          <span className='currency'>{data.currencyName} </span>
                           {data.totalAmount}
                         </th>
                       </tr>
                       <tr>
-                        <th colSpan="3">
-                          <h5 className="font-weight-bold ">
+                        <th colSpan='3'>
+                          <h5 className='font-weight-bold '>
                             <b>Prepared By :</b>&nbsp;
-                            <strong className="font-weight-normal">
+                            <strong className='font-weight-normal'>
                               shah Umer
                             </strong>
                             <br />
-                            <b className="hidden">Contact No :</b>&nbsp;
-                            <strong className="font-weight-normal">
+                            <b className='hidden'>Contact No :</b>&nbsp;
+                            <strong className='font-weight-normal'>
                               123456789
                             </strong>
                           </h5>
                         </th>
-                        <th colSpan="7">
-                          <h6 className="">
+                        <th colSpan='7'>
+                          <h6 className=''>
                             <b>
                               Important Notice For Receiver <br /> Please
                               Sign/Stamp & Email This CIPL To:
                             </b>
                             &nbsp;
-                            <strong className="text-lowercase">
+                            <strong className='text-lowercase'>
                               <a
-                                href={`mailto:${"shah.umer8493@gmail.com"}`}
-                                style={{ color: "blue" }}
+                                href={`mailto:${'shah.umer8493@gmail.com'}`}
+                                style={{ color: 'blue' }}
                               >
                                 shah.umer8493@gmail.com
                               </a>
                             </strong>
                           </h6>
-                          <h5 className="mt-4">
+                          <h5 className='mt-4'>
                             <b>Received By:</b> &nbsp;
-                            <strong className="float-right"></strong>
+                            <strong className='float-right'></strong>
                           </h5>
                         </th>
                       </tr>
                     </table>
                   </div>
 
-                  <div className=" col-md-12 table table-responsive">
-                    <table className="table table-borderless mt-4">
+                  <div className=' col-md-12 table table-responsive'>
+                    <table className='table table-borderless mt-4'>
                       <h5>
-                        <strong className=" font-weight-bold">
-                          {" "}
+                        <strong className=' font-weight-bold'>
+                          {' '}
                           PT. SATRYA MARITIM INDONESIA
                         </strong>
                       </h5>
                       <h6>
-                        <strong className=" font-weight-bold">
-                          {" "}
+                        <strong className=' font-weight-bold'>
+                          {' '}
                           Horizon Industrial Park Type F Lot 3A, Sei Lekop, Kec.
                           Sagulung, Batam 29422, Indonesia
                         </strong>
@@ -569,14 +583,14 @@ function PrintCipl() {
 
                       <h6>
                         <b>Phone No:</b>&nbsp;
-                        <strong className=" font-weight-bold ml-5">
+                        <strong className=' font-weight-bold ml-5'>
                           +62 778 6000 113
                         </strong>
                       </h6>
                       <h6>
                         <b>Tax ID Number:</b>&nbsp;&nbsp;
-                        <strong className="font-weight-bold">
-                          {" "}
+                        <strong className='font-weight-bold'>
+                          {' '}
                           62.086.146.8-225.000
                         </strong>
                       </h6>
@@ -584,15 +598,15 @@ function PrintCipl() {
                   </div>
                 </div>
               </div>
-              <div className="row m-2">
-                <div className="col-lg-12 ">
+              <div className='row m-2'>
+                <div className='col-lg-12 '>
                   <button
-                    className="btn-primary float-right"
-                    id="printButton"
+                    className='btn-primary float-right'
+                    id='printButton'
                     onClick={handlePrint}
                   >
-                    <i className="fa fa-print" aria-hidden="true">
-                      {" "}
+                    <i className='fa fa-print' aria-hidden='true'>
+                      {' '}
                       Print
                     </i>
                   </button>

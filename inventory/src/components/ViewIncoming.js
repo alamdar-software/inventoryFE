@@ -273,7 +273,7 @@ const ViewIncoming = () => {
           sx={{
             borderRadius: '33px',
             borderBottom: '2px solid yellow',
-            // width: '110%',
+            width: '110%',
           }}
         >
           <Table sx={{ minWidth: 650 }} aria-label='simple table'>
