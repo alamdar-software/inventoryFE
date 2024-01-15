@@ -29,6 +29,10 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import PictureAsPdfIcon from "@mui/icons-material/PictureAsPdf";
+import { CSVLink } from "react-csv";
+import Papa from "papaparse";
+import * as XLSX from "xlsx";
+import ExcelJS from "exceljs";
 
 export const SearchInventory = () => {
   const dispatch = useDispatch();
@@ -48,7 +52,7 @@ export const SearchInventory = () => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [formData, setformData] = useState({
-    item: "",
+    description: "",
 
     locationName: "",
   });
@@ -142,7 +146,7 @@ export const SearchInventory = () => {
   const handleClick = async (e) => {
     e.preventDefault();
     try {
-      const res = await fetch("http://localhost:8080/cipl/search", {
+      const res = await fetch("http://localhost:8080/inventory/searchReport", {
         method: "post",
         headers: {
           "content-type": "application/json",
@@ -176,6 +180,54 @@ export const SearchInventory = () => {
       pdf.save("table.pdf");
     }
   }; */
+  const generateCsvData = () => {
+    // Your logic to create CSV data based on search parameters
+    const csvData = [
+      ["Serial No", "Location/Vessel", "SubLocation"],
+      ...filteredCipl.flatMap((ciplRow, rowIndex) =>
+        ciplRow.address?.map((subLocation, subIndex) => [
+          rowIndex * ciplRow.addresses.length + subIndex + 1,
+          ciplRow.locationName,
+          subLocation.address,
+        ])
+      ),
+    ];
+
+    return csvData;
+  };
+  const handleDownloadCsv = () => {
+    const boldStyle = { bold: true };
+    const workbook = new ExcelJS.Workbook();
+    const worksheet = workbook.addWorksheet("Sheet 1");
+
+    // Add header row
+    worksheet.addRow(["Serial No", "Location/Vessel", "SubLocation"]).font =
+      boldStyle;
+    worksheet.getColumn(3).width = 20;
+    worksheet.getColumn(2).width = 30;
+    // Add data rows
+    filteredCipl.forEach((ciplRow, rowIndex) => {
+      ciplRow.addresses?.forEach((subLocation, subIndex) => {
+        const rowData = [
+          rowIndex * ciplRow.addresses.length + subIndex + 1,
+          ciplRow.locationName,
+          subLocation.address,
+        ];
+        worksheet.addRow(rowData);
+      });
+    });
+
+    // Create a blob from the workbook
+    workbook.xlsx.writeBuffer().then((buffer) => {
+      const blob = new Blob([buffer], {
+        type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+      });
+      const link = document.createElement("a");
+      link.href = URL.createObjectURL(blob);
+      link.download = "excel_file.xlsx";
+      link.click();
+    });
+  };
   return (
     <>
       <Grid>
@@ -222,7 +274,7 @@ export const SearchInventory = () => {
                 onChange={(e) => {
                   setformData({
                     ...formData,
-                    item: e.target.value,
+                    description: e.target.value,
                   });
                 }}
                 /* onChange={(e) =>
@@ -296,14 +348,30 @@ export const SearchInventory = () => {
           >
             Preview
           </Button>
+          <CSVLink
+            data={generateCsvData()}
+            filename={"search_parameters.csv"}
+            target="_blank"
+            style={{ textDecoration: "none" }}
+          >
+            <Button
+              variant="contained"
+              color="secondary"
+              size="large"
+              sx={{ marginRight: "8px" }}
+              hidden
+            >
+              Download Excel
+            </Button>
+          </CSVLink>
+
           <Button
             variant="contained"
             color="secondary"
             size="large"
-            onClick={handleClick}
-            sx={{ marginRight: "8px" }}
+            onClick={handleDownloadCsv}
           >
-            Dwnload Excel
+            Download Excel
           </Button>
           <Button
             variant="contained"
@@ -315,16 +383,16 @@ export const SearchInventory = () => {
           </Button>
         </Box>
       </Card>
-      <Grid sx={{ mt: "33px", width: "100%", overflowX: "scroll" }}>
+      <Grid sx={{ mt: "33px", width: "96%", overflowX: "scroll" }}>
         <TableContainer
           component={Paper}
           sx={{
             borderRadius: "33px",
             borderBottom: "2px solid yellow",
-            width: "110%",
+            width: "100%",
           }}
         >
-          <Table sx={{ minWidth: 650 }} aria-label="simple table">
+          <Table sx={{ minWidth: 500 }} aria-label="simple table">
             <TableHead>
               <TableRow>
                 <TableCell align="right" sx={{ fontWeight: "bold" }}>
@@ -339,9 +407,6 @@ export const SearchInventory = () => {
                 <TableCell align="right" sx={{ fontWeight: "bold" }}>
                   Quantity
                 </TableCell>
-                <TableCell align="right" sx={{ fontWeight: "bold" }}>
-                  Minimum
-                </TableCell>
 
                 <TableCell align="right" sx={{ fontWeight: "bold" }}>
                   Consumed Qty
@@ -349,53 +414,29 @@ export const SearchInventory = () => {
                 <TableCell align="right" sx={{ fontWeight: "bold" }}>
                   Scrapped Qty
                 </TableCell>
-
-                <TableCell align="right" sx={{ fontWeight: "bold" }}>
-                  Print
-                </TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
               {filteredCipl
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                .map((ciplRow) =>
+                .map((ciplRow) => (
                   // Render a row for each sublocation
-                  ciplRow.SubLocations.map((subLocation, index) => (
-                    <TableRow
-                      key={`${ciplRow.id}-${index}`} // Use a unique key for each row
-                      sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-                    >
-                      <TableCell align="right">
-                        {ciplRow.locationName}
-                      </TableCell>
-                      <TableCell align="right">{subLocation}</TableCell>
-                      <TableCell align="right">{ciplRow.shipperName}</TableCell>
-                      <TableCell align="right">
-                        {ciplRow.consigneeName}
-                      </TableCell>
-                      <TableCell align="right">
-                        {ciplRow.consigneeName}
-                      </TableCell>
-                      <TableCell align="right">
-                        {ciplRow.transferDate}
-                      </TableCell>
-                      <TableCell align="right">
-                        {ciplRow.transferDate}
-                      </TableCell>
-                      <TableCell align="right">
-                        <Link to={`/cipl/createpdf/${ciplRow.id}`}>
-                          <Button
-                            variant="contained"
-                            color="primary"
-                            /*  onClick={() => generatePDF(ciplRow.id, index)} */
-                          >
-                            {<PictureAsPdfIcon />}
-                          </Button>
-                        </Link>
-                      </TableCell>
-                    </TableRow>
-                  ))
-                )}
+
+                  <TableRow
+                    key={`${ciplRow.id}`} // Use a unique key for each row
+                    sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                  >
+                    <TableCell align="right">{ciplRow.description}</TableCell>
+                    <TableCell align="right">{ciplRow.locationName}</TableCell>
+                    <TableCell align="right">
+                      {ciplRow.address.address}
+                    </TableCell>
+                    <TableCell align="right">{ciplRow.quantity}</TableCell>
+
+                    <TableCell align="right">{ciplRow.consumedItem}</TableCell>
+                    <TableCell align="right">{ciplRow.scrappedItem}</TableCell>
+                  </TableRow>
+                ))}
             </TableBody>
           </Table>
         </TableContainer>

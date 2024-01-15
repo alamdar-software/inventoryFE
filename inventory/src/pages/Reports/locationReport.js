@@ -293,7 +293,7 @@ const LocationReport = () => {
                   )
                 } */
               >
-                {state.location.data?.map((location, index) =>
+                {state.location.data?.map((location) =>
                   location.addresses.map((address) => (
                     <MenuItem key={address.id} value={address.address}>
                       {address.address}
