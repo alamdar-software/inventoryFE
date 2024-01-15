@@ -6,6 +6,7 @@ import {
   TextField,
   Button,
   Typography,
+  Box,
 } from '@mui/material';
 import { Link } from 'react-router-dom';
 
@@ -53,64 +54,73 @@ export const Location = () => {
 
       <Card
         sx={{
-          width: '100%',
+          width: '70%',
           mt: '33px',
           pt: '33px',
+          ml: '13%',
           borderBottom: '2px solid grey',
+          borderRadius: '23px',
         }}
       >
-        <Grid container spacing={2} sx={{ ml: '11px', mR: '15px' }}>
-          <Grid item xs={12} sm={6}>
-            <TextField
-              id='outlined-basic'
-              label='Location/vessel'
-              variant='outlined'
-              value={locationName}
-              onChange={(e) => setLocation(e.target.value)}
-              width={'70px'}
-            />
+        <CardContent>
+          <Grid container spacing={2} sx={{ ml: '71px' }}>
+            <Grid item xs={12} sm={6}>
+              <TextField
+                id='outlined-basic'
+                label='Location/vessel'
+                variant='outlined'
+                value={locationName}
+                onChange={(e) => setLocation(e.target.value)}
+                width={'70px'}
+              />
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <TextField
+                id='outlined-basic'
+                label='SubLocation'
+                variant='outlined'
+                value={address}
+                onChange={(e) => setSubLocation(e.target.value)}
+                width={'200px'}
+              />
+            </Grid>
           </Grid>
-          <Grid item xs={12} sm={6}>
-            <TextField
-              id='outlined-basic'
-              label='SubLocation'
-              variant='outlined'
-              value={address}
-              onChange={(e) => setSubLocation(e.target.value)}
-              width={'200px'}
-            />
-          </Grid>
-        </Grid>
-        <Button
-          variant='contained'
-          color='secondary'
-          size='large'
-          onClick={handleClick}
-          sx={{
-            mt: '33px',
-            mb: '17px',
-            marginLeft: '25rem',
-            marginRight: 'auto',
-          }}
-        >
-          Add
-        </Button>
-        <Link to={'/Location-Vessel'}>
-          <Button
-            variant='contained'
-            color='secondary'
-            size='large'
-            sx={{
-              mt: '33px',
-              mb: '17px',
-              marginLeft: '2rem',
-              marginRight: 'auto',
-              backgroundColor: 'green',
+          <hr
+            style={{
+              marginTop: '33px',
+              marginLeft: '50px',
+              marginRight: '50px',
             }}
-          >
-            View
-          </Button>
-        </Link>
+          />
+          <Box sx={{ display: 'flex', justifyContent: 'center', mt: '33px' }}>
+            <Button
+              variant='contained'
+              color='secondary'
+              size='large'
+              onClick={handleClick}
+              // sx={{
+              //   mt: '33px',
+              //   mb: '17px',
+              //   marginLeft: '25rem',
+              //   marginRight: 'auto',
+              // }}
+            >
+              Add
+            </Button>
+            <Link to={'/view-location'}>
+              <Button
+                variant='contained'
+                color='success'
+                size='large'
+                sx={{
+                  marginLeft: '11px',
+                }}
+              >
+                View
+              </Button>
+            </Link>
+          </Box>
+        </CardContent>
       </Card>
     </>
   );

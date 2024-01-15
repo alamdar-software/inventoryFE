@@ -99,7 +99,7 @@ const ScrappedItem = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await fetch("http://localhost:8080/cipl/add", {
+      const res = await fetch("http://localhost:8080/scrappeditem/add", {
         method: "post",
         headers: {
           "content-type": "application/json",
@@ -108,7 +108,7 @@ const ScrappedItem = () => {
       });
       const data = await res.json();
       console.log(data, "came from backend");
-      alert("cipl added successfully");
+      alert("Scrapped Item added successfully");
     } catch (error) {
       console.log("something happens while adding cipl");
     }
@@ -263,18 +263,20 @@ const ScrappedItem = () => {
 
   const handleItemChange = (index, selectedSubLocation, selectedItem) => {
     // Update formData with the selected item
-    updateFormDataItem(index, selectedItem);
+    updateFormDataItem(index, selectedItem.match(/^[^(]*/)[0].trim());
+    console.log(selectedItem.match(/^[^(]*/)[0].trim(), "meingoonselected");
 
     // Ensure a default value if undefined
     setSelectedItem((prevSelectedItems) => {
       const updatedSelectedItems = [...prevSelectedItems];
-      updatedSelectedItems[index] = selectedItem;
+      updatedSelectedItems[index] = selectedItem.match(/^[^(]*/)[0].trim();
       return updatedSelectedItems;
     });
 
     // Find the corresponding data in state.singleincome for the selected item
     const selectedIncomeData = state.singleIncome?.data.filter(
-      (incomeItem) => incomeItem.description === selectedItem
+      (incomeItem) =>
+        incomeItem.description === selectedItem.match(/^[^(]*/)[0].trim()
     );
     console.log(selectedIncomeData, "selectttttt");
     console.log(selectedItem, "selected item");
@@ -297,7 +299,7 @@ const ScrappedItem = () => {
   const updateFormDataItem = (index, selectedItem) => {
     setformData((prevFormData) => {
       const updatedItems = [...prevFormData.item];
-      updatedItems[index] = selectedItem;
+      updatedItems[index] = selectedItem.match(/^[^(]*/)[0].trim();
       return {
         ...prevFormData,
         item: updatedItems,

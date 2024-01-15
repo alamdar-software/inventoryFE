@@ -62,6 +62,15 @@ import MasterReports from './components/MasterReports.js';
 import ConsumeReport from './components/ConsumeReport.js';
 import ScrappedReport from './components/ScrappedReport.js';
 import ItemServiceReport from './components/ItemServiceReport.js';
+import ReportItem from './pages/Reports/ReportItem.js';
+import LocationReport from './pages/Reports/locationReport.js';
+import TransferItemDashboard from './pages/Dashboards/transferItemDashboard.js';
+import MtoReports from './components/MtoReports.js';
+import InternalTransferReport from './components/InternalTransferReport.js';
+import CiplReport from './components/CiplReport.js';
+import UpdatePickup from './components/UpdatePickup.js';
+import UpdateUom from './components/UpdateUom.js';
+import UpdateItem from './components/UpdateItem.js';
 const theme = createTheme({
   palette: {
     background: {
@@ -81,6 +90,7 @@ function App() {
               <Route path='/dashboard' element={<Dashboard />}></Route>
               <Route path='/add-location' element={<Location />} />
               <Route path='/item' element={<Item />} />
+              <Route path='/updateItem/:id' element={<UpdateItem />} />
               <Route path='/pick-up' element={<Pickup />} />
               <Route path='/updatePickup/:id' element={<Pickup />} />
               <Route path='/uom' element={<Uom />} />
@@ -110,19 +120,25 @@ function App() {
               <Route path='/it' element={<InternalTransfer />} />
               <Route path='/Items' element={<ViewItem />} />
               <Route path='/entity' element={<Entity />} />
-
+              <Route path='/entity/update/:id' element={<UpdateEntity />} />
               <Route
                 path='/updateConsignee/:id'
                 element={<UpdateConsignee />}
               />
               <Route path='/add-consumeditem' element={<ConsumeItem />} />
+              <Route path='/view-consumeditem' element={<ViewConsume />} />
+              <Route path='/updateConsumed/:id' element={<UpdateConsumed />} />
+
               <Route path='/add-inventory' element={<Inventory />} />
               <Route path='/view-inventory' element={<InventoryList />} />
               <Route
                 path='/updateInventory/:id'
                 element={<UpdateInventory />}
               />
-              <Route path='/scrapped-item' element={<ScrappedItem />} />
+              <Route path='/add-scrappeditem' element={<ScrappedItem />} />
+              <Route path='/view-scrappeditem' element={<ViewScrapp />} />
+              <Route path='/updateScapped/:id' element={<UpdateScrapped />} />
+
               <Route path='/add-incoming' element={<IncomingStock />} />
               <Route path='/view-incoming' element={<ViewIncoming />} />
               <Route path='/updateIncoming/:id' element={<UpdateIncoming />} />
@@ -146,14 +162,20 @@ function App() {
               <Route path='/mto/createpdf/:id' element={<PrintMto />} />
               <Route path='/updateMto/:id' element={<UpdateMto />} />
               <Route path='/viewInternal' element={<ViewInternal />} />
+              <Route path='/updatePickup/:id' element={<UpdatePickup />} />
               <Route
                 path='/internal/createpdf/:id'
                 element={<PrintInternal />}
               />
+              <Route path='/Uom/update/:id' element={<UpdateUom />} />
+
               <Route path='/masterReport' element={<MasterReports />} />
               <Route path='/consumeReport' element={<ConsumeReport />} />
               <Route path='/scrappedReport' element={<ScrappedReport />} />
               <Route path='/itemService' element={<ItemServiceReport />} />
+              <Route path='/mtoReports' element={<MtoReports />} />
+              <Route path='/itReport' element={<InternalTransferReport />} />
+              <Route path='/ciplReport' element={<CiplReport />} />
               {/* <Route
                 path='/consignee/consignee/view'
                 element={<ViewConsignee />}

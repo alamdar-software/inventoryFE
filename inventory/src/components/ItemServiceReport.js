@@ -7,7 +7,14 @@ import {
   Grid,
   InputLabel,
   MenuItem,
+  Paper,
   Select,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
   Typography,
 } from '@mui/material';
 import React, { useEffect, useState } from 'react';
@@ -26,6 +33,7 @@ const ItemServiceReport = () => {
     dateTo: '',
     entityName: '',
   });
+  const [itemService, setItemService] = useState([]);
   const dispatch = useDispatch();
   const state = useSelector((state) => state);
 
@@ -218,7 +226,7 @@ const ItemServiceReport = () => {
               //onClick={handleClick}
               sx={{ marginRight: '8px' }}
             >
-              Dwnload Excel
+              Download Excel
             </Button>
             <Button
               variant='contained'
@@ -231,6 +239,105 @@ const ItemServiceReport = () => {
           </Box>
         </CardContent>
       </Card>
+
+      <Grid sx={{ mt: '33px', width: '100%', overflowX: 'scroll' }}>
+        <TableContainer
+          component={Paper}
+          sx={{
+            borderRadius: '33px',
+            borderBottom: '2px solid yellow',
+            width: '110%',
+          }}
+        >
+          <Table sx={{ minWidth: 650 }} aria-label='simple table'>
+            <TableHead>
+              <TableRow>
+                <TableCell align='right' sx={{ fontWeight: 'bold' }}>
+                  Reference Number
+                </TableCell>
+                <TableCell align='right' sx={{ fontWeight: 'bold' }}>
+                  Repair Service
+                </TableCell>
+                <TableCell align='right' sx={{ fontWeight: 'bold' }}>
+                  POSO Number
+                </TableCell>
+
+                <TableCell align='right' sx={{ fontWeight: 'bold' }}>
+                  Source Location
+                </TableCell>
+                <TableCell align='right' sx={{ fontWeight: 'bold' }}>
+                  Sub Location
+                </TableCell>
+                <TableCell align='right' sx={{ fontWeight: 'bold' }}>
+                  Item
+                </TableCell>
+                <TableCell align='right' sx={{ fontWeight: 'bold' }}>
+                  Purchase
+                </TableCell>
+                <TableCell align='right' sx={{ fontWeight: 'bold' }}>
+                  P/N
+                </TableCell>
+                <TableCell align='right' sx={{ fontWeight: 'bold' }}>
+                  Consignee
+                </TableCell>
+                <TableCell align='right' sx={{ fontWeight: 'bold' }}>
+                  Entity
+                </TableCell>
+                <TableCell align='right' sx={{ fontWeight: 'bold' }}>
+                  Transfer Date
+                </TableCell>
+                <TableCell align='right' sx={{ fontWeight: 'bold' }}>
+                  Action
+                </TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {itemService.map((consume) => (
+                <TableRow
+                  key={itemService.name}
+                  sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                >
+                  {/* <TableCell component='th' scope='row'>
+                  {attendenceconsume
+                </TableCell> */}
+                  <TableCell align='right'>{itemService.description}</TableCell>
+                  <TableCell align='right'>
+                    {itemService.locationName}
+                  </TableCell>
+                  <TableCell align='right'>{itemService.subLocation}</TableCell>
+                  <TableCell align='right'>{itemService.entity}</TableCell>
+                  <TableCell align='right'>
+                    {itemService.consumedQuantity}
+                  </TableCell>
+                  <TableCell align='right'>{itemService.date}</TableCell>
+                  <TableCell align='right'>{itemService.remarks}</TableCell>
+
+                  {/* <Link to={`/updatePickup/${master.id}`}>
+                      <Button variant='contained'>Update</Button>
+                    </Link>
+                    <Button
+                      sx={{ marginLeft: '11px' }}
+                      variant='contained'
+                      color='secondary'
+                      onClick={() => deletePickup(pickup.id)}
+                    >
+                      Delete
+                    </Button> */}
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+        {/* <TablePagination
+          rowsPerPageOptions={[5, 10, 25]}
+          component='div'
+          count={pickup.length}
+          rowsPerPage={rowsPerPage}
+          page={page}
+          onPageChange={handleChangePage}
+          onRowsPerPageChange={handleChangeRowsPerPage}
+        /> */}
+      </Grid>
     </>
   );
 };

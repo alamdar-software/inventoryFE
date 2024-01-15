@@ -7,7 +7,14 @@ import {
   Grid,
   InputLabel,
   MenuItem,
+  Paper,
   Select,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
   Typography,
 } from '@mui/material';
 import React, { useEffect, useState } from 'react';
@@ -26,6 +33,7 @@ const ScrappedReport = () => {
     dateTo: '',
     entityName: '',
   });
+  const [scrapped, setScrapped] = useState([]);
   const dispatch = useDispatch();
   const state = useSelector((state) => state);
 
@@ -230,6 +238,87 @@ const ScrappedReport = () => {
           </Box>
         </CardContent>
       </Card>
+      <Grid sx={{ mt: '33px', width: '100%', overflowX: 'scroll' }}>
+        <TableContainer
+          component={Paper}
+          sx={{
+            borderRadius: '33px',
+            borderBottom: '2px solid yellow',
+            width: '110%',
+          }}
+        >
+          <Table sx={{ minWidth: 650 }} aria-label='simple table'>
+            <TableHead>
+              <TableRow>
+                <TableCell align='right' sx={{ fontWeight: 'bold' }}>
+                  Item Description
+                </TableCell>
+                <TableCell align='right' sx={{ fontWeight: 'bold' }}>
+                  Location
+                </TableCell>
+                <TableCell align='right' sx={{ fontWeight: 'bold' }}>
+                  SubLocation
+                </TableCell>
+
+                <TableCell align='right' sx={{ fontWeight: 'bold' }}>
+                  Entity
+                </TableCell>
+                <TableCell align='right' sx={{ fontWeight: 'bold' }}>
+                  Quantity
+                </TableCell>
+                <TableCell align='right' sx={{ fontWeight: 'bold' }}>
+                  Date
+                </TableCell>
+                <TableCell align='right' sx={{ fontWeight: 'bold' }}>
+                  Remarks
+                </TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {scrapped.map((scrapped) => (
+                <TableRow
+                  key={scrapped.name}
+                  sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                >
+                  {/* <TableCell component='th' scope='row'>
+                  {attendenceconsume
+                </TableCell> */}
+                  <TableCell align='right'>{scrapped.description}</TableCell>
+                  <TableCell align='right'>{scrapped.locationName}</TableCell>
+                  <TableCell align='right'>{scrapped.subLocation}</TableCell>
+                  <TableCell align='right'>{scrapped.entity}</TableCell>
+                  <TableCell align='right'>
+                    {scrapped.consumedQuantity}
+                  </TableCell>
+                  <TableCell align='right'>{scrapped.date}</TableCell>
+                  <TableCell align='right'>{scrapped.remarks}</TableCell>
+
+                  {/* <Link to={`/updatePickup/${master.id}`}>
+                      <Button variant='contained'>Update</Button>
+                    </Link>
+                    <Button
+                      sx={{ marginLeft: '11px' }}
+                      variant='contained'
+                      color='secondary'
+                      onClick={() => deletePickup(pickup.id)}
+                    >
+                      Delete
+                    </Button> */}
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+        {/* <TablePagination
+          rowsPerPageOptions={[5, 10, 25]}
+          component='div'
+          count={pickup.length}
+          rowsPerPage={rowsPerPage}
+          page={page}
+          onPageChange={handleChangePage}
+          onRowsPerPageChange={handleChangeRowsPerPage}
+        /> */}
+      </Grid>
     </>
   );
 };

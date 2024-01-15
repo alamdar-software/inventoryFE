@@ -3,7 +3,14 @@ import {
   FormControl,
   FormLabel,
   MenuItem,
+  Paper,
   Select,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
 } from '@mui/material';
 import { Card, CardContent, Grid, InputLabel, Typography } from '@mui/material';
 import { Box } from '@mui/system';
@@ -23,6 +30,7 @@ const MasterReports = () => {
     dateTo: '',
     entityName: '',
   });
+  const [master, setMaster] = useState([]);
 
   const dispatch = useDispatch();
   const state = useSelector((state) => state);
@@ -228,6 +236,116 @@ const MasterReports = () => {
           </Box>
         </CardContent>
       </Card>
+      <Grid sx={{ mt: '33px', width: '100%', overflowX: 'scroll' }}>
+        <TableContainer
+          component={Paper}
+          sx={{
+            borderRadius: '33px',
+            borderBottom: '2px solid yellow',
+            width: '110%',
+          }}
+        >
+          <Table sx={{ minWidth: 650 }} aria-label='simple table'>
+            <TableHead>
+              <TableRow>
+                <TableCell align='right' sx={{ fontWeight: 'bold' }}>
+                  Item Description
+                </TableCell>
+                <TableCell align='right' sx={{ fontWeight: 'bold' }}>
+                  Location
+                </TableCell>
+                <TableCell align='right' sx={{ fontWeight: 'bold' }}>
+                  SubLocation
+                </TableCell>
+                <TableCell align='right' sx={{ fontWeight: 'bold' }}>
+                  Catagory
+                </TableCell>
+                <TableCell align='right' sx={{ fontWeight: 'bold' }}>
+                  Brand
+                </TableCell>
+                <TableCell align='right' sx={{ fontWeight: 'bold' }}>
+                  Entity
+                </TableCell>
+                <TableCell align='right' sx={{ fontWeight: 'bold' }}>
+                  Purchase Date
+                </TableCell>
+                <TableCell align='right' sx={{ fontWeight: 'bold' }}>
+                  Purchase Order
+                </TableCell>
+                <TableCell align='right' sx={{ fontWeight: 'bold' }}>
+                  Part Number
+                </TableCell>
+                <TableCell align='right' sx={{ fontWeight: 'bold' }}>
+                  Serial Number
+                </TableCell>
+                <TableCell align='right' sx={{ fontWeight: 'bold' }}>
+                  Quantity
+                </TableCell>
+                <TableCell align='right' sx={{ fontWeight: 'bold' }}>
+                  Extended Value
+                </TableCell>
+                <TableCell align='right' sx={{ fontWeight: 'bold' }}>
+                  Unit Cost
+                </TableCell>
+                <TableCell align='right' sx={{ fontWeight: 'bold' }}>
+                  Price
+                </TableCell>
+                <TableCell align='right' sx={{ fontWeight: 'bold' }}>
+                  Currency
+                </TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {master.map((master) => (
+                <TableRow
+                  key={master.name}
+                  sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                >
+                  {/* <TableCell component='th' scope='row'>
+                  {attendence.name}
+                </TableCell> */}
+                  <TableCell align='right'>{master.description}</TableCell>
+                  <TableCell align='right'>{master.locationName}</TableCell>
+                  <TableCell align='right'>{master.subLocation}</TableCell>
+                  <TableCell align='right'>{master.catagory}</TableCell>
+                  <TableCell align='right'>{master.brandName}</TableCell>
+                  <TableCell align='right'>{master.entityName}</TableCell>
+                  <TableCell align='right'>{master.date}</TableCell>
+                  <TableCell align='right'>{master.purchaseOrder}</TableCell>
+                  <TableCell align='right'>{master.partNumber}</TableCell>
+                  <TableCell align='right'>{master.serialNumber}</TableCell>
+                  <TableCell align='right'>{master.quantity}</TableCell>
+                  <TableCell align='right'>{master.extendedValue}</TableCell>
+                  <TableCell align='right'>{master.unitCost}</TableCell>
+                  <TableCell align='right'>{master.price}</TableCell>
+                  <TableCell align='right'>{master.currency}</TableCell>
+
+                  {/* <Link to={`/updatePickup/${master.id}`}>
+                      <Button variant='contained'>Update</Button>
+                    </Link>
+                    <Button
+                      sx={{ marginLeft: '11px' }}
+                      variant='contained'
+                      color='secondary'
+                      onClick={() => deletePickup(pickup.id)}
+                    >
+                      Delete
+                    </Button> */}
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+        {/* <TablePagination
+          rowsPerPageOptions={[5, 10, 25]}
+          component='div'
+          count={pickup.length}
+          rowsPerPage={rowsPerPage}
+          page={page}
+          onPageChange={handleChangePage}
+          onRowsPerPageChange={handleChangeRowsPerPage}
+        /> */}
+      </Grid>
     </>
   );
 };

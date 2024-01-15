@@ -48,7 +48,7 @@ const Update = () => {
     )
       .then(() => {
         console.log('Class Updated');
-        navigate('/location-Vessel');
+        navigate('/view-location');
       })
       .catch((error) => {
         console.error('Error updating class:', error);
