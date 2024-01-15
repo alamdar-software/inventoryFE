@@ -71,6 +71,11 @@ import CiplReport from './components/CiplReport.js';
 import UpdatePickup from './components/UpdatePickup.js';
 import UpdateUom from './components/UpdateUom.js';
 import UpdateItem from './components/UpdateItem.js';
+import UpdateConsumed from './pages/UpdateConsumed.js';
+import ViewConsume from './pages/ViewConsume.js';
+import ViewScrapp from './pages/ViewScrap';
+import UpdateScrapped from './pages/UpdateScrapped';
+
 const theme = createTheme({
   palette: {
     background: {
