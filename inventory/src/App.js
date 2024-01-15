@@ -67,6 +67,14 @@ import UpdateConsumed from "./pages/UpdateConsumed";
 import UpdatePickup from "./components/UpdatePickup";
 import ViewScrapp from "./pages/ViewScrap";
 import UpdateScrapped from "./pages/UpdateScrapped";
+
+import ConsumeReport from "./components/ConsumeReport.js";
+import ScrappedReport from "./components/ScrappedReport.js";
+import ItemServiceReport from "./components/ItemServiceReport.js";
+
+import MtoReports from "./components/MtoReports.js";
+import InternalTransferReport from "./components/InternalTransferReport.js";
+import CiplReport from "./components/CiplReport.js";
 const theme = createTheme({
   palette: {
     background: {

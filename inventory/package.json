@@ -17,8 +17,11 @@
     "cors": "^2.8.5",
     "date-fns": "^2.30.0",
     "dayjs": "^1.11.10",
+    "exceljs": "^4.4.0",
+    "papaparse": "^5.4.1",
     "perfect-scrollbar": "^1.5.5",
     "react": "^18.2.0",
+    "react-csv": "^2.2.2",
     "react-datepicker": "^4.24.0",
     "react-dom": "^18.2.0",
     "react-perfect-scrollbar": "^1.5.8",
@@ -29,7 +32,8 @@
     "redux": "^5.0.0",
     "sweetalert2": "^11.10.1",
     "uuid": "^9.0.1",
-    "web-vitals": "^2.1.4"
+    "web-vitals": "^2.1.4",
+    "xlsx": "^0.18.5"
   },
   "scripts": {
     "start": "react-scripts start",

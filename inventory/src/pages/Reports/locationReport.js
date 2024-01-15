@@ -29,7 +29,10 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import PictureAsPdfIcon from "@mui/icons-material/PictureAsPdf";
-
+import { CSVLink } from "react-csv";
+import Papa from "papaparse";
+import * as XLSX from "xlsx";
+import ExcelJS from "exceljs";
 const LocationReport = () => {
   const dispatch = useDispatch();
   const state = useSelector((state) => state);
@@ -43,7 +46,7 @@ const LocationReport = () => {
   useEffect(() => {
     dispatch(fetchlocation());
   }, []);
-
+  console.log(state, "nowory");
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [formData, setformData] = useState({
@@ -139,7 +142,7 @@ const LocationReport = () => {
   const handleClick = async (e) => {
     e.preventDefault();
     try {
-      const res = await fetch("http://localhost:8080/cipl/search", {
+      const res = await fetch("http://localhost:8080/location/search", {
         method: "post",
         headers: {
           "content-type": "application/json",
@@ -152,8 +155,8 @@ const LocationReport = () => {
       }
 
       const data = await res.json();
-      setFilteredCipl(data);
       console.log(data, "came from backend");
+      setFilteredCipl(data);
     } catch (error) {
       console.error("Error while adding inventory:", error.message);
       alert("data not found");
@@ -174,6 +177,56 @@ const LocationReport = () => {
     }
   }; */
   console.log(state, "hey");
+  const generateCsvData = () => {
+    // Your logic to create CSV data based on search parameters
+    const csvData = [
+      ["Serial No", "Location/Vessel", "SubLocation"],
+      ...filteredCipl.flatMap((ciplRow, rowIndex) =>
+        ciplRow.addresses?.map((subLocation, subIndex) => [
+          rowIndex * ciplRow.addresses.length + subIndex + 1,
+          ciplRow.locationName,
+          subLocation.address,
+        ])
+      ),
+    ];
+
+    return csvData;
+  };
+  const handleDownloadCsv = () => {
+    const boldStyle = { bold: true };
+    const workbook = new ExcelJS.Workbook();
+    const worksheet = workbook.addWorksheet("Sheet 1");
+
+    // Add header row
+    worksheet.addRow(["Serial No", "Location/Vessel", "SubLocation"]).font =
+      boldStyle;
+    worksheet.getColumn(3).width = 20;
+    worksheet.getColumn(2).width = 30;
+    // Add data rows
+    filteredCipl.forEach((ciplRow, rowIndex) => {
+      ciplRow.addresses?.forEach((subLocation, subIndex) => {
+        const rowData = [
+          rowIndex * ciplRow.addresses.length + subIndex + 1,
+          ciplRow.locationName,
+          subLocation.address,
+        ];
+        worksheet.addRow(rowData);
+      });
+    });
+
+    // Create a blob from the workbook
+    workbook.xlsx.writeBuffer().then((buffer) => {
+      const blob = new Blob([buffer], {
+        type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+      });
+      const link = document.createElement("a");
+      link.href = URL.createObjectURL(blob);
+      link.download = "excel_file.xlsx";
+      link.click();
+    });
+  };
+
+  console.log(filteredCipl, "fillll");
   return (
     <>
       <Grid>
@@ -225,6 +278,13 @@ const LocationReport = () => {
                     address: e.target.value,
                   });
                 }}
+                MenuProps={{
+                  PaperProps: {
+                    style: {
+                      maxHeight: 120, // Adjust the height as needed
+                    },
+                  },
+                }}
                 /* onChange={(e) =>
                   handleItemChange(
                     index,
@@ -233,12 +293,13 @@ const LocationReport = () => {
                   )
                 } */
               >
-                {state.location.data?.map((item, index) => (
-                  <MenuItem key={index} value={item?.description}>
-                    {" "}
-                    {item?.description}
-                  </MenuItem>
-                ))}
+                {state.location.data?.map((location, index) =>
+                  location.addresses.map((address) => (
+                    <MenuItem key={address.id} value={address.address}>
+                      {address.address}
+                    </MenuItem>
+                  ))
+                )}
               </Select>
             </FormControl>
           </Grid>
@@ -262,22 +323,31 @@ const LocationReport = () => {
           >
             Preview
           </Button>
+
+          <CSVLink
+            data={generateCsvData()}
+            filename={"search_parameters.csv"}
+            target="_blank"
+            style={{ textDecoration: "none" }}
+          >
+            <Button
+              variant="contained"
+              color="secondary"
+              size="large"
+              sx={{ marginRight: "8px" }}
+              hidden
+            >
+              Download Excel
+            </Button>
+          </CSVLink>
+
           <Button
             variant="contained"
             color="secondary"
             size="large"
-            onClick={handleClick}
-            sx={{ marginRight: "8px" }}
+            onClick={handleDownloadCsv}
           >
-            Dwnload Excel
-          </Button>
-          <Button
-            variant="contained"
-            color="secondary"
-            size="large"
-            onClick={handleClick}
-          >
-            Download Pdf
+            Download Excel
           </Button>
         </Box>
       </Card>
@@ -295,7 +365,7 @@ const LocationReport = () => {
               <TableRow>
                 <TableCell
                   align="left"
-                  sx={{ fontWeight: "bold", paddingLeft: "100px" }}
+                  sx={{ fontWeight: "bold", paddingLeft: "40px" }}
                 >
                   Location/Vessel
                 </TableCell>
@@ -305,46 +375,27 @@ const LocationReport = () => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {filteredCipl
-                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                .map((ciplRow) =>
-                  // Render a row for each sublocation
-                  ciplRow.SubLocations.map((subLocation, index) => (
-                    <TableRow
-                      key={`${ciplRow.id}-${index}`} // Use a unique key for each row
-                      sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-                    >
-                      <TableCell align="right">
-                        {ciplRow.locationName}
-                      </TableCell>
-                      <TableCell align="right">{subLocation}</TableCell>
-                      <TableCell align="right">{ciplRow.shipperName}</TableCell>
-                      <TableCell align="right">
-                        {ciplRow.consigneeName}
-                      </TableCell>
-                      <TableCell align="right">
-                        {ciplRow.consigneeName}
-                      </TableCell>
-                      <TableCell align="right">
-                        {ciplRow.transferDate}
-                      </TableCell>
-                      <TableCell align="right">
-                        {ciplRow.transferDate}
-                      </TableCell>
-                      <TableCell align="right">
-                        <Link to={`/cipl/createpdf/${ciplRow.id}`}>
-                          <Button
-                            variant="contained"
-                            color="primary"
-                            /*  onClick={() => generatePDF(ciplRow.id, index)} */
-                          >
-                            {<PictureAsPdfIcon />}
-                          </Button>
-                        </Link>
-                      </TableCell>
-                    </TableRow>
-                  ))
-                )}
+              {filteredCipl &&
+                filteredCipl
+                  ?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                  .map((ciplRow) =>
+                    // Render a row for each sublocation
+                    ciplRow?.addresses?.map((subLocation, index) => (
+                      <TableRow
+                        key={`${ciplRow.id}-${index}`} // Use a unique key for each row
+                        sx={{
+                          "&:last-child td, &:last-child th": { border: 0 },
+                        }}
+                      >
+                        <TableCell align="left" sx={{ paddingLeft: "40px" }}>
+                          {ciplRow.locationName}
+                        </TableCell>
+                        <TableCell align="left">
+                          {subLocation.address}
+                        </TableCell>
+                      </TableRow>
+                    ))
+                  )}
             </TableBody>
           </Table>
         </TableContainer>
