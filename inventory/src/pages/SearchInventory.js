@@ -181,40 +181,68 @@ export const SearchInventory = () => {
     }
   }; */
   const generateCsvData = () => {
-    // Your logic to create CSV data based on search parameters
     const csvData = [
-      ["Serial No", "Location/Vessel", "SubLocation"],
-      ...filteredCipl.flatMap((ciplRow, rowIndex) =>
-        ciplRow.address?.map((subLocation, subIndex) => [
-          rowIndex * ciplRow.addresses.length + subIndex + 1,
+      [
+        "Serial No",
+        "Item Description",
+        "Location/Vessel",
+        "SubLocation",
+        "Quantity",
+        "Consumed Qty",
+        "Scrapped Qty",
+      ],
+      ...filteredCipl.flatMap((ciplRow, rowIndex) => {
+        const subLocationsArray = ciplRow.address ? [ciplRow.address] : [];
+        return subLocationsArray.map((subLocation, subIndex) => [
+          rowIndex * subLocationsArray.length + subIndex + 1,
+          ciplRow.description,
           ciplRow.locationName,
           subLocation.address,
-        ])
-      ),
+          ciplRow.quantity,
+          ciplRow.consumedItem,
+          ciplRow.scrappedItem,
+        ]);
+      }),
     ];
 
     return csvData;
   };
+
+  console.log(filteredCipl, "filloppp");
   const handleDownloadCsv = () => {
     const boldStyle = { bold: true };
     const workbook = new ExcelJS.Workbook();
     const worksheet = workbook.addWorksheet("Sheet 1");
 
     // Add header row
-    worksheet.addRow(["Serial No", "Location/Vessel", "SubLocation"]).font =
-      boldStyle;
+    worksheet.addRow([
+      "Serial No",
+      "Item Description",
+      "Location/Vessel",
+      "SubLocation",
+      "Quantity",
+      "Consumed Qty",
+      "Scrapped Qty",
+    ]).font = boldStyle;
     worksheet.getColumn(3).width = 20;
     worksheet.getColumn(2).width = 30;
+    worksheet.getColumn(4).width = 13;
+    worksheet.getColumn(6).width = 15;
+    worksheet.getColumn(5).width = 15;
+    worksheet.getColumn(7).width = 15;
+
     // Add data rows
     filteredCipl.forEach((ciplRow, rowIndex) => {
-      ciplRow.addresses?.forEach((subLocation, subIndex) => {
-        const rowData = [
-          rowIndex * ciplRow.addresses.length + subIndex + 1,
-          ciplRow.locationName,
-          subLocation.address,
-        ];
-        worksheet.addRow(rowData);
-      });
+      const rowData = [
+        rowIndex + 1,
+        ciplRow.description,
+        ciplRow.locationName,
+        ciplRow.address?.address,
+        ciplRow.quantity,
+        ciplRow.consumedItem,
+        ciplRow.scrappedItem,
+      ];
+      worksheet.addRow(rowData);
     });
 
     // Create a blob from the workbook
@@ -370,6 +398,7 @@ export const SearchInventory = () => {
             color="secondary"
             size="large"
             onClick={handleDownloadCsv}
+            sx={{ marginRight: "15px" }}
           >
             Download Excel
           </Button>

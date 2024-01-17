@@ -24,13 +24,14 @@ import {
 import { Link } from "react-router-dom";
 import { fetchlocation } from "../redux/slice/location";
 import { fetchItem } from "../redux/slice/ItemSlice";
+import { fetchentity } from "../redux/slice/entitySlice";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import PictureAsPdfIcon from "@mui/icons-material/PictureAsPdf";
-
+import ExcelJS from "exceljs";
 export const SearchIncoming = () => {
   const dispatch = useDispatch();
   const state = useSelector((state) => state);
@@ -44,13 +45,14 @@ export const SearchIncoming = () => {
   useEffect(() => {
     dispatch(fetchlocation());
     dispatch(fetchItem());
+    dispatch(fetchentity());
   }, []);
 
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [formData, setformData] = useState({
-    FromDate: "",
-    ToDate: "",
+    startDate: "",
+    endDate: "",
 
     entity: "",
   });
@@ -144,13 +146,16 @@ export const SearchIncoming = () => {
   const handleClick = async (e) => {
     e.preventDefault();
     try {
-      const res = await fetch("http://localhost:8080/cipl/search", {
-        method: "post",
-        headers: {
-          "content-type": "application/json",
-        },
-        body: JSON.stringify(formData),
-      });
+      const res = await fetch(
+        "http://localhost:8080/incomingstock/searchReport",
+        {
+          method: "post",
+          headers: {
+            "content-type": "application/json",
+          },
+          body: JSON.stringify(formData),
+        }
+      );
 
       if (!res.ok) {
         throw new Error(`HTTP error! Status: ${res.status}`);
@@ -164,16 +169,17 @@ export const SearchIncoming = () => {
       alert("data not found");
     }
   };
+  console.log(filteredCipl, "alllllllli");
   const handleDateChange = (date) => {
     setformData({
       ...formData,
-      FromDate: date.format("YYYY-MM-DD"),
+      startDate: date.format("YYYY-MM-DD"),
     });
   };
   const handleToDateChange = (date) => {
     setformData({
       ...formData,
-      ToDate: date.format("YYYY-MM-DD"),
+      endDate: date.format("YYYY-MM-DD"),
     });
   };
 
@@ -190,6 +196,62 @@ export const SearchIncoming = () => {
       pdf.save("table.pdf");
     }
   }; */
+  const handleDownloadCsv = () => {
+    const boldStyle = { bold: true };
+    const workbook = new ExcelJS.Workbook();
+    const worksheet = workbook.addWorksheet("Sheet 1");
+
+    // Add header row
+    worksheet.addRow([
+      "Serial No",
+      "Item Description",
+      "Location/Vessel",
+      "SubLocation",
+      "Quantity",
+      "Uom",
+      "Incoming Stock",
+    ]).font = boldStyle;
+    worksheet.getColumn(3).width = 20;
+    worksheet.getColumn(2).width = 30;
+    worksheet.getColumn(4).width = 13;
+    worksheet.getColumn(6).width = 15;
+    worksheet.getColumn(5).width = 15;
+    worksheet.getColumn(7).width = 15;
+
+    let serialNumber = 1;
+    // Add data rows
+    filteredCipl.forEach((ciplRow, rowIndex) => {
+      const rowData = [
+        serialNumber++,
+        Array.isArray(ciplRow.description)
+          ? ciplRow.description.join(", ")
+          : ciplRow.description,
+        ciplRow.locationName,
+        ciplRow.address,
+        Array.isArray(ciplRow.quantity)
+          ? ciplRow.quantity.join(", ")
+          : ciplRow.quantity,
+        Array.isArray(ciplRow.unitName)
+          ? ciplRow.unitName.join(", ")
+          : ciplRow.unitName,
+        ciplRow.dataType,
+      ];
+
+      worksheet.addRow(rowData);
+    });
+
+    // Create a blob from the workbook
+    workbook.xlsx.writeBuffer().then((buffer) => {
+      const blob = new Blob([buffer], {
+        type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+      });
+      const link = document.createElement("a");
+      link.href = URL.createObjectURL(blob);
+      link.download = "excel_file.xlsx";
+      link.click();
+    });
+  };
+
   return (
     <>
       <Grid>
@@ -330,17 +392,12 @@ export const SearchIncoming = () => {
             variant="contained"
             color="secondary"
             size="large"
-            onClick={handleClick}
+            onClick={handleDownloadCsv}
             sx={{ marginRight: "8px" }}
           >
             Dwnload Excel
           </Button>
-          <Button
-            variant="contained"
-            color="secondary"
-            size="large"
-            onClick={handleClick}
-          >
+          <Button variant="contained" color="secondary" size="large">
             Download Pdf
           </Button>
         </Box>
@@ -351,7 +408,7 @@ export const SearchIncoming = () => {
           sx={{
             borderRadius: "33px",
             borderBottom: "2px solid yellow",
-            width: "110%",
+            width: "98%",
           }}
         >
           <Table sx={{ minWidth: 650 }} aria-label="simple table">
@@ -361,7 +418,7 @@ export const SearchIncoming = () => {
                   Item Description
                 </TableCell>
                 <TableCell align="right" sx={{ fontWeight: "bold" }}>
-                  Location/Vessel
+                  Source Location
                 </TableCell>
                 <TableCell align="right" sx={{ fontWeight: "bold" }}>
                   Sub Location
@@ -370,62 +427,32 @@ export const SearchIncoming = () => {
                   Quantity
                 </TableCell>
                 <TableCell align="right" sx={{ fontWeight: "bold" }}>
-                  Minimum
+                  Uom
                 </TableCell>
 
                 <TableCell align="right" sx={{ fontWeight: "bold" }}>
-                  Consumed Qty
-                </TableCell>
-                <TableCell align="right" sx={{ fontWeight: "bold" }}>
-                  Scrapped Qty
-                </TableCell>
-
-                <TableCell align="right" sx={{ fontWeight: "bold" }}>
-                  Print
+                  Incoming Stock
                 </TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
               {filteredCipl
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                .map((ciplRow) =>
+                .map((ciplRow) => (
                   // Render a row for each sublocation
-                  ciplRow.SubLocations.map((subLocation, index) => (
-                    <TableRow
-                      key={`${ciplRow.id}-${index}`} // Use a unique key for each row
-                      sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-                    >
-                      <TableCell align="right">
-                        {ciplRow.locationName}
-                      </TableCell>
-                      <TableCell align="right">{subLocation}</TableCell>
-                      <TableCell align="right">{ciplRow.shipperName}</TableCell>
-                      <TableCell align="right">
-                        {ciplRow.consigneeName}
-                      </TableCell>
-                      <TableCell align="right">
-                        {ciplRow.consigneeName}
-                      </TableCell>
-                      <TableCell align="right">
-                        {ciplRow.transferDate}
-                      </TableCell>
-                      <TableCell align="right">
-                        {ciplRow.transferDate}
-                      </TableCell>
-                      <TableCell align="right">
-                        <Link to={`/cipl/createpdf/${ciplRow.id}`}>
-                          <Button
-                            variant="contained"
-                            color="primary"
-                            /*  onClick={() => generatePDF(ciplRow.id, index)} */
-                          >
-                            {<PictureAsPdfIcon />}
-                          </Button>
-                        </Link>
-                      </TableCell>
-                    </TableRow>
-                  ))
-                )}
+
+                  <TableRow
+                    key={`${ciplRow.id}`} // Use a unique key for each row
+                    sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                  >
+                    <TableCell align="right">{ciplRow.description}</TableCell>
+                    <TableCell align="right">{ciplRow.locationName}</TableCell>
+                    <TableCell align="right">{ciplRow.address}</TableCell>
+                    <TableCell align="right">{ciplRow.quantity}</TableCell>
+                    <TableCell align="right">{ciplRow.unitName}</TableCell>
+                    <TableCell align="right">{ciplRow.dataType}</TableCell>
+                  </TableRow>
+                ))}
             </TableBody>
           </Table>
         </TableContainer>
