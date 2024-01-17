@@ -38,7 +38,7 @@ const Dashboard = () => {
       <div style={{ display: 'flex', flexDirection: 'row', marginTop: 3 }}>
         <Card
           sx={{
-            border: '2px solid yellow',
+            // border: '2px solid yellow',
 
             flex: 1,
             marginRight: 3,
@@ -66,34 +66,35 @@ const Dashboard = () => {
                   backgroundColor: 'white', // Set your desired color
                   color: 'white', // Set your desired text color
                   padding: 2,
-                  // Adjust the border-radius to match the card
                 }}
               >
-                <CountertopsIcon
+                {/* <CountertopsIcon
                   fontSize='large'
                   color='primary'
                   sx={{ fontSize: '70px' }}
-                />
+                /> */}
               </Box>
 
               <CountertopsIcon
                 fontSize='large'
                 color='primary'
-                sx={{ fontSize: '70px' }}
+                sx={{ fontSize: '50px' }}
               />
 
               <Typography
-                sx={{ mb: 1.5, textAlign: 'center', fontWeight: 'bolder' }}
-                color='text.secondary'
+                sx={{
+                  mb: 1.5,
+                  textAlign: 'center',
+                  fontWeight: 'bolder',
+                  fontFamily: 'Roboto, sans-serif', // Set the font family
+                }}
+                color='#333'
                 variant='h5'
                 component='div'
               >
                 MOC
               </Typography>
-              <Typography
-                sx={{ mb: 1.5, textAlign: 'center' }}
-                color='text.secondary'
-              >
+              <Typography sx={{ mb: 1.5 }} color='text.secondary'>
                 Count:
               </Typography>
             </CardContent>
@@ -102,7 +103,7 @@ const Dashboard = () => {
 
         <Card
           sx={{
-            border: '2px solid yellow',
+            //border: '2px solid yellow',
             minWidth: 40,
             flex: 1,
             marginTop: 3,
@@ -116,8 +117,17 @@ const Dashboard = () => {
         >
           <Link to={'/datacount'} style={{ textDecoration: 'none' }}>
             <CardContent>
-              <DatasetIcon fontSize='large' color='secondary' />
-              <Typography variant='h5' color='text.secondary' component='div'>
+              <DatasetIcon
+                fontSize='large'
+                color='secondary'
+                sx={{ fontSize: '50px' }}
+              />
+              <Typography
+                variant='h5'
+                color='text.secondary'
+                component='div'
+                sx={{ mb: 1.5, textAlign: 'center', fontWeight: 'bolder' }}
+              >
                 Daily Data Count
               </Typography>
               <Typography sx={{ mb: 1.5 }} color='text.secondary'>
@@ -302,7 +312,7 @@ const Dashboard = () => {
             borderRadius: 8,
             transition: 'transform 0.3s',
             '&:hover': {
-              transform: 'scale(1.1)', // Adjust the scaling factor as needed
+              transform: 'scale(1.1)',
             },
           }}
         >
