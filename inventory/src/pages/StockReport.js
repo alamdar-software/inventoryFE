@@ -30,7 +30,7 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import PictureAsPdfIcon from "@mui/icons-material/PictureAsPdf";
-
+import ExcelJS from "exceljs";
 export const StockReport = () => {
   const dispatch = useDispatch();
   const state = useSelector((state) => state);
@@ -49,9 +49,9 @@ export const StockReport = () => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [formData, setformData] = useState({
-    FromDate: "",
-    ToDate: "",
-    entity: "",
+    startDate: "",
+    endDate: "",
+
     repairService: "",
   });
   const handleChangePage = (event, newPage) => {
@@ -144,7 +144,7 @@ export const StockReport = () => {
   const handleClick = async (e) => {
     e.preventDefault();
     try {
-      const res = await fetch("http://localhost:8080/cipl/search", {
+      const res = await fetch("http://localhost:8080/report/search", {
         method: "post",
         headers: {
           "content-type": "application/json",
@@ -167,13 +167,13 @@ export const StockReport = () => {
   const handleDateChange = (date) => {
     setformData({
       ...formData,
-      FromDate: date.format("YYYY-MM-DD"),
+      startDate: date.format("YYYY-MM-DD"),
     });
   };
   const handleToDateChange = (date) => {
     setformData({
       ...formData,
-      ToDate: date.format("YYYY-MM-DD"),
+      endDate: date.format("YYYY-MM-DD"),
     });
   };
 
@@ -190,6 +190,74 @@ export const StockReport = () => {
       pdf.save("table.pdf");
     }
   }; */
+  const handleDownloadCsv = () => {
+    const boldStyle = { bold: true };
+    const workbook = new ExcelJS.Workbook();
+    const worksheet = workbook.addWorksheet("Sheet 1");
+
+    // Add header row
+    worksheet.addRow([
+      "Serial No",
+      "Reference No",
+      "Repair/Service",
+      "Source Location",
+      "SubLocation",
+
+      "Purchase",
+      "P/N",
+      "Consignee",
+
+      "Transfer Date",
+      "Action",
+    ]).font = boldStyle;
+    worksheet.getColumn(3).width = 20;
+    worksheet.getColumn(2).width = 30;
+    worksheet.getColumn(4).width = 20;
+    worksheet.getColumn(6).width = 15;
+    worksheet.getColumn(5).width = 15;
+    worksheet.getColumn(7).width = 15;
+    worksheet.getColumn(8).width = 15;
+    worksheet.getColumn(9).width = 15;
+    worksheet.getColumn(10).width = 15;
+
+    let serialNumber = 1;
+    // Add data rows
+    filteredCipl.forEach((ciplRow, rowIndex) => {
+      const rowData = [
+        serialNumber++,
+        Array.isArray(ciplRow.referenceNo)
+          ? ciplRow.referenceNo.join(", ")
+          : ciplRow.referenceNo,
+        ciplRow.repairService,
+        ciplRow.locationName,
+        Array.isArray(ciplRow.subLocation)
+          ? ciplRow.subLocation.join(", ")
+          : ciplRow.subLocation,
+        Array.isArray(ciplRow.purchase)
+          ? ciplRow.purchase.join(", ")
+          : ciplRow.purchase,
+
+        ciplRow.pn,
+        ciplRow.consigneeName,
+        ciplRow.transferDate,
+        ciplRow.dataType,
+      ];
+
+      worksheet.addRow(rowData);
+    });
+
+    // Create a blob from the workbook
+    workbook.xlsx.writeBuffer().then((buffer) => {
+      const blob = new Blob([buffer], {
+        type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+      });
+      const link = document.createElement("a");
+      link.href = URL.createObjectURL(blob);
+      link.download = "stockmoment.xlsx";
+      link.click();
+    });
+  };
+  console.log(filteredCipl, "rusijk");
   return (
     <>
       <Grid>
@@ -264,47 +332,7 @@ export const StockReport = () => {
               </Grid>
             </FormControl>
           </Grid>
-          <Grid container spacing={2} sx={{ ml: "5px", mt: "20px" }}>
-            <Grid item xs={12} sm={6}>
-              <FormControl fullWidth sx={{ width: "100%" }}>
-                <Grid item xs={12} sm={6}>
-                  <FormControl fullWidth sx={{ width: "90%" }}>
-                    <InputLabel id="demo-simple-select-label">
-                      Entity
-                    </InputLabel>
-                    <Select
-                      labelId="demo-simple-select-label"
-                      id="demo-simple-select"
-                      //value={age}
-                      value={formData?.entity}
-                      label="location"
-                      MenuProps={{
-                        PaperProps: {
-                          style: {
-                            maxHeight: 120, // Adjust the height as needed
-                          },
-                        },
-                      }}
-                      onChange={(e) => {
-                        setformData({
-                          ...formData,
-                          entity: e.target.value,
-                        });
-                      }}
-
-                      //onChange={handleChange}
-                    >
-                      {state.location.data?.map((item, index) => (
-                        <MenuItem key={index} value={item?.locationName}>
-                          {" "}
-                          {item?.locationName}
-                        </MenuItem>
-                      ))}
-                    </Select>
-                  </FormControl>
-                </Grid>
-              </FormControl>
-            </Grid>
+          <Grid container spacing={2} sx={{ ml: "0px", mt: "20px" }}>
             <Grid item xs={12} sm={6}>
               <FormControl fullWidth sx={{ width: "45%" }}>
                 <InputLabel id="demo-simple-select-label">
@@ -355,7 +383,7 @@ export const StockReport = () => {
             variant="contained"
             color="secondary"
             size="large"
-            onClick={handleClick}
+            onClick={handleDownloadCsv}
             sx={{ marginRight: "8px" }}
           >
             Dwnload Excel
@@ -394,9 +422,6 @@ export const StockReport = () => {
                 <TableCell align="right" sx={{ fontWeight: "bold" }}>
                   SubLocation
                 </TableCell>
-                <TableCell align="right" sx={{ fontWeight: "bold" }}>
-                  Item
-                </TableCell>
 
                 <TableCell align="right" sx={{ fontWeight: "bold" }}>
                   Purchase
@@ -408,12 +433,7 @@ export const StockReport = () => {
                 <TableCell align="right" sx={{ fontWeight: "bold" }}>
                   Consignee
                 </TableCell>
-                <TableCell align="right" sx={{ fontWeight: "bold" }}>
-                  Entity
-                </TableCell>
-                <TableCell align="right" sx={{ fontWeight: "bold" }}>
-                  Status
-                </TableCell>
+
                 <TableCell align="right" sx={{ fontWeight: "bold" }}>
                   Transfer Date
                 </TableCell>
@@ -425,44 +445,37 @@ export const StockReport = () => {
             <TableBody>
               {filteredCipl
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                .map((ciplRow) =>
+                .map((ciplRow) => (
                   // Render a row for each sublocation
-                  ciplRow.SubLocations.map((subLocation, index) => (
-                    <TableRow
-                      key={`${ciplRow.id}-${index}`} // Use a unique key for each row
-                      sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-                    >
-                      <TableCell align="right">
-                        {ciplRow.locationName}
-                      </TableCell>
-                      <TableCell align="right">{subLocation}</TableCell>
-                      <TableCell align="right">{ciplRow.shipperName}</TableCell>
-                      <TableCell align="right">
-                        {ciplRow.consigneeName}
-                      </TableCell>
-                      <TableCell align="right">
-                        {ciplRow.consigneeName}
-                      </TableCell>
-                      <TableCell align="right">
-                        {ciplRow.transferDate}
-                      </TableCell>
-                      <TableCell align="right">
-                        {ciplRow.transferDate}
-                      </TableCell>
-                      <TableCell align="right">
-                        <Link to={`/cipl/createpdf/${ciplRow.id}`}>
-                          <Button
-                            variant="contained"
-                            color="primary"
-                            /*  onClick={() => generatePDF(ciplRow.id, index)} */
-                          >
-                            {<PictureAsPdfIcon />}
-                          </Button>
-                        </Link>
-                      </TableCell>
-                    </TableRow>
-                  ))
-                )}
+
+                  <TableRow
+                    key={`${ciplRow.id}`} // Use a unique key for each row
+                    sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                  >
+                    <TableCell align="right">{ciplRow.referenceNo}</TableCell>
+                    <TableCell align="right">
+                      {ciplRow.repairService ? "Yes" : "No"}
+                    </TableCell>
+                    <TableCell align="right">{ciplRow.locationName}</TableCell>
+                    <TableCell align="right">{ciplRow.subLocation}</TableCell>
+                    <TableCell align="right">{ciplRow.purchase}</TableCell>
+                    <TableCell align="right">{ciplRow.pn}</TableCell>
+                    <TableCell align="right">{ciplRow.consigneeName}</TableCell>
+                    <TableCell align="right">{ciplRow.transferDate}</TableCell>
+                    <TableCell align="right">{ciplRow.dataType}</TableCell>
+                    <TableCell align="right">
+                      <Link to={`/cipl/createpdf/${ciplRow.id}`}>
+                        <Button
+                          variant="contained"
+                          color="primary"
+                          /*  onClick={() => generatePDF(ciplRow.id, index)} */
+                        >
+                          {<PictureAsPdfIcon />}
+                        </Button>
+                      </Link>
+                    </TableCell>
+                  </TableRow>
+                ))}
             </TableBody>
           </Table>
         </TableContainer>
