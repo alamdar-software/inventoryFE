@@ -38,7 +38,7 @@ const Dashboard = () => {
       <div style={{ display: 'flex', flexDirection: 'row', marginTop: 3 }}>
         <Card
           sx={{
-            border: '2px solid yellow',
+            // border: '2px solid yellow',
 
             flex: 1,
             marginRight: 3,
@@ -66,34 +66,40 @@ const Dashboard = () => {
                   backgroundColor: 'white', // Set your desired color
                   color: 'white', // Set your desired text color
                   padding: 2,
-                  // Adjust the border-radius to match the card
                 }}
               >
-                <CountertopsIcon
+                {/* <CountertopsIcon
                   fontSize='large'
                   color='primary'
                   sx={{ fontSize: '70px' }}
-                />
+                /> */}
               </Box>
 
               <CountertopsIcon
                 fontSize='large'
                 color='primary'
-                sx={{ fontSize: '70px' }}
+                sx={{
+                  fontSize: '50px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  // justifyContent: 'center',
+                }}
               />
 
               <Typography
-                sx={{ mb: 1.5, textAlign: 'center', fontWeight: 'bolder' }}
-                color='text.secondary'
+                sx={{
+                  mb: 1.5,
+                  textAlign: 'center',
+                  fontWeight: 'bolder',
+                  fontFamily: 'Montserrat',
+                }}
+                color='#333'
                 variant='h5'
                 component='div'
               >
                 MOC
               </Typography>
-              <Typography
-                sx={{ mb: 1.5, textAlign: 'center' }}
-                color='text.secondary'
-              >
+              <Typography sx={{ mb: 1.5 }} color='text.secondary'>
                 Count:
               </Typography>
             </CardContent>
@@ -102,7 +108,7 @@ const Dashboard = () => {
 
         <Card
           sx={{
-            border: '2px solid yellow',
+            //border: '2px solid yellow',
             minWidth: 40,
             flex: 1,
             marginTop: 3,
@@ -116,8 +122,22 @@ const Dashboard = () => {
         >
           <Link to={'/datacount'} style={{ textDecoration: 'none' }}>
             <CardContent>
-              <DatasetIcon fontSize='large' color='secondary' />
-              <Typography variant='h5' color='text.secondary' component='div'>
+              <DatasetIcon
+                fontSize='large'
+                color='secondary'
+                sx={{ fontSize: '50px' }}
+              />
+              <Typography
+                variant='h5'
+                color='#333'
+                component='div'
+                sx={{
+                  mb: 1.5,
+                  textAlign: 'center',
+                  fontWeight: 'bolder',
+                  fontFamily: 'Montserrat',
+                }}
+              >
                 Daily Data Count
               </Typography>
               <Typography sx={{ mb: 1.5 }} color='text.secondary'>
@@ -128,7 +148,7 @@ const Dashboard = () => {
         </Card>
         <Card
           sx={{
-            border: '2px solid yellow',
+            //border: '2px solid yellow',
             minWidth: 20,
             flex: 1,
             marginLeft: 3,
@@ -142,8 +162,21 @@ const Dashboard = () => {
         >
           <Link to={'/Reports'} style={{ textDecoration: 'none' }}>
             <CardContent>
-              <AssessmentIcon fontSize='large' style={{ color: '#ff0000' }} />
-              <Typography variant='h5' component='div' color='text.secondary'>
+              <AssessmentIcon
+                fontSize='large'
+                sx={{ fontSize: '50px', color: '#ff0000' }}
+              />
+              <Typography
+                variant='h5'
+                component='div'
+                color='#333'
+                sx={{
+                  mb: 1.5,
+                  textAlign: 'center',
+                  fontWeight: 'bolder',
+                  fontFamily: 'Montserrat',
+                }}
+              >
                 Reports
               </Typography>
             </CardContent>
@@ -151,7 +184,7 @@ const Dashboard = () => {
         </Card>
         <Card
           sx={{
-            border: '2px solid yellow',
+            //border: '2px solid yellow',
             minWidth: 20,
             flex: 1,
             marginLeft: 3,
@@ -165,8 +198,21 @@ const Dashboard = () => {
         >
           <Link to={'/Items'} style={{ textDecoration: 'none' }}>
             <CardContent>
-              <DescriptionIcon fontSize='large' style={{ color: '#c6ff00' }} />
-              <Typography variant='h5' component='div' color='text.secondary'>
+              <DescriptionIcon
+                fontSize='large'
+                sx={{ fontSize: '50px', color: '#c6ff00' }}
+              />
+              <Typography
+                variant='h5'
+                component='div'
+                color='#333'
+                sx={{
+                  mb: 1.5,
+                  textAlign: 'center',
+                  fontWeight: 'bolder',
+                  fontFamily: 'Montserrat',
+                }}
+              >
                 Items
               </Typography>
             </CardContent>
@@ -176,7 +222,7 @@ const Dashboard = () => {
       <div style={{ display: 'flex', flexDirection: 'row', marginTop: 3 }}>
         <Card
           sx={{
-            border: '2px solid yellow',
+            //border: '2px solid yellow',
             minWidth: 20,
             flex: 1,
             marginRight: 3,
@@ -191,17 +237,25 @@ const Dashboard = () => {
         >
           <Link to={'/locationDashboard'} style={{ textDecoration: 'none' }}>
             <CardContent
-              sx={{
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'start',
-              }}
+            // sx={{
+            //   display: 'flex',
+            //   flexDirection: 'column',
+            //   alignItems: 'start',
+            // }}
             >
-              <CountertopsIcon fontSize='large' style={{ color: '#c6ff00' }} />
+              <CountertopsIcon
+                fontSize='large'
+                sx={{ fontSize: '50px', color: '#c6ff00' }}
+              />
 
               <Typography
-                sx={{ mb: 1.5, textAlign: 'right' }}
-                color='text.secondary'
+                sx={{
+                  mb: 1.5,
+                  textAlign: 'center',
+                  fontWeight: 'bolder',
+                  fontFamily: 'Montserrat',
+                }}
+                color='#333'
                 variant='h5'
                 component='div'
               >
@@ -215,7 +269,7 @@ const Dashboard = () => {
         </Card>
         <Card
           sx={{
-            border: '2px solid yellow',
+            //border: '2px solid yellow',
             minWidth: 20,
             flex: 1,
             marginRight: 3,
@@ -236,11 +290,19 @@ const Dashboard = () => {
                 alignItems: 'start',
               }}
             >
-              <CountertopsIcon fontSize='large' style={{ color: '#64dd17' }} />
+              <CountertopsIcon
+                fontSize='large'
+                sx={{ fontSize: '50px', color: '#64dd17' }}
+              />
 
               <Typography
-                sx={{ mb: 1.5, textAlign: 'right' }}
-                color='text.secondary'
+                sx={{
+                  mb: 1.5,
+                  textAlign: 'center',
+                  fontWeight: 'bolder',
+                  fontFamily: 'Montserrat',
+                }}
+                color='#333'
                 variant='h5'
                 component='div'
               >
@@ -254,7 +316,7 @@ const Dashboard = () => {
         </Card>
         <Card
           sx={{
-            border: '2px solid yellow',
+            //border: '2px solid yellow',
             minWidth: 20,
             flex: 1,
             marginRight: 3,
@@ -275,11 +337,19 @@ const Dashboard = () => {
                 alignItems: 'start',
               }}
             >
-              <CountertopsIcon fontSize='large' style={{ color: '#9e9e9e' }} />
+              <CountertopsIcon
+                fontSize='large'
+                style={{ color: '#9e9e9e', fontSize: '50px' }}
+              />
 
               <Typography
-                sx={{ mb: 1.5, textAlign: 'right' }}
-                color='text.secondary'
+                sx={{
+                  mb: 1.5,
+                  textAlign: 'center',
+                  fontWeight: 'bolder',
+                  fontFamily: 'Montserrat',
+                }}
+                color='#333'
                 variant='h5'
                 component='div'
               >
@@ -293,7 +363,7 @@ const Dashboard = () => {
         </Card>
         <Card
           sx={{
-            border: '2px solid yellow',
+            //border: '2px solid yellow',
             minWidth: 20,
             flex: 1,
             marginRight: 3,
@@ -302,7 +372,7 @@ const Dashboard = () => {
             borderRadius: 8,
             transition: 'transform 0.3s',
             '&:hover': {
-              transform: 'scale(1.1)', // Adjust the scaling factor as needed
+              transform: 'scale(1.1)',
             },
           }}
         >
@@ -314,11 +384,19 @@ const Dashboard = () => {
                 alignItems: 'start',
               }}
             >
-              <CountertopsIcon fontSize='large' style={{ color: '#795548' }} />
+              <CountertopsIcon
+                fontSize='large'
+                style={{ color: '#795548', fontSize: '50px' }}
+              />
 
               <Typography
-                sx={{ mb: 1, textAlign: 'right' }}
-                color='text.secondary'
+                sx={{
+                  mb: 1.5,
+                  textAlign: 'center',
+                  fontWeight: 'bolder',
+                  fontFamily: 'Montserrat',
+                }}
+                color='#333'
                 variant='h6'
                 component='div'
               >
@@ -334,7 +412,7 @@ const Dashboard = () => {
       <div style={{ display: 'flex', flexDirection: 'row', marginTop: 3 }}>
         <Card
           sx={{
-            border: '2px solid yellow',
+            //border: '2px solid yellow',
             minWidth: 20,
 
             marginRight: 3,
@@ -356,11 +434,19 @@ const Dashboard = () => {
                 alignItems: 'start',
               }}
             >
-              <CountertopsIcon fontSize='large' style={{ color: '#ff5722' }} />
+              <CountertopsIcon
+                fontSize='large'
+                style={{ color: '#ff5722', fontSize: '50px' }}
+              />
 
               <Typography
-                sx={{ mb: 1.5, textAlign: 'right' }}
-                color='text.secondary'
+                sx={{
+                  mb: 1.5,
+                  textAlign: 'center',
+                  fontWeight: 'bolder',
+                  fontFamily: 'Montserrat',
+                }}
+                color='#333'
                 variant='h5'
                 component='div'
               >
@@ -374,7 +460,7 @@ const Dashboard = () => {
         </Card>
         <Card
           sx={{
-            border: '2px solid yellow',
+            //border: '2px solid yellow',
             minWidth: 20,
 
             marginRight: 3,
@@ -396,11 +482,19 @@ const Dashboard = () => {
                 alignItems: 'start',
               }}
             >
-              <CountertopsIcon fontSize='large' style={{ color: '#00bcd4' }} />
+              <CountertopsIcon
+                fontSize='large'
+                style={{ color: '#00bcd4', fontSize: '50px' }}
+              />
 
               <Typography
-                sx={{ mb: 1.5, textAlign: 'right' }}
-                color='text.secondary'
+                sx={{
+                  mb: 1.5,
+                  textAlign: 'center',
+                  fontWeight: 'bolder',
+                  fontFamily: 'Montserrat',
+                }}
+                color='#333'
                 variant='h5'
                 component='div'
               >
