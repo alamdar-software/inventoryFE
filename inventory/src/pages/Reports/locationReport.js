@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from 'react';
 import {
   Card,
   CardContent,
@@ -19,20 +19,20 @@ import {
   TableBody,
   TablePagination,
   Box,
-} from "@mui/material";
-import { Link } from "react-router-dom";
-import { fetchlocation } from "../../redux/slice/location";
+} from '@mui/material';
+import { Link } from 'react-router-dom';
+import { fetchlocation } from '../../redux/slice/location';
 
-import { useDispatch } from "react-redux";
-import { useSelector } from "react-redux";
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-import { DatePicker } from "@mui/x-date-pickers/DatePicker";
-import PictureAsPdfIcon from "@mui/icons-material/PictureAsPdf";
-import { CSVLink } from "react-csv";
-import Papa from "papaparse";
-import * as XLSX from "xlsx";
-import ExcelJS from "exceljs";
+import { useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
+import { CSVLink } from 'react-csv';
+import Papa from 'papaparse';
+import * as XLSX from 'xlsx';
+import ExcelJS from 'exceljs';
 const LocationReport = () => {
   const dispatch = useDispatch();
   const state = useSelector((state) => state);
@@ -46,11 +46,11 @@ const LocationReport = () => {
   useEffect(() => {
     dispatch(fetchlocation());
   }, []);
-  console.log(state, "nowory");
+  console.log(state, 'nowory');
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [formData, setformData] = useState({
-    address: "",
+    address: '',
   });
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -60,7 +60,7 @@ const LocationReport = () => {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
-  console.log(formData, "heyyy");
+  console.log(formData, 'heyyy');
   // const handleClick = () => {
   //   try {
   //     const formData = {
@@ -142,10 +142,10 @@ const LocationReport = () => {
   const handleClick = async (e) => {
     e.preventDefault();
     try {
-      const res = await fetch("http://localhost:8080/location/search", {
-        method: "post",
+      const res = await fetch('http://localhost:8080/location/search', {
+        method: 'post',
         headers: {
-          "content-type": "application/json",
+          'content-type': 'application/json',
         },
         body: JSON.stringify(formData),
       });
@@ -155,11 +155,11 @@ const LocationReport = () => {
       }
 
       const data = await res.json();
-      console.log(data, "came from backend");
+      console.log(data, 'came from backend');
       setFilteredCipl(data);
     } catch (error) {
-      console.error("Error while adding inventory:", error.message);
-      alert("data not found");
+      console.error('Error while adding inventory:', error.message);
+      alert('data not found');
     }
   };
 
@@ -176,11 +176,11 @@ const LocationReport = () => {
       pdf.save("table.pdf");
     }
   }; */
-  console.log(state, "hey");
+  console.log(state, 'hey');
   const generateCsvData = () => {
     // Your logic to create CSV data based on search parameters
     const csvData = [
-      ["Serial No", "Location/Vessel", "SubLocation"],
+      ['Serial No', 'Location/Vessel', 'SubLocation'],
       ...filteredCipl.flatMap((ciplRow, rowIndex) =>
         ciplRow.addresses?.map((subLocation, subIndex) => [
           rowIndex * ciplRow.addresses.length + subIndex + 1,
@@ -195,10 +195,10 @@ const LocationReport = () => {
   const handleDownloadCsv = () => {
     const boldStyle = { bold: true };
     const workbook = new ExcelJS.Workbook();
-    const worksheet = workbook.addWorksheet("Sheet 1");
+    const worksheet = workbook.addWorksheet('Sheet 1');
 
     // Add header row
-    worksheet.addRow(["Serial No", "Location/Vessel", "SubLocation"]).font =
+    worksheet.addRow(['Serial No', 'Location/Vessel', 'SubLocation']).font =
       boldStyle;
     worksheet.getColumn(3).width = 20;
     worksheet.getColumn(2).width = 30;
@@ -217,33 +217,33 @@ const LocationReport = () => {
     // Create a blob from the workbook
     workbook.xlsx.writeBuffer().then((buffer) => {
       const blob = new Blob([buffer], {
-        type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+        type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
       });
-      const link = document.createElement("a");
+      const link = document.createElement('a');
       link.href = URL.createObjectURL(blob);
-      link.download = "excel_file.xlsx";
+      link.download = 'excel_file.xlsx';
       link.click();
     });
   };
 
-  console.log(filteredCipl, "fillll");
+  console.log(filteredCipl, 'fillll');
   return (
     <>
       <Grid>
         <Card
-          color="secondary"
+          color='secondary'
           sx={{
-            width: "100%",
+            width: '100%',
             // background:
             //   'linear-gradient(217deg, rgba(255,0,0,.8), rgba(255,0,0,0) 70.71%)',
 
-            borderBottom: "2px solid #ab47bc",
+            borderBottom: '2px solid #ab47bc',
           }}
         >
           <CardContent>
             <Typography
-              variant="h4"
-              color="secondary"
+              variant='h4'
+              color='secondary'
               gutterBottom
               style={{ fontFamily: "'EB Garamond'" }}
             >
@@ -255,23 +255,23 @@ const LocationReport = () => {
 
       <Card
         sx={{
-          width: "100%",
-          mt: "33px",
-          pt: "33px",
-          borderBottom: "2px solid #ab47bc",
-          borderRadius: "33px",
+          width: '100%',
+          mt: '33px',
+          pt: '33px',
+          borderBottom: '2px solid #ab47bc',
+          borderRadius: '33px',
         }}
       >
-        <Grid container spacing={2} sx={{ ml: "13px", alignItems: "center" }}>
-          <Grid item xs={12} sm={4} sx={{ marginLeft: "400px" }}>
+        <Grid container spacing={2} sx={{ ml: '13px', alignItems: 'center' }}>
+          <Grid item xs={12} sm={4} sx={{ marginLeft: '400px' }}>
             <FormControl fullWidth>
-              <InputLabel id="demo-simple-select-label">
+              <InputLabel id='demo-simple-select-label'>
                 Sub Location
               </InputLabel>
               <Select
-                labelId="demo-simple-select-label"
-                id="itemName"
-                label="itemName"
+                labelId='demo-simple-select-label'
+                id='itemName'
+                label='itemName'
                 onChange={(e) => {
                   setformData({
                     ...formData,
@@ -307,34 +307,34 @@ const LocationReport = () => {
 
         <Box
           sx={{
-            display: "flex",
-            justifyContent: "center",
-            flexDirection: "row",
-            mt: "33px",
-            mb: "17px",
+            display: 'flex',
+            justifyContent: 'center',
+            flexDirection: 'row',
+            mt: '33px',
+            mb: '17px',
           }}
         >
           <Button
-            variant="contained"
-            color="secondary"
-            size="large"
+            variant='contained'
+            color='secondary'
+            size='large'
             onClick={handleClick}
-            sx={{ marginRight: "8px" }}
+            sx={{ marginRight: '8px' }}
           >
             Preview
           </Button>
 
           <CSVLink
             data={generateCsvData()}
-            filename={"search_parameters.csv"}
-            target="_blank"
-            style={{ textDecoration: "none" }}
+            filename={'search_parameters.csv'}
+            target='_blank'
+            style={{ textDecoration: 'none' }}
           >
             <Button
-              variant="contained"
-              color="secondary"
-              size="large"
-              sx={{ marginRight: "8px" }}
+              variant='contained'
+              color='secondary'
+              size='large'
+              sx={{ marginRight: '8px' }}
               hidden
             >
               Download Excel
@@ -342,34 +342,34 @@ const LocationReport = () => {
           </CSVLink>
 
           <Button
-            variant="contained"
-            color="secondary"
-            size="large"
+            variant='contained'
+            color='secondary'
+            size='large'
             onClick={handleDownloadCsv}
           >
             Download Excel
           </Button>
         </Box>
       </Card>
-      <Grid sx={{ mt: "33px", width: "100%", overflowX: "scroll" }}>
+      <Grid sx={{ mt: '33px', width: '100%', overflowX: 'scroll' }}>
         <TableContainer
           component={Paper}
           sx={{
-            borderRadius: "33px",
-            borderBottom: "2px solid yellow",
-            width: "100%",
+            borderRadius: '33px',
+            borderBottom: '2px solid yellow',
+            width: '100%',
           }}
         >
-          <Table sx={{ minWidth: 100 }} aria-label="simple table">
+          <Table sx={{ minWidth: 100 }} aria-label='simple table'>
             <TableHead>
               <TableRow>
                 <TableCell
-                  align="left"
-                  sx={{ fontWeight: "bold", paddingLeft: "40px" }}
+                  align='left'
+                  sx={{ fontWeight: 'bold', paddingLeft: '40px' }}
                 >
                   Location/Vessel
                 </TableCell>
-                <TableCell align="left" sx={{ fontWeight: "bold" }}>
+                <TableCell align='left' sx={{ fontWeight: 'bold' }}>
                   SubLocation
                 </TableCell>
               </TableRow>
@@ -384,13 +384,13 @@ const LocationReport = () => {
                       <TableRow
                         key={`${ciplRow.id}-${index}`} // Use a unique key for each row
                         sx={{
-                          "&:last-child td, &:last-child th": { border: 0 },
+                          '&:last-child td, &:last-child th': { border: 0 },
                         }}
                       >
-                        <TableCell align="left" sx={{ paddingLeft: "40px" }}>
+                        <TableCell align='left' sx={{ paddingLeft: '40px' }}>
                           {ciplRow.locationName}
                         </TableCell>
-                        <TableCell align="left">
+                        <TableCell align='left'>
                           {subLocation.address}
                         </TableCell>
                       </TableRow>
@@ -401,7 +401,7 @@ const LocationReport = () => {
         </TableContainer>
         <TablePagination
           rowsPerPageOptions={[5, 10, 25]}
-          component="div"
+          component='div'
           count={cipl.length}
           rowsPerPage={rowsPerPage}
           page={page}

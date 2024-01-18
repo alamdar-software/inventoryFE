@@ -25,7 +25,7 @@ import { fetchItem } from '../redux/slice/ItemSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { PoList } from '../components/PoList';
 
-const InventoryList = () => {
+const ViewInventoryMoc = () => {
   const [inventoryData, setInventoryData] = useState([]);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
@@ -75,21 +75,21 @@ const InventoryList = () => {
         console.error('Error fetching inventory data:', error);
       });
   }, []);
-  const deleteInventory = async (id) => {
-    console.log(id);
-    fetch(`http://localhost:8080/inventory/delete/${id}`, {
-      method: 'DELETE',
-      headers: { 'Content-type': 'application/json' },
-      body: JSON.stringify(InventoryList),
-    })
-      .then(() => {
-        console.log('Location Updated');
-        window.location.reload();
-      })
-      .catch((error) => {
-        console.error('Error updating location:', error);
-      });
-  };
+  //   const deleteInventory = async (id) => {
+  //     console.log(id);
+  //     fetch(`http://localhost:8080/inventory/delete/${id}`, {
+  //       method: 'DELETE',
+  //       headers: { 'Content-type': 'application/json' },
+  //       body: JSON.stringify(InventoryList),
+  //     })
+  //       .then(() => {
+  //         console.log('Location Updated');
+  //         window.location.reload();
+  //       })
+  //       .catch((error) => {
+  //         console.error('Error updating location:', error);
+  //       });
+  //   };
   useEffect(() => {
     dispatch(fetchlocation());
     dispatch(fetchItem());
@@ -144,88 +144,6 @@ const InventoryList = () => {
         </Card>
       </Grid>
 
-      <Card sx={{ mt: '23px' }}>
-        <CardContent>
-          <Grid>
-            <Grid container spacing={2}>
-              <Grid item xs={12} sm={6}>
-                <FormControl fullWidth sx={{ width: '90%' }}>
-                  <InputLabel id='demo-simple-select-label'>
-                    Location
-                  </InputLabel>
-                  <Select
-                    labelId='demo-simple-select-label'
-                    id='demo-simple-select'
-                    //value={age}
-                    label='location'
-                    MenuProps={{
-                      PaperProps: {
-                        style: {
-                          maxHeight: 120, // Adjust the height as needed
-                        },
-                      },
-                    }}
-                    // onChange={handleLocationChange}
-                    onChange={(e) =>
-                      setformData({
-                        ...formData,
-                        locationName: e.target.value,
-                      })
-                    }
-                  >
-                    {state.location.data?.map((item, index) => (
-                      <MenuItem key={index} value={item?.locationName}>
-                        {' '}
-                        {item?.locationName}
-                      </MenuItem>
-                    ))}
-                  </Select>
-                </FormControl>
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                <FormControl fullWidth sx={{ width: '90%' }}>
-                  <InputLabel id='demo-simple-select-label'>
-                    Item Description
-                  </InputLabel>
-                  <Select
-                    labelId='demo-simple-select-label'
-                    id='demo-simple-select'
-                    label='Description'
-                    onChange={(e) =>
-                      setformData({
-                        ...formData,
-                        description: e.target.value,
-                      })
-                    }
-                  >
-                    {state.item.data?.map((item, index) => (
-                      <MenuItem key={index} value={item?.description}>
-                        {' '}
-                        {item?.description}
-                      </MenuItem>
-                    ))}
-                  </Select>
-                </FormControl>
-              </Grid>
-            </Grid>
-          </Grid>
-          <Button
-            variant='contained'
-            color='secondary'
-            size='large'
-            onClick={handleSearch}
-            sx={{
-              mt: '33px',
-              mb: '17px',
-              marginLeft: 'auto',
-              marginRight: 'auto',
-              display: 'block',
-            }}
-          >
-            Search
-          </Button>
-        </CardContent>
-      </Card>
       <Grid sx={{ mt: '33px', width: '100%', overflowX: 'scroll' }}>
         <TableContainer
           component={Paper}
@@ -267,8 +185,8 @@ const InventoryList = () => {
                     sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                   >
                     {/* <TableCell component='th' scope='row'>
-                  {attendence.name}
-                </TableCell> */}
+                    {attendence.name}
+                  </TableCell> */}
 
                     <TableCell align='right'>
                       {inventory.locationName}
@@ -286,7 +204,7 @@ const InventoryList = () => {
                     <TableCell align='right'>
                       {inventory.scrappedItem}
                     </TableCell>
-                    <Box>
+                    {/* <Box>
                       <Button
                         variant='outlined'
                         onClick={handleButtonClick}
@@ -387,20 +305,12 @@ const InventoryList = () => {
                             </Grid>
                           </Grid>
                         </div>
-                      )}
+                      )} */}
 
-                      <Link to={`/updateInventory/${inventory?.id}`}>
+                    {/* <Link to={`/updateInventory/${inventory?.id}`}>
                         <Button variant='contained'>Update</Button>
                       </Link>
-                      <Button
-                        sx={{ marginLeft: '11px' }}
-                        variant='contained'
-                        color='secondary'
-                        onClick={() => deleteInventory(inventory.id)}
-                      >
-                        Delete
-                      </Button>
-                    </Box>
+                    </Box> */}
                   </TableRow>
                 ))}
             </TableBody>
@@ -420,4 +330,4 @@ const InventoryList = () => {
   );
 };
 
-export default InventoryList;
+export default ViewInventoryMoc;

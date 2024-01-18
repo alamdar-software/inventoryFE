@@ -68,7 +68,7 @@ const SingleIncome = () => {
     setformData({
       ...formData,
       locationName: selectedLocation,
-      SubLocations: [""], // Reset sublocation when location changes
+      address: "", // Reset sublocation when location changes
     });
     const selectedLocationObj = state.location.data.find(
       (location) => location.locationName === selectedLocation
@@ -101,15 +101,11 @@ const SingleIncome = () => {
     setItem(itemDescriptions);
   };
 
-  const updateFormDataSubLocations = (index, selectedSubLocation) => {
-    setformData((prevFormData) => {
-      const updatedSubLocations = [...prevFormData.SubLocations];
-      updatedSubLocations[index] = selectedSubLocation;
-      return {
-        ...prevFormData,
-        SubLocations: updatedSubLocations,
-      };
-    });
+  const updateFormDataSubLocations = (selectedSubLocation) => {
+    setformData((prevFormData) => ({
+      ...prevFormData,
+      address: selectedSubLocation,
+    }));
   };
   const handleQuantityChange = (e) => {
     const quantity = parseFloat(e.target.value);

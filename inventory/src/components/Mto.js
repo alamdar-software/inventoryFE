@@ -49,6 +49,7 @@ const Mto = () => {
   const [formRows, setFormRows] = useState(1);
   const [formControls, setFormControls] = useState([{ key: 0 }]);
   const [selectedSubLocations, setSelectedSubLocations] = useState([]);
+  const [item, setItem] = useState([]);
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(fetchConsignee());
@@ -118,6 +119,23 @@ const Mto = () => {
         ...prevFormData,
         SubLocation: updatedSubLocations,
       };
+    });
+    const selectedInventoryData = state.inventory.data.filter(
+      (inventoryItem) => inventoryItem.address?.address === selectedSubLocation
+    );
+    console.log(selectedInventoryData, '22');
+
+    // Extract item descriptions from the selected inventory data
+    const itemDescriptions = selectedInventoryData.map(
+      (inventoryItem) => inventoryItem.description
+    );
+    console.log(itemDescriptions, '33');
+
+    // Update the item state with the selected item descriptions
+    setItem((prevItems) => {
+      const updatedItems = [...prevItems];
+      updatedItems[index] = itemDescriptions; // This line is updated
+      return updatedItems;
     });
   };
   console.log(subLocations, 'subbbbbbbbbbbbb');
@@ -368,7 +386,13 @@ const Mto = () => {
             //     itemName: e.target.value,
             //   })
             // }
-            onChange={(e) => handleDescriptionChange(index, e.target.value)}
+            onChange={(e) =>
+              handleDescriptionChange(
+                index,
+                selectedSubLocations[index],
+                e.target.value
+              )
+            }
             MenuProps={{
               PaperProps: {
                 style: {
@@ -378,10 +402,9 @@ const Mto = () => {
             }}
             //onChange={handleChange}
           >
-            {state.item.data?.map((item, arrayIndex) => (
-              <MenuItem key={arrayIndex} value={item?.description}>
-                {' '}
-                {item?.description}
+            {item[index]?.map((filteredItem, itemIndex) => (
+              <MenuItem key={itemIndex} value={filteredItem}>
+                {filteredItem}
               </MenuItem>
             ))}
           </Select>
