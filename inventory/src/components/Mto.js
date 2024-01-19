@@ -24,6 +24,8 @@ import AddIcon from '@mui/icons-material/Add';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { fetchInventory } from '../redux/slice/InventorySlice';
+import { fetchIncome } from '../redux/slice/SingleIncomeSlice';
 
 const Mto = () => {
   const [formData, setformData] = useState({
@@ -37,6 +39,7 @@ const Mto = () => {
     purchase: [],
     quantity: [],
     remarks: [],
+    partNo: [],
   });
 
   const [subLocations, setSubLocations] = useState([]);
@@ -50,11 +53,18 @@ const Mto = () => {
   const [formControls, setFormControls] = useState([{ key: 0 }]);
   const [selectedSubLocations, setSelectedSubLocations] = useState([]);
   const [item, setItem] = useState([]);
+  const [partNumbersData, setPartNumbersData] = useState([]);
+  const [selectedPartNo, setselectedPartNo] = useState([]);
+  const [partNo, setPartNo] = useState(
+    Array.from({ length: formRows }, () => [])
+  );
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(fetchConsignee());
     dispatch(fetchlocation());
     dispatch(fetchItem());
+    dispatch(fetchInventory());
+    dispatch(fetchIncome());
   }, []);
   console.log(state, 'mto');
 
@@ -103,23 +113,13 @@ const Mto = () => {
 
   const handleSubLocationChange = (e, index) => {
     const selectedSubLocation = e.target.value || ''; // Ensure a default value if undefined
+    updateFormDataSubLocation(index, selectedSubLocation);
     setSelectedSubLocations((prevSubLocations) => {
       const updatedSubLocations = [...prevSubLocations];
       updatedSubLocations[index] = selectedSubLocation;
       return updatedSubLocations;
     });
 
-    updateFormDataSubLocation(index, selectedSubLocation);
-  };
-  const updateFormDataSubLocation = (index, selectedSubLocation) => {
-    setformData((prevFormData) => {
-      const updatedSubLocations = [...prevFormData.SubLocation];
-      updatedSubLocations[index] = selectedSubLocation;
-      return {
-        ...prevFormData,
-        SubLocation: updatedSubLocations,
-      };
-    });
     const selectedInventoryData = state.inventory.data.filter(
       (inventoryItem) => inventoryItem.address?.address === selectedSubLocation
     );
@@ -136,6 +136,16 @@ const Mto = () => {
       const updatedItems = [...prevItems];
       updatedItems[index] = itemDescriptions; // This line is updated
       return updatedItems;
+    });
+  };
+  const updateFormDataSubLocation = (index, selectedSubLocation) => {
+    setformData((prevFormData) => {
+      const updatedSubLocations = [...prevFormData.SubLocation];
+      updatedSubLocations[index] = selectedSubLocation;
+      return {
+        ...prevFormData,
+        SubLocation: updatedSubLocations,
+      };
     });
   };
   console.log(subLocations, 'subbbbbbbbbbbbb');
@@ -235,12 +245,31 @@ const Mto = () => {
       };
     });
   };
-  const handleDescriptionChange = (index, value) => {
-    updateFormDataDescription(index, value);
+  const handleDescriptionChange = (index, description) => {
+    updateFormDataDescription(index, description);
     setDescription((prevDescription) => {
       const updateDescription = [...prevDescription];
-      updateDescription[index] = value;
+      updateDescription[index] = description;
       return updateDescription;
+    });
+    // Find the corresponding data in state.singleincome for the selected item
+    const selectedIncomeData = state.singleIncome?.data.filter(
+      (incomeItem) =>
+        incomeItem.description === description.match(/^[^(]*/)[0].trim()
+    );
+    console.log(selectedIncomeData, 'selectttttt');
+    console.log(description, 'selected item');
+
+    // Extract part numbers from the selected income data
+    const partNumbers = selectedIncomeData.map(
+      (incomeItem) => incomeItem.pn || []
+    );
+
+    // Update the partNumbers state with the selected part numbers
+    setPartNo((prevPartNumbers) => {
+      const updatedPartNumbers = [...prevPartNumbers];
+      updatedPartNumbers[index] = partNumbers.flat(); // Use flat to flatten the nested arrays
+      return updatedPartNumbers;
     });
   };
   console.log(description, 'item');
@@ -256,6 +285,59 @@ const Mto = () => {
       };
     });
   };
+  const handlePartNoChange = async (
+    index,
+    selectedSubLocation,
+    selectedPartNo
+  ) => {
+    // ... (your existing code)
+
+    // Find the corresponding data in state.singleIncome for the selected part number
+    const selectedIncomeData = state.singleIncome?.data.find(
+      (incomeItem) => incomeItem.pn === selectedPartNo
+    );
+
+    // Extract the necessary data from the selected income data
+    const partNumberData = {
+      date: selectedIncomeData?.date || '',
+      unitPrice: selectedIncomeData?.unitCost || '',
+
+      sn: selectedIncomeData?.sn || '',
+      brand: selectedIncomeData?.brandName || '',
+    };
+    updateFormDataPart(index, selectedPartNo, partNumberData);
+    // Update formData with the selected part number data
+    setPartNumbersData((prevPartNumbersData) => {
+      const updatedPartNumbersData = [...prevPartNumbersData];
+      updatedPartNumbersData[index] = partNumberData;
+      return updatedPartNumbersData;
+    });
+  };
+
+  const updateFormDataPart = (index, selectedPartNo, partNumberData) => {
+    setformData((prevFormData) => {
+      const updatedPartNumbersData = [...prevFormData.partNo];
+      updatedPartNumbersData[index] = selectedPartNo;
+
+      // Update other relevant properties in formData
+      return {
+        ...prevFormData,
+        partNo: updatedPartNumbersData,
+
+        brand: [...(prevFormData.brand || []), partNumberData.brand],
+        sn: [...(prevFormData.sn || []), partNumberData.sn], // Keep the previous sn values
+        amount: [...(prevFormData.amount || []), partNumberData.amount],
+        date: [...(prevFormData.date || []), partNumberData.date],
+        unitPrice: [
+          ...(prevFormData.unitPrice || []),
+          String(partNumberData.unitPrice),
+        ],
+      };
+    });
+  };
+
+  console.log(partNumbersData, 'partNumbersData');
+  console.log(partNumbersData?.date, 'dateeee');
   // const updateFormDataSubLocation = (index, value) => {
   //   setformData((prevFormData) => {
   //     const updatedSubLocations = [...prevFormData.SubLocation];
@@ -377,9 +459,9 @@ const Mto = () => {
           </InputLabel>
           <Select
             labelId='demo-simple-select-label'
-            id='itemName'
+            id='description'
             //value={age}
-            label='itemName'
+            label='description'
             // onChange={(e) =>
             //   setformData({
             //     ...formData,
@@ -389,7 +471,7 @@ const Mto = () => {
             onChange={(e) =>
               handleDescriptionChange(
                 index,
-                selectedSubLocations[index],
+                // selectedSubLocations[index],
                 e.target.value
               )
             }
@@ -424,17 +506,13 @@ const Mto = () => {
               },
             }}
             onChange={(e) =>
-              setformData({
-                ...formData,
-                locationName: e.target.value,
-              })
+              handlePartNoChange(index, selectedPartNo[index], e.target.value)
             }
             //onChange={handleChange}
           >
-            {state.location.data?.map((item, index) => (
-              <MenuItem key={index} value={item?.locationName}>
-                {' '}
-                {item?.locationName}
+            {partNo[index]?.map((partNo, partIndex) => (
+              <MenuItem key={partIndex} value={partNo}>
+                {partNo}
               </MenuItem>
             ))}
           </Select>
@@ -447,7 +525,7 @@ const Mto = () => {
               id='outlined-basic'
               label='S/N'
               variant='outlined'
-              // value={sn}
+              value={partNumbersData[index]?.sn || ''}
               onChange={(e) => handleSnChange(index, e.target.value)}
               fullWidth
             />
@@ -460,8 +538,7 @@ const Mto = () => {
               id='outlined-basic'
               label='Purchase Order(D.O.P)'
               variant='outlined'
-              // value={locationName}
-              // onChange={(e) => setLocation(e.target.value)}
+              value={partNumbersData[index]?.date || ''}
               onChange={(e) => handlePurchaseChange(index, e.target.value)}
               fullWidth
             />
