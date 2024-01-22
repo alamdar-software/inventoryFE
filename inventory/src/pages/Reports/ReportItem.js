@@ -110,7 +110,7 @@ const ReportItem = () => {
     worksheet.addRow([
       "Item Description",
       "Category",
-      "Item",
+
       "Total Quantity",
       "MinimumStock",
     ]).font = boldStyle;
@@ -166,7 +166,7 @@ const ReportItem = () => {
               gutterBottom
               style={{ fontFamily: "'EB Garamond'" }}
             >
-              Inventory Report
+              Item Report
             </Typography>
           </CardContent>
         </Card>
