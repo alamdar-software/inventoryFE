@@ -30,7 +30,7 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import PictureAsPdfIcon from "@mui/icons-material/PictureAsPdf";
-
+import ExcelJS from "exceljs";
 const ReportItem = () => {
   const dispatch = useDispatch();
   const state = useSelector((state) => state);
@@ -62,83 +62,6 @@ const ReportItem = () => {
     setPage(0);
   };
   console.log(formData, "heyyy");
-  // const handleClick = () => {
-  //   try {
-  //     const formData = {
-  //       pickupAddress,
-  //       pIC,
-  //       companyName,
-  //       countryCode,
-  //       contactNumber,
-  //     };
-
-  //     console.log(formData);
-
-  //     fetch('http://localhost:8080/pickup/add', {
-  //       method: 'POST',
-  //       headers: { 'Content-type': 'application/json' },
-  //       body: JSON.stringify(formData),
-  //     }).then(() => {
-  //       console.log('Pickup Added');
-  //     });
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
-
-  /*   const handleClick = (e) => {
-    e.preventDefault();
-    const attendence = {
-      pickupAddress,
-      pic,
-      companyName,
-      countryCode,
-      contactNumber,
-    };
-    console.log(attendence);
-
-    fetch("http://localhost:8080/pickup/add", {
-      method: "POST",
-      headers: { "Content-type": "application/json" },
-      body: JSON.stringify(attendence),
-    }).then(() => {
-      console.log("Pickup Added");
-      window.location.reload();
-    });
-  };
-  useEffect(() => {
-    fetch('http://localhost:8080/pickup/view')
-      .then((res) => {
-        if (!res.ok) {
-          throw new Error(`HTTP error! Status: ${res.status}`);
-        }
-        return res.json();
-      })
-      .then((result) => {
-        console.log(result);
-        setPickUp(result);
-      })
-      .catch((error) => {
-        console.error('Error fetching pickup data:', error);
-      });
-  }, []);
-
-  const deletePickup = async (id) => {
-    alert("Deleted Successfully!");
-    console.log(id);
-    fetch(`http://localhost:8080/pickup/delete/${id}`, {
-      method: "DELETE",
-      headers: { "Content-type": "application/json" },
-      body: JSON.stringify(Pickup),
-    })
-      .then(() => {
-        console.log("Pickup Deleted");
-        window.location.reload();
-      })
-      .catch((error) => {
-        console.error("Error updating pickup:", error);
-      });
-    }; */
 
   const handleClick = async (e) => {
     e.preventDefault();
@@ -178,6 +101,51 @@ const ReportItem = () => {
     }
   }; */
   console.log(state, "hey");
+  const handleDownloadCsv = () => {
+    const boldStyle = { bold: true };
+    const workbook = new ExcelJS.Workbook();
+    const worksheet = workbook.addWorksheet("Sheet 1");
+
+    // Add header row
+    worksheet.addRow([
+      "Item Description",
+      "Category",
+
+      "Total Quantity",
+      "MinimumStock",
+    ]).font = boldStyle;
+    worksheet.getColumn(3).width = 20;
+    worksheet.getColumn(2).width = 30;
+
+    let serialNumber = 1;
+    // Add data rows
+    filteredCipl.forEach((ciplRow, rowIndex) => {
+      const rowData = [
+        serialNumber++,
+        Array.isArray(ciplRow.description)
+          ? ciplRow.description.join(", ")
+          : ciplRow.description,
+        ciplRow.name,
+        ciplRow.quantity,
+        Array.isArray(ciplRow.minimumStock)
+          ? ciplRow.minimumStock.join(", ")
+          : ciplRow.minimumStock,
+      ];
+
+      worksheet.addRow(rowData);
+    });
+
+    // Create a blob from the workbook
+    workbook.xlsx.writeBuffer().then((buffer) => {
+      const blob = new Blob([buffer], {
+        type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+      });
+      const link = document.createElement("a");
+      link.href = URL.createObjectURL(blob);
+      link.download = "reportItem.xlsx";
+      link.click();
+    });
+  };
   return (
     <>
       <Grid>
@@ -198,7 +166,7 @@ const ReportItem = () => {
               gutterBottom
               style={{ fontFamily: "'EB Garamond'" }}
             >
-              Inventory Report
+              Item Report
             </Typography>
           </CardContent>
         </Card>
@@ -323,25 +291,26 @@ const ReportItem = () => {
           sx={{
             borderRadius: "33px",
             borderBottom: "2px solid yellow",
-            width: "110%",
+            width: "95%",
           }}
         >
           <Table sx={{ minWidth: 650 }} aria-label="simple table">
             <TableHead>
               <TableRow>
-                <TableCell align="right" sx={{ fontWeight: "bold" }}>
+                <TableCell
+                  align="left"
+                  sx={{ fontWeight: "bold", paddingLeft: "40px" }}
+                >
                   Item Description
                 </TableCell>
-                <TableCell align="right" sx={{ fontWeight: "bold" }}>
+                <TableCell align="left" sx={{ fontWeight: "bold" }}>
                   Category
                 </TableCell>
-                <TableCell align="right" sx={{ fontWeight: "bold" }}>
-                  Item
-                </TableCell>
-                <TableCell align="right" sx={{ fontWeight: "bold" }}>
+
+                <TableCell align="left" sx={{ fontWeight: "bold" }}>
                   Total Quantity
                 </TableCell>
-                <TableCell align="right" sx={{ fontWeight: "bold" }}>
+                <TableCell align="left" sx={{ fontWeight: "bold" }}>
                   Minimum Stock
                 </TableCell>
               </TableRow>
@@ -349,50 +318,28 @@ const ReportItem = () => {
             <TableBody>
               {filteredCipl
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                .map((ciplRow) =>
+                .map((ciplRow) => (
                   // Render a row for each sublocation
-                  ciplRow.SubLocations.map((subLocation, index) => (
-                    <TableRow
-                      key={`${ciplRow.id}-${index}`} // Use a unique key for each row
-                      sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-                    >
-                      <TableCell align="right">
-                        {ciplRow.locationName}
-                      </TableCell>
-                      <TableCell align="right">{subLocation}</TableCell>
-                      <TableCell align="right">{ciplRow.shipperName}</TableCell>
-                      <TableCell align="right">
-                        {ciplRow.consigneeName}
-                      </TableCell>
-                      <TableCell align="right">
-                        {ciplRow.consigneeName}
-                      </TableCell>
-                      <TableCell align="right">
-                        {ciplRow.transferDate}
-                      </TableCell>
-                      <TableCell align="right">
-                        {ciplRow.transferDate}
-                      </TableCell>
-                      <TableCell align="right">
-                        <Link to={`/cipl/createpdf/${ciplRow.id}`}>
-                          <Button
-                            variant="contained"
-                            color="primary"
-                            /*  onClick={() => generatePDF(ciplRow.id, index)} */
-                          >
-                            {<PictureAsPdfIcon />}
-                          </Button>
-                        </Link>
-                      </TableCell>
-                    </TableRow>
-                  ))
-                )}
+
+                  <TableRow
+                    key={`${ciplRow.id}`} // Use a unique key for each row
+                    sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                  >
+                    <TableCell align="right">{ciplRow.description}</TableCell>
+
+                    <TableCell align="right">{ciplRow.name}</TableCell>
+
+                    <TableCell align="right">{ciplRow.quantity}</TableCell>
+                    <TableCell align="right">{ciplRow.minimumStock}</TableCell>
+                  </TableRow>
+                ))}
             </TableBody>
           </Table>
         </TableContainer>
         <TablePagination
           rowsPerPageOptions={[5, 10, 25]}
           component="div"
+          sx={{ paddingRight: "20px" }}
           count={cipl.length}
           rowsPerPage={rowsPerPage}
           page={page}

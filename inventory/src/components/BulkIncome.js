@@ -60,6 +60,7 @@ const BulkIncome = () => {
     date: '',
     unitCost: [],
     name: [],
+
     quantity: [],
     //item: [],
     description: [],
@@ -73,6 +74,7 @@ const BulkIncome = () => {
     entityName: [],
     storeNo: [],
     impaCode: [],
+    totalPrice: [],
   });
 
   const handleDateChange = (date) => {
@@ -81,16 +83,65 @@ const BulkIncome = () => {
       date: date.format('YYYY-MM-DD'),
     });
   };
-  console.log(formData);
 
-  const handleUnitCostChange = (index, value) => {
-    updateFormDataUnitCost(index, value);
-    setUnitCost((prevunitCost) => {
-      const updateUnitCost = [...prevunitCost];
-      updateUnitCost[index] = value;
-      return updateUnitCost;
+  // const handleUnitCostChange = (index, newUnitCost) => {
+  //   // Assuming newUnitCost is a string, you might want to parse it to a number
+  //   const parsedUnitCost = parseFloat(newUnitCost);
+
+  //   setFormControls((prevControls) => {
+  //     const updatedControls = [...prevControls];
+  //     updatedControls[index] = {
+  //       ...updatedControls[index],
+  //       unitCost: newUnitCost,
+  //     };
+  //     return updatedControls;
+  //   });
+
+  //   // Calculate total price and update form data
+  //   setformData((prevFormData) => {
+  //     const updatedFormData = {
+  //       ...prevFormData,
+  //       unitCost: [newUnitCost],
+  //       totalPrice: prevFormData.unitCost.reduce((total, cost, i) => {
+  //         return total + (i === index ? parsedUnitCost : cost);
+  //       }, 0),
+  //     };
+  //     return updatedFormData;
+  //   });
+  // };
+  // console.log(unitCost, 'cst');
+
+  const handleUnitCostChange = (index, newUnitCost) => {
+    // Assuming newUnitCost is a string, you might want to parse it to a number
+    const parsedUnitCost = parseFloat(newUnitCost);
+
+    // Update the form controls with the new unit cost
+    setFormControls((prevControls) => {
+      const updatedControls = [...prevControls];
+      updatedControls[index] = {
+        ...updatedControls[index],
+        unitCost: newUnitCost,
+      };
+      return updatedControls;
+    });
+
+    // Get the quantity for the corresponding item
+    const quantity = formData.quantity[index];
+
+    // Calculate total price and update form data
+    const totalPrice = parsedUnitCost * quantity;
+
+    setformData((prevFormData) => {
+      const updatedFormData = {
+        ...prevFormData,
+        unitCost: [...prevFormData.unitCost], // Copy the existing array
+        totalPrice: totalPrice, // Update the total price
+      };
+      updatedFormData.unitCost[index] = newUnitCost; // Update the specific index
+      return updatedFormData;
     });
   };
+
   const handleClick = (e) => {
     e.preventDefault();
 
@@ -173,6 +224,7 @@ const BulkIncome = () => {
         return {
           description: description,
           unitName: selectedItem ? selectedItem.unitName : '',
+          name: selectedItem ? selectedItem.name : '',
         };
       });
 
@@ -188,8 +240,8 @@ const BulkIncome = () => {
           .map((itemInfo, index) => ({
             key: prevControls.length + index,
             description: itemInfo.description,
-
             unitName: itemInfo.unitName,
+            name: itemInfo.name,
           })),
       ]);
 
@@ -202,11 +254,13 @@ const BulkIncome = () => {
         const uniqueUnits = selectedItemsInfo.map(
           (itemInfo) => itemInfo.unitName
         );
+        const uniqueNames = selectedItemsInfo.map((itemInfo) => itemInfo.name);
 
         return {
           ...prevFormData,
           description: Array.from(uniqueDescriptions),
-          unitName: uniqueUnits, // Assign the array directly
+          unitName: uniqueUnits,
+          name: uniqueNames,
         };
       });
 
@@ -249,27 +303,45 @@ const BulkIncome = () => {
   // console.log(subLocations, 'itemmmm');
   // const handleItemChange = (index, value) => {
 
-  const handleCatagoryChange = (index, value) => {
-    updateFormDataCatagory(index, value);
+  const handleCatagoryChange = (index, name) => {
+    updateFormDataCatagory(index, name);
     setName((prevCatagory) => {
       const updateCatagory = [...prevCatagory];
-      updateCatagory[index] = value;
+      updateCatagory[index] = name;
       return updateCatagory;
     });
   };
 
-  const updateFormDataCatagory = (index, value) => {
+  const updateFormDataCatagory = (index, name) => {
     setformData((prevFormData) => {
       const updateCatagory = [...prevFormData.name];
-      updateCatagory[index] = value;
+      updateCatagory[index] = name;
       return {
         ...prevFormData,
         name: updateCatagory,
       };
     });
   };
+  console.log(name, 'name');
   const handleQuantityChange = (index, value) => {
-    updateFormDataQuantity(index, value);
+    // Assuming that unit cost is stored as a number in formData.unitCost
+    const unitCost = parseFloat(formData.unitCost[index]);
+
+    // Calculate the total price based on the new quantity and unit cost
+    const totalPrice = unitCost * value;
+
+    // Update the form data with the new quantity and total price
+    setformData((prevFormData) => {
+      const updatedFormData = {
+        ...prevFormData,
+        quantity: [...prevFormData.quantity], // Copy the existing array
+        totalPrice: totalPrice, // Update the total price
+      };
+      updatedFormData.quantity[index] = value; // Update the specific index
+      return updatedFormData;
+    });
+
+    // Update the quantity state
     setQuantity((prevQuantity) => {
       const updateQuantity = [...prevQuantity];
       updateQuantity[index] = value;
@@ -288,13 +360,25 @@ const BulkIncome = () => {
     });
   };
 
-  const handleTotalPriceChange = (index, value) => {
-    updateFormDataTotalPrice(index, value);
-    setPrice((prevPrice) => {
-      const updateTotalPrice = [...prevPrice];
-      updateTotalPrice[index] = value;
-      return updateTotalPrice;
+  const handleTotalPriceChange = (index, newTotalPrice) => {
+    // Assuming newTotalPrice is a string, you might want to parse it to a number
+    const parsedTotalPrice = parseFloat(newTotalPrice);
+
+    // Update the form controls with the new total price
+    setFormControls((prevControls) => {
+      const updatedControls = [...prevControls];
+      updatedControls[index] = {
+        ...updatedControls[index],
+        totalPrice: parsedTotalPrice,
+      };
+      return updatedControls;
     });
+
+    // Update the form data with the new total price
+    setformData((prevFormData) => ({
+      ...prevFormData,
+      totalPrice: parsedTotalPrice,
+    }));
   };
 
   const updateFormDataTotalPrice = (index, value) => {
@@ -511,8 +595,8 @@ const BulkIncome = () => {
             variant='outlined'
             fullWidth
             sx={{ width: '100%' }}
-            // value={formData.name}
-            onChange={(e) => handleCatagoryChange(index, e.target.value)}
+            value={control.name || ''}
+            // onChange={(e) => handleCatagoryChange(index, e.target.value)}
           />
         </FormControl>
 
@@ -549,6 +633,7 @@ const BulkIncome = () => {
               variant='outlined'
               type='number'
               fullWidth
+              value={control.unitCost || ''}
               sx={{ width: '90%' }}
               /*   onChange={(e) =>
               setformData({
@@ -582,8 +667,8 @@ const BulkIncome = () => {
               label='Total Price'
               variant='outlined'
               type='number'
-              // value={locationName}
-              onChange={(e) => handleTotalPriceChange(index, e.target.value)}
+              value={formData.totalPrice || 0}
+              //onChange={(e) => handleTotalPriceChange(index, e.target.value)}
               fullWidth
             />
           </Grid>
@@ -763,6 +848,7 @@ const BulkIncome = () => {
       </div>
     ));
   };
+  console.log(formData, 'formmmmmmmm');
 
   return (
     <>
