@@ -18,6 +18,8 @@
     "date-fns": "^2.30.0",
     "dayjs": "^1.11.10",
     "exceljs": "^4.4.0",
+    "html2canvas": "^1.4.1",
+    "jspdf": "^2.5.1",
     "papaparse": "^5.4.1",
     "perfect-scrollbar": "^1.5.5",
     "react": "^18.2.0",
