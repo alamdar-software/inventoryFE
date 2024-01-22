@@ -9,18 +9,18 @@ import {
   Select,
   TextField,
   Typography,
-} from "@mui/material";
-import React, { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
-import { useSelector } from "react-redux";
-import { fetchlocation } from "../redux/slice/location";
-import { fetchItem } from "../redux/slice/ItemSlice";
-import { fetchCurrency } from "../redux/slice/CurrencySlice";
-import { fetchBrand } from "../redux/slice/BrandSlice";
-import DeleteIcon from "@mui/icons-material/Delete";
-import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import { fetchUom } from "../redux/slice/UomSlice";
+} from '@mui/material';
+import React, { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
+import { fetchlocation } from '../redux/slice/location';
+import { fetchItem } from '../redux/slice/ItemSlice';
+import { fetchCurrency } from '../redux/slice/CurrencySlice';
+import { fetchBrand } from '../redux/slice/BrandSlice';
+import DeleteIcon from '@mui/icons-material/Delete';
+import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { fetchUom } from '../redux/slice/UomSlice';
 
 const BulkIncome = () => {
   useEffect(() => {
@@ -52,14 +52,15 @@ const BulkIncome = () => {
   const [impaode, setImpaCode] = useState([]);
   const [selectedItems, setSelectedItems] = useState([]);
   const [formData, setformData] = useState({
-    locationName: "",
-    address: "",
-    description: "",
-    purchaseOrder: "",
-    remarks: "",
-    date: "",
+    locationName: '',
+    address: '',
+    description: '',
+    purchaseOrder: '',
+    remarks: '',
+    date: '',
     unitCost: [],
     name: [],
+
     quantity: [],
     //item: [],
     description: [],
@@ -73,24 +74,74 @@ const BulkIncome = () => {
     entityName: [],
     storeNo: [],
     impaCode: [],
+    totalPrice: [],
   });
 
   const handleDateChange = (date) => {
     setformData({
       ...formData,
-      date: date.format("YYYY-MM-DD"),
+      date: date.format('YYYY-MM-DD'),
     });
   };
-  console.log(formData);
 
-  const handleUnitCostChange = (index, value) => {
-    updateFormDataUnitCost(index, value);
-    setUnitCost((prevunitCost) => {
-      const updateUnitCost = [...prevunitCost];
-      updateUnitCost[index] = value;
-      return updateUnitCost;
+  // const handleUnitCostChange = (index, newUnitCost) => {
+  //   // Assuming newUnitCost is a string, you might want to parse it to a number
+  //   const parsedUnitCost = parseFloat(newUnitCost);
+
+  //   setFormControls((prevControls) => {
+  //     const updatedControls = [...prevControls];
+  //     updatedControls[index] = {
+  //       ...updatedControls[index],
+  //       unitCost: newUnitCost,
+  //     };
+  //     return updatedControls;
+  //   });
+
+  //   // Calculate total price and update form data
+  //   setformData((prevFormData) => {
+  //     const updatedFormData = {
+  //       ...prevFormData,
+  //       unitCost: [newUnitCost],
+  //       totalPrice: prevFormData.unitCost.reduce((total, cost, i) => {
+  //         return total + (i === index ? parsedUnitCost : cost);
+  //       }, 0),
+  //     };
+  //     return updatedFormData;
+  //   });
+  // };
+  // console.log(unitCost, 'cst');
+
+  const handleUnitCostChange = (index, newUnitCost) => {
+    // Assuming newUnitCost is a string, you might want to parse it to a number
+    const parsedUnitCost = parseFloat(newUnitCost);
+
+    // Update the form controls with the new unit cost
+    setFormControls((prevControls) => {
+      const updatedControls = [...prevControls];
+      updatedControls[index] = {
+        ...updatedControls[index],
+        unitCost: newUnitCost,
+      };
+      return updatedControls;
+    });
+
+    // Get the quantity for the corresponding item
+    const quantity = formData.quantity[index];
+
+    // Calculate total price and update form data
+    const totalPrice = parsedUnitCost * quantity;
+
+    setformData((prevFormData) => {
+      const updatedFormData = {
+        ...prevFormData,
+        unitCost: [...prevFormData.unitCost], // Copy the existing array
+        totalPrice: totalPrice, // Update the total price
+      };
+      updatedFormData.unitCost[index] = newUnitCost; // Update the specific index
+      return updatedFormData;
     });
   };
+
   const handleClick = (e) => {
     e.preventDefault();
 
@@ -100,12 +151,12 @@ const BulkIncome = () => {
 
     console.log(formData);
 
-    fetch("http://localhost:8080/bulkstock/add", {
-      method: "POST",
-      headers: { "Content-type": "application/json" },
+    fetch('http://localhost:8080/bulkstock/add', {
+      method: 'POST',
+      headers: { 'Content-type': 'application/json' },
       body: JSON.stringify(formData),
     }).then(() => {
-      console.log("Bulk Added");
+      console.log('Bulk Added');
       //window.location.reload();
     });
   };
@@ -128,7 +179,7 @@ const BulkIncome = () => {
       return updateBrand;
     });
   };
-  console.log(item, "item");
+  console.log(item, 'item');
   console.log(formData);
 
   const updateFormDataBrand = (index, value) => {
@@ -142,7 +193,7 @@ const BulkIncome = () => {
     });
   };
 
-  console.log(state, "formstate");
+  console.log(state, 'formstate');
   const [isItemSelected, setIsItemSelected] = useState(false);
 
   const handleLocationChange = (e) => {
@@ -172,7 +223,8 @@ const BulkIncome = () => {
         );
         return {
           description: description,
-          unitName: selectedItem ? selectedItem.unitName : "",
+          unitName: selectedItem ? selectedItem.unitName : '',
+          name: selectedItem ? selectedItem.name : '',
         };
       });
 
@@ -188,8 +240,8 @@ const BulkIncome = () => {
           .map((itemInfo, index) => ({
             key: prevControls.length + index,
             description: itemInfo.description,
-
             unitName: itemInfo.unitName,
+            name: itemInfo.name,
           })),
       ]);
 
@@ -202,11 +254,13 @@ const BulkIncome = () => {
         const uniqueUnits = selectedItemsInfo.map(
           (itemInfo) => itemInfo.unitName
         );
+        const uniqueNames = selectedItemsInfo.map((itemInfo) => itemInfo.name);
 
         return {
           ...prevFormData,
           description: Array.from(uniqueDescriptions),
-          unitName: uniqueUnits, // Assign the array directly
+          unitName: uniqueUnits,
+          name: uniqueNames,
         };
       });
 
@@ -230,7 +284,7 @@ const BulkIncome = () => {
       return updatedSelectedItems;
     });
   };
-  console.log(selectedItems, "aaaa");
+  console.log(selectedItems, 'aaaa');
   console.log(formData);
   // const handleItemChange = (e) => {
   //   const selectedItem = e.target.value;
@@ -249,27 +303,45 @@ const BulkIncome = () => {
   // console.log(subLocations, 'itemmmm');
   // const handleItemChange = (index, value) => {
 
-  const handleCatagoryChange = (index, value) => {
-    updateFormDataCatagory(index, value);
+  const handleCatagoryChange = (index, name) => {
+    updateFormDataCatagory(index, name);
     setName((prevCatagory) => {
       const updateCatagory = [...prevCatagory];
-      updateCatagory[index] = value;
+      updateCatagory[index] = name;
       return updateCatagory;
     });
   };
 
-  const updateFormDataCatagory = (index, value) => {
+  const updateFormDataCatagory = (index, name) => {
     setformData((prevFormData) => {
       const updateCatagory = [...prevFormData.name];
-      updateCatagory[index] = value;
+      updateCatagory[index] = name;
       return {
         ...prevFormData,
         name: updateCatagory,
       };
     });
   };
+  console.log(name, 'name');
   const handleQuantityChange = (index, value) => {
-    updateFormDataQuantity(index, value);
+    // Assuming that unit cost is stored as a number in formData.unitCost
+    const unitCost = parseFloat(formData.unitCost[index]);
+
+    // Calculate the total price based on the new quantity and unit cost
+    const totalPrice = unitCost * value;
+
+    // Update the form data with the new quantity and total price
+    setformData((prevFormData) => {
+      const updatedFormData = {
+        ...prevFormData,
+        quantity: [...prevFormData.quantity], // Copy the existing array
+        totalPrice: totalPrice, // Update the total price
+      };
+      updatedFormData.quantity[index] = value; // Update the specific index
+      return updatedFormData;
+    });
+
+    // Update the quantity state
     setQuantity((prevQuantity) => {
       const updateQuantity = [...prevQuantity];
       updateQuantity[index] = value;
@@ -288,13 +360,25 @@ const BulkIncome = () => {
     });
   };
 
-  const handleTotalPriceChange = (index, value) => {
-    updateFormDataTotalPrice(index, value);
-    setPrice((prevPrice) => {
-      const updateTotalPrice = [...prevPrice];
-      updateTotalPrice[index] = value;
-      return updateTotalPrice;
+  const handleTotalPriceChange = (index, newTotalPrice) => {
+    // Assuming newTotalPrice is a string, you might want to parse it to a number
+    const parsedTotalPrice = parseFloat(newTotalPrice);
+
+    // Update the form controls with the new total price
+    setFormControls((prevControls) => {
+      const updatedControls = [...prevControls];
+      updatedControls[index] = {
+        ...updatedControls[index],
+        totalPrice: parsedTotalPrice,
+      };
+      return updatedControls;
     });
+
+    // Update the form data with the new total price
+    setformData((prevFormData) => ({
+      ...prevFormData,
+      totalPrice: parsedTotalPrice,
+    }));
   };
 
   const updateFormDataTotalPrice = (index, value) => {
@@ -327,7 +411,7 @@ const BulkIncome = () => {
       };
     });
   };
-  console.log(state, "uom");
+  console.log(state, 'uom');
   const handleStandardPriceChange = (index, value) => {
     updateFormDataStandardPrice(index, value);
     setStandardPrice((prevStandardPrice) => {
@@ -490,39 +574,39 @@ const BulkIncome = () => {
       <div
         key={control.key}
         fullWidth
-        style={{ display: "flex", marginBottom: "10px" }}
+        style={{ display: 'flex', marginBottom: '10px' }}
       >
-        <FormControl fullWidth sx={{ width: "90%", marginRight: "10px" }}>
+        <FormControl fullWidth sx={{ width: '90%', marginRight: '10px' }}>
           <TextField
-            id="outlined-basic"
-            label="Item description"
-            variant="outlined"
+            id='outlined-basic'
+            label='Item description'
+            variant='outlined'
             fullWidth
-            sx={{ width: "100%" }}
+            sx={{ width: '100%' }}
             value={control.description}
             onChange={(e) => handleDescriptionChange(index, e.target.value)}
           />
         </FormControl>
 
-        <FormControl fullWidth sx={{ width: "90%", marginRight: "10px" }}>
+        <FormControl fullWidth sx={{ width: '90%', marginRight: '10px' }}>
           <TextField
-            id="outlined-basic"
-            label="Catagory"
-            variant="outlined"
+            id='outlined-basic'
+            label='Catagory'
+            variant='outlined'
             fullWidth
-            sx={{ width: "100%" }}
-            // value={formData.name}
-            onChange={(e) => handleCatagoryChange(index, e.target.value)}
+            sx={{ width: '100%' }}
+            value={control.name || ''}
+            // onChange={(e) => handleCatagoryChange(index, e.target.value)}
           />
         </FormControl>
 
-        <FormControl fullWidth sx={{ width: "100%" }}>
-          <InputLabel id="brandName">brandName</InputLabel>
+        <FormControl fullWidth sx={{ width: '100%' }}>
+          <InputLabel id='brandName'>brandName</InputLabel>
           <Select
-            labelId="brandName"
-            id="brandName"
+            labelId='brandName'
+            id='brandName'
             //value={age}
-            label="brandName"
+            label='brandName'
             // onChange={(e) =>
             //   setformData({
             //     ...formData,
@@ -535,21 +619,22 @@ const BulkIncome = () => {
           >
             {state.brand.data?.map((item, index) => (
               <MenuItem key={index} value={item?.brandName}>
-                {" "}
+                {' '}
                 {item?.brandName}
               </MenuItem>
             ))}
           </Select>
         </FormControl>
-        <FormControl fullWidth sx={{ width: "90%", marginLeft: "10px" }}>
+        <FormControl fullWidth sx={{ width: '90%', marginLeft: '10px' }}>
           <Grid item xs={12} sm={6}>
             <TextField
-              id="outlined-basic"
-              label="Unit Cost"
-              variant="outlined"
-              type="number"
+              id='outlined-basic'
+              label='Unit Cost'
+              variant='outlined'
+              type='number'
               fullWidth
-              sx={{ width: "90%" }}
+              value={control.unitCost || ''}
+              sx={{ width: '90%' }}
               /*   onChange={(e) =>
               setformData({
                 ...formData,
@@ -560,30 +645,30 @@ const BulkIncome = () => {
             />
           </Grid>
         </FormControl>
-        <FormControl fullWidth sx={{ width: "90%", marginRight: "10px" }}>
+        <FormControl fullWidth sx={{ width: '90%', marginRight: '10px' }}>
           <Grid item xs={12} sm={6}>
             <TextField
-              sx={{ width: "90%" }}
-              id="outlined-basic"
-              label="Quantity"
-              variant="outlined"
-              type="number"
+              sx={{ width: '90%' }}
+              id='outlined-basic'
+              label='Quantity'
+              variant='outlined'
+              type='number'
               // value={locationName}
               onChange={(e) => handleQuantityChange(index, e.target.value)}
               fullWidth
             />
           </Grid>
         </FormControl>
-        <FormControl fullWidth sx={{ width: "90%", marginRight: "10px" }}>
+        <FormControl fullWidth sx={{ width: '90%', marginRight: '10px' }}>
           <Grid item xs={12} sm={6}>
             <TextField
-              sx={{ width: "90%" }}
-              id="outlined-basic"
-              label="Total Price"
-              variant="outlined"
-              type="number"
-              // value={locationName}
-              onChange={(e) => handleTotalPriceChange(index, e.target.value)}
+              sx={{ width: '90%' }}
+              id='outlined-basic'
+              label='Total Price'
+              variant='outlined'
+              type='number'
+              value={formData.totalPrice || 0}
+              //onChange={(e) => handleTotalPriceChange(index, e.target.value)}
               fullWidth
             />
           </Grid>
@@ -632,18 +717,18 @@ const BulkIncome = () => {
           </Select>
         </FormControl> */}
 
-        <FormControl fullWidth sx={{ width: "70%", marginRight: "10px" }}>
+        <FormControl fullWidth sx={{ width: '70%', marginRight: '10px' }}>
           <Grid item xs={21} sm={6}>
             <TextField
-              id="outlined-basic"
-              label="Unit of Measure"
-              variant="outlined"
+              id='outlined-basic'
+              label='Unit of Measure'
+              variant='outlined'
               fullWidth
-              sx={{ width: "90%" }}
+              sx={{ width: '90%' }}
               InputProps={{
                 readOnly: true,
               }}
-              value={control.unitName || ""}
+              value={control.unitName || ''}
               // onChange={(e) =>
               //   setformData({
               //     ...formData,
@@ -653,28 +738,28 @@ const BulkIncome = () => {
             />
           </Grid>
         </FormControl>
-        <FormControl fullWidth sx={{ width: "90%", marginRight: "10px" }}>
+        <FormControl fullWidth sx={{ width: '90%', marginRight: '10px' }}>
           <Grid item xs={12} sm={6}>
             <TextField
-              sx={{ width: "90%" }}
-              id="outlined-basic"
-              label="Standard Price"
-              variant="outlined"
-              type="number"
+              sx={{ width: '90%' }}
+              id='outlined-basic'
+              label='Standard Price'
+              variant='outlined'
+              type='number'
               // value={locationName}
               onChange={(e) => handleStandardPriceChange(index, e.target.value)}
               fullWidth
             />
           </Grid>
         </FormControl>
-        <FormControl fullWidth sx={{ width: "100%", marginRight: "10px" }}>
+        <FormControl fullWidth sx={{ width: '100%', marginRight: '10px' }}>
           <Grid item xs={12} sm={6}>
             <TextField
-              sx={{ width: "90%" }}
-              id="outlined-basic"
-              label="Extended Value"
-              variant="outlined"
-              type="number"
+              sx={{ width: '90%' }}
+              id='outlined-basic'
+              label='Extended Value'
+              variant='outlined'
+              type='number'
               // value={locationName}
               onChange={(e) => handleExtendedValueChange(index, e.target.value)}
               fullWidth
@@ -682,64 +767,64 @@ const BulkIncome = () => {
           </Grid>
         </FormControl>
 
-        <FormControl fullWidth sx={{ width: "70%", marginRight: "10px" }}>
+        <FormControl fullWidth sx={{ width: '70%', marginRight: '10px' }}>
           <Grid item xs={12} sm={6}>
             <TextField
-              sx={{ width: "90%" }}
-              id="outlined-basic"
-              label="S/N"
-              variant="outlined"
+              sx={{ width: '90%' }}
+              id='outlined-basic'
+              label='S/N'
+              variant='outlined'
               // value={sn}
               onChange={(e) => handleSnChange(index, e.target.value)}
               fullWidth
             />
           </Grid>
         </FormControl>
-        <FormControl fullWidth sx={{ width: "70%", marginRight: "10px" }}>
+        <FormControl fullWidth sx={{ width: '70%', marginRight: '10px' }}>
           <Grid item xs={12} sm={6}>
             <TextField
-              sx={{ width: "90%" }}
-              id="outlined-basic"
-              label="P/N"
-              variant="outlined"
+              sx={{ width: '90%' }}
+              id='outlined-basic'
+              label='P/N'
+              variant='outlined'
               // value={sn}
               onChange={(e) => handlePnChange(index, e.target.value)}
               fullWidth
             />
           </Grid>
         </FormControl>
-        <FormControl fullWidth sx={{ width: "90%", marginRight: "10px" }}>
+        <FormControl fullWidth sx={{ width: '90%', marginRight: '10px' }}>
           <Grid item xs={12} sm={6}>
             <TextField
-              sx={{ width: "90%" }}
-              id="outlined-basic"
-              label="Entity"
-              variant="outlined"
+              sx={{ width: '90%' }}
+              id='outlined-basic'
+              label='Entity'
+              variant='outlined'
               onChange={(e) => handleEntityChange(index, e.target.value)}
               fullWidth
             />
           </Grid>
         </FormControl>
-        <FormControl fullWidth sx={{ width: "90%", marginRight: "10px" }}>
+        <FormControl fullWidth sx={{ width: '90%', marginRight: '10px' }}>
           <Grid item xs={12} sm={6}>
             <TextField
-              sx={{ width: "90%" }}
-              id="outlined-basic"
-              label="Store No"
-              variant="outlined"
+              sx={{ width: '90%' }}
+              id='outlined-basic'
+              label='Store No'
+              variant='outlined'
               // value={sn}
               onChange={(e) => handleStoreChange(index, e.target.value)}
               fullWidth
             />
           </Grid>
         </FormControl>
-        <FormControl fullWidth sx={{ width: "90%", marginRight: "10px" }}>
+        <FormControl fullWidth sx={{ width: '90%', marginRight: '10px' }}>
           <Grid item xs={12} sm={6}>
             <TextField
-              sx={{ width: "90%" }}
-              id="outlined-basic"
-              label="IMPA Code"
-              variant="outlined"
+              sx={{ width: '90%' }}
+              id='outlined-basic'
+              label='IMPA Code'
+              variant='outlined'
               // value={sn}
               onChange={(e) => handleImpaChange(index, e.target.value)}
               fullWidth
@@ -748,48 +833,49 @@ const BulkIncome = () => {
         </FormControl>
         <div
           style={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
           }}
         >
           <Button>
             <DeleteIcon
               onClick={() => handleDeleteClick(index)}
-              style={{ color: "red" }}
+              style={{ color: 'red' }}
             />
           </Button>
         </div>
       </div>
     ));
   };
+  console.log(formData, 'formmmmmmmm');
 
   return (
     <>
       <Grid>
         <Card
-          color="secondary"
+          color='secondary'
           sx={{
-            width: "100%",
-            backgroundColor: "secondary",
-            borderBottom: "2px solid yellow",
+            width: '100%',
+            backgroundColor: 'secondary',
+            borderBottom: '2px solid yellow',
           }}
         >
           <CardContent>
-            <Typography variant="h4" color="secondary" gutterBottom>
+            <Typography variant='h4' color='secondary' gutterBottom>
               Bulk Incoming Stock
             </Typography>
           </CardContent>
         </Card>
       </Grid>
-      <Grid container spacing={2} sx={{ mt: "33px" }}>
+      <Grid container spacing={2} sx={{ mt: '33px' }}>
         <Grid item xs={12} sm={6}>
-          <FormControl fullWidth sx={{ width: "90%" }}>
-            <InputLabel id="demo-simple-select-label">Location</InputLabel>
+          <FormControl fullWidth sx={{ width: '90%' }}>
+            <InputLabel id='demo-simple-select-label'>Location</InputLabel>
             <Select
-              labelId="demo-simple-select-label"
-              id="demo-simple-select"
-              label="location"
+              labelId='demo-simple-select-label'
+              id='demo-simple-select'
+              label='location'
               MenuProps={{
                 PaperProps: {
                   style: {
@@ -802,7 +888,7 @@ const BulkIncome = () => {
             >
               {state.location.data?.map((item, index) => (
                 <MenuItem key={index} value={item?.locationName}>
-                  {" "}
+                  {' '}
                   {item?.locationName}
                 </MenuItem>
               ))}
@@ -810,13 +896,13 @@ const BulkIncome = () => {
           </FormControl>
         </Grid>
         <Grid item xs={12} sm={6}>
-          <FormControl fullWidth sx={{ width: "90%" }}>
-            <InputLabel id="demo-simple-select-label">Sub Location</InputLabel>
+          <FormControl fullWidth sx={{ width: '90%' }}>
+            <InputLabel id='demo-simple-select-label'>Sub Location</InputLabel>
             <Select
-              labelId="demo-simple-select-label"
-              id="demo-simple-select"
+              labelId='demo-simple-select-label'
+              id='demo-simple-select'
               //value={age}
-              label="sublocation"
+              label='sublocation'
               onChange={(e) =>
                 setformData({
                   ...formData,
@@ -834,17 +920,17 @@ const BulkIncome = () => {
           </FormControl>
         </Grid>
       </Grid>
-      <Grid container spacing={2} sx={{ mt: "33px" }}>
+      <Grid container spacing={2} sx={{ mt: '33px' }}>
         <Grid item xs={21} sm={6}>
-          <FormControl fullWidth sx={{ width: "90%" }}>
-            <InputLabel id="demo-simple-select-label">
+          <FormControl fullWidth sx={{ width: '90%' }}>
+            <InputLabel id='demo-simple-select-label'>
               Item Description
             </InputLabel>
             <Select
-              labelId="demo-simple-select-label"
-              id="demo-simple-select"
+              labelId='demo-simple-select-label'
+              id='demo-simple-select'
               //value={age}
-              label="Description"
+              label='Description'
               multiple
               value={formData.description}
               //onChange={handleChange}
@@ -852,7 +938,7 @@ const BulkIncome = () => {
             >
               {state.item.data?.map((item, index) => (
                 <MenuItem key={index} value={item?.description}>
-                  {" "}
+                  {' '}
                   {item?.description}
                 </MenuItem>
               ))}
@@ -861,11 +947,11 @@ const BulkIncome = () => {
         </Grid>
         <Grid item xs={12} sm={6}>
           <TextField
-            id="purchaseOrder"
-            label="Purchase Order"
-            variant="outlined"
+            id='purchaseOrder'
+            label='Purchase Order'
+            variant='outlined'
             fullWidth
-            sx={{ width: "90%" }}
+            sx={{ width: '90%' }}
             value={formData.purchaseOrder}
             onChange={(e) =>
               setformData({ ...formData, purchaseOrder: e.target.value })
@@ -874,18 +960,18 @@ const BulkIncome = () => {
         </Grid>
       </Grid>
 
-      <Grid container spacing={2} sx={{ mt: "33px" }}>
+      <Grid container spacing={2} sx={{ mt: '33px' }}>
         <Grid item xs={12} sm={6}>
-          <FormControl fullWidth sx={{ width: "90%" }}>
-            <InputLabel id="demo-simple-select-label">
-              {" "}
+          <FormControl fullWidth sx={{ width: '90%' }}>
+            <InputLabel id='demo-simple-select-label'>
+              {' '}
               Select Currency
             </InputLabel>
             <Select
-              labelId="demo-simple-select-label"
-              id="demo-simple-select"
+              labelId='demo-simple-select-label'
+              id='demo-simple-select'
               //value={age}
-              label="currency"
+              label='currency'
               MenuProps={{
                 PaperProps: {
                   style: {
@@ -903,7 +989,7 @@ const BulkIncome = () => {
             >
               {state.currency.data?.currencyList?.map((item, index) => (
                 <MenuItem key={index} value={item?.currencyName}>
-                  {" "}
+                  {' '}
                   {item?.currencyName}
                 </MenuItem>
               ))}
@@ -912,69 +998,69 @@ const BulkIncome = () => {
         </Grid>
         <Grid item xs={12} sm={6}>
           <TextField
-            id="outlined-basic"
-            label="Remarks"
-            variant="outlined"
+            id='outlined-basic'
+            label='Remarks'
+            variant='outlined'
             fullWidth
-            sx={{ width: "90%" }}
+            sx={{ width: '90%' }}
             onChange={(e) =>
               setformData({ ...formData, remarks: e.target.value })
             }
           />
         </Grid>
       </Grid>
-      <Grid container spacing={2} sx={{ mt: "23px" }}>
+      <Grid container spacing={2} sx={{ mt: '23px' }}>
         <Grid item xs={12} sm={6}>
           <LocalizationProvider dateAdapter={AdapterDayjs}>
             <DatePicker
               value={formData.date}
               onChange={(newDate) => handleDateChange(newDate)}
               fullWidth
-              sx={{ width: "90%" }}
+              sx={{ width: '90%' }}
             />
           </LocalizationProvider>
         </Grid>
       </Grid>
       <Button
-        variant="contained"
-        color="secondary"
-        size="large"
+        variant='contained'
+        color='secondary'
+        size='large'
         onClick={handleClick}
         sx={{
-          mt: "33px",
-          mb: "17px",
-          marginLeft: "auto",
-          marginRight: "auto",
-          display: "block",
+          mt: '33px',
+          mb: '17px',
+          marginLeft: 'auto',
+          marginRight: 'auto',
+          display: 'block',
         }}
       >
         Add
       </Button>
       <div
         sx={{
-          marginTop: "5px",
+          marginTop: '5px',
 
-          flexWrap: "wrap",
-          width: "80%",
+          flexWrap: 'wrap',
+          width: '80%',
         }}
       >
         {isItemSelected && (
           <>
-            <div style={{ display: "flex", flexWrap: "wrap" }}>
+            <div style={{ display: 'flex', flexWrap: 'wrap' }}>
               <Grid
-                sx={{ overflowX: "scroll", width: "100%", flexWrap: "wrap" }}
+                sx={{ overflowX: 'scroll', width: '100%', flexWrap: 'wrap' }}
               >
                 <Card
-                  color="secondary"
+                  color='secondary'
                   sx={{
-                    width: "211%",
-                    marginTop: "20px",
-                    backgroundColor: "secondary",
+                    width: '211%',
+                    marginTop: '20px',
+                    backgroundColor: 'secondary',
                   }}
                 >
                   <CardContent
                     fullWidth
-                    sx={{ width: "100%", display: "flex", flexWrap: "wrap" }}
+                    sx={{ width: '100%', display: 'flex', flexWrap: 'wrap' }}
                   >
                     {renderFormControls()}
                   </CardContent>

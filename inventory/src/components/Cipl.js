@@ -10,48 +10,48 @@ import {
   Select,
   TextField,
   Typography,
-} from "@mui/material";
-import React, { useState } from "react";
-import AddIcon from "@mui/icons-material/Add";
-import DeleteIcon from "@mui/icons-material/Delete";
-import { useEffect } from "react";
-import { useSelector } from "react-redux";
-import { useDispatch } from "react-redux";
-import { fetchlocation } from "../redux/slice/location";
-import { fetchShipper } from "../redux/slice/ShipperSlice";
-import { fetchConsignee } from "../redux/slice/ConsigneeSlice";
-import { fetchPickup } from "../redux/slice/PickUpSlice";
-import { fetchCurrency } from "../redux/slice/CurrencySlice";
-import { fetchItem } from "../redux/slice/ItemSlice";
+} from '@mui/material';
+import React, { useState } from 'react';
+import AddIcon from '@mui/icons-material/Add';
+import DeleteIcon from '@mui/icons-material/Delete';
+import { useEffect } from 'react';
+import { useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
+import { fetchlocation } from '../redux/slice/location';
+import { fetchShipper } from '../redux/slice/ShipperSlice';
+import { fetchConsignee } from '../redux/slice/ConsigneeSlice';
+import { fetchPickup } from '../redux/slice/PickUpSlice';
+import { fetchCurrency } from '../redux/slice/CurrencySlice';
+import { fetchItem } from '../redux/slice/ItemSlice';
 
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
-import TableContainer from "@mui/material/TableContainer";
-import TableHead from "@mui/material/TableHead";
-import TableRow from "@mui/material/TableRow";
-import Paper from "@mui/material/Paper";
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-import { DatePicker } from "@mui/x-date-pickers/DatePicker";
-import dayjs from "dayjs";
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import Paper from '@mui/material/Paper';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import dayjs from 'dayjs';
 
-import TextareaAutosize from "@mui/material/TextareaAutosize";
-import { fetchIncome } from "../redux/slice/SingleIncomeSlice";
-import { fetchInventory } from "../redux/slice/InventorySlice";
+import TextareaAutosize from '@mui/material/TextareaAutosize';
+import { fetchIncome } from '../redux/slice/SingleIncomeSlice';
+import { fetchInventory } from '../redux/slice/InventorySlice';
 export const Cipl = () => {
   const state = useSelector((state) => state);
 
   const dispatch = useDispatch();
   const [formData, setformData] = useState({
-    itemName: "",
-    repairService: "",
-    transferDate: "",
-    shipperName: "",
-    consigneeName: "",
-    locationName: "",
-    pickupAddress: "",
-    currencyName: "",
+    itemName: '',
+    repairService: '',
+    transferDate: '',
+    shipperName: '',
+    consigneeName: '',
+    locationName: '',
+    pickupAddress: '',
+    currencyName: '',
     SubLocations: [],
     item: [],
     hs: [],
@@ -66,13 +66,13 @@ export const Cipl = () => {
     brand: [],
     remarks: [],
     packageName: [],
-    po: "",
-    totalWeight: "",
-    totalPackage: "",
-    totalAmount: "",
+    po: '',
+    totalWeight: '',
+    totalPackage: '',
+    totalAmount: '',
     partNo: [],
     date: [],
-    currencyRate: "",
+    currencyRate: '',
   });
   const [subLocations, setSubLocations] = useState([]);
   const [item, setItem] = useState([]);
@@ -108,23 +108,23 @@ export const Cipl = () => {
     dispatch(fetchIncome());
     dispatch(fetchInventory());
   }, []);
-  console.log(state, "cipl");
+  console.log(state, 'cipl');
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await fetch("http://localhost:8080/cipl/add", {
-        method: "post",
+      const res = await fetch('http://localhost:8080/cipl/add', {
+        method: 'post',
         headers: {
-          "content-type": "application/json",
+          'content-type': 'application/json',
         },
         body: JSON.stringify(formData),
       });
       const data = await res.json();
-      console.log(data, "came from backend");
-      alert("cipl added successfully");
+      console.log(data, 'came from backend');
+      alert('cipl added successfully');
     } catch (error) {
-      console.log("something happens while adding cipl");
+      console.log('something happens while adding cipl');
     }
   };
 
@@ -133,17 +133,17 @@ export const Cipl = () => {
     setformData({
       ...formData,
       locationName: selectedLocation,
-      SubLocations: [""], // Reset sublocation when location changes
+      SubLocations: [''], // Reset sublocation when location changes
     });
     const selectedLocationObj = state.location.data.find(
       (location) => location.locationName === selectedLocation
     );
     setSubLocations(selectedLocationObj && selectedLocationObj?.addresses);
-    console.log(selectedLocationObj, "yuuuu");
+    console.log(selectedLocationObj, 'yuuuu');
   };
 
   const handleSubLocationChange = (e, index) => {
-    const selectedSubLocation = e.target.value || "";
+    const selectedSubLocation = e.target.value || '';
 
     // Update formData with the selected sublocation
     updateFormDataSubLocations(index, selectedSubLocation);
@@ -159,13 +159,13 @@ export const Cipl = () => {
     const selectedInventoryData = state.inventory.data.filter(
       (inventoryItem) => inventoryItem.address?.address === selectedSubLocation
     );
-    console.log(selectedInventoryData, "22");
+    console.log(selectedInventoryData, '22');
 
     // Extract item descriptions from the selected inventory data
     const itemDescriptions = selectedInventoryData.map(
       (inventoryItem) => inventoryItem.description
     );
-    console.log(itemDescriptions, "33");
+    console.log(itemDescriptions, '33');
 
     // Update the item state with the selected item descriptions
     setItem((prevItems) => {
@@ -174,7 +174,7 @@ export const Cipl = () => {
       return updatedItems;
     });
   };
-  console.log(item, "topibaz");
+  console.log(item, 'topibaz');
 
   const updateFormDataSubLocations = (index, selectedSubLocation) => {
     setformData((prevFormData) => {
@@ -186,8 +186,8 @@ export const Cipl = () => {
       };
     });
   };
-  console.log(subLocations, "subbbbbbbbbbbbb");
-  console.log(formData, "nooooooooooo");
+  console.log(subLocations, 'subbbbbbbbbbbbb');
+  console.log(formData, 'nooooooooooo');
 
   const handleAddClick = () => {
     setFormRows((prevRows) => prevRows + 1);
@@ -195,8 +195,8 @@ export const Cipl = () => {
       ...prevControls,
       { key: prevControls.length },
     ]);
-    setSubLocations((prevSubLocations) => [...prevSubLocations, ""]);
-    updateFormDataSubLocations(formControls.length, ""); // Add an empty string to SubLocation
+    setSubLocations((prevSubLocations) => [...prevSubLocations, '']);
+    updateFormDataSubLocations(formControls.length, ''); // Add an empty string to SubLocation
   };
 
   const handleDeleteClick = (index) => {
@@ -311,7 +311,7 @@ export const Cipl = () => {
     });
   };
 
-  console.log(formData, "naya");
+  console.log(formData, 'naya');
 
   const handleItemChange = (index, selectedSubLocation, selectedItem) => {
     // Update formData with the selected item
@@ -329,8 +329,8 @@ export const Cipl = () => {
       (incomeItem) =>
         incomeItem.description === selectedItem.match(/^[^(]*/)[0].trim()
     );
-    console.log(selectedIncomeData, "selectttttt");
-    console.log(selectedItem, "selected item");
+    console.log(selectedIncomeData, 'selectttttt');
+    console.log(selectedItem, 'selected item');
 
     // Extract part numbers from the selected income data
     const partNumbers = selectedIncomeData.map(
@@ -345,7 +345,7 @@ export const Cipl = () => {
     });
   };
 
-  console.log(partNo, "formmgasi");
+  console.log(partNo, 'formmgasi');
 
   const updateFormDataItem = (index, selectedItem) => {
     setformData((prevFormData) => {
@@ -372,11 +372,11 @@ export const Cipl = () => {
 
     // Extract the necessary data from the selected income data
     const partNumberData = {
-      date: selectedIncomeData?.date || "",
-      unitPrice: selectedIncomeData?.unitCost || "",
+      date: selectedIncomeData?.date || '',
+      unitPrice: selectedIncomeData?.unitCost || '',
 
-      sn: selectedIncomeData?.sn || "",
-      brand: selectedIncomeData?.brandName || "",
+      sn: selectedIncomeData?.sn || '',
+      brand: selectedIncomeData?.brandName || '',
     };
     updateFormDataPart(index, selectedPartNo, partNumberData);
     // Update formData with the selected part number data
@@ -409,8 +409,8 @@ export const Cipl = () => {
     });
   };
 
-  console.log(partNumbersData, "partNumbersData");
-  console.log(partNumbersData?.date, "dateeee");
+  console.log(partNumbersData, 'partNumbersData');
+  console.log(partNumbersData?.date, 'dateeee');
 
   const handleHsChange = (index, value) => {
     updateFormDataHS(index, value);
@@ -458,7 +458,7 @@ export const Cipl = () => {
       return updateCountryOfOrigin;
     });
   };
-  console.log(item, "item");
+  console.log(item, 'item');
   console.log(formData);
 
   const updateFormDataCountryOfOrigin = (index, value) => {
@@ -479,7 +479,7 @@ export const Cipl = () => {
       return updateDimension;
     });
   };
-  console.log(dimension, "dimension");
+  console.log(dimension, 'dimension');
   console.log(formData);
 
   const updateFormDataDimension = (index, value) => {
@@ -500,7 +500,7 @@ export const Cipl = () => {
       return updateWeights;
     });
   };
-  console.log(weights, "weights");
+  console.log(weights, 'weights');
   console.log(formData);
 
   const updateFormDataWeights = (index, value) => {
@@ -552,11 +552,11 @@ export const Cipl = () => {
         ...prevFormData,
         purchase: updatedPurchaseOrders,
         // Update other properties based on selectedPartNumberData
-        date: selectedPartNumberData?.date || "",
-        unitPrice: selectedPartNumberData?.unitPrice || "",
-        amount: selectedPartNumberData?.amount || "",
-        brand: selectedPartNumberData?.brand || "",
-        sn: selectedPartNumberData?.sn || "",
+        date: selectedPartNumberData?.date || '',
+        unitPrice: selectedPartNumberData?.unitPrice || '',
+        amount: selectedPartNumberData?.amount || '',
+        brand: selectedPartNumberData?.brand || '',
+        sn: selectedPartNumberData?.sn || '',
       };
     });
   };
@@ -628,8 +628,8 @@ export const Cipl = () => {
 
       const updatedAmounts = [...prevFormData.amount];
       updatedAmounts[index] = updateAmount;
-      console.log(updateAmount, "rusiiiiiiiiiiiiiiii");
-      console.log(updatedAmounts, "ruseeeeeeeeeeeeee");
+      console.log(updateAmount, 'rusiiiiiiiiiiiiiiii');
+      console.log(updatedAmounts, 'ruseeeeeeeeeeeeee');
       return {
         ...prevFormData,
         amount: updatedAmounts,
@@ -643,7 +643,7 @@ export const Cipl = () => {
     if (!isNaN(parsedQuantity) && !isNaN(parsedUnitCost)) {
       return (parsedQuantity * parsedUnitCost).toFixed(2);
     } else {
-      return "";
+      return '';
     }
   };
 
@@ -658,7 +658,7 @@ export const Cipl = () => {
   const handleDateChange = (date) => {
     setformData({
       ...formData,
-      transferDate: date.format("YYYY-MM-DD"),
+      transferDate: date.format('YYYY-MM-DD'),
     });
   };
 
@@ -693,17 +693,17 @@ export const Cipl = () => {
     });
   };
 
-  console.log("All Items Data:", state.item.data);
+  console.log('All Items Data:', state.item.data);
   const renderFormControls = () => {
-    console.log(formControls, "yayerfgyu");
+    console.log(formControls, 'yayerfgyu');
     return formControls?.map((control, index) => (
-      <div key={control.key} style={{ display: "flex", marginBottom: "10px" }}>
-        <FormControl fullWidth sx={{ width: "50%", marginRight: "10px" }}>
-          <InputLabel id="demo-simple-select-label">Sub Location</InputLabel>
+      <div key={control.key} style={{ display: 'flex', marginBottom: '10px' }}>
+        <FormControl fullWidth sx={{ width: '50%', marginRight: '10px' }}>
+          <InputLabel id='demo-simple-select-label'>Sub Location</InputLabel>
           <Select
-            labelId="demo-simple-select-label"
-            id="demo-simple-select"
-            label="location"
+            labelId='demo-simple-select-label'
+            id='demo-simple-select'
+            label='location'
             MenuProps={{
               PaperProps: {
                 style: {
@@ -721,11 +721,11 @@ export const Cipl = () => {
           </Select>
         </FormControl>
         <FormControl fullWidth>
-          <InputLabel id="demo-simple-select-label">Item Desc</InputLabel>
+          <InputLabel id='demo-simple-select-label'>Item Desc</InputLabel>
           <Select
-            labelId="demo-simple-select-label"
-            id="itemName"
-            label="itemName"
+            labelId='demo-simple-select-label'
+            id='itemName'
+            label='itemName'
             onChange={(e) =>
               handleItemChange(
                 index,
@@ -741,13 +741,13 @@ export const Cipl = () => {
             ))}
           </Select>
         </FormControl>
-        <FormControl fullWidth sx={{ width: "70%", marginRight: "10px" }}>
+        <FormControl fullWidth sx={{ width: '70%', marginRight: '10px' }}>
           <Grid item xs={12} sm={6}>
             <TextField
-              sx={{ width: "100%" }}
-              id="outlined-basic"
-              label="Package Name"
-              variant="outlined"
+              sx={{ width: '100%' }}
+              id='outlined-basic'
+              label='Package Name'
+              variant='outlined'
               // value={locationName}
               // onChange={(e) => setLocation(e.target.value)}
               onChange={(e) => handlePackageChange(index, e.target.value)}
@@ -755,26 +755,26 @@ export const Cipl = () => {
             />
           </Grid>
         </FormControl>
-        <FormControl fullWidth sx={{ width: "30%", marginRight: "10px" }}>
+        <FormControl fullWidth sx={{ width: '30%', marginRight: '10px' }}>
           <Grid item xs={12} sm={6}>
             <TextField
-              sx={{ width: "90%" }}
-              id="outlined-basic"
-              label="Hs"
-              variant="outlined"
+              sx={{ width: '90%' }}
+              id='outlined-basic'
+              label='Hs'
+              variant='outlined'
               // value={sn}
               onChange={(e) => handleHsChange(index, e.target.value)}
               fullWidth
             />
           </Grid>
         </FormControl>
-        <FormControl fullWidth sx={{ width: "50%", marginRight: "10px" }}>
+        <FormControl fullWidth sx={{ width: '50%', marginRight: '10px' }}>
           <Grid item xs={12} sm={6}>
             <TextField
-              sx={{ width: "90%" }}
-              id="Country Of Origin"
-              label="Country Of Origin"
-              variant="outlined"
+              sx={{ width: '90%' }}
+              id='Country Of Origin'
+              label='Country Of Origin'
+              variant='outlined'
               // value={locationName}
               // onChange={(e) => setLocation(e.target.value)}
               onChange={(e) =>
@@ -784,13 +784,13 @@ export const Cipl = () => {
             />
           </Grid>
         </FormControl>
-        <FormControl fullWidth sx={{ width: "50%", marginRight: "10px" }}>
+        <FormControl fullWidth sx={{ width: '50%', marginRight: '10px' }}>
           <Grid item xs={12} sm={6}>
             <TextField
-              sx={{ width: "90%" }}
-              id="outlined-basic"
-              label="Dimension(CM)"
-              variant="outlined"
+              sx={{ width: '90%' }}
+              id='outlined-basic'
+              label='Dimension(CM)'
+              variant='outlined'
               // value={locationName}
               // onChange={(e) => setLocation(e.target.value)}
               onChange={(e) => handleDimensionChange(index, e.target.value)}
@@ -798,13 +798,13 @@ export const Cipl = () => {
             />
           </Grid>
         </FormControl>
-        <FormControl fullWidth sx={{ width: "40%", marginRight: "10px" }}>
+        <FormControl fullWidth sx={{ width: '40%', marginRight: '10px' }}>
           <Grid item xs={12} sm={6}>
             <TextField
-              sx={{ width: "90%" }}
-              id="outlined-basic"
-              label="Weights(Kg)"
-              variant="outlined"
+              sx={{ width: '90%' }}
+              id='outlined-basic'
+              label='Weights(Kg)'
+              variant='outlined'
               // value={locationName}
               // onChange={(e) => setLocation(e.target.value)}
               onChange={(e) => handleWeightsChange(index, e.target.value)}
@@ -815,14 +815,14 @@ export const Cipl = () => {
 
         <FormControl
           fullWidth
-          sx={{ width: "50%", marginRight: "10px" }}
+          sx={{ width: '50%', marginRight: '10px' }}
           key={control.key}
         >
           <InputLabel id={`part-no-label-${index}`}>Part No</InputLabel>
           <Select
             labelId={`part-no-label-${index}`}
             id={`part-no-select-${index}`}
-            label="Part No"
+            label='Part No'
             MenuProps={{
               PaperProps: {
                 style: {
@@ -841,14 +841,14 @@ export const Cipl = () => {
             ))}
           </Select>
         </FormControl>
-        <FormControl fullWidth sx={{ width: "30%", marginRight: "10px" }}>
+        <FormControl fullWidth sx={{ width: '30%', marginRight: '10px' }}>
           <Grid item xs={12} sm={6}>
             <TextField
-              sx={{ width: "90%" }}
-              id="outlined-basic"
-              label="S/N"
-              variant="outlined"
-              value={partNumbersData[index]?.sn || ""}
+              sx={{ width: '90%' }}
+              id='outlined-basic'
+              label='S/N'
+              variant='outlined'
+              value={partNumbersData[index]?.sn || ''}
               // value={locationName}
               // onChange={(e) => setLocation(e.target.value)}
               onChange={(e) => handleSnChange(index, e.target.value)}
@@ -856,28 +856,28 @@ export const Cipl = () => {
             />
           </Grid>
         </FormControl>
-        <FormControl fullWidth sx={{ width: "90%", marginRight: "10px" }}>
+        <FormControl fullWidth sx={{ width: '90%', marginRight: '10px' }}>
           <Grid item xs={12} sm={6}>
             <TextField
-              sx={{ width: "90%" }}
-              id="outlined-basic"
-              label="Purchase Order(D.O.P)"
-              variant="outlined"
-              value={partNumbersData[index]?.date || ""}
+              sx={{ width: '90%' }}
+              id='outlined-basic'
+              label='Purchase Order(D.O.P)'
+              variant='outlined'
+              value={partNumbersData[index]?.date || ''}
               // onChange={(e) => setLocation(e.target.value)}
               onChange={(e) => handlePurchaseChange(index, e.target.value)}
               fullWidth
             />
           </Grid>
         </FormControl>
-        <FormControl fullWidth sx={{ width: "60%", marginRight: "10px" }}>
+        <FormControl fullWidth sx={{ width: '60%', marginRight: '10px' }}>
           <Grid item xs={12} sm={6}>
             <TextField
-              sx={{ width: "90%" }}
-              id="outlined-basic"
-              label="Unit Price"
-              variant="outlined"
-              value={partNumbersData[index]?.unitPrice || ""}
+              sx={{ width: '90%' }}
+              id='outlined-basic'
+              label='Unit Price'
+              variant='outlined'
+              value={partNumbersData[index]?.unitPrice || ''}
               // value={locationName}
               // onChange={(e) => setLocation(e.target.value)}
               onChange={(e) => handleUnitPriceChange(index, e.target.value)}
@@ -885,13 +885,13 @@ export const Cipl = () => {
             />
           </Grid>
         </FormControl>
-        <FormControl fullWidth sx={{ width: "50%", marginRight: "10px" }}>
+        <FormControl fullWidth sx={{ width: '50%', marginRight: '10px' }}>
           <Grid item xs={12} sm={6}>
             <TextField
-              sx={{ width: "90%" }}
-              id="outlined-basic"
-              label="Quantity"
-              variant="outlined"
+              sx={{ width: '90%' }}
+              id='outlined-basic'
+              label='Quantity'
+              variant='outlined'
               // value={locationName}
               // onChange={(e) => setLocation(e.target.value)}
               onChange={(e) => handleQuantityChange(index, e.target.value)}
@@ -899,14 +899,14 @@ export const Cipl = () => {
             />
           </Grid>
         </FormControl>
-        <FormControl fullWidth sx={{ width: "50%", marginRight: "10px" }}>
+        <FormControl fullWidth sx={{ width: '50%', marginRight: '10px' }}>
           <Grid item xs={12} sm={6}>
             <TextField
-              sx={{ width: "80%" }}
-              id="outlined-basic"
-              label="Amount"
-              variant="outlined"
-              value={formData.amount[index] || ""}
+              sx={{ width: '80%' }}
+              id='outlined-basic'
+              label='Amount'
+              variant='outlined'
+              value={formData.amount[index] || ''}
               // value={locationName}
               // onChange={(e) => setLocation(e.target.value)}
               /* onChange={(e) => handleAmountChange(index, e.target.value)} */
@@ -915,26 +915,26 @@ export const Cipl = () => {
             />
           </Grid>
         </FormControl>
-        <FormControl fullWidth sx={{ width: "50%", marginRight: "10px" }}>
+        <FormControl fullWidth sx={{ width: '50%', marginRight: '10px' }}>
           <Grid item xs={12} sm={6}>
             <TextField
-              sx={{ width: "90%" }}
-              id="outlined-basic"
-              label="Brand"
-              variant="outlined"
-              value={partNumbersData[index]?.brand || ""}
+              sx={{ width: '90%' }}
+              id='outlined-basic'
+              label='Brand'
+              variant='outlined'
+              value={partNumbersData[index]?.brand || ''}
               // value={locationName}
               // onChange={(e) => setLocation(e.target.value)}
               onChange={(e) => handleBrandChange(index, e.target.value)}
             />
           </Grid>
         </FormControl>
-        <FormControl fullWidth sx={{ width: "50%", marginRight: "10px" }}>
+        <FormControl fullWidth sx={{ width: '50%', marginRight: '10px' }}>
           <Grid item xs={12} sm={6}>
             <TextareaAutosize
-              sx={{ width: "90%" }}
-              aria-label="Brand"
-              placeholder="Enter Remarks"
+              sx={{ width: '90%' }}
+              aria-label='Brand'
+              placeholder='Enter Remarks'
               // value={brandValue} // You can set the value and handle changes as needed
               // onChange={(e) => handleBrandChange(e.target.value)}
               onChange={(e) => handleRemarksChange(index, e.target.value)}
@@ -944,17 +944,17 @@ export const Cipl = () => {
         </FormControl>
         <div
           style={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            marginLeft: "60px",
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            marginLeft: '60px',
           }}
         >
           <button>
             <AddIcon onClick={handleAddClick} />
           </button>
           <Button onClick={() => handleDeleteClick(index)}>
-            <DeleteIcon style={{ color: "red" }} />
+            <DeleteIcon style={{ color: 'red' }} />
           </Button>
         </div>
 
@@ -1017,13 +1017,13 @@ export const Cipl = () => {
     // Update the formData with calculated values
 
     return (
-      <Grid container spacing={1} sx={{ mt: "23px" }}>
+      <Grid container spacing={1} sx={{ mt: '23px' }}>
         <Grid item xs={12} sm={4}>
           <TextField
-            sx={{ width: "90%" }}
-            id="outlined-basic"
-            label="Total  Weight"
-            variant="outlined"
+            sx={{ width: '90%' }}
+            id='outlined-basic'
+            label='Total  Weight'
+            variant='outlined'
             value={totalWeight}
             // value={locationName}
             // onChange={(e) => setLocation(e.target.value)}
@@ -1038,20 +1038,20 @@ export const Cipl = () => {
         </Grid>
         <Grid item xs={12} sm={4}>
           <TextField
-            sx={{ width: "90%" }}
-            id="outlined-basic"
-            label="Total  Package"
-            variant="outlined"
+            sx={{ width: '90%' }}
+            id='outlined-basic'
+            label='Total  Package'
+            variant='outlined'
             value={totalPackageCount}
             fullWidth
           />
         </Grid>
         <Grid item xs={12} sm={4}>
           <TextField
-            sx={{ width: "90%" }}
-            id="outlined-basic"
-            label="Total  Amount"
-            variant="outlined"
+            sx={{ width: '90%' }}
+            id='outlined-basic'
+            label='Total  Amount'
+            variant='outlined'
             value={totalAmount}
             // onChange={(e) => setLocation(e.target.value)}
             fullWidth
@@ -1068,11 +1068,11 @@ export const Cipl = () => {
           {/* Additional fields for 'Repair/Service' Yes */}
           <Grid item xs={21} sm={6}>
             <TextField
-              id="outlined-basic"
-              label="Po/SO No"
-              variant="outlined"
+              id='outlined-basic'
+              label='Po/SO No'
+              variant='outlined'
               fullWidth
-              sx={{ width: "90%" }}
+              sx={{ width: '90%' }}
               onChange={(e) =>
                 setformData({
                   ...formData,
@@ -1094,16 +1094,16 @@ export const Cipl = () => {
     <>
       <Grid>
         <Card
-          color="secondary"
+          color='secondary'
           sx={{
-            width: "100%",
-            backgroundColor: "secondary",
-            borderBottom: "2px solid yellow",
-            mb: "33px",
+            width: '100%',
+            backgroundColor: 'secondary',
+            borderBottom: '2px solid yellow',
+            mb: '33px',
           }}
         >
           <CardContent>
-            <Typography variant="h4" color="secondary" gutterBottom>
+            <Typography variant='h4' color='secondary' gutterBottom>
               CIPL Transfer
             </Typography>
           </CardContent>
@@ -1111,14 +1111,14 @@ export const Cipl = () => {
       </Grid>
       <Grid container spacing={2}>
         <Grid item xs={21} sm={6}>
-          <FormControl fullWidth sx={{ width: "90%" }}>
-            <InputLabel id="demo-simple-select-label">Location</InputLabel>
+          <FormControl fullWidth sx={{ width: '90%' }}>
+            <InputLabel id='demo-simple-select-label'>Location</InputLabel>
             <Select
-              labelId="demo-simple-select-label"
-              id="demo-simple-select"
+              labelId='demo-simple-select-label'
+              id='demo-simple-select'
               //value={age}
-              value={formData.locationName || ""}
-              label="location"
+              value={formData.locationName || ''}
+              label='location'
               MenuProps={{
                 PaperProps: {
                   style: {
@@ -1131,7 +1131,7 @@ export const Cipl = () => {
             >
               {state.location.data?.map((item, index) => (
                 <MenuItem key={index} value={item?.locationName}>
-                  {" "}
+                  {' '}
                   {item?.locationName}
                 </MenuItem>
               ))}
@@ -1139,14 +1139,14 @@ export const Cipl = () => {
           </FormControl>
         </Grid>
         <Grid item xs={21} sm={6}>
-          <FormControl fullWidth sx={{ width: "90%" }}>
-            <InputLabel id="demo-simple-select-label">Shipper</InputLabel>
+          <FormControl fullWidth sx={{ width: '90%' }}>
+            <InputLabel id='demo-simple-select-label'>Shipper</InputLabel>
             <Select
-              labelId="demo-simple-select-label"
-              id="demo-simple-select"
+              labelId='demo-simple-select-label'
+              id='demo-simple-select'
               //value={age}
-              label="shipper"
-              value={formData.shipperName || ""}
+              label='shipper'
+              value={formData.shipperName || ''}
               MenuProps={{
                 PaperProps: {
                   style: {
@@ -1164,7 +1164,7 @@ export const Cipl = () => {
             >
               {state.shipper.data?.map((item, index) => (
                 <MenuItem key={index} value={item?.shipperName}>
-                  {" "}
+                  {' '}
                   {item?.shipperName}
                 </MenuItem>
               ))}
@@ -1172,7 +1172,7 @@ export const Cipl = () => {
           </FormControl>
         </Grid>
       </Grid>
-      <Grid container spacing={2} sx={{ mt: "23px" }}>
+      <Grid container spacing={2} sx={{ mt: '23px' }}>
         <Grid item xs={12} sm={6}>
           <LocalizationProvider dateAdapter={AdapterDayjs}>
             <DatePicker
@@ -1181,20 +1181,20 @@ export const Cipl = () => {
           } */
               onChange={(newDate) => handleDateChange(newDate)}
               fullWidth
-              sx={{ width: "90%" }}
+              sx={{ width: '90%' }}
               /* format="yyyy-MM-dd" */
             />
           </LocalizationProvider>
         </Grid>
         <Grid item xs={12} sm={6}>
-          <FormControl fullWidth sx={{ width: "90%" }}>
-            <InputLabel id="demo-simple-select-label">Consignee</InputLabel>
+          <FormControl fullWidth sx={{ width: '90%' }}>
+            <InputLabel id='demo-simple-select-label'>Consignee</InputLabel>
             <Select
-              labelId="demo-simple-select-label"
-              id="demo-simple-select"
+              labelId='demo-simple-select-label'
+              id='demo-simple-select'
               //value={age}
-              label="consignee"
-              value={formData.consigneeName || ""}
+              label='consignee'
+              value={formData.consigneeName || ''}
               //onChange={handleChange}
               MenuProps={{
                 PaperProps: {
@@ -1212,7 +1212,7 @@ export const Cipl = () => {
             >
               {state.consignee.data?.map((item, index) => (
                 <MenuItem key={index} value={item?.consigneeName}>
-                  {" "}
+                  {' '}
                   {item?.consigneeName}
                 </MenuItem>
               ))}
@@ -1220,18 +1220,18 @@ export const Cipl = () => {
           </FormControl>
         </Grid>
       </Grid>
-      <Grid container spacing={2} sx={{ mt: "23px" }}>
+      <Grid container spacing={2} sx={{ mt: '23px' }}>
         <Grid item xs={12} sm={6}>
-          <FormControl fullWidth sx={{ width: "90%" }}>
-            <InputLabel id="demo-simple-select-label">
+          <FormControl fullWidth sx={{ width: '90%' }}>
+            <InputLabel id='demo-simple-select-label'>
               Pickup Address
             </InputLabel>
             <Select
-              labelId="demo-simple-select-label"
-              id="demo-simple-select"
+              labelId='demo-simple-select-label'
+              id='demo-simple-select'
               //value={age}
-              value={formData.pickupAddress || ""}
-              label="pickupAddress"
+              value={formData.pickupAddress || ''}
+              label='pickupAddress'
               //onChange={handleChange}
               MenuProps={{
                 PaperProps: {
@@ -1249,7 +1249,7 @@ export const Cipl = () => {
             >
               {state.pickup.data?.map((item, index) => (
                 <MenuItem key={index} value={item?.pickupAddress}>
-                  {" "}
+                  {' '}
                   {item?.pickupAddress}
                 </MenuItem>
               ))}
@@ -1257,16 +1257,16 @@ export const Cipl = () => {
           </FormControl>
         </Grid>
         <Grid item xs={12} sm={6}>
-          <FormControl fullWidth sx={{ width: "90%" }}>
-            <InputLabel id="demo-simple-select-label">
+          <FormControl fullWidth sx={{ width: '90%' }}>
+            <InputLabel id='demo-simple-select-label'>
               Select Currency
             </InputLabel>
             <Select
-              labelId="demo-simple-select-label"
-              id="demo-simple-select"
+              labelId='demo-simple-select-label'
+              id='demo-simple-select'
               //value={age}
-              value={formData.currencyName || ""}
-              label="selectCurrency"
+              value={formData.currencyName || ''}
+              label='selectCurrency'
               MenuProps={{
                 PaperProps: {
                   style: {
@@ -1284,7 +1284,7 @@ export const Cipl = () => {
             >
               {state.currency.data?.currencyList.map((item, index) => (
                 <MenuItem key={index} value={item?.currencyName}>
-                  {" "}
+                  {' '}
                   {item?.currencyName}
                 </MenuItem>
               ))}
@@ -1292,13 +1292,13 @@ export const Cipl = () => {
           </FormControl>
         </Grid>
       </Grid>
-      <Grid container spacing={2} sx={{ mt: "23px" }}>
+      <Grid container spacing={2} sx={{ mt: '23px' }}>
         <Grid item xs={12} sm={6}>
           <TextField
-            sx={{ width: "90%" }}
-            id="outlined-basic"
-            label="Currency Rate"
-            variant="outlined"
+            sx={{ width: '90%' }}
+            id='outlined-basic'
+            label='Currency Rate'
+            variant='outlined'
             // value={locationName}
             // onChange={(e) => setLocation(e.target.value)}
             onChange={(e) =>
@@ -1311,16 +1311,16 @@ export const Cipl = () => {
           />
         </Grid>
         <Grid item xs={12} sm={6}>
-          <FormControl fullWidth sx={{ width: "90%" }}>
-            <InputLabel id="demo-simple-select-label">
+          <FormControl fullWidth sx={{ width: '90%' }}>
+            <InputLabel id='demo-simple-select-label'>
               Repair/Service
             </InputLabel>
             <Select
-              labelId="demo-simple-select-label"
-              id="demo-simple-select"
+              labelId='demo-simple-select-label'
+              id='demo-simple-select'
               //value={age}
-              value={formData.repairService || ""}
-              label="Repair/service"
+              value={formData.repairService || ''}
+              label='Repair/service'
               //onChange={handleChange}
               onChange={(e) =>
                 setformData({
@@ -1338,28 +1338,28 @@ export const Cipl = () => {
       </Grid>
       <div
         sx={{
-          marginTop: "5px",
+          marginTop: '5px',
 
-          flexWrap: "wrap",
-          width: "80%",
+          flexWrap: 'wrap',
+          width: '80%',
         }}
       >
         {formData.locationName && (
           <>
-            <div style={{ display: "flex", flexWrap: "wrap" }}>
+            <div style={{ display: 'flex', flexWrap: 'wrap' }}>
               <Grid
-                sx={{ overflowX: "scroll", width: "100%", flexWrap: "wrap" }}
+                sx={{ overflowX: 'scroll', width: '100%', flexWrap: 'wrap' }}
               >
                 <Card
-                  color="secondary"
+                  color='secondary'
                   sx={{
-                    width: "180%",
-                    marginTop: "20px",
-                    backgroundColor: "secondary",
+                    width: '180%',
+                    marginTop: '20px',
+                    backgroundColor: 'secondary',
                   }}
                 >
                   <CardContent
-                    sx={{ minWidth: "100%", display: "flex", flexWrap: "wrap" }}
+                    sx={{ minWidth: '100%', display: 'flex', flexWrap: 'wrap' }}
                   >
                     {renderFormControls()}
                   </CardContent>
@@ -1370,12 +1370,12 @@ export const Cipl = () => {
           </>
         )}
       </div>
-      <Box sx={{ display: "flex", justifyContent: "center", mt: "33px" }}>
-        {" "}
+      <Box sx={{ display: 'flex', justifyContent: 'center', mt: '33px' }}>
+        {' '}
         <Button
-          variant="contained"
-          size="large"
-          color="secondary"
+          variant='contained'
+          size='large'
+          color='secondary'
           onClick={handleSubmit}
         >
           Add
