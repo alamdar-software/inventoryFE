@@ -77,7 +77,7 @@ import ViewScrapp from './pages/ViewScrap';
 import UpdateScrapped from './pages/UpdateScrapped';
 import ViewInventoryMoc from './components/ViewInventoryMoc.js';
 import LocationDashboard from './components/LocationDashboard.js';
-
+import Signup from './pages/Login/Signup.jsx';
 const theme = createTheme({
   palette: {
     background: {
@@ -86,6 +86,25 @@ const theme = createTheme({
   },
 });
 function App() {
+  const WithSidebarLayout = ({ children }) => (
+    <>
+      <Sidebar>
+        <ThemeProvider theme={theme}>
+          <CssBaseline />
+          {children}
+        </ThemeProvider>
+      </Sidebar>
+    </>
+  );
+
+  const WithoutSidebarLayout = ({ children }) => (
+    <>
+      <ThemeProvider theme={theme}>
+        <CssBaseline />
+        {children}
+      </ThemeProvider>
+    </>
+  );
   return (
     <>
       <BrowserRouter>
@@ -94,6 +113,14 @@ function App() {
             <CssBaseline />
             <Routes>
               <Route path='/' element={<Dashboard />} />
+              <Route
+                path='/signUp'
+                element={
+                  <WithoutSidebarLayout>
+                    <Signup />
+                  </WithoutSidebarLayout>
+                }
+              />
               <Route path='/dashboard' element={<Dashboard />}></Route>
               <Route path='/add-location' element={<Location />} />
               <Route path='/item' element={<Item />} />

@@ -31,6 +31,8 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import PictureAsPdfIcon from "@mui/icons-material/PictureAsPdf";
 import ExcelJS from "exceljs";
+import jsPDF from "jspdf";
+import html2canvas from "html2canvas";
 export const StockReport = () => {
   const dispatch = useDispatch();
   const state = useSelector((state) => state);
@@ -258,6 +260,34 @@ export const StockReport = () => {
     });
   };
   console.log(filteredCipl, "rusijk");
+  // Inside your handleDownloadPdf function
+  const handleDownloadPdf = () => {
+    const input = document.getElementById("cipl-table");
+    setTimeout(() => {
+      html2canvas(input, { scrollY: -window.scrollY }).then((canvas) => {
+        const imgData = canvas.toDataURL("image/png");
+        const pdf = new jsPDF({ orientation: "landscape" });
+
+        // Divide the canvas into multiple sections if needed
+        const imgHeight = (canvas.height * 208) / canvas.width;
+        let heightLeft = imgHeight;
+        let position = 0;
+
+        // Add each section to the PDF
+        while (heightLeft >= 0) {
+          pdf.addImage(imgData, "PNG", 0, position, 297, imgHeight);
+          heightLeft -= 208;
+          position -= 297;
+          if (heightLeft >= 0) {
+            pdf.addPage();
+          }
+        }
+
+        pdf.save("table.pdf");
+      });
+    }, 500);
+  };
+
   return (
     <>
       <Grid>
@@ -392,7 +422,7 @@ export const StockReport = () => {
             variant="contained"
             color="secondary"
             size="large"
-            onClick={handleClick}
+            onClick={handleDownloadPdf}
           >
             Download Pdf
           </Button>
@@ -400,11 +430,16 @@ export const StockReport = () => {
       </Card>
       <Grid sx={{ mt: "33px", width: "100%", overflowX: "scroll" }}>
         <TableContainer
+          id="cipl-table"
           component={Paper}
           sx={{
             borderRadius: "33px",
             borderBottom: "2px solid yellow",
             width: "110%",
+            // Adjust the height as needed
+            overflowY: "auto",
+            background: "transparent", // Set background color to transparent
+            margin: 0,
           }}
         >
           <Table sx={{ minWidth: 500 }} aria-label="simple table">
@@ -463,17 +498,6 @@ export const StockReport = () => {
                     <TableCell align="right">{ciplRow.consigneeName}</TableCell>
                     <TableCell align="right">{ciplRow.transferDate}</TableCell>
                     <TableCell align="right">{ciplRow.dataType}</TableCell>
-                    <TableCell align="right">
-                      <Link to={`/cipl/createpdf/${ciplRow.id}`}>
-                        <Button
-                          variant="contained"
-                          color="primary"
-                          /*  onClick={() => generatePDF(ciplRow.id, index)} */
-                        >
-                          {<PictureAsPdfIcon />}
-                        </Button>
-                      </Link>
-                    </TableCell>
                   </TableRow>
                 ))}
             </TableBody>
