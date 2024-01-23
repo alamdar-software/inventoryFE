@@ -263,29 +263,41 @@ export const StockReport = () => {
   // Inside your handleDownloadPdf function
   const handleDownloadPdf = () => {
     const input = document.getElementById("cipl-table");
-    setTimeout(() => {
-      html2canvas(input, { scrollY: -window.scrollY }).then((canvas) => {
-        const imgData = canvas.toDataURL("image/png");
-        const pdf = new jsPDF({ orientation: "landscape" });
 
-        // Divide the canvas into multiple sections if needed
-        const imgHeight = (canvas.height * 208) / canvas.width;
-        let heightLeft = imgHeight;
-        let position = 0;
+    html2canvas(input, { scrollY: -window.scrollY }).then((canvas) => {
+      const imgData = canvas.toDataURL("image/png");
+      const pdf = new jsPDF({ orientation: "landscape" });
 
-        // Add each section to the PDF
-        while (heightLeft >= 0) {
-          pdf.addImage(imgData, "PNG", 0, position, 297, imgHeight);
-          heightLeft -= 208;
-          position -= 297;
-          if (heightLeft >= 0) {
-            pdf.addPage();
-          }
+      // Divide the canvas into multiple sections if needed
+      const imgHeight = (canvas.height * 208) / canvas.width;
+      let heightLeft = imgHeight;
+      let position = 0;
+      const marginTop = 20;
+      pdf.setFont("helvetica", "bold");
+      pdf.text("Incoming Stock Report", 110, 10);
+
+      // Add each section to the PDF
+      pdf.setFont("helvetica", "bold");
+      pdf.text("Reference No", 10, 10);
+      pdf.text("Repair/Service", 60, 10);
+      pdf.text("Source Location", 110, 10);
+      pdf.text("SubLocation", 160, 10);
+      pdf.text("Purchase", 210, 10);
+      pdf.text("P/N", 260, 10);
+      pdf.text("Consignee", 310, 10);
+      pdf.text("Transfer Date", 360, 10);
+      pdf.text("Action", 410, 10);
+      while (heightLeft >= 0) {
+        pdf.addImage(imgData, "PNG", 0, position + marginTop, 297, imgHeight);
+        heightLeft -= 208;
+        position -= 297;
+        if (heightLeft >= 0) {
+          pdf.addPage();
         }
+      }
 
-        pdf.save("table.pdf");
-      });
-    }, 500);
+      pdf.save("table.pdf");
+    });
   };
 
   return (
@@ -433,13 +445,13 @@ export const StockReport = () => {
           id="cipl-table"
           component={Paper}
           sx={{
-            borderRadius: "33px",
-            borderBottom: "2px solid yellow",
-            width: "110%",
+            borderRadius: "10px",
+            border: "1px   black",
+            width: "98%",
             // Adjust the height as needed
             overflowY: "auto",
             background: "transparent", // Set background color to transparent
-            margin: 0,
+            margin: "5px",
           }}
         >
           <Table sx={{ minWidth: 500 }} aria-label="simple table">
