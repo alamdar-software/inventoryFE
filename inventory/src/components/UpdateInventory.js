@@ -259,7 +259,7 @@ const UpdateInventory = () => {
         <Grid item xs={12} sm={6}>
           <TextField
             id='outlined-basic'
-            label='Item Description'
+            label='Consumed Quantity'
             variant='outlined'
             value={inventory ? inventory.consumedItem : ''}
             onChange={(e) => {
@@ -276,7 +276,7 @@ const UpdateInventory = () => {
         <Grid item xs={12} sm={6}>
           <TextField
             id='outlined-basic'
-            label='Quantity'
+            label='Scrapped Quantity'
             variant='outlined'
             value={inventory ? inventory.scrappedItem : ''}
             onChange={(e) => {
