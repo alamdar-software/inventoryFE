@@ -115,6 +115,7 @@ const ConsumeReport = () => {
 
     // Add header row
     worksheet.addRow([
+      'S.No',
       'Item Description',
       'Location/Vessel',
       'SubLocation',
@@ -122,24 +123,34 @@ const ConsumeReport = () => {
       'Date',
       'remarks',
     ]).font = boldStyle;
-    worksheet.getColumn(1).width = 20;
+
     worksheet.getColumn(3).width = 20;
     worksheet.getColumn(2).width = 30;
     worksheet.getColumn(4).width = 30;
     worksheet.getColumn(5).width = 20;
+    worksheet.getColumn(6).width = 20;
 
     let serialNumber = 1;
     // Add data rows
     consume.forEach((consumeRow, rowIndex) => {
       const rowData = [
-        // serialNumber++,
+        serialNumber++,
         Array.isArray(consumeRow.item)
           ? consumeRow.item.join(', ')
           : consumeRow.item,
         consumeRow.locationName,
-        consumeRow.SubLocations,
-        consumeRow.quantity,
-        consumeRow.date,
+        Array.isArray(consumeRow.SubLocations)
+          ? consumeRow.SubLocations.join(', ')
+          : consumeRow.SubLocations,
+        Array.isArray(consumeRow.quantity)
+          ? consumeRow.quantity.join(', ')
+          : consumeRow.quantity,
+        Array.isArray(consumeRow.date)
+          ? consumeRow.date.join(', ')
+          : consumeRow.date,
+        Array.isArray(consumeRow.remarks)
+          ? consumeRow.remarks.join(', ')
+          : consumeRow.remarks,
       ];
 
       worksheet.addRow(rowData);
@@ -362,6 +373,7 @@ const ConsumeReport = () => {
                   <TableCell align='right'>{consume.SubLocations}</TableCell>
                   <TableCell align='right'>{consume.quantity}</TableCell>
                   <TableCell align='right'>{consume.transferDate}</TableCell>
+                  <TableCell align='right'>{consume.remarks}</TableCell>
 
                   {/* <Link to={`/updatePickup/${master.id}`}>
                       <Button variant='contained'>Update</Button>
