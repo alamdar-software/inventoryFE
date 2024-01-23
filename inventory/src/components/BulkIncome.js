@@ -673,6 +673,7 @@ const BulkIncome = () => {
             />
           </Grid>
         </FormControl>
+
         {/* <FormControl fullWidth sx={{ width: '70%', marginRight: '10px' }}>
           <Grid item xs={12} sm={6}>
             <Select

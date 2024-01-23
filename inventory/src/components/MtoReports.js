@@ -57,6 +57,28 @@ const MtoReports = () => {
     });
   };
   console.log(formData);
+  // const handleSearch = () => {
+  //   fetch('http://localhost:8080/mto/search', {
+  //     method: 'POST',
+  //     headers: {
+  //       'Content-Type': 'application/json',
+  //     },
+  //     body: JSON.stringify(formData),
+  //   })
+  //     .then((res) => res.json())
+  //     .then((result) => {
+  //       if (Array.isArray(result)) {
+  //         setMto(result);
+  //       } else {
+  //         console.error('Received data does not contain an array:', result);
+  //         setMto([]);
+  //       }
+  //     })
+  //     .catch((error) => {
+  //       console.error('Error searching data:', error);
+  //       setMto([]);
+  //     });
+  // };
 
   return (
     <>
@@ -238,7 +260,7 @@ const MtoReports = () => {
               variant='contained'
               color='secondary'
               size='large'
-              //onClick={handleClick}
+              // onClick={handleSearch}
               sx={{ marginRight: '8px' }}
             >
               Preview
