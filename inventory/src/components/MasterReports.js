@@ -11,27 +11,29 @@ import {
   TableContainer,
   TableHead,
   TableRow,
-} from '@mui/material';
-import { Card, CardContent, Grid, InputLabel, Typography } from '@mui/material';
-import { Box } from '@mui/system';
-import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { fetchlocation } from '../redux/slice/location';
-import { fetchItem } from '../redux/slice/ItemSlice';
-import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers';
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import { fetchentity } from '../redux/slice/entitySlice';
-import ExcelJS from 'exceljs';
+} from "@mui/material";
+import { Card, CardContent, Grid, InputLabel, Typography } from "@mui/material";
+import { Box } from "@mui/system";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchlocation } from "../redux/slice/location";
+import { fetchItem } from "../redux/slice/ItemSlice";
+import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { fetchentity } from "../redux/slice/entitySlice";
+import ExcelJS from "exceljs";
+import jsPDF from "jspdf";
+import html2canvas from "html2canvas";
 const MasterReports = () => {
   const [filteredCipl, setFilteredCipl] = useState([]);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [formData, setformData] = useState({
-    description: '',
-    locationName: '',
-    startDate: '',
-    endDate: '',
-    entityName: '',
+    description: "",
+    locationName: "",
+    startDate: "",
+    endDate: "",
+    entityName: "",
   });
 
   const dispatch = useDispatch();
@@ -46,25 +48,25 @@ const MasterReports = () => {
   const handleDateChange = (date) => {
     setformData({
       ...formData,
-      startDate: date.format('YYYY-MM-DD'),
+      startDate: date.format("YYYY-MM-DD"),
     });
   };
   console.log(formData);
   const handleDateChangeTo = (dateTo) => {
     setformData({
       ...formData,
-      endDate: dateTo.format('YYYY-MM-DD'),
+      endDate: dateTo.format("YYYY-MM-DD"),
     });
   };
   const handleClick = async (e) => {
     e.preventDefault();
     try {
       const res = await fetch(
-        'http://localhost:8080/incomingstock/searchMaster',
+        "http://localhost:8080/incomingstock/searchMaster",
         {
-          method: 'post',
+          method: "post",
           headers: {
-            'content-type': 'application/json',
+            "content-type": "application/json",
           },
           body: JSON.stringify(formData),
         }
@@ -76,37 +78,37 @@ const MasterReports = () => {
 
       const data = await res.json();
       setFilteredCipl(data);
-      console.log(data, 'came from backend');
+      console.log(data, "came from backend");
     } catch (error) {
-      console.error('Error while adding inventory:', error.message);
-      alert('data not found');
+      console.error("Error while adding inventory:", error.message);
+      alert("data not found");
     }
   };
   const handleDownloadCsv = () => {
     const boldStyle = { bold: true };
     const workbook = new ExcelJS.Workbook();
-    const worksheet = workbook.addWorksheet('Sheet 1');
+    const worksheet = workbook.addWorksheet("Sheet 1");
 
     // Add header row
     worksheet.addRow([
-      'Item Description',
-      'Location/Vessel',
-      'SubLocation',
-      'Category',
-      'Brand',
-      'Entity',
-      'Purchase Date',
-      'Purchase Order',
-      'Part No',
-      'Serial No',
+      "Item Description",
+      "Location/Vessel",
+      "SubLocation",
+      "Category",
+      "Brand",
+      "Entity",
+      "Purchase Date",
+      "Purchase Order",
+      "Part No",
+      "Serial No",
 
-      'Total Quantity',
-      'Extended Value',
+      "Total Quantity",
+      "Extended Value",
 
-      'Unit Cost',
-      'Price',
+      "Unit Cost",
+      "Price",
 
-      'Currency',
+      "Currency",
     ]).font = boldStyle;
     worksheet.getColumn(3).width = 20;
     worksheet.getColumn(2).width = 30;
@@ -117,7 +119,7 @@ const MasterReports = () => {
       const rowData = [
         serialNumber++,
         Array.isArray(ciplRow.description)
-          ? ciplRow.description.join(', ')
+          ? ciplRow.description.join(", ")
           : ciplRow.description,
         ciplRow.locationName,
         ciplRow.address,
@@ -140,31 +142,61 @@ const MasterReports = () => {
     // Create a blob from the workbook
     workbook.xlsx.writeBuffer().then((buffer) => {
       const blob = new Blob([buffer], {
-        type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+        type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
       });
-      const link = document.createElement('a');
+      const link = document.createElement("a");
       link.href = URL.createObjectURL(blob);
-      link.download = 'MasterReport.xlsx';
+      link.download = "MasterReport.xlsx";
       link.click();
     });
   };
-  console.log(formData, 'resssss');
+  console.log(formData, "resssss");
+  const handleDownloadPdf = () => {
+    const input = document.getElementById("cipl-table");
+
+    html2canvas(input, { scrollY: -window.scrollY }).then((canvas) => {
+      const imgData = canvas.toDataURL("image/png");
+      const pdf = new jsPDF({ orientation: "landscape" });
+
+      // Divide the canvas into multiple sections if needed
+      const imgHeight = (canvas.height * 208) / canvas.width;
+      let heightLeft = imgHeight;
+      let position = 0;
+      const marginTop = 20;
+
+      // Add each section to the PDF
+      pdf.setFont("helvetica", "bold");
+
+      pdf.text("Master Report", 110, 10);
+
+      while (heightLeft >= 0) {
+        pdf.addImage(imgData, "PNG", 0, position + marginTop, 297, imgHeight);
+        heightLeft -= 208;
+        position -= 297;
+        if (heightLeft >= 0) {
+          pdf.addPage();
+        }
+      }
+
+      pdf.save("Master Report.pdf");
+    });
+  };
 
   return (
     <>
       <Card
-        color='secondary'
+        color="secondary"
         sx={{
-          width: '90%',
-          backgroundColor: 'secondary',
-          borderBottom: '2px solid yellow',
-          mb: '33px',
+          width: "90%",
+          backgroundColor: "secondary",
+          borderBottom: "2px solid yellow",
+          mb: "33px",
         }}
       >
         <CardContent>
           <Typography
-            variant='h4'
-            color='secondary'
+            variant="h4"
+            color="secondary"
             gutterBottom
             style={{ fontFamily: "'EB Garamond'" }}
           >
@@ -174,23 +206,23 @@ const MasterReports = () => {
       </Card>
       <Card
         sx={{
-          borderBottom: '2px solid #ab47bc',
-          borderRadius: '33px',
-          width: '90%',
+          borderBottom: "2px solid #ab47bc",
+          borderRadius: "33px",
+          width: "90%",
         }}
       >
         <CardContent>
           <Grid container spacing={2}>
             <Grid item xs={21} sm={6}>
-              <FormControl fullWidth sx={{ width: '90%' }}>
-                <InputLabel id='demo-simple-select-label'>
+              <FormControl fullWidth sx={{ width: "90%" }}>
+                <InputLabel id="demo-simple-select-label">
                   Item Description
                 </InputLabel>
                 <Select
-                  labelId='demo-simple-select-label'
-                  id='description'
+                  labelId="demo-simple-select-label"
+                  id="description"
                   //value={age}
-                  label='description'
+                  label="description"
                   onChange={(e) =>
                     setformData({
                       ...formData,
@@ -208,7 +240,7 @@ const MasterReports = () => {
                 >
                   {state.item.data?.map((item, index) => (
                     <MenuItem key={index} value={item?.description}>
-                      {' '}
+                      {" "}
                       {item?.description}
                     </MenuItem>
                   ))}
@@ -216,12 +248,12 @@ const MasterReports = () => {
               </FormControl>
             </Grid>
             <Grid item xs={12} sm={6}>
-              <FormControl fullWidth sx={{ width: '90%' }}>
-                <InputLabel id='demo-simple-select-label'>Location</InputLabel>
+              <FormControl fullWidth sx={{ width: "90%" }}>
+                <InputLabel id="demo-simple-select-label">Location</InputLabel>
                 <Select
-                  labelId='demo-simple-select-label'
-                  id='demo-simple-select'
-                  label='location'
+                  labelId="demo-simple-select-label"
+                  id="demo-simple-select"
+                  label="location"
                   onChange={(e) =>
                     setformData({
                       ...formData,
@@ -239,7 +271,7 @@ const MasterReports = () => {
                 >
                   {state.location.data?.map((item, index) => (
                     <MenuItem key={index} value={item?.locationName}>
-                      {' '}
+                      {" "}
                       {item?.locationName}
                     </MenuItem>
                   ))}
@@ -247,39 +279,39 @@ const MasterReports = () => {
               </FormControl>
             </Grid>
           </Grid>
-          <Grid container spacing={2} sx={{ mt: '23px' }}>
+          <Grid container spacing={2} sx={{ mt: "23px" }}>
             <Grid item xs={12} sm={6}>
-              <InputLabel id='date-picker-label'>From date</InputLabel>
+              <InputLabel id="date-picker-label">From date</InputLabel>
 
               <LocalizationProvider dateAdapter={AdapterDayjs}>
                 <DatePicker
                   //value={formData.date}
                   onChange={(newDate) => handleDateChange(newDate)}
                   fullWidth
-                  sx={{ width: '90%' }}
+                  sx={{ width: "90%" }}
                 />
               </LocalizationProvider>
             </Grid>
             <Grid item xs={12} sm={6}>
-              <InputLabel id='date-picker-label'>To Date</InputLabel>
+              <InputLabel id="date-picker-label">To Date</InputLabel>
               <LocalizationProvider dateAdapter={AdapterDayjs}>
                 <DatePicker
                   //value={formData.date}
                   onChange={(newDate) => handleDateChangeTo(newDate)}
                   fullWidth
-                  sx={{ width: '90%' }}
+                  sx={{ width: "90%" }}
                 />
               </LocalizationProvider>
             </Grid>
           </Grid>
-          <Grid container spacing={2} sx={{ mt: '21px' }}>
+          <Grid container spacing={2} sx={{ mt: "21px" }}>
             <Grid item xs={21} sm={6}>
-              <FormControl fullWidth sx={{ width: '90%' }}>
-                <InputLabel id='demo-simple-select-label'>Entity</InputLabel>
+              <FormControl fullWidth sx={{ width: "90%" }}>
+                <InputLabel id="demo-simple-select-label">Entity</InputLabel>
                 <Select
-                  labelId='demo-simple-select-label'
-                  id='demo-simple-select'
-                  label='Description'
+                  labelId="demo-simple-select-label"
+                  id="demo-simple-select"
+                  label="Description"
                   value={formData?.entityName}
                   onChange={(e) =>
                     setformData({
@@ -290,7 +322,7 @@ const MasterReports = () => {
                 >
                   {state.entity.data?.map((item, index) => (
                     <MenuItem key={index} value={item?.entityName}>
-                      {' '}
+                      {" "}
                       {item?.entityName}
                     </MenuItem>
                   ))}
@@ -300,109 +332,111 @@ const MasterReports = () => {
           </Grid>
           <Box
             sx={{
-              display: 'flex',
-              justifyContent: 'center',
-              flexDirection: 'row',
-              mt: '33px',
-              mb: '17px',
+              display: "flex",
+              justifyContent: "center",
+              flexDirection: "row",
+              mt: "33px",
+              mb: "17px",
             }}
           >
             <Button
-              variant='contained'
-              color='secondary'
-              size='large'
+              variant="contained"
+              color="secondary"
+              size="large"
               onClick={handleClick}
-              sx={{ marginRight: '8px' }}
+              sx={{ marginRight: "8px" }}
             >
               Preview
             </Button>
             <Button
-              variant='contained'
-              color='secondary'
-              size='large'
+              variant="contained"
+              color="secondary"
+              size="large"
               //onClick={handleClick}
               onClick={handleDownloadCsv}
-              sx={{ marginRight: '8px' }}
+              sx={{ marginRight: "8px" }}
             >
               Dwnload Excel
             </Button>
             <Button
-              variant='contained'
-              color='secondary'
-              size='large'
-              //onClick={handleClick}
+              variant="contained"
+              color="secondary"
+              size="large"
+              onClick={handleDownloadPdf}
             >
               Download Pdf
             </Button>
           </Box>
         </CardContent>
       </Card>
-      <Grid sx={{ mt: '33px', width: '95%' }}>
+      <Grid sx={{ mt: "33px", width: "95%" }}>
         <TableContainer
+          id="cipl-table"
           component={Paper}
           sx={{
-            borderRadius: '33px',
-            borderBottom: '2px solid yellow',
-            width: '100%',
+            borderRadius: "15px",
+            borderBottom: "1px solid black",
+            borderTop: "1px solid black",
+            width: "100%",
           }}
         >
-          <Table sx={{ minWidth: 900 }} aria-label='simple table'>
+          <Table sx={{ minWidth: 900 }} aria-label="simple table">
             <TableHead>
               <TableRow>
                 <TableCell
-                  align='right'
-                  sx={{ fontWeight: 'bold', paddingRight: '60px' }}
+                  align="right"
+                  sx={{ fontWeight: "bold", paddingRight: "60px" }}
                 >
                   Item Description
                 </TableCell>
-                <TableCell align='right' sx={{ fontWeight: 'bold' }}>
+                <TableCell align="right" sx={{ fontWeight: "bold" }}>
                   Location
                 </TableCell>
-                <TableCell align='right' sx={{ fontWeight: 'bold' }}>
+                <TableCell align="right" sx={{ fontWeight: "bold" }}>
                   SubLocation
                 </TableCell>
-                <TableCell align='right' sx={{ fontWeight: 'bold' }}>
+                <TableCell align="right" sx={{ fontWeight: "bold" }}>
                   Catagory
                 </TableCell>
-                <TableCell align='right' sx={{ fontWeight: 'bold' }}>
+                <TableCell align="right" sx={{ fontWeight: "bold" }}>
                   Brand
                 </TableCell>
-                <TableCell align='right' sx={{ fontWeight: 'bold' }}>
+                <TableCell align="right" sx={{ fontWeight: "bold" }}>
                   Entity
                 </TableCell>
                 <TableCell
-                  align='right'
+                  align="right"
                   sx={{
-                    fontWeight: 'bold',
-                    width: '40px',
-                    marginRight: '50px',
-                    paddingRight: '50px',
+                    fontWeight: "bold",
+                    width: "40px",
+                    marginRight: "50px",
+                    paddingRight: "50px",
                   }}
                 >
                   Purchase Date
                 </TableCell>
-                <TableCell align='right' sx={{ fontWeight: 'bold' }}>
+                <TableCell align="right" sx={{ fontWeight: "bold" }}>
                   Purchase Order
                 </TableCell>
-                <TableCell align='right' sx={{ fontWeight: 'bold' }}>
+                <TableCell align="right" sx={{ fontWeight: "bold" }}>
                   Part Number
                 </TableCell>
-                <TableCell align='right' sx={{ fontWeight: 'bold' }}>
+                <TableCell align="right" sx={{ fontWeight: "bold" }}>
                   Serial Number
                 </TableCell>
-                <TableCell align='right' sx={{ fontWeight: 'bold' }}>
+                <TableCell align="right" sx={{ fontWeight: "bold" }}>
                   Quantity
                 </TableCell>
-                <TableCell align='right' sx={{ fontWeight: 'bold' }}>
+                <TableCell align="right" sx={{ fontWeight: "bold" }}>
                   Extended Value
                 </TableCell>
-                <TableCell align='right' sx={{ fontWeight: 'bold' }}>
+                <TableCell align="right" sx={{ fontWeight: "bold" }}>
                   Unit Cost
                 </TableCell>
-                <TableCell align='right' sx={{ fontWeight: 'bold' }}>
+                <TableCell align="right" sx={{ fontWeight: "bold" }}>
                   Price
                 </TableCell>
-                <TableCell align='right' sx={{ fontWeight: 'bold' }}>
+                <TableCell align="right" sx={{ fontWeight: "bold" }}>
                   Currency
                 </TableCell>
               </TableRow>
@@ -413,26 +447,26 @@ const MasterReports = () => {
                 .map((master) => (
                   <TableRow
                     key={`${master.id}`} // Use a unique key for each row
-                    sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                    sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                   >
                     {/* <TableCell component='th' scope='row'>
                   {attendence.name}
                 </TableCell> */}
-                    <TableCell align='right'>{master.description}</TableCell>
-                    <TableCell align='right'>{master.locationName}</TableCell>
-                    <TableCell align='right'>{master.address}</TableCell>
-                    <TableCell align='right'>{master.name}</TableCell>
-                    <TableCell align='right'>{master.brandName}</TableCell>
-                    <TableCell align='right'>{master.entityName}</TableCell>
-                    <TableCell align='right'>{master.date}</TableCell>
-                    <TableCell align='right'>{master.purchaseOrder}</TableCell>
-                    <TableCell align='right'>{master.pn}</TableCell>
-                    <TableCell align='right'>{master.sn}</TableCell>
-                    <TableCell align='right'>{master.quantity}</TableCell>
-                    <TableCell align='right'>{master.extendedValue}</TableCell>
-                    <TableCell align='right'>{master.unitCost}</TableCell>
-                    <TableCell align='right'>{master.price}</TableCell>
-                    <TableCell align='right'>{master.currencyName}</TableCell>
+                    <TableCell align="left">{master.description}</TableCell>
+                    <TableCell align="right">{master.locationName}</TableCell>
+                    <TableCell align="right">{master.address}</TableCell>
+                    <TableCell align="right">{master.name}</TableCell>
+                    <TableCell align="right">{master.brandName}</TableCell>
+                    <TableCell align="right">{master.entityName}</TableCell>
+                    <TableCell align="right">{master.date}</TableCell>
+                    <TableCell align="right">{master.purchaseOrder}</TableCell>
+                    <TableCell align="right">{master.pn}</TableCell>
+                    <TableCell align="right">{master.sn}</TableCell>
+                    <TableCell align="right">{master.quantity}</TableCell>
+                    <TableCell align="right">{master.extendedValue}</TableCell>
+                    <TableCell align="right">{master.unitCost}</TableCell>
+                    <TableCell align="right">{master.price}</TableCell>
+                    <TableCell align="right">{master.currencyName}</TableCell>
 
                     {/* <Link to={`/updatePickup/${master.id}`}>
                       <Button variant='contained'>Update</Button>
