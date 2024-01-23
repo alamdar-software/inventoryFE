@@ -110,7 +110,7 @@ const ReportItem = () => {
     worksheet.addRow([
       "Item Description",
       "Category",
-
+      "Item",
       "Total Quantity",
       "MinimumStock",
     ]).font = boldStyle;
