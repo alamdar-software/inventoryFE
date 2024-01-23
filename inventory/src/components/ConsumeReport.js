@@ -26,6 +26,9 @@ import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { fetchConsumeItem } from '../redux/slice/ConsumeItemSlice';
 import ExcelJS from 'exceljs';
+import html2canvas from 'html2canvas';
+import jsPDF from 'jspdf';
+
 const ConsumeReport = () => {
   const [formData, setformData] = useState({
     item: '',
@@ -168,6 +171,37 @@ const ConsumeReport = () => {
     });
   };
   console.log(formData, 'resssss');
+
+  const handleDownloadPdf = () => {
+    const input = document.getElementById('consume');
+
+    html2canvas(input, { scrollY: -window.scrollY }).then((canvas) => {
+      const imgData = canvas.toDataURL('image/png');
+      const pdf = new jsPDF({ orientation: 'landscape' });
+
+      // Divide the canvas into multiple sections if needed
+      const imgHeight = (canvas.height * 208) / canvas.width;
+      let heightLeft = imgHeight;
+      let position = 0;
+      const marginTop = 20;
+
+      // Add each section to the PDF
+      pdf.setFont('helvetica', 'bold');
+
+      pdf.text('Consumed Item Report', 110, 10);
+
+      while (heightLeft >= 0) {
+        pdf.addImage(imgData, 'PNG', 0, position + marginTop, 297, imgHeight);
+        heightLeft -= 208;
+        position -= 297;
+        if (heightLeft >= 0) {
+          pdf.addPage();
+        }
+      }
+
+      pdf.save('Consumed.pdf');
+    });
+  };
 
   return (
     <>
@@ -318,7 +352,7 @@ const ConsumeReport = () => {
               variant='contained'
               color='secondary'
               size='large'
-              //onClick={handleClick}
+              onClick={handleDownloadPdf}
             >
               Download Pdf
             </Button>
@@ -326,13 +360,13 @@ const ConsumeReport = () => {
         </CardContent>
       </Card>
 
-      <Grid sx={{ mt: '33px', width: '100%', overflowX: 'scroll' }}>
+      <Grid sx={{ mt: '33px' }}>
         <TableContainer
+          id='consume'
           component={Paper}
           sx={{
             borderRadius: '33px',
-            borderBottom: '2px solid yellow',
-            width: '110%',
+            border: '1px solid black',
           }}
         >
           <Table sx={{ minWidth: 650 }} aria-label='simple table'>
