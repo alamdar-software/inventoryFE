@@ -24,38 +24,139 @@ import { fetchItem } from '../redux/slice/ItemSlice';
 import { fetchentity } from '../redux/slice/entitySlice';
 import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-
+import { fetchConsumeItem } from '../redux/slice/ConsumeItemSlice';
+import ExcelJS from 'exceljs';
 const ConsumeReport = () => {
   const [formData, setformData] = useState({
-    description: '',
+    item: '',
     locationName: '',
-    date: '',
-    dateTo: '',
-    entityName: '',
+    startDate: '',
+    endDate: '',
   });
   const [consume, setConsume] = useState([]);
   const dispatch = useDispatch();
   const state = useSelector((state) => state);
+  const [filteredConsume, setFilteredConsume] = useState([]);
 
   useEffect(() => {
     dispatch(fetchlocation());
     dispatch(fetchItem());
     dispatch(fetchentity());
+    dispatch(fetchConsumeItem());
   }, [dispatch]);
-  const handleDateChange = (date) => {
+  const handleDateChange = (startDate) => {
     setformData({
       ...formData,
-      date: date.format('YYYY-MM-DD'),
+      startDate: startDate.format('YYYY-MM-DD'),
     });
   };
   console.log(formData);
-  const handleDateChangeTo = (dateTo) => {
+  const handleDateChangeTo = (endDate) => {
     setformData({
       ...formData,
-      dateTo: dateTo.format('YYYY-MM-DD'),
+      endDate: endDate.format('YYYY-MM-DD'),
     });
   };
   console.log(formData);
+
+  // const handleSearch = () => {
+  //   fetch('http://localhost:8080/consumeditem/searchReport', {
+  //     method: 'POST',
+  //     headers: {
+  //       'Content-Type': 'application/json',
+  //     },
+  //     body: JSON.stringify(formData),
+  //   })
+  //     .then((res) => res.json())
+  //     .then((result) => {
+  //       if (Array.isArray(result)) {
+  //         setConsume(result);
+  //       } else {
+  //         console.error('Received data does not contain an array:', result);
+  //         setConsume([]);
+  //       }
+  //     })
+  //     .catch((error) => {
+  //       console.error('Error searching data:', error);
+  //       setConsume([]);
+  //     });
+  // };
+  const handleClick = async (e) => {
+    e.preventDefault();
+    try {
+      const res = await fetch(
+        'http://localhost:8080/consumeditem/searchReport',
+        {
+          method: 'post',
+          headers: {
+            'content-type': 'application/json',
+          },
+          body: JSON.stringify(formData),
+        }
+      );
+
+      if (!res.ok) {
+        throw new Error(`HTTP error! Status: ${res.status}`);
+      }
+
+      const data = await res.json();
+      setConsume(data);
+      console.log(data, 'came from backend');
+    } catch (error) {
+      console.error('Error while adding inventory:', error.message);
+      alert('data not found');
+    }
+  };
+
+  const handleDownloadCsv = () => {
+    const boldStyle = { bold: true };
+    const workbook = new ExcelJS.Workbook();
+    const worksheet = workbook.addWorksheet('Sheet 1');
+
+    // Add header row
+    worksheet.addRow([
+      'Item Description',
+      'Location/Vessel',
+      'SubLocation',
+      'Consumed Quantity',
+      'Date',
+      'remarks',
+    ]).font = boldStyle;
+    worksheet.getColumn(1).width = 20;
+    worksheet.getColumn(3).width = 20;
+    worksheet.getColumn(2).width = 30;
+    worksheet.getColumn(4).width = 30;
+    worksheet.getColumn(5).width = 20;
+
+    let serialNumber = 1;
+    // Add data rows
+    consume.forEach((consumeRow, rowIndex) => {
+      const rowData = [
+        // serialNumber++,
+        Array.isArray(consumeRow.item)
+          ? consumeRow.item.join(', ')
+          : consumeRow.item,
+        consumeRow.locationName,
+        consumeRow.SubLocations,
+        consumeRow.quantity,
+        consumeRow.date,
+      ];
+
+      worksheet.addRow(rowData);
+    });
+
+    // Create a blob from the workbook
+    workbook.xlsx.writeBuffer().then((buffer) => {
+      const blob = new Blob([buffer], {
+        type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+      });
+      const link = document.createElement('a');
+      link.href = URL.createObjectURL(blob);
+      link.download = 'MasterReport.xlsx';
+      link.click();
+    });
+  };
+  console.log(formData, 'resssss');
 
   return (
     <>
@@ -95,7 +196,7 @@ const ConsumeReport = () => {
                   onChange={(e) =>
                     setformData({
                       ...formData,
-                      description: e.target.value,
+                      item: e.target.value,
                     })
                   }
                   MenuProps={{
@@ -149,30 +250,6 @@ const ConsumeReport = () => {
             </Grid>
           </Grid>
           <Grid container spacing={2} sx={{ mt: '21px' }}>
-            <Grid item xs={21} sm={6} sx={{ mt: '17px' }}>
-              <FormControl fullWidth sx={{ width: '90%' }}>
-                <InputLabel id='demo-simple-select-label'>Entity</InputLabel>
-                <Select
-                  labelId='demo-simple-select-label'
-                  id='demo-simple-select'
-                  label='Description'
-                  value={formData?.entityName}
-                  onChange={(e) =>
-                    setformData({
-                      ...formData,
-                      entityName: e.target.value,
-                    })
-                  }
-                >
-                  {state.entity.data?.map((item, index) => (
-                    <MenuItem key={index} value={item?.entityName}>
-                      {' '}
-                      {item?.entityName}
-                    </MenuItem>
-                  ))}
-                </Select>
-              </FormControl>
-            </Grid>
             <Grid item xs={12} sm={6}>
               <InputLabel id='date-picker-label'>From date</InputLabel>
 
@@ -185,8 +262,6 @@ const ConsumeReport = () => {
                 />
               </LocalizationProvider>
             </Grid>
-          </Grid>
-          <Grid container spacing={2} sx={{ mt: '23px' }}>
             <Grid item xs={12} sm={6}>
               <InputLabel id='date-picker-label'>To Date</InputLabel>
               <LocalizationProvider dateAdapter={AdapterDayjs}>
@@ -199,6 +274,7 @@ const ConsumeReport = () => {
               </LocalizationProvider>
             </Grid>
           </Grid>
+          <Grid container spacing={2} sx={{ mt: '23px' }}></Grid>
 
           <Box
             sx={{
@@ -213,7 +289,7 @@ const ConsumeReport = () => {
               variant='contained'
               color='secondary'
               size='large'
-              //onClick={handleClick}
+              onClick={handleClick}
               sx={{ marginRight: '8px' }}
             >
               Preview
@@ -222,7 +298,7 @@ const ConsumeReport = () => {
               variant='contained'
               color='secondary'
               size='large'
-              //onClick={handleClick}
+              onClick={handleDownloadCsv}
               sx={{ marginRight: '8px' }}
             >
               Dwnload Excel
@@ -262,9 +338,6 @@ const ConsumeReport = () => {
                 </TableCell>
 
                 <TableCell align='right' sx={{ fontWeight: 'bold' }}>
-                  Entity
-                </TableCell>
-                <TableCell align='right' sx={{ fontWeight: 'bold' }}>
                   Consumed Quantity
                 </TableCell>
                 <TableCell align='right' sx={{ fontWeight: 'bold' }}>
@@ -284,15 +357,11 @@ const ConsumeReport = () => {
                   {/* <TableCell component='th' scope='row'>
                   {attendenceconsume
                 </TableCell> */}
-                  <TableCell align='right'>{consume.description}</TableCell>
+                  <TableCell align='right'>{consume.item}</TableCell>
                   <TableCell align='right'>{consume.locationName}</TableCell>
-                  <TableCell align='right'>{consume.subLocation}</TableCell>
-                  <TableCell align='right'>{consume.entity}</TableCell>
-                  <TableCell align='right'>
-                    {consume.consumedQuantity}
-                  </TableCell>
-                  <TableCell align='right'>{consume.date}</TableCell>
-                  <TableCell align='right'>{consume.remarks}</TableCell>
+                  <TableCell align='right'>{consume.SubLocations}</TableCell>
+                  <TableCell align='right'>{consume.quantity}</TableCell>
+                  <TableCell align='right'>{consume.transferDate}</TableCell>
 
                   {/* <Link to={`/updatePickup/${master.id}`}>
                       <Button variant='contained'>Update</Button>
