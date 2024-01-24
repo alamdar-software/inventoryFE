@@ -22,6 +22,8 @@ import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { fetchentity } from "../redux/slice/entitySlice";
 import ExcelJS from "exceljs";
+import jsPDF from "jspdf";
+import html2canvas from "html2canvas";
 const MasterReports = () => {
   const [filteredCipl, setFilteredCipl] = useState([]);
   const [page, setPage] = useState(0);
@@ -149,6 +151,36 @@ const MasterReports = () => {
     });
   };
   console.log(formData, "resssss");
+  const handleDownloadPdf = () => {
+    const input = document.getElementById("cipl-table");
+
+    html2canvas(input, { scrollY: -window.scrollY }).then((canvas) => {
+      const imgData = canvas.toDataURL("image/png");
+      const pdf = new jsPDF({ orientation: "landscape" });
+
+      // Divide the canvas into multiple sections if needed
+      const imgHeight = (canvas.height * 208) / canvas.width;
+      let heightLeft = imgHeight;
+      let position = 0;
+      const marginTop = 20;
+
+      // Add each section to the PDF
+      pdf.setFont("helvetica", "bold");
+
+      pdf.text("Master Report", 110, 10);
+
+      while (heightLeft >= 0) {
+        pdf.addImage(imgData, "PNG", 0, position + marginTop, 297, imgHeight);
+        heightLeft -= 208;
+        position -= 297;
+        if (heightLeft >= 0) {
+          pdf.addPage();
+        }
+      }
+
+      pdf.save("Master Report.pdf");
+    });
+  };
 
   return (
     <>
@@ -330,7 +362,7 @@ const MasterReports = () => {
               variant="contained"
               color="secondary"
               size="large"
-              //onClick={handleClick}
+              onClick={handleDownloadPdf}
             >
               Download Pdf
             </Button>
@@ -339,10 +371,12 @@ const MasterReports = () => {
       </Card>
       <Grid sx={{ mt: "33px", width: "95%" }}>
         <TableContainer
+          id="cipl-table"
           component={Paper}
           sx={{
-            borderRadius: "33px",
-            borderBottom: "2px solid yellow",
+            borderRadius: "15px",
+            borderBottom: "1px solid black",
+            borderTop: "1px solid black",
             width: "100%",
           }}
         >
@@ -418,7 +452,7 @@ const MasterReports = () => {
                     {/* <TableCell component='th' scope='row'>
                   {attendence.name}
                 </TableCell> */}
-                    <TableCell align="right">{master.description}</TableCell>
+                    <TableCell align="left">{master.description}</TableCell>
                     <TableCell align="right">{master.locationName}</TableCell>
                     <TableCell align="right">{master.address}</TableCell>
                     <TableCell align="right">{master.name}</TableCell>

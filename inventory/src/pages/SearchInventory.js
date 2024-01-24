@@ -30,6 +30,8 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import PictureAsPdfIcon from "@mui/icons-material/PictureAsPdf";
 import { CSVLink } from "react-csv";
+import jsPDF from "jspdf";
+import html2canvas from "html2canvas";
 import Papa from "papaparse";
 import * as XLSX from "xlsx";
 import ExcelJS from "exceljs";
@@ -256,6 +258,36 @@ export const SearchInventory = () => {
       link.click();
     });
   };
+  const handleDownloadPdf = () => {
+    const input = document.getElementById("cipl-table");
+
+    html2canvas(input, { scrollY: -window.scrollY }).then((canvas) => {
+      const imgData = canvas.toDataURL("image/png");
+      const pdf = new jsPDF({ orientation: "landscape" });
+
+      // Divide the canvas into multiple sections if needed
+      const imgHeight = (canvas.height * 208) / canvas.width;
+      let heightLeft = imgHeight;
+      let position = 0;
+      const marginTop = 20;
+
+      // Add each section to the PDF
+      pdf.setFont("helvetica", "bold");
+
+      pdf.text("Inventory Report", 110, 10);
+
+      while (heightLeft >= 0) {
+        pdf.addImage(imgData, "PNG", 0, position + marginTop, 297, imgHeight);
+        heightLeft -= 208;
+        position -= 297;
+        if (heightLeft >= 0) {
+          pdf.addPage();
+        }
+      }
+
+      pdf.save("table.pdf");
+    });
+  };
   return (
     <>
       <Grid>
@@ -406,7 +438,7 @@ export const SearchInventory = () => {
             variant="contained"
             color="secondary"
             size="large"
-            onClick={handleClick}
+            onClick={handleDownloadPdf}
           >
             Download Pdf
           </Button>
@@ -414,10 +446,12 @@ export const SearchInventory = () => {
       </Card>
       <Grid sx={{ mt: "33px", width: "96%", overflowX: "scroll" }}>
         <TableContainer
+          id="cipl-table"
           component={Paper}
           sx={{
-            borderRadius: "33px",
-            borderBottom: "2px solid yellow",
+            borderRadius: "10px",
+            borderBottom: "1px solid black",
+            borderTop: "1px solid black",
             width: "100%",
           }}
         >
