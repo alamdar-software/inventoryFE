@@ -107,6 +107,7 @@ const ConsumeReport = () => {
       console.log(data, 'came from backend');
     } catch (error) {
       console.error('Error while adding inventory:', error.message);
+      setConsume([]);
       alert('data not found');
     }
   };
@@ -170,7 +171,7 @@ const ConsumeReport = () => {
       link.click();
     });
   };
-  console.log(formData, 'resssss');
+  console.log(formData, 'formData');
 
   const handleDownloadPdf = () => {
     const input = document.getElementById('consume');
