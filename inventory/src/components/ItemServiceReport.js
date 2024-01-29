@@ -300,17 +300,17 @@ const ItemServiceReport = () => {
                   {/* <TableCell component='th' scope='row'>
                   {attendenceconsume
                 </TableCell> */}
-                  <TableCell align='right'>{itemService.description}</TableCell>
+                  <TableCell align='right'>{itemService.referenceNo}</TableCell>
+                  <TableCell align='right'>
+                    {itemService.repairService}
+                  </TableCell>
+                  <TableCell align='right'>{itemService.po}</TableCell>
                   <TableCell align='right'>
                     {itemService.locationName}
                   </TableCell>
                   <TableCell align='right'>{itemService.subLocation}</TableCell>
-                  <TableCell align='right'>{itemService.entity}</TableCell>
-                  <TableCell align='right'>
-                    {itemService.consumedQuantity}
-                  </TableCell>
-                  <TableCell align='right'>{itemService.date}</TableCell>
-                  <TableCell align='right'>{itemService.remarks}</TableCell>
+                  <TableCell align='right'>{itemService.description}</TableCell>
+                  <TableCell align='right'>{itemService.purchase}</TableCell>
 
                   {/* <Link to={`/updatePickup/${master.id}`}>
                       <Button variant='contained'>Update</Button>
