@@ -81,17 +81,18 @@ const ScrappedReport = () => {
 
       const data = await res.json();
 
+      // Always set the filteredCipl state to the new data or an empty array
+      setFilteredCipl(data || []);
+
       if (data.length === 0) {
-        // No data found, reset the filteredCipl state
         setFilteredCipl([]);
         alert("No data found");
       } else {
-        // Data found, update the filteredCipl state
-        setFilteredCipl(data);
         console.log(data, "came from backend");
       }
     } catch (error) {
       console.error("Error while adding inventory:", error.message);
+      setFilteredCipl([]);
       alert("No data found");
     }
   };
