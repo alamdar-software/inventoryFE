@@ -26,6 +26,9 @@ import { fetchShipper } from '../redux/slice/ShipperSlice';
 import { fetchConsignee } from '../redux/slice/ConsigneeSlice';
 import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import ExcelJS from 'exceljs';
+import html2canvas from 'html2canvas';
+import jsPDF from 'jspdf';
 
 const CiplReport = () => {
   const [formData, setformData] = useState({
@@ -47,20 +50,144 @@ const CiplReport = () => {
     dispatch(fetchShipper());
     dispatch(fetchConsignee());
   }, [dispatch]);
-  const handleDateChange = (date) => {
+  const handleDateChange = (startDate) => {
     setformData({
       ...formData,
-      date: date.format('YYYY-MM-DD'),
+      startDate: startDate.format('YYYY-MM-DD'),
     });
   };
   console.log(formData);
-  const handleDateChangeTo = (dateTo) => {
+  const handleDateChangeTo = (endDate) => {
     setformData({
       ...formData,
-      dateTo: dateTo.format('YYYY-MM-DD'),
+      endDate: endDate.format('YYYY-MM-DD'),
     });
   };
   console.log(formData);
+
+  const handleClick = async (e) => {
+    e.preventDefault();
+    try {
+      const res = await fetch('http://localhost:8080/cipl/searchReport', {
+        method: 'post',
+        headers: {
+          'content-type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (!res.ok) {
+        throw new Error(`HTTP error! Status: ${res.status}`);
+      }
+
+      const data = await res.json();
+      setCiplReport(data);
+      console.log(data, 'came from backend');
+    } catch (error) {
+      console.error('Error while adding inventory:', error.message);
+      setCiplReport([]);
+      alert('data not found');
+    }
+  };
+
+  const handleDownloadCsv = () => {
+    const boldStyle = { bold: true };
+    const workbook = new ExcelJS.Workbook();
+    const worksheet = workbook.addWorksheet('Sheet 1');
+
+    // Add header row
+    worksheet.addRow([
+      'S.no',
+      'Ref.No',
+      'Consignee',
+      'Repair Service',
+      'Shipper',
+      'Transfer Date',
+      'Transfer Items',
+    ]).font = boldStyle;
+
+    worksheet.getColumn(3).width = 20;
+    worksheet.getColumn(2).width = 30;
+    worksheet.getColumn(4).width = 20;
+    worksheet.getColumn(5).width = 20;
+    worksheet.getColumn(6).width = 20;
+    worksheet.getColumn(7).width = 30;
+    worksheet.getColumn(8).width = 30;
+
+    worksheet.getColumn(4).alignment = { horizontal: 'left' };
+    worksheet.getColumn(1).alignment = { horizontal: 'left' };
+    let serialNumber = 1;
+    // Add data rows
+    ciplReport.forEach((ciplRow, rowIndex) => {
+      const rowData = [
+        serialNumber++,
+        Array.isArray(ciplRow.referenceNo)
+          ? ciplRow.referenceNo.join(', ')
+          : ciplRow.referenceNo,
+        Array.isArray(ciplRow.consigneeName)
+          ? ciplRow.consigneeName.join(', ')
+          : ciplRow.consigneeName,
+
+        Array.isArray(ciplRow.repairService)
+          ? ciplRow.repairService.join(', ')
+          : ciplRow.repairService,
+
+        Array.isArray(ciplRow.shipperName)
+          ? ciplRow.shipperName.join(', ')
+          : ciplRow.shipperName,
+
+        Array.isArray(ciplRow.transferDate)
+          ? ciplRow.transferDate.join(', ')
+          : ciplRow.transferDate,
+        Array.isArray(ciplRow.item) ? ciplRow.item.join(', ') : ciplRow.item,
+      ];
+
+      worksheet.addRow(rowData);
+    });
+
+    // Create a blob from the workbook
+    workbook.xlsx.writeBuffer().then((buffer) => {
+      const blob = new Blob([buffer], {
+        type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+      });
+      const link = document.createElement('a');
+      link.href = URL.createObjectURL(blob);
+      link.download = 'Cipl Report.xlsx';
+      link.click();
+    });
+  };
+  console.log(formData, 'formData');
+
+  const handleDownloadPdf = () => {
+    const input = document.getElementById('ciplReport');
+
+    html2canvas(input, { scrollY: -window.scrollY }).then((canvas) => {
+      const imgData = canvas.toDataURL('image/png');
+      const pdf = new jsPDF({ orientation: 'landscape' });
+
+      // Divide the canvas into multiple sections if needed
+      const imgHeight = (canvas.height * 208) / canvas.width;
+      let heightLeft = imgHeight;
+      let position = 0;
+      const marginTop = 20;
+
+      // Add each section to the PDF
+      pdf.setFont('helvetica', 'bold');
+
+      pdf.text('Cipl Report', 110, 10);
+
+      while (heightLeft >= 0) {
+        pdf.addImage(imgData, 'PNG', 0, position + marginTop, 297, imgHeight);
+        heightLeft -= 208;
+        position -= 297;
+        if (heightLeft >= 0) {
+          pdf.addPage();
+        }
+      }
+
+      pdf.save('Cipl.pdf');
+    });
+  };
   return (
     <>
       <Card
@@ -98,7 +225,7 @@ const CiplReport = () => {
               onChange={(e) =>
                 setformData({
                   ...formData,
-                  description: e.target.value,
+                  item: e.target.value,
                 })
               }
               MenuProps={{
@@ -154,6 +281,31 @@ const CiplReport = () => {
       </Grid>
       <Grid container spacing={2} sx={{ mt: '23px' }}>
         <Grid item xs={12} sm={6}>
+          <InputLabel id='date-picker-label'>From date</InputLabel>
+
+          <LocalizationProvider dateAdapter={AdapterDayjs}>
+            <DatePicker
+              //value={formData.date}
+              onChange={(newDate) => handleDateChange(newDate)}
+              fullWidth
+              sx={{ width: '90%' }}
+            />
+          </LocalizationProvider>
+        </Grid>
+        <Grid item xs={12} sm={6}>
+          <InputLabel id='date-picker-label'>To Date</InputLabel>
+          <LocalizationProvider dateAdapter={AdapterDayjs}>
+            <DatePicker
+              //value={formData.date}
+              onChange={(newDate) => handleDateChangeTo(newDate)}
+              fullWidth
+              sx={{ width: '90%' }}
+            />
+          </LocalizationProvider>
+        </Grid>
+      </Grid>
+      <Grid container spacing={2} sx={{ mt: '23px' }}>
+        <Grid item xs={12} sm={6}>
           <FormControl fullWidth sx={{ width: '90%' }}>
             <InputLabel id='demo-simple-select-label'>Consignee</InputLabel>
             <Select
@@ -185,57 +337,6 @@ const CiplReport = () => {
             </Select>
           </FormControl>
         </Grid>
-        <Grid item xs={21} sm={6}>
-          <FormControl fullWidth sx={{ width: '90%' }}>
-            <InputLabel id='demo-simple-select-label'>Entity</InputLabel>
-            <Select
-              labelId='demo-simple-select-label'
-              id='demo-simple-select'
-              label='Description'
-              value={formData?.entityName}
-              onChange={(e) =>
-                setformData({
-                  ...formData,
-                  entityName: e.target.value,
-                })
-              }
-            >
-              {state.entity.data?.map((item, index) => (
-                <MenuItem key={index} value={item?.entityName}>
-                  {' '}
-                  {item?.entityName}
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
-        </Grid>
-      </Grid>
-      <Grid container spacing={2} sx={{ mt: '23px' }}>
-        <Grid item xs={12} sm={6}>
-          <InputLabel id='date-picker-label'>From date</InputLabel>
-
-          <LocalizationProvider dateAdapter={AdapterDayjs}>
-            <DatePicker
-              //value={formData.date}
-              onChange={(newDate) => handleDateChange(newDate)}
-              fullWidth
-              sx={{ width: '90%' }}
-            />
-          </LocalizationProvider>
-        </Grid>
-        <Grid item xs={12} sm={6}>
-          <InputLabel id='date-picker-label'>To Date</InputLabel>
-          <LocalizationProvider dateAdapter={AdapterDayjs}>
-            <DatePicker
-              //value={formData.date}
-              onChange={(newDate) => handleDateChangeTo(newDate)}
-              fullWidth
-              sx={{ width: '90%' }}
-            />
-          </LocalizationProvider>
-        </Grid>
-      </Grid>
-      <Grid container spacing={2} sx={{ mt: '17px' }}>
         <Grid item xs={12} sm={6}>
           <FormControl fullWidth sx={{ width: '90%' }}>
             <InputLabel id='demo-simple-select-label'>
@@ -275,7 +376,7 @@ const CiplReport = () => {
           variant='contained'
           color='secondary'
           size='large'
-          //onClick={handleClick}
+          onClick={handleClick}
           sx={{ marginRight: '8px' }}
         >
           Preview
@@ -284,7 +385,7 @@ const CiplReport = () => {
           variant='contained'
           color='secondary'
           size='large'
-          //onClick={handleClick}
+          onClick={handleDownloadCsv}
           sx={{ marginRight: '8px' }}
         >
           Dwnload Excel
@@ -293,19 +394,19 @@ const CiplReport = () => {
           variant='contained'
           color='secondary'
           size='large'
-          //onClick={handleClick}
+          onClick={handleDownloadPdf}
         >
           Download Pdf
         </Button>
       </Box>
 
-      <Grid sx={{ mt: '33px', width: '100%', overflowX: 'scroll' }}>
+      <Grid sx={{ mt: '33px' }}>
         <TableContainer
+          id='ciplReport'
           component={Paper}
           sx={{
             borderRadius: '33px',
             borderBottom: '2px solid yellow',
-            width: '110%',
           }}
         >
           <Table sx={{ minWidth: 650 }} aria-label='simple table'>
@@ -341,16 +442,16 @@ const CiplReport = () => {
                   {/* <TableCell component='th' scope='row'>
                   {attendenceconsume
                 </TableCell> */}
-                  <TableCell align='right'>{ciplReport.refNo}</TableCell>
+                  <TableCell align='right'>{ciplReport.referenceNo}</TableCell>
                   <TableCell align='right'>
                     {ciplReport.consigneeName}
                   </TableCell>
                   <TableCell align='right'>
-                    {ciplReport.repairService}
+                    {ciplReport.repairService ? 'true' : 'false'}
                   </TableCell>
                   <TableCell align='right'>{ciplReport.shipperName}</TableCell>
-                  <TableCell align='right'>{ciplReport.date}</TableCell>
-                  <TableCell align='right'>{ciplReport.transferItem}</TableCell>
+                  <TableCell align='right'>{ciplReport.transferDate}</TableCell>
+                  <TableCell align='right'>{ciplReport.item}</TableCell>
 
                   {/* <Link to={`/updatePickup/${master.id}`}>
                       <Button variant='contained'>Update</Button>
