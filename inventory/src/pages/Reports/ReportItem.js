@@ -49,9 +49,9 @@ const ReportItem = () => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [formData, setformData] = useState({
-    item: "",
+    description: "",
 
-    category: "",
+    name: "",
   });
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -66,7 +66,7 @@ const ReportItem = () => {
   const handleClick = async (e) => {
     e.preventDefault();
     try {
-      const res = await fetch("http://localhost:8080/cipl/search", {
+      const res = await fetch("http://localhost:8080/inventory/searchItem", {
         method: "post",
         headers: {
           "content-type": "application/json",
@@ -86,7 +86,7 @@ const ReportItem = () => {
       alert("data not found");
     }
   };
-
+  console.log(filteredCipl, "iamnuu");
   /*   const generatePDF = async (rowData, index) => {
     console.log("Generate PDF clicked");
     const pdf = new jsPDF();
@@ -192,7 +192,7 @@ const ReportItem = () => {
                 onChange={(e) => {
                   setformData({
                     ...formData,
-                    item: e.target.value,
+                    description: e.target.value,
                   });
                 }}
                 /* onChange={(e) =>
@@ -231,7 +231,7 @@ const ReportItem = () => {
                 onChange={(e) => {
                   setformData({
                     ...formData,
-                    category: e.target.value,
+                    name: e.target.value,
                   });
                 }}
 
