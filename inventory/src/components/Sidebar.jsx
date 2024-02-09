@@ -35,6 +35,7 @@ import PersonIcon from "@mui/icons-material/Person";
 import SettingsIcon from "@mui/icons-material/Settings";
 import { Button, Card, CardActions, CardContent, Grid } from "@mui/material";
 import { Link } from "react-router-dom";
+import sidebar from '../assects/sidebar.jpg';
 const drawerWidth = 240;
 
 const openedMixin = (theme) => ({
@@ -133,7 +134,6 @@ export default function Sidebar({ children }) {
     {
       text: "Inventory",
       icon: <TransferWithinAStationIcon />,
-
       submenu: [{ text: "Add Inventory" }, { text: "View Inventory" }],
     },
     /* { text: "Transfer Item", icon: <WhatshotIcon /> }, */
@@ -192,7 +192,9 @@ export default function Sidebar({ children }) {
   };
 
   return (
-    <Box sx={{ display: "flex" }}>
+    <Box sx={{
+      display: "flex",
+    }}>
       <CssBaseline />
       <AppBar
         position="fixed"
@@ -225,8 +227,13 @@ export default function Sidebar({ children }) {
           </Typography>
         </Toolbar>
       </AppBar>
-      <Drawer variant="permanent" open={open} sx={{ background: "#090979" }}>
-        <DrawerHeader>
+      <Drawer variant="permanent" open={open} sx={{
+
+      }}>
+        <DrawerHeader sx={{
+          backgroundImage: `url(${sidebar})`,
+          backgroundSize: 'cover',
+        }}>
           <IconButton onClick={handleDrawerClose}>
             {theme.direction === "rtl" ? (
               <ChevronRightIcon />
@@ -236,7 +243,10 @@ export default function Sidebar({ children }) {
           </IconButton>
         </DrawerHeader>
         <Divider />
-        <List>
+        <List sx={{
+          backgroundImage: `url(${sidebar})`,
+          backgroundSize: 'cover',
+        }}>
           {menuItems.map((item, index) => (
             <div key={item.text}>
               <ListItem disablePadding>
