@@ -34,8 +34,13 @@ import ReportIcon from "@mui/icons-material/Report";
 import PersonIcon from "@mui/icons-material/Person";
 import SettingsIcon from "@mui/icons-material/Settings";
 import { Button, Card, CardActions, CardContent, Grid } from "@mui/material";
-import { Link } from "react-router-dom";
-
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { Menu, MenuItem } from "@mui/material";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import { useDispatch } from "react-redux";
+import { signoutSuccess } from "../redux/slice/UserSlice";
+import { useHistory } from "react-router-dom";
 const drawerWidth = 240;
 
 const openedMixin = (theme) => ({
@@ -105,6 +110,9 @@ const Drawer = styled(MuiDrawer, {
 }));
 
 export default function Sidebar({ children }) {
+  const location = useLocation();
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
 
@@ -190,11 +198,30 @@ export default function Sidebar({ children }) {
   const handleSubMenuClick = (index) => {
     setOpenSubMenu(openSubMenu === index ? null : index);
   };
+  const [anchorEl, setAnchorEl] = useState(null);
+
+  const handleMenuOpen = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleMenuClose = () => {
+    setAnchorEl(null);
+  };
+
+  const handleLogout = () => {
+    dispatch(signoutSuccess());
+    navigate("/login");
+    window.location.reload();
+    // Implement your logout logic here
+    // For example, dispatch a logout action or redirect the user
+  };
 
   return (
-    <Box sx={{
-      display: "flex",
-    }}>
+    <Box
+      sx={{
+        display: "flex",
+      }}
+    >
       <CssBaseline />
       <AppBar
         position="fixed"
@@ -225,15 +252,37 @@ export default function Sidebar({ children }) {
           >
             INVENTORY
           </Typography>
+
+          {/* User Dropdown */}
+          <div style={{ marginLeft: "auto" }}>
+            <IconButton
+              size="large"
+              edge="end"
+              color="inherit"
+              onClick={handleMenuOpen}
+            >
+              <AccountCircleIcon />
+            </IconButton>
+            <Menu
+              id="user-menu"
+              anchorEl={anchorEl}
+              open={Boolean(anchorEl)}
+              onClose={handleMenuClose}
+            >
+              {/* Display user information */}
+              <MenuItem disabled>{/* Add user info here */}</MenuItem>
+              <MenuItem onClick={handleLogout}>Logout</MenuItem>
+            </Menu>
+          </div>
         </Toolbar>
       </AppBar>
-      <Drawer variant="permanent" open={open} sx={{
-
-      }}>
-        <DrawerHeader sx={{
-          // backgroundImage: `url(${sidebar})`,
-          backgroundSize: 'cover',
-        }}>
+      <Drawer variant="permanent" open={open} sx={{}}>
+        <DrawerHeader
+          sx={{
+            // backgroundImage: `url(${sidebar})`,
+            backgroundSize: "cover",
+          }}
+        >
           <IconButton onClick={handleDrawerClose}>
             {theme.direction === "rtl" ? (
               <ChevronRightIcon />
@@ -243,10 +292,12 @@ export default function Sidebar({ children }) {
           </IconButton>
         </DrawerHeader>
         <Divider />
-        <List sx={{
-          // backgroundImage: `url(${sidebar})`,
-          backgroundSize: 'cover',
-        }}>
+        <List
+          sx={{
+            // backgroundImage: `url(${sidebar})`,
+            backgroundSize: "cover",
+          }}
+        >
           {menuItems.map((item, index) => (
             <div key={item.text}>
               <ListItem disablePadding>
