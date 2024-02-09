@@ -78,6 +78,7 @@ import UpdateScrapped from "./pages/UpdateScrapped";
 import ViewInventoryMoc from "./components/ViewInventoryMoc.js";
 import LocationDashboard from "./components/LocationDashboard.js";
 import Signup from "./pages/Login/Signup.jsx";
+import Login from "./pages/Login/Login.jsx";
 const theme = createTheme({
   palette: {
     background: {
@@ -113,6 +114,7 @@ function App() {
           <Routes>
             {/* Route for signup without the sidebar */}
             <Route path="/signUp" element={<Signup />} />
+            <Route path="/login" element={<Login />} />
             {/* Define other routes here */}
           </Routes>
         </ThemeProvider>
