@@ -35,7 +35,7 @@ import PersonIcon from "@mui/icons-material/Person";
 import SettingsIcon from "@mui/icons-material/Settings";
 import { Button, Card, CardActions, CardContent, Grid } from "@mui/material";
 import { Link } from "react-router-dom";
-import sidebar from '../assects/sidebar.jpg';
+
 const drawerWidth = 240;
 
 const openedMixin = (theme) => ({
@@ -231,7 +231,7 @@ export default function Sidebar({ children }) {
 
       }}>
         <DrawerHeader sx={{
-          backgroundImage: `url(${sidebar})`,
+          // backgroundImage: `url(${sidebar})`,
           backgroundSize: 'cover',
         }}>
           <IconButton onClick={handleDrawerClose}>
@@ -244,7 +244,7 @@ export default function Sidebar({ children }) {
         </DrawerHeader>
         <Divider />
         <List sx={{
-          backgroundImage: `url(${sidebar})`,
+          // backgroundImage: `url(${sidebar})`,
           backgroundSize: 'cover',
         }}>
           {menuItems.map((item, index) => (
