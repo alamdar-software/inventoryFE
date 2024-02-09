@@ -125,9 +125,6 @@ const ItemServiceReport = () => {
           ? mtoRow.referenceNo.join(', ')
           : mtoRow.referenceNo,
 
-        // Array.isArray(mtoRow.consigneeName)
-        //   ? mtoRow.consigneeName.join(', ')
-        //   : mtoRow.consigneeName,
         Array.isArray(mtoRow.repairService)
           ? mtoRow.repairService.join(', ')
           : mtoRow.repairService,
