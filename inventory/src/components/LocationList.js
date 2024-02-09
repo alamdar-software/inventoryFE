@@ -18,9 +18,11 @@ import {
   FormControl,
 } from "@mui/material";
 import React, { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
 const LocationList = () => {
+  const { currentUser } = useSelector((state) => state.persisted.user);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5); // Adjust as needed
   const [error, setError] = useState(null);
@@ -29,7 +31,11 @@ const LocationList = () => {
   const [selectedLocationId, setselectedLocationId] = useState(null);
   const [showError, setShowError] = useState(false);
   useEffect(() => {
-    fetch("http://localhost:8080/location/getAll")
+    fetch("http://localhost:8080/location/getAll", {
+      headers: {
+        Authorization: `Bearer ${currentUser.accessToken}`,
+      },
+    })
       .then((res) => res.json())
       .then((result) => {
         console.log(result);
@@ -48,7 +54,10 @@ const LocationList = () => {
     console.log(id);
     fetch(`http://localhost:8080/location/delete/${id}`, {
       method: "DELETE",
-      headers: { "Content-type": "application/json" },
+      headers: {
+        "Content-type": "application/json",
+        Authorization: `Bearer ${currentUser.accessToken}`,
+      },
       body: JSON.stringify(LocationList),
     })
       .then(() => {
