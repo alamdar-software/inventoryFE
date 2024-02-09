@@ -20,6 +20,7 @@ import {
   TablePagination,
 } from '@mui/material';
 import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 const Pickup = () => {
   const [pickupAddress, setPickupAddress] = useState();
   const [pic, setPic] = useState();
@@ -30,6 +31,7 @@ const Pickup = () => {
 
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
+  const { currentUser } = useSelector((state) => state.persisted.user);
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -76,7 +78,10 @@ const Pickup = () => {
 
     fetch('http://localhost:8080/pickup/add', {
       method: 'POST',
-      headers: { 'Content-type': 'application/json' },
+      headers: {
+        'Content-type': 'application/json',
+        Authorization: `Bearer ${currentUser.accessToken}`,
+      },
       body: JSON.stringify(attendence),
     }).then(() => {
       console.log('Pickup Added');
@@ -84,21 +89,37 @@ const Pickup = () => {
     });
   };
   useEffect(() => {
-    fetch('http://localhost:8080/pickup/view')
-      .then((res) => {
-        if (!res.ok) {
-          throw new Error(`HTTP error! Status: ${res.status}`);
-        }
-        return res.json();
-      })
-      .then((result) => {
-        console.log(result);
-        setPickUp(result);
-      })
-      .catch((error) => {
-        console.error('Error fetching pickup data:', error);
+    const getPickup = async () => {
+      console.log(currentUser.accessToken, 'heyyyy');
+      const res = await fetch('http://localhost:8080/pickup/view', {
+        headers: {
+          Authorization: `Bearer ${currentUser.accessToken}`,
+        },
       });
+
+      const data = await res.json();
+
+      console.log(data, 'backdata');
+      setPickUp(data);
+    };
+    getPickup();
   }, []);
+  // useEffect(() => {
+  //   fetch('http://localhost:8080/pickup/view')
+  //     .then((res) => {
+  //       if (!res.ok) {
+  //         throw new Error(`HTTP error! Status: ${res.status}`);
+  //       }
+  //       return res.json();
+  //     })
+  //     .then((result) => {
+  //       console.log(result);
+  //       setPickUp(result);
+  //     })
+  //     .catch((error) => {
+  //       console.error('Error fetching pickup data:', error);
+  //     });
+  // }, []);
 
   const deletePickup = async (id) => {
     alert('Deleted Successfully!');
