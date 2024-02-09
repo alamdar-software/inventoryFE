@@ -12,6 +12,7 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
+import { InputLabel, MenuItem, Select } from "@mui/material";
 
 function Copyright(props) {
   return (
@@ -85,10 +86,10 @@ export default function SignUp() {
                 <TextField
                   required
                   fullWidth
-                  id="lastName"
-                  label="Last Name"
-                  name="lastName"
-                  autoComplete="family-name"
+                  id="username"
+                  label="User Name"
+                  name="username"
+                  autoComplete="username"
                 />
               </Grid>
               <Grid item xs={12}>
@@ -100,6 +101,32 @@ export default function SignUp() {
                   name="email"
                   autoComplete="email"
                 />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  type="number"
+                  required
+                  fullWidth
+                  id="phoneNumber"
+                  label="Phone  Number"
+                  name="phoneNumber"
+                  autoComplete="phoneNumber"
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <InputLabel id="selectOption">Select Role</InputLabel>
+                <Select
+                  fullWidth
+                  id="selectOption"
+                  label="Select Role"
+                  placeholder="select Role"
+                  /*  value={selectedOption} */ // Provide a state variable to hold the selected option
+                  /* onChange={handleSelectChange} */ // Provide a function to handle changes in the select
+                >
+                  <MenuItem value="ROLE_SUPERADMIN">ROLE_SUPERADMIN</MenuItem>
+                  <MenuItem value="ROLE_VERIFIER">ROLE_VERIFIER</MenuItem>
+                  <MenuItem value="ROLE_PREPARER">ROLE_PREPARER</MenuItem>
+                </Select>
               </Grid>
               <Grid item xs={12}>
                 <TextField
