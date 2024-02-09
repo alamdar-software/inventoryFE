@@ -10,6 +10,7 @@ import {
 import TableComp from "./TableComp.jsx";
 import { useEffect } from "react";
 import Swal from "sweetalert2";
+import { useSelector } from "react-redux";
 // const currency = {
 //   currencyName: "",
 // };
@@ -21,11 +22,17 @@ export const Currency = () => {
   const [Loading, setLoading] = useState(false);
   const [error, seterror] = useState(false);
   const [data, setdata] = useState([]);
+  const { currentUser } = useSelector((state) => state.persisted.user);
   console.log(currency);
 
   useEffect(() => {
     const getCurrency = async () => {
-      const res = await fetch("http://localhost:8080/currency/view");
+      console.log(currentUser.accessToken);
+      const res = await fetch("http://localhost:8080/currency/view", {
+        headers: {
+          Authorization: `Bearer ${currentUser.accessToken}`,
+        },
+      })
 
       const data = await res.json();
 
@@ -34,6 +41,7 @@ export const Currency = () => {
     };
     getCurrency();
   }, []);
+
   const handleClick = async () => {
     const { currencyName } = currency;
 
@@ -49,7 +57,7 @@ export const Currency = () => {
     const res = await fetch("http://localhost:8080/currency/add", {
       method: "POST",
       headers: {
-        "Content-Type": "application/json",
+        "Content-Type": "application/json", Authorization: `Bearer ${currentUser.accessToken}`
       },
       body: JSON.stringify(currency),
     });

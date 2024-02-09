@@ -49,6 +49,7 @@ const Consignee = () => {
 
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
+  const { currentUser } = useSelector((state) => state.persisted.user);
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -67,6 +68,7 @@ const Consignee = () => {
         method: 'post',
         headers: {
           'Content-Type': 'application/json',
+          Authorization: `Bearer ${currentUser.accessToken}`,
         },
         body: JSON.stringify(formData),
       });
@@ -78,7 +80,12 @@ const Consignee = () => {
     }
   };
   useEffect(() => {
-    fetch('http://localhost:8080/consignee/view')
+    console.log(currentUser.accessToken, 'heyyyy');
+    fetch('http://localhost:8080/consignee/view', {
+      headers: {
+        Authorization: `Bearer ${currentUser.accessToken}`,
+      },
+    })
       .then((res) => res.json())
       .then((result) => {
         console.log(result);

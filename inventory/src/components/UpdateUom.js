@@ -7,6 +7,7 @@ import {
   Typography,
 } from '@mui/material';
 import React, { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 
 const UpdateUom = () => {
@@ -15,9 +16,14 @@ const UpdateUom = () => {
   });
   const navigate = useNavigate();
   const { id } = useParams();
+  const { currentUser } = useSelector((state) => state.persisted.user);
   useEffect(() => {
     const getUOM = async () => {
-      const res = await fetch(`http://localhost:8080/unit/get/${id}`);
+      const res = await fetch(`http://localhost:8080/unit/get/${id}`, {
+        headers: {
+          Authorization: `Bearer ${currentUser.accessToken}`,
+        },
+      });
 
       const data = await res.json();
 
@@ -34,6 +40,7 @@ const UpdateUom = () => {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
+        Authorization: `Bearer ${currentUser.accessToken}`,
       },
 
       body: JSON.stringify(formData),

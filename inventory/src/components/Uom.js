@@ -5,27 +5,28 @@ import {
   Grid,
   TextField,
   Typography,
-} from "@mui/material";
+} from '@mui/material';
 
-import { useState } from "react";
-import * as React from "react";
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
-import TableContainer from "@mui/material/TableContainer";
-import TableHead from "@mui/material/TableHead";
-import TableRow from "@mui/material/TableRow";
-import Paper from "@mui/material/Paper";
-import { useEffect } from "react";
-import { Link } from "react-router-dom";
-import ButtonGroup from "@mui/material/ButtonGroup";
-import UomTable from "./UomTable";
+import { useState } from 'react';
+import * as React from 'react';
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import Paper from '@mui/material/Paper';
+import { useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import ButtonGroup from '@mui/material/ButtonGroup';
+import UomTable from './UomTable';
+import { useSelector } from 'react-redux';
 export const Uom = () => {
   const [unit, setunit] = useState({
-    unitName: "",
+    unitName: '',
   });
   const [Uom, setUom] = useState([]);
-
+  const { currentUser } = useSelector((state) => state.persisted.user);
   console.log(unit);
   function createData(name, calories, fat, carbs, protein) {
     return { name, calories, fat, carbs, protein };
@@ -34,9 +35,14 @@ export const Uom = () => {
   useEffect(() => {
     const getUom = async () => {
       try {
-        const res = await fetch("http://localhost:8080/unit/view");
+        const res = await fetch('http://localhost:8080/unit/view', {
+          headers: {
+            Authorization: `Bearer ${currentUser.accessToken}`,
+          },
+        });
+
         const response = await res.json();
-        console.log(response.content, "uom");
+        console.log(response.content, 'uom');
         setUom(response.content);
       } catch (error) {
         console.log(error);
@@ -45,13 +51,13 @@ export const Uom = () => {
 
     getUom();
   }, []);
-  console.log(Uom, "uuuuuuuuuuuu");
+  console.log(Uom, 'uuuuuuuuuuuu');
 
   const handleClick = async () => {
-    const res = await fetch("http://localhost:8080/unit/add", {
-      method: "POST",
+    const res = await fetch('http://localhost:8080/unit/add', {
+      method: 'POST',
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
       },
       body: JSON.stringify(unit),
     });
@@ -66,9 +72,9 @@ export const Uom = () => {
     try {
       // Perform the delete operation
       const response = await fetch(`http://localhost:8080/Uom/delete/${id}`, {
-        method: "DELETE",
+        method: 'DELETE',
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
       });
 
@@ -78,10 +84,10 @@ export const Uom = () => {
         window.location.reload();
       } else {
         // Handle the error if deletion fails
-        console.error("Delete failed");
+        console.error('Delete failed');
       }
     } catch (error) {
-      console.error("Error during delete:", error);
+      console.error('Error during delete:', error);
     }
   };
 
@@ -89,17 +95,17 @@ export const Uom = () => {
     <>
       <Grid>
         <Card
-          color="secondary"
+          color='secondary'
           sx={{
-            width: "100%",
-            backgroundColor: "secondary",
-            borderBottom: "2px solid yellow",
+            width: '100%',
+            backgroundColor: 'secondary',
+            borderBottom: '2px solid yellow',
           }}
         >
           <CardContent>
             <Typography
-              variant="h4"
-              color="secondary"
+              variant='h4'
+              color='secondary'
               gutterBottom
               style={{ fontFamily: "'EB Garamond'" }}
             >
@@ -111,19 +117,19 @@ export const Uom = () => {
 
       <Card
         sx={{
-          width: "100%",
-          mt: "33px",
-          pt: "33px",
-          borderBottom: "2px solid yellow",
-          borderRadius: "33px",
+          width: '100%',
+          mt: '33px',
+          pt: '33px',
+          borderBottom: '2px solid yellow',
+          borderRadius: '33px',
         }}
       >
-        <Grid container spacing={2} sx={{ ml: "13px" }}>
+        <Grid container spacing={2} sx={{ ml: '13px' }}>
           <Grid item xs={12} sm={6}>
             <TextField
-              id="unitName"
-              label="Unit Name"
-              variant="outlined"
+              id='unitName'
+              label='Unit Name'
+              variant='outlined'
               onChange={handleChange}
               //   value={location}
               //   onChange={(e) => setLocation(e.target.value)}
@@ -133,22 +139,22 @@ export const Uom = () => {
         </Grid>
 
         <Button
-          variant="contained"
-          color="secondary"
-          size="large"
+          variant='contained'
+          color='secondary'
+          size='large'
           //onClick={handleClick}
           sx={{
-            mt: "33px",
-            mb: "17px",
-            marginLeft: "auto",
-            marginRight: "auto",
-            display: "block",
+            mt: '33px',
+            mb: '17px',
+            marginLeft: 'auto',
+            marginRight: 'auto',
+            display: 'block',
           }}
           onClick={handleClick}
         >
           Add
         </Button>
-        <div sx={{ margin: "20px" }}>
+        <div sx={{ margin: '20px' }}>
           <UomTable data={Uom} />
         </div>
       </Card>
