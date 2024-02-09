@@ -126,6 +126,7 @@ export default function SignUp() {
                   <MenuItem value="ROLE_SUPERADMIN">ROLE_SUPERADMIN</MenuItem>
                   <MenuItem value="ROLE_VERIFIER">ROLE_VERIFIER</MenuItem>
                   <MenuItem value="ROLE_PREPARER">ROLE_PREPARER</MenuItem>
+                  <MenuItem value="ROLE_PREPARER">ROLE_APPROVER</MenuItem>
                 </Select>
               </Grid>
               <Grid item xs={12}>

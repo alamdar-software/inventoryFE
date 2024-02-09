@@ -74,7 +74,8 @@ export default function Signin() {
       console.log(data);
       if (res.ok) {
         dispatch(signInSuccess(data));
-        navigate("/");
+        navigate("/dashboard");
+        window.location.reload();
         console.log(currentUser.accessToken, "mujhepatahai");
         /* window.location.reload(); */
         /*  console.log(currentUser, "currentlaga"); */

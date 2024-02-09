@@ -49,6 +49,7 @@ export default function Brand() {
     const res = await fetch("http://localhost:8080/brand/add", {
       method: "POST",
       headers: {
+        Authorization: `Bearer ${currentUser.accessToken}`,
         "Content-Type": "application/json",
       },
       body: JSON.stringify(Brand),
