@@ -1,4 +1,9 @@
+import { combineReducers } from "@reduxjs/toolkit";
 import { configureStore } from "@reduxjs/toolkit";
+import { persistReducer, persistStore } from "redux-persist";
+import storage from "redux-persist/lib/storage";
+import userReducer from "./slice/UserSlice";
+
 import CategoryReducer from "./slice/CategorySlice";
 import locationReducer from "./slice/location";
 import UomReducer from "./slice/UomSlice";
@@ -13,8 +18,22 @@ import SingleIncomeSlice from "./slice/SingleIncomeSlice";
 import InventorySlice from "./slice/InventorySlice";
 import ConsumeItemSlice from "./slice/ConsumeItemSlice";
 
-export const store = configureStore({
-  reducer: {
+// Combine the reducers from both stores
+const rootReducer = combineReducers({
+  // Redux Persisted store reducers
+  persisted: persistReducer(
+    {
+      key: "root",
+      storage,
+      version: 1,
+    },
+    combineReducers({
+      user: userReducer,
+    })
+  ),
+
+  // Non-persisted store reducers
+  nonPersisted: combineReducers({
     location: locationReducer,
     category: CategoryReducer,
     consignee: ConsigneeReducer,
@@ -28,5 +47,17 @@ export const store = configureStore({
     singleIncome: SingleIncomeSlice,
     inventory: InventorySlice,
     consumedItem: ConsumeItemSlice,
-  },
+  }),
 });
+
+// Create the global store
+export const store = configureStore({
+  reducer: rootReducer, // Use rootReducer here
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      serializableCheck: false, // Disables the serializable check
+    }),
+});
+
+// Initialize Redux Persist
+export const persistor = persistStore(store); // Use persistor instead of persist

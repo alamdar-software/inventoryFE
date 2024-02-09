@@ -187,7 +187,7 @@ const SingleIncome = () => {
       console.log(data, "came from backend");
       alert("income added successfully");
     } catch (error) {
-      console.log("something happens while adding inventory");
+      console.log(error, "something happens while adding income");
     }
   };
   return (
