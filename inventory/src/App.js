@@ -122,7 +122,14 @@ function App() {
           <CssBaseline />
 
           <Routes>
-            <Route path="/" element={<Dashboard />} />
+            <Route
+              path="/"
+              element={
+                <Sidebar>
+                  <Dashboard />
+                </Sidebar>
+              }
+            />
 
             <Route
               path="/dashboard"
@@ -188,7 +195,6 @@ function App() {
                 </Sidebar>
               }
             />
-
             <Route
               path="/updateShipper/:id"
               element={
@@ -317,7 +323,6 @@ function App() {
                 </Sidebar>
               }
             />
-
             <Route
               path="/mto"
               element={
@@ -390,14 +395,12 @@ function App() {
                 </Sidebar>
               }
             />
-
             <Route path="/add-inventory" element={<Inventory />} />
             <Route path="/view-inventory" element={<InventoryList />} />
             <Route path="/updateInventory/:id" element={<UpdateInventory />} />
             <Route path="/add-scrappeditem" element={<ScrappedItem />} />
             <Route path="/view-scrappeditem" element={<ViewScrapp />} />
             <Route path="/updateScapped/:id" element={<UpdateScrapped />} />
-
             <Route path="/add-incoming" element={<IncomingStock />} />
             <Route path="/view-incoming" element={<ViewIncoming />} />
             <Route path="/updateIncoming/:id" element={<UpdateIncoming />} />
@@ -416,7 +419,6 @@ function App() {
             <Route path="/reportItem" element={<ReportItem />} />
             <Route path="/locationReport" element={<LocationReport />} />
             <Route path="/transferItem" element={<TransferItemDashboard />} />
-
             <Route path="/viewMto" element={<ViewMto />} />
             <Route path="/mto/createpdf/:id" element={<PrintMto />} />
             <Route path="/updateMto/:id" element={<UpdateMto />} />
@@ -424,7 +426,6 @@ function App() {
             <Route path="/updatePickup/:id" element={<UpdatePickup />} />
             <Route path="/internal/createpdf/:id" element={<PrintInternal />} />
             <Route path="/Uom/update/:id" element={<UpdateUom />} />
-
             <Route path="/masterReport" element={<MasterReports />} />
             <Route path="/consumeReport" element={<ConsumeReport />} />
             <Route path="/scrappedReport" element={<ScrappedReport />} />
