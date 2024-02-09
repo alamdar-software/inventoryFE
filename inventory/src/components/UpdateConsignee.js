@@ -7,6 +7,7 @@ import {
   Typography,
 } from '@mui/material';
 import React, { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 
 const UpdateConsignee = () => {
@@ -21,6 +22,7 @@ const UpdateConsignee = () => {
     locationName: null,
   });
   const [consignee, setConsignee] = useState();
+  const { currentUser } = useSelector((state) => state.persisted.user);
   let navigate = useNavigate();
 
   const { id } = useParams();
@@ -28,7 +30,12 @@ const UpdateConsignee = () => {
   console.log(id);
 
   useEffect(() => {
-    fetch(`http://localhost:8080/consignee/get/${id}`)
+    console.log(currentUser.accessToken, 'heyyyy');
+    fetch(`http://localhost:8080/consignee/get/${id}`, {
+      headers: {
+        Authorization: `Bearer ${currentUser.accessToken}`,
+      },
+    })
       .then((res) => res.json())
       .then((result) => {
         console.log(result);
@@ -45,7 +52,10 @@ const UpdateConsignee = () => {
 
     fetch(`http://localhost:8080/consignee/edit/${id}`, {
       method: 'PUT',
-      headers: { 'Content-type': 'application/json' },
+      headers: {
+        'Content-type': 'application/json',
+        Authorization: `Bearer ${currentUser.accessToken}`,
+      },
       body: JSON.stringify(consignee),
     })
       .then(() => {

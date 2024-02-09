@@ -15,6 +15,7 @@ import {
   Typography,
 } from '@mui/material';
 import React, { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import Swal from 'sweetalert2';
 
@@ -27,6 +28,7 @@ const Shipper = () => {
   const [email, setEmail] = useState();
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5); // You can adjust the number of rows per page
+  const { currentUser } = useSelector((state) => state.persisted.user);
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -59,7 +61,10 @@ const Shipper = () => {
 
     fetch('http://localhost:8080/shipper/add', {
       method: 'POST',
-      headers: { 'Content-type': 'application/json' },
+      headers: {
+        'Content-type': 'application/json',
+        Authorization: `Bearer ${currentUser.accessToken}`,
+      },
       body: JSON.stringify(formData),
     }).then(() => {
       console.log('Shipper Added');
@@ -68,7 +73,12 @@ const Shipper = () => {
   };
 
   useEffect(() => {
-    fetch('http://localhost:8080/shipper/view')
+    console.log(currentUser.accessToken, 'heyyyy');
+    fetch('http://localhost:8080/shipper/view', {
+      headers: {
+        Authorization: `Bearer ${currentUser.accessToken}`,
+      },
+    })
       .then((res) => res.json())
       .then((result) => {
         if (result) {
