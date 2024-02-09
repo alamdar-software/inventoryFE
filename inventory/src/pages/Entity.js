@@ -10,11 +10,13 @@ import {
 
 import { useEffect } from "react";
 import EntityTable from "../components/EntityTable.js";
+import { useSelector } from "react-redux";
 // const currency = {
 //   currencyName: "",
 // };
 
 export default function Entity() {
+  const { currentUser } = useSelector((state) => state.persisted.user);
   const [entity, setEntity] = useState({
     entityName: "",
   });
@@ -25,7 +27,11 @@ export default function Entity() {
 
   useEffect(() => {
     const getCurrency = async () => {
-      const res = await fetch("http://localhost:8080/entity/view");
+      const res = await fetch("http://localhost:8080/entity/view", {
+        headers: {
+          Authorization: `Bearer ${currentUser.accessToken}`,
+        },
+      });
 
       const data = await res.json();
 
@@ -38,6 +44,7 @@ export default function Entity() {
     const res = await fetch("http://localhost:8080/entity/add", {
       method: "POST",
       headers: {
+        Authorization: `Bearer ${currentUser.accessToken}`,
         "Content-Type": "application/json",
       },
       body: JSON.stringify(entity),
