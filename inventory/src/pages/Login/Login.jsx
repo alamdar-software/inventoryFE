@@ -46,7 +46,7 @@ function Copyright(props) {
 const defaultTheme = createTheme();
 
 export default function Signin() {
-  const { currentUser } = useSelector((state) => state.payload);
+  const { currentUser } = useSelector((state) => state.persisted.user);
   const location = useLocation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -74,9 +74,10 @@ export default function Signin() {
       console.log(data);
       if (res.ok) {
         dispatch(signInSuccess(data));
-        navigate("/dashboard");
-        window.location.reload();
-        console.log(currentUser, "currentlaga");
+        navigate("/");
+        console.log(currentUser.accessToken, "mujhepatahai");
+        /* window.location.reload(); */
+        /*  console.log(currentUser, "currentlaga"); */
       }
     } catch (error) {
       dispatch(signInFailure());

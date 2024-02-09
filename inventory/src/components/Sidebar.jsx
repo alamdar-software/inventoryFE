@@ -177,6 +177,13 @@ export default function Sidebar({ children }) {
     },
 
     { text: "Reports", icon: <ReportIcon /> },
+    {
+      text: "Users",
+      icon: <RingVolumeIcon />,
+      submenu: [{ text: "Add User" }, { text: "View User" }],
+    },
+
+    { text: "Reports", icon: <ReportIcon /> },
   ];
   const [openSubMenu, setOpenSubMenu] = React.useState(null);
 
