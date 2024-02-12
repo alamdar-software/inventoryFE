@@ -32,19 +32,19 @@ import PictureAsPdfIcon from "@mui/icons-material/PictureAsPdf";
 import { fetchConsumeItem } from "../redux/slice/ConsumeItemSlice";
 
 const ViewConsume = () => {
-  const dispatch = useDispatch();
-  const state = useSelector((state) => state);
   const [item, setitem] = useState();
   const [locationName, setlocationName] = useState();
   const [transferDate, settransferDate] = useState();
   const [consumed, setconsumed] = useState([]);
   const [allConsumed, setAllConsumed] = useState([]);
   const [filteredConsumed, setFilteredConsumed] = useState([]);
-
+  const state = useSelector((state) => state);
+  const dispatch = useDispatch();
+  const { currentUser } = state?.persisted.user;
   useEffect(() => {
-    dispatch(fetchlocation());
-    dispatch(fetchItem());
-    dispatch(fetchConsumeItem());
+    dispatch(fetchlocation(currentUser?.accessToken));
+    dispatch(fetchItem(currentUser?.accessToken));
+    dispatch(fetchConsumeItem(currentUser?.accessToken));
   }, []);
 
   const [page, setPage] = useState(0);
@@ -141,7 +141,11 @@ const ViewConsume = () => {
       });
     }; */
   useEffect(() => {
-    fetch("http://localhost:8080/consumeditem/view")
+    fetch("http://localhost:8080/consumeditem/view", {
+      headers: {
+        Authorization: `Bearer ${currentUser?.accessToken}`,
+      },
+    })
       .then((res) => res.json())
       .then((result) => {
         console.log(result);
@@ -160,6 +164,7 @@ const ViewConsume = () => {
       const res = await fetch("http://localhost:8080/consumeditem/search", {
         method: "post",
         headers: {
+          Authorization: `Bearer ${currentUser.accessToken}`,
           "content-type": "application/json",
         },
         body: JSON.stringify(formData),
@@ -202,7 +207,10 @@ const ViewConsume = () => {
     console.log(id);
     await fetch(`http://localhost:8080/consumeditem/delete/${id}`, {
       method: "DELETE",
-      headers: { "Content-type": "application/json" },
+      headers: {
+        Authorization: `Bearer ${currentUser.accessToken}`,
+        "Content-type": "application/json",
+      },
     })
       .then(() => {
         console.log("item Deleted");
@@ -270,7 +278,7 @@ const ViewConsume = () => {
                   )
                 } */
               >
-                {state.item.data?.map((item, index) => (
+                {state.nonPersisted.item.data?.map((item, index) => (
                   <MenuItem key={index} value={item?.description}>
                     {" "}
                     {item?.description}
@@ -301,10 +309,8 @@ const ViewConsume = () => {
                     locationName: e.target.value,
                   });
                 }}
-
-                //onChange={handleChange}
               >
-                {state.location.data?.map((item, index) => (
+                {state.nonPersisted?.location.data?.map((item, index) => (
                   <MenuItem key={index} value={item?.locationName}>
                     {" "}
                     {item?.locationName}
