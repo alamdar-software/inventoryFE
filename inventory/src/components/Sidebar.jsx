@@ -113,6 +113,7 @@ const Drawer = styled(MuiDrawer, {
 
 export default function Sidebar({ children }) {
   const { currentUser } = useSelector((state) => state.persisted.user);
+  console.log(currentUser.roles[0], "kyahhai");
   const location = useLocation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -126,6 +127,8 @@ export default function Sidebar({ children }) {
   const handleDrawerClose = () => {
     setOpen(false);
   };
+  const roleSuperAdmin =
+    currentUser && currentUser.roles[0] === "ROLE_SUPERADMIN";
   const menuItems = [
     { text: "Dashboard", icon: <DashboardIcon /> },
     {
@@ -188,14 +191,14 @@ export default function Sidebar({ children }) {
     },
 
     { text: "Reports", icon: <ReportIcon /> },
-    {
+  ];
+  if (roleSuperAdmin) {
+    menuItems.push({
       text: "Users",
       icon: <RingVolumeIcon />,
       submenu: [{ text: "Add User" }, { text: "View User" }],
-    },
-
-    { text: "Reports", icon: <ReportIcon /> },
-  ];
+    });
+  }
   const [openSubMenu, setOpenSubMenu] = React.useState(null);
 
   const handleSubMenuClick = (index) => {

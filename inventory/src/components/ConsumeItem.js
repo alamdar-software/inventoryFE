@@ -10,43 +10,40 @@ import {
   Select,
   TextField,
   Typography,
-} from '@mui/material';
-import React, { useState } from 'react';
-import AddIcon from '@mui/icons-material/Add';
-import DeleteIcon from '@mui/icons-material/Delete';
-import { useEffect } from 'react';
-import { useSelector } from 'react-redux';
-import { useDispatch } from 'react-redux';
-import { fetchlocation } from '../redux/slice/location';
-import { fetchShipper } from '../redux/slice/ShipperSlice';
-import { fetchConsignee } from '../redux/slice/ConsigneeSlice';
-import { fetchPickup } from '../redux/slice/PickUpSlice';
-import { fetchCurrency } from '../redux/slice/CurrencySlice';
-import { fetchItem } from '../redux/slice/ItemSlice';
+} from "@mui/material";
+import React, { useState } from "react";
+import AddIcon from "@mui/icons-material/Add";
+import DeleteIcon from "@mui/icons-material/Delete";
+import { useEffect } from "react";
+import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { fetchlocation } from "../redux/slice/location";
+import { fetchShipper } from "../redux/slice/ShipperSlice";
+import { fetchConsignee } from "../redux/slice/ConsigneeSlice";
+import { fetchPickup } from "../redux/slice/PickUpSlice";
+import { fetchCurrency } from "../redux/slice/CurrencySlice";
+import { fetchItem } from "../redux/slice/ItemSlice";
 
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { DatePicker } from '@mui/x-date-pickers/DatePicker';
-import dayjs from 'dayjs';
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableCell from "@mui/material/TableCell";
+import TableContainer from "@mui/material/TableContainer";
+import TableHead from "@mui/material/TableHead";
+import TableRow from "@mui/material/TableRow";
+import Paper from "@mui/material/Paper";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import dayjs from "dayjs";
 
-import TextareaAutosize from '@mui/material/TextareaAutosize';
-import { fetchIncome } from '../redux/slice/SingleIncomeSlice';
-import { fetchInventory } from '../redux/slice/InventorySlice';
+import TextareaAutosize from "@mui/material/TextareaAutosize";
+import { fetchIncome } from "../redux/slice/SingleIncomeSlice";
+import { fetchInventory } from "../redux/slice/InventorySlice";
 const ConsumeItem = () => {
-  const state = useSelector((state) => state);
-
-  const dispatch = useDispatch();
   const [formData, setformData] = useState({
-    transferDate: '',
+    transferDate: "",
 
-    locationName: '',
+    locationName: "",
 
     SubLocations: [],
     item: [],
@@ -84,33 +81,38 @@ const ConsumeItem = () => {
     Array.from({ length: formRows }, () => [])
   );
   const [partNumbersData, setPartNumbersData] = useState([]);
+  const state = useSelector((state) => state);
+  const { currentUser } = state.persisted.user;
+  const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(fetchlocation());
-    dispatch(fetchShipper());
-    dispatch(fetchConsignee());
-    dispatch(fetchPickup());
-    dispatch(fetchCurrency());
-    dispatch(fetchItem());
-    dispatch(fetchIncome());
-    dispatch(fetchInventory());
+    dispatch(fetchlocation(currentUser.accessToken));
+    dispatch(fetchShipper(currentUser.accessToken));
+    dispatch(fetchConsignee(currentUser.accessToken));
+    dispatch(fetchPickup(currentUser.accessToken));
+    dispatch(fetchCurrency(currentUser.accessToken));
+    dispatch(fetchItem(currentUser.accessToken));
+    dispatch(fetchIncome(currentUser.accessToken));
+    dispatch(fetchInventory(currentUser.accessToken));
   }, []);
-  console.log(state, 'cipl');
+  console.log(currentUser.accessToken, "muuuy");
+  console.log(state, "cipl");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await fetch('http://localhost:8080/consumeditem/add', {
-        method: 'post',
+      const res = await fetch("http://localhost:8080/consumeditem/add", {
+        method: "post",
         headers: {
-          'content-type': 'application/json',
+          Authorization: `Bearer ${currentUser.accessToken}`,
+          "content-type": "application/json",
         },
         body: JSON.stringify(formData),
       });
       const data = await res.json();
-      console.log(data, 'came from backend');
-      alert('consume Item added successfully');
+      console.log(data, "came from backend");
+      alert("consume Item added successfully");
     } catch (error) {
-      console.log('something happens while adding cipl');
+      console.log("something happens while adding cipl");
     }
   };
 
@@ -119,17 +121,17 @@ const ConsumeItem = () => {
     setformData({
       ...formData,
       locationName: selectedLocation,
-      SubLocations: [''], // Reset sublocation when location changes
+      SubLocations: [""], // Reset sublocation when location changes
     });
-    const selectedLocationObj = state.location.data.find(
+    const selectedLocationObj = state.nonPersisted.location.data.find(
       (location) => location.locationName === selectedLocation
     );
     setSubLocations(selectedLocationObj && selectedLocationObj?.addresses);
-    console.log(selectedLocationObj, 'yuuuu');
+    console.log(selectedLocationObj, "yuuuu");
   };
 
   const handleSubLocationChange = (e, index) => {
-    const selectedSubLocation = e.target.value || '';
+    const selectedSubLocation = e.target.value || "";
 
     // Update formData with the selected sublocation
     updateFormDataSubLocations(index, selectedSubLocation);
@@ -142,16 +144,16 @@ const ConsumeItem = () => {
     });
 
     // Find the corresponding item descriptions in the inventory data
-    const selectedInventoryData = state.inventory.data.filter(
+    const selectedInventoryData = state.nonPersisted.inventory.data.filter(
       (inventoryItem) => inventoryItem.address?.address === selectedSubLocation
     );
-    console.log(selectedInventoryData, '22');
+    console.log(selectedInventoryData, "22");
 
     // Extract item descriptions from the selected inventory data
     const itemDescriptions = selectedInventoryData.map(
       (inventoryItem) => inventoryItem.description
     );
-    console.log(itemDescriptions, '33');
+    console.log(itemDescriptions, "33");
 
     // Update the item state with the selected item descriptions
     setItem((prevItems) => {
@@ -160,7 +162,7 @@ const ConsumeItem = () => {
       return updatedItems;
     });
   };
-  console.log(item, 'topibaz');
+  console.log(item, "topibaz");
 
   const updateFormDataSubLocations = (index, selectedSubLocation) => {
     setformData((prevFormData) => {
@@ -172,8 +174,8 @@ const ConsumeItem = () => {
       };
     });
   };
-  console.log(subLocations, 'subbbbbbbbbbbbb');
-  console.log(formData, 'nooooooooooo');
+  console.log(subLocations, "subbbbbbbbbbbbb");
+  console.log(formData, "nooooooooooo");
 
   const handleAddClick = () => {
     setFormRows((prevRows) => prevRows + 1);
@@ -181,8 +183,8 @@ const ConsumeItem = () => {
       ...prevControls,
       { key: prevControls.length },
     ]);
-    setSubLocations((prevSubLocations) => [...prevSubLocations, '']);
-    updateFormDataSubLocations(formControls.length, ''); // Add an empty string to SubLocation
+    setSubLocations((prevSubLocations) => [...prevSubLocations, ""]);
+    updateFormDataSubLocations(formControls.length, ""); // Add an empty string to SubLocation
   };
 
   const handleDeleteClick = (index) => {
@@ -259,12 +261,12 @@ const ConsumeItem = () => {
     });
   };
 
-  console.log(formData, 'naya');
+  console.log(formData, "naya");
 
   const handleItemChange = (index, selectedSubLocation, selectedItem) => {
     // Update formData with the selected item
     updateFormDataItem(index, selectedItem.match(/^[^(]*/)[0].trim());
-    console.log(selectedItem.match(/^[^(]*/)[0].trim(), 'meingoonselected');
+    console.log(selectedItem.match(/^[^(]*/)[0].trim(), "meingoonselected");
 
     // Ensure a default value if undefined
     setSelectedItem((prevSelectedItems) => {
@@ -274,12 +276,12 @@ const ConsumeItem = () => {
     });
 
     // Find the corresponding data in state.singleincome for the selected item
-    const selectedIncomeData = state.singleIncome?.data.filter(
+    const selectedIncomeData = state.nonPersisted.singleIncome?.data.filter(
       (incomeItem) =>
         incomeItem.description === selectedItem.match(/^[^(]*/)[0].trim()
     );
-    console.log(selectedIncomeData, 'selectttttt');
-    console.log(selectedItem, 'selected item');
+    console.log(selectedIncomeData, "selectttttt");
+    console.log(selectedItem, "selected item");
 
     // Extract part numbers from the selected income data
     const partNumbers = selectedIncomeData.map(
@@ -294,7 +296,7 @@ const ConsumeItem = () => {
     });
   };
 
-  console.log(partNo, 'formmgasi');
+  console.log(partNo, "formmgasi");
 
   const updateFormDataItem = (index, selectedItem) => {
     setformData((prevFormData) => {
@@ -315,17 +317,17 @@ const ConsumeItem = () => {
     // ... (your existing code)
 
     // Find the corresponding data in state.singleIncome for the selected part number
-    const selectedIncomeData = state.singleIncome?.data.find(
+    const selectedIncomeData = state.nonPersisted.singleIncome?.data.find(
       (incomeItem) => incomeItem.pn === selectedPartNo
     );
 
     // Extract the necessary data from the selected income data
     const partNumberData = {
-      date: selectedIncomeData?.date || '',
-      unitPrice: selectedIncomeData?.unitCost || '',
+      date: selectedIncomeData?.date || "",
+      unitPrice: selectedIncomeData?.unitCost || "",
 
-      sn: selectedIncomeData?.sn || '',
-      brand: selectedIncomeData?.brandName || '',
+      sn: selectedIncomeData?.sn || "",
+      brand: selectedIncomeData?.brandName || "",
     };
     updateFormDataPart(index, selectedPartNo, partNumberData);
     // Update formData with the selected part number data
@@ -353,10 +355,10 @@ const ConsumeItem = () => {
     });
   };
 
-  console.log(partNumbersData, 'partNumbersData');
-  console.log(partNumbersData?.date, 'dateeee');
+  console.log(partNumbersData, "partNumbersData");
+  console.log(partNumbersData?.date, "dateeee");
 
-  console.log(item, 'item');
+  console.log(item, "item");
   console.log(formData);
 
   console.log(formData);
@@ -401,9 +403,9 @@ const ConsumeItem = () => {
         ...prevFormData,
         purchase: updatedPurchaseOrders,
         // Update other properties based on selectedPartNumberData
-        date: selectedPartNumberData?.date || '',
+        date: selectedPartNumberData?.date || "",
 
-        sn: selectedPartNumberData?.sn || '',
+        sn: selectedPartNumberData?.sn || "",
       };
     });
   };
@@ -431,7 +433,7 @@ const ConsumeItem = () => {
   const handleDateChange = (date) => {
     setformData({
       ...formData,
-      transferDate: date.format('YYYY-MM-DD'),
+      transferDate: date.format("YYYY-MM-DD"),
     });
   };
 
@@ -455,20 +457,20 @@ const ConsumeItem = () => {
     });
   };
 
-  console.log('All Items Data:', state.item.data);
+  /*  console.log("All Items Data:", state.nonPersisted.item.data); */
   const renderFormControls = () => {
-    console.log(formControls, 'yayerfgyu');
+    console.log(formControls, "yayerfgyu");
     return formControls?.map((control, index) => (
       <div
         key={control.key}
-        style={{ display: 'flex', marginBottom: '10px', width: '100%' }}
+        style={{ display: "flex", marginBottom: "10px", width: "100%" }}
       >
-        <FormControl fullWidth sx={{ width: '40%', marginRight: '10px' }}>
-          <InputLabel id='demo-simple-select-label'>Sub Location</InputLabel>
+        <FormControl fullWidth sx={{ width: "40%", marginRight: "10px" }}>
+          <InputLabel id="demo-simple-select-label">Sub Location</InputLabel>
           <Select
-            labelId='demo-simple-select-label'
-            id='demo-simple-select'
-            label='location'
+            labelId="demo-simple-select-label"
+            id="demo-simple-select"
+            label="location"
             MenuProps={{
               PaperProps: {
                 style: {
@@ -485,12 +487,12 @@ const ConsumeItem = () => {
             ))}
           </Select>
         </FormControl>
-        <FormControl fullWidth sx={{ width: '40%', marginRight: '10px' }}>
-          <InputLabel id='demo-simple-select-label'>Item Desc</InputLabel>
+        <FormControl fullWidth sx={{ width: "40%", marginRight: "10px" }}>
+          <InputLabel id="demo-simple-select-label">Item Desc</InputLabel>
           <Select
-            labelId='demo-simple-select-label'
-            id='itemName'
-            label='itemName'
+            labelId="demo-simple-select-label"
+            id="itemName"
+            label="itemName"
             onChange={(e) =>
               handleItemChange(
                 index,
@@ -509,14 +511,14 @@ const ConsumeItem = () => {
 
         <FormControl
           fullWidth
-          sx={{ width: '50%', marginRight: '10px' }}
+          sx={{ width: "50%", marginRight: "10px" }}
           key={control.key}
         >
           <InputLabel id={`part-no-label-${index}`}>Part No</InputLabel>
           <Select
             labelId={`part-no-label-${index}`}
             id={`part-no-select-${index}`}
-            label='Part No'
+            label="Part No"
             MenuProps={{
               PaperProps: {
                 style: {
@@ -535,14 +537,14 @@ const ConsumeItem = () => {
             ))}
           </Select>
         </FormControl>
-        <FormControl fullWidth sx={{ width: '30%', marginRight: '10px' }}>
+        <FormControl fullWidth sx={{ width: "30%", marginRight: "10px" }}>
           <Grid item xs={12} sm={6}>
             <TextField
-              sx={{ width: '90%' }}
-              id='outlined-basic'
-              label='S/N'
-              variant='outlined'
-              value={partNumbersData[index]?.sn || ''}
+              sx={{ width: "90%" }}
+              id="outlined-basic"
+              label="S/N"
+              variant="outlined"
+              value={partNumbersData[index]?.sn || ""}
               // value={locationName}
               // onChange={(e) => setLocation(e.target.value)}
               onChange={(e) => handleSnChange(index, e.target.value)}
@@ -550,14 +552,14 @@ const ConsumeItem = () => {
             />
           </Grid>
         </FormControl>
-        <FormControl fullWidth sx={{ width: '90%', marginRight: '10px' }}>
+        <FormControl fullWidth sx={{ width: "90%", marginRight: "10px" }}>
           <Grid item xs={12} sm={6}>
             <TextField
-              sx={{ width: '90%' }}
-              id='outlined-basic'
-              label='Purchase Order(D.O.P)'
-              variant='outlined'
-              value={partNumbersData[index]?.date || ''}
+              sx={{ width: "90%" }}
+              id="outlined-basic"
+              label="Purchase Order(D.O.P)"
+              variant="outlined"
+              value={partNumbersData[index]?.date || ""}
               // onChange={(e) => setLocation(e.target.value)}
               onChange={(e) => handlePurchaseChange(index, e.target.value)}
               fullWidth
@@ -565,13 +567,13 @@ const ConsumeItem = () => {
           </Grid>
         </FormControl>
 
-        <FormControl fullWidth sx={{ width: '50%', marginRight: '10px' }}>
+        <FormControl fullWidth sx={{ width: "50%", marginRight: "10px" }}>
           <Grid item xs={12} sm={6}>
             <TextField
-              sx={{ width: '90%' }}
-              id='outlined-basic'
-              label='Quantity'
-              variant='outlined'
+              sx={{ width: "90%" }}
+              id="outlined-basic"
+              label="Quantity"
+              variant="outlined"
               // value={locationName}
               // onChange={(e) => setLocation(e.target.value)}
               onChange={(e) => handleQuantityChange(index, e.target.value)}
@@ -580,11 +582,11 @@ const ConsumeItem = () => {
           </Grid>
         </FormControl>
 
-        <FormControl fullWidth sx={{ width: '50%' }}>
+        <FormControl fullWidth sx={{ width: "50%" }}>
           <Grid item xs={12} sm={6}>
             <TextareaAutosize
-              aria-label='Brand'
-              placeholder='Enter Remarks'
+              aria-label="Brand"
+              placeholder="Enter Remarks"
               // value={brandValue} // You can set the value and handle changes as needed
               // onChange={(e) => handleBrandChange(e.target.value)}
               onChange={(e) => handleRemarksChange(index, e.target.value)}
@@ -595,16 +597,16 @@ const ConsumeItem = () => {
         </FormControl>
         <div
           style={{
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
           }}
         >
           <button>
             <AddIcon onClick={handleAddClick} />
           </button>
           <Button onClick={() => handleDeleteClick(index)}>
-            <DeleteIcon style={{ color: 'red' }} />
+            <DeleteIcon style={{ color: "red" }} />
           </Button>
         </div>
 
@@ -635,16 +637,16 @@ const ConsumeItem = () => {
     <>
       <Grid>
         <Card
-          color='secondary'
+          color="secondary"
           sx={{
-            width: '100%',
-            backgroundColor: 'secondary',
-            borderBottom: '2px solid yellow',
-            mb: '33px',
+            width: "100%",
+            backgroundColor: "secondary",
+            borderBottom: "2px solid yellow",
+            mb: "33px",
           }}
         >
           <CardContent>
-            <Typography variant='h4' color='secondary' gutterBottom>
+            <Typography variant="h4" color="secondary" gutterBottom>
               Consumed Item
             </Typography>
           </CardContent>
@@ -652,14 +654,14 @@ const ConsumeItem = () => {
       </Grid>
       <Grid container spacing={2}>
         <Grid item xs={21} sm={6}>
-          <FormControl fullWidth sx={{ width: '90%' }}>
-            <InputLabel id='demo-simple-select-label'>Location</InputLabel>
+          <FormControl fullWidth sx={{ width: "90%" }}>
+            <InputLabel id="demo-simple-select-label">Location</InputLabel>
             <Select
-              labelId='demo-simple-select-label'
-              id='demo-simple-select'
+              labelId="demo-simple-select-label"
+              id="demo-simple-select"
               //value={age}
-              value={formData.locationName || ''}
-              label='location'
+              value={formData.locationName || ""}
+              label="location"
               MenuProps={{
                 PaperProps: {
                   style: {
@@ -670,9 +672,9 @@ const ConsumeItem = () => {
               onChange={handleLocationChange}
               //onChange={handleChange}
             >
-              {state.location.data?.map((item, index) => (
+              {state.nonPersisted.location.data?.map((item, index) => (
                 <MenuItem key={index} value={item?.locationName}>
-                  {' '}
+                  {" "}
                   {item?.locationName}
                 </MenuItem>
               ))}
@@ -687,7 +689,7 @@ const ConsumeItem = () => {
           } */
               onChange={(newDate) => handleDateChange(newDate)}
               fullWidth
-              sx={{ width: '90%' }}
+              sx={{ width: "90%" }}
               /* format="yyyy-MM-dd" */
             />
           </LocalizationProvider>
@@ -696,28 +698,28 @@ const ConsumeItem = () => {
 
       <div
         sx={{
-          marginTop: '5px',
+          marginTop: "5px",
 
-          flexWrap: 'wrap',
-          width: '80%',
+          flexWrap: "wrap",
+          width: "80%",
         }}
       >
         {formData.locationName && (
           <>
-            <div style={{ display: 'flex', flexWrap: 'wrap' }}>
+            <div style={{ display: "flex", flexWrap: "wrap" }}>
               <Grid
-                sx={{ overflowX: 'scroll', width: '100%', flexWrap: 'wrap' }}
+                sx={{ overflowX: "scroll", width: "100%", flexWrap: "wrap" }}
               >
                 <Card
-                  color='secondary'
+                  color="secondary"
                   sx={{
-                    width: '100%',
-                    marginTop: '20px',
-                    backgroundColor: 'secondary',
+                    width: "100%",
+                    marginTop: "20px",
+                    backgroundColor: "secondary",
                   }}
                 >
                   <CardContent
-                    sx={{ minWidth: '60%', display: 'flex', flexWrap: 'wrap' }}
+                    sx={{ minWidth: "60%", display: "flex", flexWrap: "wrap" }}
                   >
                     {renderFormControls()}
                   </CardContent>
@@ -727,12 +729,12 @@ const ConsumeItem = () => {
           </>
         )}
       </div>
-      <Box sx={{ display: 'flex', justifyContent: 'center', mt: '33px' }}>
-        {' '}
+      <Box sx={{ display: "flex", justifyContent: "center", mt: "33px" }}>
+        {" "}
         <Button
-          variant='contained'
-          size='large'
-          color='secondary'
+          variant="contained"
+          size="large"
+          color="secondary"
           onClick={handleSubmit}
         >
           Add

@@ -145,13 +145,6 @@ export default function Signin() {
             >
               Sign In
             </Button>
-            <Grid container justifyContent="flex-end">
-              <Grid item>
-                <Link href="/signUp" variant="body2">
-                  Dont Have An Account? Sign up
-                </Link>
-              </Grid>
-            </Grid>
           </Box>
         </Box>
         <Copyright sx={{ mt: 5 }} />

@@ -1,8 +1,14 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { createSlice } from "@reduxjs/toolkit";
+import { useSelector } from "react-redux";
 
-export const fetchPickup = createAsyncThunk("pickup", async () => {
-  const res = await fetch("http://localhost:8080/pickup/view");
+export const fetchPickup = createAsyncThunk("pickup", async (accessToken) => {
+  const { currentUser } = useSelector((state) => state.persisted.user);
+  const res = await fetch("http://localhost:8080/pickup/view", {
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+  });
   return res.json();
 });
 const pickupSlice = createSlice({
