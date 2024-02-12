@@ -13,6 +13,10 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { InputLabel, MenuItem, Select } from "@mui/material";
+import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 function Copyright(props) {
   return (
@@ -37,15 +41,52 @@ function Copyright(props) {
 const defaultTheme = createTheme();
 
 export default function SignUp() {
-  const handleSubmit = (event) => {
+  const { currentUser } = useSelector((state) => state.persisted.user);
+  const [selectedRole, setSelectedRole] = useState("");
+  const navigate = useNavigate();
+
+  const [formData, setformData] = useState({});
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get("email"),
-      password: data.get("password"),
+    try {
+      const res = await fetch("http://localhost:8080/api/auth/addUser", {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${currentUser.accessToken}`,
+          "content-type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+      const data = await res.json();
+      console.log(data);
+      if (res.ok) {
+        navigate("/login");
+        window.location.reload();
+
+        /* window.location.reload(); */
+        /*  console.log(currentUser, "currentlaga"); */
+      }
+    } catch (error) {
+      console.log(error.message);
+    }
+
+    console.log(formData, "formmm");
+  };
+  const handleChange = (event) => {
+    const { id, value } = event.target;
+    console.log("Selected ID:", id); // Check the selected ID
+    console.log("Selected Value:", value); // Check the selected value
+    const parsedValue = id === "contactNumber" ? parseInt(value) : value;
+    setformData({
+      ...formData,
+      [id]: parsedValue,
     });
+    setSelectedRole(value); // Update the selectedRole state with the selected value
+    console.log("Form Data:", formData); // Log the updated form data
   };
 
+  console.log(formData, "umersah");
+  console.log(formData.role, "jdncjwncj");
   return (
     <ThemeProvider theme={defaultTheme}>
       <Container component="main" maxWidth="xs">
@@ -74,12 +115,13 @@ export default function SignUp() {
               <Grid item xs={12} sm={6}>
                 <TextField
                   autoComplete="given-name"
-                  name="firstName"
+                  name="name"
                   required
                   fullWidth
-                  id="firstName"
-                  label="First Name"
+                  id="name"
+                  label="Name"
                   autoFocus
+                  onChange={handleChange}
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
@@ -90,6 +132,7 @@ export default function SignUp() {
                   label="User Name"
                   name="username"
                   autoComplete="username"
+                  onChange={handleChange}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -100,6 +143,7 @@ export default function SignUp() {
                   label="Email Address"
                   name="email"
                   autoComplete="email"
+                  onChange={handleChange}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -107,19 +151,24 @@ export default function SignUp() {
                   type="number"
                   required
                   fullWidth
-                  id="phoneNumber"
-                  label="Phone  Number"
-                  name="phoneNumber"
-                  autoComplete="phoneNumber"
+                  id="contactNumber"
+                  label="Contact  Number"
+                  name="contactNumber"
+                  autoComplete="contactNumber"
+                  onChange={handleChange}
                 />
               </Grid>
               <Grid item xs={12}>
-                <InputLabel id="selectOption">Select Role</InputLabel>
+                <InputLabel htmlFor="role">Select Role</InputLabel>
                 <Select
+                  id="role"
                   fullWidth
-                  id="selectOption"
                   label="Select Role"
                   placeholder="select Role"
+                  value={selectedRole} // Set the value prop to the selected role state variable
+                  onChange={(e) => {
+                    setformData({ ...formData, role: e.target.value });
+                  }}
                   /*  value={selectedOption} */ // Provide a state variable to hold the selected option
                   /* onChange={handleSelectChange} */ // Provide a function to handle changes in the select
                 >
@@ -138,6 +187,7 @@ export default function SignUp() {
                   type="password"
                   id="password"
                   autoComplete="new-password"
+                  onChange={handleChange}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -154,6 +204,7 @@ export default function SignUp() {
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
+              onClick={handleSubmit}
             >
               Sign Up
             </Button>

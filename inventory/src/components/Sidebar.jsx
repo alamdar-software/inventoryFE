@@ -41,6 +41,8 @@ import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import { useDispatch } from "react-redux";
 import { signoutSuccess } from "../redux/slice/UserSlice";
 import { useHistory } from "react-router-dom";
+import { useSelector } from "react-redux";
+import Badge from "@mui/material/Badge";
 const drawerWidth = 240;
 
 const openedMixin = (theme) => ({
@@ -110,6 +112,8 @@ const Drawer = styled(MuiDrawer, {
 }));
 
 export default function Sidebar({ children }) {
+  const { currentUser } = useSelector((state) => state.persisted.user);
+  console.log(currentUser.roles[0], "kyahhai");
   const location = useLocation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -123,6 +127,8 @@ export default function Sidebar({ children }) {
   const handleDrawerClose = () => {
     setOpen(false);
   };
+  const roleSuperAdmin =
+    currentUser && currentUser.roles[0] === "ROLE_SUPERADMIN";
   const menuItems = [
     { text: "Dashboard", icon: <DashboardIcon /> },
     {
@@ -185,14 +191,14 @@ export default function Sidebar({ children }) {
     },
 
     { text: "Reports", icon: <ReportIcon /> },
-    {
+  ];
+  if (roleSuperAdmin) {
+    menuItems.push({
       text: "Users",
       icon: <RingVolumeIcon />,
       submenu: [{ text: "Add User" }, { text: "View User" }],
-    },
-
-    { text: "Reports", icon: <ReportIcon /> },
-  ];
+    });
+  }
   const [openSubMenu, setOpenSubMenu] = React.useState(null);
 
   const handleSubMenuClick = (index) => {
@@ -260,8 +266,24 @@ export default function Sidebar({ children }) {
               edge="end"
               color="inherit"
               onClick={handleMenuOpen}
+              aria-controls="user-menu"
+              aria-haspopup="true"
+              aria-label="user-menu"
             >
-              <AccountCircleIcon />
+              <AccountCircleIcon style={{ fontSize: 50 }} />
+              {currentUser && (
+                <Typography
+                  variant="body1"
+                  style={{
+                    fontSize: 18,
+                    marginLeft: "8px",
+                    fontWeight: "bold",
+                  }}
+                >
+                  {currentUser.username}{" "}
+                  {/* Assuming the user object has a 'name' property */}
+                </Typography>
+              )}
             </IconButton>
             <Menu
               id="user-menu"

@@ -1,9 +1,18 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { useSelector } from "react-redux";
 
-export const fetchlocation = createAsyncThunk("fetchlocation", async () => {
-  const response = await fetch("http://localhost:8080/location/getAll");
-  return response.json();
-});
+export const fetchlocation = createAsyncThunk(
+  "fetchlocation",
+  async (accessToken) => {
+    const response = await fetch("http://localhost:8080/location/getAll", {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
+    return response.json();
+  }
+);
+
 const consigneeSlice = createSlice({
   name: "location",
   initialState: {

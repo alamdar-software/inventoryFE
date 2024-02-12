@@ -80,6 +80,7 @@ import LocationDashboard from "./components/LocationDashboard.js";
 import Signup from "./pages/Login/Signup.jsx";
 import Login from "./pages/Login/Login.jsx";
 import PrivateRoute from "./components/PrivateRoute";
+import OnlySuperAdmin from "./components/OnlySuperAdminRoute";
 const theme = createTheme({
   palette: {
     background: {
@@ -114,7 +115,9 @@ function App() {
           <CssBaseline />
           <Routes>
             {/* Route for signup without the sidebar */}
-            <Route path="/add-user" element={<Signup />} />
+            <Route element={<OnlySuperAdmin />}>
+              <Route path="/add-user" element={<Signup />} />
+            </Route>
             <Route path="/login" element={<Login />} />
             {/* Define other routes here */}
           </Routes>

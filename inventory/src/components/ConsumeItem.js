@@ -40,9 +40,6 @@ import TextareaAutosize from '@mui/material/TextareaAutosize';
 import { fetchIncome } from '../redux/slice/SingleIncomeSlice';
 import { fetchInventory } from '../redux/slice/InventorySlice';
 const ConsumeItem = () => {
-  const state = useSelector((state) => state);
-
-  const dispatch = useDispatch();
   const [formData, setformData] = useState({
     transferDate: '',
 
@@ -84,18 +81,21 @@ const ConsumeItem = () => {
     Array.from({ length: formRows }, () => [])
   );
   const [partNumbersData, setPartNumbersData] = useState([]);
+  const state = useSelector((state) => state);
+  const { currentUser } = state.persisted.user;
+  const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(fetchlocation());
-    dispatch(fetchShipper());
-    dispatch(fetchConsignee());
-    dispatch(fetchPickup());
-    dispatch(fetchCurrency());
-    dispatch(fetchItem());
-    dispatch(fetchIncome());
-    dispatch(fetchInventory());
+    dispatch(fetchlocation(currentUser.accessToken));
+    dispatch(fetchShipper(currentUser.accessToken));
+    dispatch(fetchConsignee(currentUser.accessToken));
+    dispatch(fetchPickup(currentUser.accessToken));
+    dispatch(fetchCurrency(currentUser.accessToken));
+    dispatch(fetchItem(currentUser.accessToken));
+    dispatch(fetchIncome(currentUser.accessToken));
+    dispatch(fetchInventory(currentUser.accessToken));
   }, []);
+  console.log(currentUser.accessToken, 'muuuy');
   console.log(state, 'cipl');
-  const { currentUser } = useSelector((state) => state.persisted.user);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -103,8 +103,8 @@ const ConsumeItem = () => {
       const res = await fetch('http://localhost:8080/consumeditem/add', {
         method: 'post',
         headers: {
-          'content-type': 'application/json',
           Authorization: `Bearer ${currentUser.accessToken}`,
+          'content-type': 'application/json',
         },
         body: JSON.stringify(formData),
       });
@@ -123,7 +123,7 @@ const ConsumeItem = () => {
       locationName: selectedLocation,
       SubLocations: [''], // Reset sublocation when location changes
     });
-    const selectedLocationObj = state.location.data.find(
+    const selectedLocationObj = state.nonPersisted.location.data.find(
       (location) => location.locationName === selectedLocation
     );
     setSubLocations(selectedLocationObj && selectedLocationObj?.addresses);
@@ -144,7 +144,7 @@ const ConsumeItem = () => {
     });
 
     // Find the corresponding item descriptions in the inventory data
-    const selectedInventoryData = state.inventory.data.filter(
+    const selectedInventoryData = state.nonPersisted.inventory.data.filter(
       (inventoryItem) => inventoryItem.address?.address === selectedSubLocation
     );
     console.log(selectedInventoryData, '22');
@@ -276,7 +276,7 @@ const ConsumeItem = () => {
     });
 
     // Find the corresponding data in state.singleincome for the selected item
-    const selectedIncomeData = state.singleIncome?.data.filter(
+    const selectedIncomeData = state.nonPersisted.singleIncome?.data.filter(
       (incomeItem) =>
         incomeItem.description === selectedItem.match(/^[^(]*/)[0].trim()
     );
@@ -317,7 +317,7 @@ const ConsumeItem = () => {
     // ... (your existing code)
 
     // Find the corresponding data in state.singleIncome for the selected part number
-    const selectedIncomeData = state.singleIncome?.data.find(
+    const selectedIncomeData = state.nonPersisted.singleIncome?.data.find(
       (incomeItem) => incomeItem.pn === selectedPartNo
     );
 
@@ -457,7 +457,7 @@ const ConsumeItem = () => {
     });
   };
 
-  console.log('All Items Data:', state.item.data);
+  /*  console.log("All Items Data:", state.nonPersisted.item.data); */
   const renderFormControls = () => {
     console.log(formControls, 'yayerfgyu');
     return formControls?.map((control, index) => (
@@ -672,7 +672,7 @@ const ConsumeItem = () => {
               onChange={handleLocationChange}
               //onChange={handleChange}
             >
-              {state.location.data?.map((item, index) => (
+              {state.nonPersisted.location.data?.map((item, index) => (
                 <MenuItem key={index} value={item?.locationName}>
                   {' '}
                   {item?.locationName}

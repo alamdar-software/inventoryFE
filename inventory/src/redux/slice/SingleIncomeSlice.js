@@ -1,10 +1,18 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { createSlice } from "@reduxjs/toolkit";
+import { useSelector } from "react-redux";
 
-export const fetchIncome = createAsyncThunk("fetchIncome", async () => {
-  const res = await fetch("http://localhost:8080/incomingstock/view");
-  return res.json();
-});
+export const fetchIncome = createAsyncThunk(
+  "fetchIncome",
+  async (accessToken) => {
+    const res = await fetch("http://localhost:8080/incomingstock/view", {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
+    return res.json();
+  }
+);
 
 const incomingStock = createSlice({
   name: "singleIncome",
