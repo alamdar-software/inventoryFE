@@ -32,6 +32,7 @@ const Item = () => {
   });
   console.log(formData, 'formmmmmmmmm');
   const state = useSelector((state) => state);
+  const { currentUser } = useSelector((state) => state.persisted.user);
 
   const dispatch = useDispatch();
   useEffect(() => {
@@ -54,6 +55,7 @@ const Item = () => {
         method: 'post',
         headers: {
           'content-type': 'application/json',
+          Authorization: `Bearer ${currentUser.accessToken}`,
         },
         body: JSON.stringify(formData),
       });

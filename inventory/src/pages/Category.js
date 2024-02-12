@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
 import {
   Card,
   CardContent,
@@ -6,10 +6,11 @@ import {
   TextField,
   Button,
   Typography,
-} from "@mui/material";
+} from '@mui/material';
 
-import { useEffect } from "react";
-import CategoryTable from "../components/CategoryTable";
+import { useEffect } from 'react';
+import CategoryTable from '../components/CategoryTable';
+import { useSelector } from 'react-redux';
 
 // const currency = {
 //   currencyName: "",
@@ -17,34 +18,42 @@ import CategoryTable from "../components/CategoryTable";
 
 export default function Category() {
   const [category, setCategory] = useState({
-    name: "",
+    name: '',
   });
   const [Loading, setLoading] = useState(false);
   const [error, seterror] = useState(false);
   const [data, setdata] = useState([]);
+  const { currentUser } = useSelector((state) => state.persisted.user);
+
   console.log(category);
 
   useEffect(() => {
     const getCategory = async () => {
-      const res = await fetch("http://localhost:8080/category/view");
+      console.log(currentUser.accessToken, 'heyyyy');
+      const res = await fetch('http://localhost:8080/category/view', {
+        headers: {
+          Authorization: `Bearer ${currentUser.accessToken}`,
+        },
+      });
 
       const data = await res.json();
 
-      console.log(data, "backdata");
+      console.log(data, 'backdata');
       setdata(data);
     };
     getCategory();
   }, []);
   const handleClick = async () => {
-    const res = await fetch("http://localhost:8080/category/add", {
-      method: "POST",
+    const res = await fetch('http://localhost:8080/category/add', {
+      method: 'POST',
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${currentUser.accessToken}`,
       },
       body: JSON.stringify(category),
     });
     const data = await res.text();
-    console.log(data, "add data");
+    console.log(data, 'add data');
     window.location.reload();
 
     // fetch('http://localhost:8080/location/add', {
@@ -64,13 +73,13 @@ export default function Category() {
     <>
       <Grid>
         <Card
-          color="secondary"
-          sx={{ width: "100%", backgroundColor: "secondary" }}
+          color='secondary'
+          sx={{ width: '100%', backgroundColor: 'secondary' }}
         >
           <CardContent>
             <Typography
-              variant="h4"
-              color="secondary"
+              variant='h4'
+              color='secondary'
               gutterBottom
               style={{ fontFamily: "'EB Garamond'" }}
             >
@@ -82,22 +91,22 @@ export default function Category() {
 
       <Card
         sx={{
-          width: "100%",
-          mt: "33px",
-          pt: "33px",
-          borderBottom: "2px solid grey",
+          width: '100%',
+          mt: '33px',
+          pt: '33px',
+          borderBottom: '2px solid grey',
         }}
       >
         <Grid
           container
           spacing={2}
-          sx={{ ml: "11px", justifyContent: "center" }}
+          sx={{ ml: '11px', justifyContent: 'center' }}
         >
           <Grid item xs={12} sm={6}>
             <TextField
-              name="name"
-              label="Enter Category"
-              variant="outlined"
+              name='name'
+              label='Enter Category'
+              variant='outlined'
               /*  value={currency?.currencyName} */
               onChange={(e) =>
                 setCategory({
@@ -109,21 +118,21 @@ export default function Category() {
           </Grid>
         </Grid>
         <Button
-          variant="contained"
-          color="secondary"
-          size="large"
+          variant='contained'
+          color='secondary'
+          size='large'
           onClick={handleClick}
           sx={{
-            mt: "33px",
-            mb: "17px",
-            marginLeft: "auto",
-            marginRight: "auto",
-            display: "block",
+            mt: '33px',
+            mb: '17px',
+            marginLeft: 'auto',
+            marginRight: 'auto',
+            display: 'block',
           }}
         >
           Add
         </Button>
-        <div sx={{ margin: "20px" }}>
+        <div sx={{ margin: '20px' }}>
           <CategoryTable data={data} />
         </div>
       </Card>

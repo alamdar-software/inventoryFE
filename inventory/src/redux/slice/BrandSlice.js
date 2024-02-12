@@ -1,11 +1,11 @@
-import { createAsyncThunk } from "@reduxjs/toolkit";
-import { createSlice } from "@reduxjs/toolkit";
-import { useSelector } from "react-redux";
+import { createAsyncThunk } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
+import { useSelector } from 'react-redux';
 
 export const fetchBrand = createAsyncThunk(
-  "fetchBrand",
+  'fetchBrand',
   async (accessToken) => {
-    const res = await fetch("http://localhost:8080/brand/view", {
+    const res = await fetch('http://localhost:8080/brand/view', {
       headers: {
         Authorization: `Bearer ${accessToken}`,
       },
@@ -15,7 +15,7 @@ export const fetchBrand = createAsyncThunk(
 );
 
 const BrandSlice = createSlice({
-  name: "Brand",
+  name: 'Brand',
   initialState: {
     data: null,
     loading: false,

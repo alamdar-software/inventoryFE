@@ -155,7 +155,8 @@ const ViewConsume = () => {
       .catch((error) => {
         console.error("Error fetching cipl data:", error);
       });
-  }, []);
+  }, []); // Make sure to include an empty dependency array if you only want this effect to run once on component mount
+
   console.log(filteredConsumed, "filter");
 
   const handleClick = async (e) => {
