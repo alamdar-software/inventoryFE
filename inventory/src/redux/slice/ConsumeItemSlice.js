@@ -1,13 +1,13 @@
-import { createAsyncThunk } from "@reduxjs/toolkit";
-import { createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
 
-export const fetchConsumeItem = createAsyncThunk("fetchConsume", async () => {
-  const res = await fetch("http://localhost:8080/consumeditem/view");
+export const fetchConsumeItem = createAsyncThunk('fetchConsume', async () => {
+  const res = await fetch('http://localhost:8080/consumeditem/view');
   return res.json();
 });
 
 const ConsumeItemSlice = createSlice({
-  name: "consumedSlice",
+  name: 'consumedSlice',
   initialState: {
     loading: false,
     error: false,

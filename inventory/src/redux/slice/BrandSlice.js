@@ -1,13 +1,13 @@
-import { createAsyncThunk } from "@reduxjs/toolkit";
-import { createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
 
-export const fetchBrand = createAsyncThunk("fetchBrand", async () => {
-  const res = await fetch("http://localhost:8080/brand/view");
+export const fetchBrand = createAsyncThunk('fetchBrand', async () => {
+  const res = await fetch('http://localhost:8080/brand/view');
   return res.json();
 });
 
 const BrandSlice = createSlice({
-  name: "Brand",
+  name: 'Brand',
   initialState: {
     data: null,
     loading: false,

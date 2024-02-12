@@ -95,6 +95,7 @@ const ConsumeItem = () => {
     dispatch(fetchInventory());
   }, []);
   console.log(state, 'cipl');
+  const { currentUser } = useSelector((state) => state.persisted.user);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -103,6 +104,7 @@ const ConsumeItem = () => {
         method: 'post',
         headers: {
           'content-type': 'application/json',
+          Authorization: `Bearer ${currentUser.accessToken}`,
         },
         body: JSON.stringify(formData),
       });
