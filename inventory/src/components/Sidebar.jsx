@@ -293,6 +293,9 @@ export default function Sidebar({ children }) {
             >
               {/* Display user information */}
               <MenuItem disabled>{/* Add user info here */}</MenuItem>
+              <MenuItem onClick={() => navigate("/change-password")}>
+                Change Password
+              </MenuItem>
               <MenuItem onClick={handleLogout}>Logout</MenuItem>
             </Menu>
           </div>
