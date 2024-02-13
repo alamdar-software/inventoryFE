@@ -11,7 +11,6 @@ const OnlySuperAdmin = () => {
       window.location.reload();
     }
   }, [currentUser.roles]);
-
   return currentUser.roles[0] === "ROLE_SUPERADMIN" ? (
     <Outlet />
   ) : (

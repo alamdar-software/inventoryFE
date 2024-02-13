@@ -115,42 +115,34 @@ function App() {
       <BrowserRouter>
         <ThemeProvider theme={theme}>
           <CssBaseline />
-          <Routes>
-            {/* Route for signup without the sidebar */}
-            <Route element={<OnlySuperAdmin />}>
-              <Route
-                path="/add-user"
-                element={
-                  <Sidebar>
-                    <Signup />
-                  </Sidebar>
-                }
-              />
-            </Route>
-            <Route path="/login" element={<Login />} />
-            {/* Define other routes here */}
-          </Routes>
-        </ThemeProvider>
-      </BrowserRouter>
-      <BrowserRouter>
-        <ThemeProvider theme={theme}>
-          <CssBaseline />
 
           <Routes>
+            <Route path="/login" element={<Login />} />
             <Route element={<PrivateRoute />}>
+              <Route element={<OnlySuperAdmin />}>
+                <Route
+                  path="/add-user"
+                  element={
+                    <Sidebar>
+                      <Signup />
+                    </Sidebar>
+                  }
+                />
+                <Route
+                  path="/view-user"
+                  element={
+                    <Sidebar>
+                      <ViewUser />
+                    </Sidebar>
+                  }
+                />
+              </Route>
+
               <Route
                 path="/"
                 element={
                   <Sidebar>
                     <Dashboard />
-                  </Sidebar>
-                }
-              />
-              <Route
-                path="/view-user"
-                element={
-                  <Sidebar>
-                    <ViewUser />
                   </Sidebar>
                 }
               />
@@ -427,54 +419,294 @@ function App() {
                   </Sidebar>
                 }
               />
-              <Route path="/add-inventory" element={<Inventory />} />
-              <Route path="/view-inventory" element={<InventoryList />} />
+              <Route
+                path="/add-inventory"
+                element={
+                  <Sidebar>
+                    <Inventory />
+                  </Sidebar>
+                }
+              />
+              <Route
+                path="/view-inventory"
+                element={
+                  <Sidebar>
+                    <InventoryList />
+                  </Sidebar>
+                }
+              />
               <Route
                 path="/updateInventory/:id"
-                element={<UpdateInventory />}
+                element={
+                  <Sidebar>
+                    <UpdateInventory />
+                  </Sidebar>
+                }
               />
-              <Route path="/add-scrappeditem" element={<ScrappedItem />} />
-              <Route path="/view-scrappeditem" element={<ViewScrapp />} />
-              <Route path="/updateScapped/:id" element={<UpdateScrapped />} />
-              <Route path="/add-incoming" element={<IncomingStock />} />
-              <Route path="/view-incoming" element={<ViewIncoming />} />
-              <Route path="/updateIncoming/:id" element={<UpdateIncoming />} />
-              <Route path="/singleIncome" element={<SingleIncome />} />
-              <Route path="/bulkIncome" element={<BulkIncome />} />
+              <Route
+                path="/add-scrappeditem"
+                element={
+                  <Sidebar>
+                    <ScrappedItem />
+                  </Sidebar>
+                }
+              />
+              <Route
+                path="/view-scrappeditem"
+                element={
+                  <Sidebar>
+                    <ViewScrapp />
+                  </Sidebar>
+                }
+              />
+              <Route
+                path="/updateScapped/:id"
+                element={
+                  <Sidebar>
+                    <UpdateScrapped />
+                  </Sidebar>
+                }
+              />
+              <Route
+                path="/add-incoming"
+                element={
+                  <Sidebar>
+                    <IncomingStock />
+                  </Sidebar>
+                }
+              />
+              <Route
+                path="/view-incoming"
+                element={
+                  <Sidebar>
+                    <ViewIncoming />
+                  </Sidebar>
+                }
+              />
+              <Route
+                path="/updateIncoming/:id"
+                element={
+                  <Sidebar>
+                    <UpdateIncoming />
+                  </Sidebar>
+                }
+              />
+              <Route
+                path="/singleIncome"
+                element={
+                  <Sidebar>
+                    <SingleIncome />
+                  </Sidebar>
+                }
+              />
+              <Route
+                path="/bulkIncome"
+                element={
+                  <Sidebar>
+                    <BulkIncome />
+                  </Sidebar>
+                }
+              />
               <Route path="/user" element={<User />} />
-              <Route path="/datacount" element={<DailyDataCount />} />
-              <Route path="/reports" element={<ReportsDashboard />} />
+              <Route
+                path="/datacount"
+                element={
+                  <Sidebar>
+                    <DailyDataCount />
+                  </Sidebar>
+                }
+              />
+              <Route
+                path="/reports"
+                element={
+                  <Sidebar>
+                    <ReportsDashboard />
+                  </Sidebar>
+                }
+              />
               <Route
                 path="/StockReportDashboard"
-                element={<StockReportDashboard />}
+                element={
+                  <Sidebar>
+                    <StockReportDashboard />
+                  </Sidebar>
+                }
               />
-              <Route path="/searchInventory" element={<SearchInventory />} />
-              <Route path="/searchIncoming" element={<SearchIncoming />} />
-              <Route path="/stockReport" element={<StockReport />} />
-              <Route path="/reportItem" element={<ReportItem />} />
-              <Route path="/locationReport" element={<LocationReport />} />
-              <Route path="/transferItem" element={<TransferItemDashboard />} />
-              <Route path="/viewMto" element={<ViewMto />} />
-              <Route path="/mto/createpdf/:id" element={<PrintMto />} />
-              <Route path="/updateMto/:id" element={<UpdateMto />} />
-              <Route path="/viewInternal" element={<ViewInternal />} />
-              <Route path="/updatePickup/:id" element={<UpdatePickup />} />
+              <Route
+                path="/searchInventory"
+                element={
+                  <Sidebar>
+                    <SearchInventory />
+                  </Sidebar>
+                }
+              />
+              <Route
+                path="/searchIncoming"
+                element={
+                  <Sidebar>
+                    <SearchIncoming />
+                  </Sidebar>
+                }
+              />
+              <Route
+                path="/stockReport"
+                element={
+                  <Sidebar>
+                    <StockReport />
+                  </Sidebar>
+                }
+              />
+              <Route
+                path="/reportItem"
+                element={
+                  <Sidebar>
+                    <ReportItem />
+                  </Sidebar>
+                }
+              />
+              <Route
+                path="/locationReport"
+                element={
+                  <Sidebar>
+                    <LocationReport />
+                  </Sidebar>
+                }
+              />
+              <Route
+                path="/transferItem"
+                element={
+                  <Sidebar>
+                    <TransferItemDashboard />
+                  </Sidebar>
+                }
+              />
+              <Route
+                path="/viewMto"
+                element={
+                  <Sidebar>
+                    <ViewMto />
+                  </Sidebar>
+                }
+              />
+              <Route
+                path="/mto/createpdf/:id"
+                element={
+                  <Sidebar>
+                    <PrintMto />
+                  </Sidebar>
+                }
+              />
+              <Route
+                path="/updateMto/:id"
+                element={
+                  <Sidebar>
+                    <UpdateMto />
+                  </Sidebar>
+                }
+              />
+              <Route
+                path="/viewInternal"
+                element={
+                  <Sidebar>
+                    <ViewInternal />
+                  </Sidebar>
+                }
+              />
+              <Route
+                path="/updatePickup/:id"
+                element={
+                  <Sidebar>
+                    <UpdatePickup />
+                  </Sidebar>
+                }
+              />
               <Route
                 path="/internal/createpdf/:id"
-                element={<PrintInternal />}
+                element={
+                  <Sidebar>
+                    <PrintInternal />
+                  </Sidebar>
+                }
               />
-              <Route path="/Uom/update/:id" element={<UpdateUom />} />
-              <Route path="/masterReport" element={<MasterReports />} />
-              <Route path="/consumeReport" element={<ConsumeReport />} />
-              <Route path="/scrappedReport" element={<ScrappedReport />} />
-              <Route path="/itemService" element={<ItemServiceReport />} />
-              <Route path="/mtoReports" element={<MtoReports />} />
-              <Route path="/itReport" element={<InternalTransferReport />} />
-              <Route path="/ciplReport" element={<CiplReport />} />
-              <Route path="/view-inventoryMoc" element={<ViewInventoryMoc />} />
+              <Route
+                path="/Uom/update/:id"
+                element={
+                  <Sidebar>
+                    <UpdateUom />
+                  </Sidebar>
+                }
+              />
+              <Route
+                path="/masterReport"
+                element={
+                  <Sidebar>
+                    <MasterReports />
+                  </Sidebar>
+                }
+              />
+              <Route
+                path="/consumeReport"
+                element={
+                  <Sidebar>
+                    <ConsumeReport />
+                  </Sidebar>
+                }
+              />
+              <Route
+                path="/scrappedReport"
+                element={
+                  <Sidebar>
+                    <ScrappedReport />
+                  </Sidebar>
+                }
+              />
+              <Route
+                path="/itemService"
+                element={
+                  <Sidebar>
+                    <ItemServiceReport />
+                  </Sidebar>
+                }
+              />
+              <Route
+                path="/mtoReports"
+                element={
+                  <Sidebar>
+                    <MtoReports />
+                  </Sidebar>
+                }
+              />
+              <Route
+                path="/itReport"
+                element={
+                  <Sidebar>
+                    <InternalTransferReport />
+                  </Sidebar>
+                }
+              />
+              <Route
+                path="/ciplReport"
+                element={
+                  <Sidebar>
+                    <CiplReport />
+                  </Sidebar>
+                }
+              />
+              <Route
+                path="/view-inventoryMoc"
+                element={
+                  <Sidebar>
+                    <ViewInventoryMoc />
+                  </Sidebar>
+                }
+              />
               <Route
                 path="/locationDashboard"
-                element={<LocationDashboard />}
+                element={
+                  <Sidebar>
+                    <LocationDashboard />
+                  </Sidebar>
+                }
               />
               {/* <Route
                 path='/consignee/consignee/view'

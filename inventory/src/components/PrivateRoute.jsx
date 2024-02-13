@@ -13,7 +13,6 @@ const PrivateRoute = () => {
   }, [currentUser]);
 
   return currentUser ? <Outlet /> : <Navigate to="/login" />;
-  window.location.reload();
 };
 
 export default PrivateRoute;
