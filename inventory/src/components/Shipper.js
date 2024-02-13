@@ -98,7 +98,10 @@ const Shipper = () => {
     alert('Deleted Successfully!');
     fetch(`http://localhost:8080/shipper/delete/${id}`, {
       method: 'DELETE',
-      headers: { 'Content-type': 'application/json' },
+      headers: {
+        'Content-type': 'application/json',
+        Authorization: `Bearer ${currentUser.accessToken}`,
+      },
       body: JSON.stringify(shipperList),
     })
       .then(() => {

@@ -116,6 +116,7 @@ const Consignee = () => {
     });
   };
   console.log(formData, 'hey');
+  console.log(state, 'heyy bro');
   return (
     <>
       <Grid>

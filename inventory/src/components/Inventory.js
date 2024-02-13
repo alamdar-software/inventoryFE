@@ -30,9 +30,10 @@ const Inventory = () => {
   const dispatch = useDispatch();
   const state = useSelector((state) => state);
   const [subLocations, setSubLocations] = useState([]);
+  const { currentUser } = state.persisted.user;
   useEffect(() => {
-    dispatch(fetchlocation());
-    dispatch(fetchItem());
+    dispatch(fetchlocation(currentUser.accessToken));
+    dispatch(fetchItem(currentUser.accessToken));
   }, []);
   const handleLocationChange = (e) => {
     const selectedLocation = e.target.value;
@@ -56,6 +57,7 @@ const Inventory = () => {
         method: 'post',
         headers: {
           'content-type': 'application/json',
+          Authorization: `Bearer ${currentUser.accessToken}`,
         },
         body: JSON.stringify(formData),
       });
@@ -114,7 +116,7 @@ const Inventory = () => {
               }}
               //onChange={handleChange}
             >
-              {state.location.data?.map((item, index) => (
+              {state.nonPersisted.location.data?.map((item, index) => (
                 <MenuItem key={index} value={item?.locationName}>
                   {' '}
                   {item?.locationName}
@@ -182,7 +184,7 @@ const Inventory = () => {
               }}
               //onChange={handleChange}
             >
-              {state.item.data?.map((item, index) => (
+              {state.nonPersisted.item.data?.map((item, index) => (
                 <MenuItem key={index} value={item?.description}>
                   {' '}
                   {item?.description}
