@@ -24,11 +24,11 @@ import { fetchUom } from '../redux/slice/UomSlice';
 
 const BulkIncome = () => {
   useEffect(() => {
-    dispatch(fetchlocation());
-    dispatch(fetchItem());
-    dispatch(fetchCurrency());
-    dispatch(fetchBrand());
-    dispatch(fetchUom());
+    dispatch(fetchlocation(currentUser.accessToken));
+    dispatch(fetchItem(currentUser.accessToken));
+    dispatch(fetchCurrency(currentUser.accessToken));
+    dispatch(fetchBrand(currentUser.accessToken));
+    dispatch(fetchUom(currentUser.accessToken));
   }, []);
   const state = useSelector((state) => state);
   const [subLocations, setSubLocations] = useState([]);
@@ -51,6 +51,7 @@ const BulkIncome = () => {
   const [store, setStore] = useState([]);
   const [impaode, setImpaCode] = useState([]);
   const [selectedItems, setSelectedItems] = useState([]);
+  const { currentUser } = state.persisted.user;
   const [formData, setformData] = useState({
     locationName: '',
     address: '',
@@ -887,7 +888,7 @@ const BulkIncome = () => {
               onChange={handleLocationChange}
               //onChange={handleChange}
             >
-              {state.location.data?.map((item, index) => (
+              {state.nonPersisted.location.data?.map((item, index) => (
                 <MenuItem key={index} value={item?.locationName}>
                   {' '}
                   {item?.locationName}
@@ -937,7 +938,7 @@ const BulkIncome = () => {
               //onChange={handleChange}
               onChange={handleItemChange}
             >
-              {state.item.data?.map((item, index) => (
+              {state.nonPersisted.item.data?.map((item, index) => (
                 <MenuItem key={index} value={item?.description}>
                   {' '}
                   {item?.description}
@@ -988,12 +989,14 @@ const BulkIncome = () => {
               }
               //onChange={handleChange}
             >
-              {state.currency.data?.currencyList?.map((item, index) => (
-                <MenuItem key={index} value={item?.currencyName}>
-                  {' '}
-                  {item?.currencyName}
-                </MenuItem>
-              ))}
+              {state.nonPersisted.currency.data?.currencyList?.map(
+                (item, index) => (
+                  <MenuItem key={index} value={item?.currencyName}>
+                    {' '}
+                    {item?.currencyName}
+                  </MenuItem>
+                )
+              )}
             </Select>
           </FormControl>
         </Grid>

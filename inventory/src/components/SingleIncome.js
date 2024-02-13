@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 
 import {
   Button,
@@ -11,73 +11,74 @@ import {
   Select,
   TextField,
   Typography,
-} from "@mui/material";
-import { useState } from "react";
-import { useDispatch } from "react-redux";
-import { useSelector } from "react-redux";
-import { fetchlocation } from "../redux/slice/location";
-import { fetchItem } from "../redux/slice/ItemSlice";
-import { useEffect } from "react";
-import { fetchBrand } from "../redux/slice/BrandSlice";
+} from '@mui/material';
+import { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
+import { fetchlocation } from '../redux/slice/location';
+import { fetchItem } from '../redux/slice/ItemSlice';
+import { useEffect } from 'react';
+import { fetchBrand } from '../redux/slice/BrandSlice';
 
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-import { DatePicker } from "@mui/x-date-pickers/DatePicker";
-import dayjs from "dayjs";
-import { fetchCurrency } from "../redux/slice/CurrencySlice";
-import { fetchentity } from "../redux/slice/entitySlice";
-import { fetchInventory } from "../redux/slice/InventorySlice";
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import dayjs from 'dayjs';
+import { fetchCurrency } from '../redux/slice/CurrencySlice';
+import { fetchentity } from '../redux/slice/entitySlice';
+import { fetchInventory } from '../redux/slice/InventorySlice';
 const SingleIncome = () => {
   const [formData, setformData] = useState({
-    locationName: "",
-    address: "",
-    description: "",
-    name: "",
-    unitName: "",
+    locationName: '',
+    address: '',
+    description: '',
+    name: '',
+    unitName: '',
     extendedValue: 0,
     quantity: 0,
     unitCost: 0,
     price: 0,
     standardPrice: 0,
-    date: "",
-    purchaseOrder: "",
-    pn: "",
-    sn: "",
-    brandName: "",
-    currencyName: "",
-    entityName: "",
-    impaCode: "",
-    storeNo: "",
-    remarks: "",
+    date: '',
+    purchaseOrder: '',
+    pn: '',
+    sn: '',
+    brandName: '',
+    currencyName: '',
+    entityName: '',
+    impaCode: '',
+    storeNo: '',
+    remarks: '',
   });
   const dispatch = useDispatch();
   const state = useSelector((state) => state);
   const [subLocations, setSubLocations] = useState([]);
   const [selectedSubLocations, setSelectedSubLocations] = useState([]);
+  const { currentUser } = state.persisted.user;
   const [item, setItem] = useState([]);
   useEffect(() => {
-    dispatch(fetchlocation());
-    dispatch(fetchItem());
-    dispatch(fetchBrand());
-    dispatch(fetchInventory());
-    dispatch(fetchCurrency());
-    dispatch(fetchentity());
+    dispatch(fetchlocation(currentUser.accessToken));
+    dispatch(fetchItem(currentUser.accessToken));
+    dispatch(fetchBrand(currentUser.accessToken));
+    dispatch(fetchInventory(currentUser.accessToken));
+    dispatch(fetchCurrency(currentUser.accessToken));
+    dispatch(fetchentity(currentUser.accessToken));
   }, []);
   const handleLocationChange = (e) => {
     const selectedLocation = e.target.value;
     setformData({
       ...formData,
       locationName: selectedLocation,
-      address: "", // Reset sublocation when location changes
+      address: '', // Reset sublocation when location changes
     });
     const selectedLocationObj = state.location.data.find(
       (location) => location.locationName === selectedLocation
     );
     setSubLocations(selectedLocationObj && selectedLocationObj?.addresses);
-    console.log(selectedLocationObj, "yuuuu");
+    console.log(selectedLocationObj, 'yuuuu');
   };
   const handleSubLocationChange = (e) => {
-    const selectedSubLocation = e.target.value || "";
+    const selectedSubLocation = e.target.value || '';
 
     // Update formData with the selected sublocation
     updateFormDataSubLocations(selectedSubLocation);
@@ -89,13 +90,13 @@ const SingleIncome = () => {
     const selectedInventoryData = state.inventory?.data.filter(
       (inventoryItem) => inventoryItem.address?.address === selectedSubLocation
     );
-    console.log(selectedInventoryData, "22");
+    console.log(selectedInventoryData, '22');
 
     // Extract item descriptions from the selected inventory data
     const itemDescriptions = selectedInventoryData.map(
       (inventoryItem) => inventoryItem.description
     );
-    console.log(itemDescriptions, "33");
+    console.log(itemDescriptions, '33');
 
     // Update the item state with the selected item descriptions
     setItem(itemDescriptions);
@@ -137,13 +138,13 @@ const SingleIncome = () => {
     if (!isNaN(parsedQuantity) && !isNaN(parsedUnitCost)) {
       return parsedQuantity * parsedUnitCost;
     } else {
-      return "";
+      return '';
     }
   };
   const handleDateChange = (date) => {
     setformData({
       ...formData,
-      date: date.format("YYYY-MM-DD"),
+      date: date.format('YYYY-MM-DD'),
     });
   };
   const handleItemChange = (e) => {
@@ -154,8 +155,8 @@ const SingleIncome = () => {
     );
 
     if (selectedItem) {
-      console.log(selectedItem, "i have selected");
-      console.log(selectedItem.category, "select");
+      console.log(selectedItem, 'i have selected');
+      console.log(selectedItem.category, 'select');
       setformData({
         ...formData,
         description: e.target.value,
@@ -166,45 +167,46 @@ const SingleIncome = () => {
       setformData({
         ...formData,
         description: e.target.value,
-        name: "",
-        unitName: "",
+        name: '',
+        unitName: '',
       });
     }
   };
-  console.log(state, "heystate");
-  console.log(formData, "formmmm");
+  console.log(state, 'heystate');
+  console.log(formData, 'formmmm');
   const handleClick = async (e) => {
     e.preventDefault();
     try {
-      const res = await fetch("http://localhost:8080/incomingstock/add", {
-        method: "post",
+      const res = await fetch('http://localhost:8080/incomingstock/add', {
+        method: 'post',
         headers: {
-          "content-type": "application/json",
+          'content-type': 'application/json',
+          Authorization: `Bearer ${currentUser.accessToken}`,
         },
         body: JSON.stringify(formData),
       });
       const data = await res.json();
-      console.log(data, "came from backend");
-      alert("income added successfully");
+      console.log(data, 'came from backend');
+      alert('income added successfully');
     } catch (error) {
-      console.log(error, "something happens while adding income");
+      console.log(error, 'something happens while adding income');
     }
   };
   return (
     <>
       <Grid>
         <Card
-          color="secondary"
+          color='secondary'
           sx={{
-            width: "100%",
-            backgroundColor: "secondary",
-            borderBottom: "2px solid yellow",
+            width: '100%',
+            backgroundColor: 'secondary',
+            borderBottom: '2px solid yellow',
           }}
         >
           <CardContent>
             <Typography
-              variant="h4"
-              color="secondary"
+              variant='h4'
+              color='secondary'
               gutterBottom
               style={{ fontFamily: "'EB Garamond'" }}
             >
@@ -214,22 +216,22 @@ const SingleIncome = () => {
         </Card>
       </Grid>
 
-      <Grid container spacing={2} sx={{ mt: "33px" }}>
+      <Grid container spacing={2} sx={{ mt: '33px' }}>
         <Grid item xs={21} sm={6}>
-          <FormControl fullWidth sx={{ width: "90%" }}>
-            <InputLabel id="demo-simple-select-label">Location</InputLabel>
+          <FormControl fullWidth sx={{ width: '90%' }}>
+            <InputLabel id='demo-simple-select-label'>Location</InputLabel>
             <Select
-              labelId="demo-simple-select-label"
-              id="demo-simple-select"
+              labelId='demo-simple-select-label'
+              id='demo-simple-select'
               //value={age}
-              label="location"
+              label='location'
               onChange={handleLocationChange}
 
               //onChange={handleChange}
             >
-              {state.location.data?.map((item, index) => (
+              {state.nonPersisted.location.data?.map((item, index) => (
                 <MenuItem key={index} value={item?.locationName}>
-                  {" "}
+                  {' '}
                   {item?.locationName}
                 </MenuItem>
               ))}
@@ -237,13 +239,13 @@ const SingleIncome = () => {
           </FormControl>
         </Grid>
         <Grid item xs={12} sm={6}>
-          <FormControl fullWidth sx={{ width: "90%" }}>
-            <InputLabel id="demo-simple-select-label">Sub Location</InputLabel>
+          <FormControl fullWidth sx={{ width: '90%' }}>
+            <InputLabel id='demo-simple-select-label'>Sub Location</InputLabel>
             <Select
-              labelId="demo-simple-select-label"
-              id="demo-simple-select"
+              labelId='demo-simple-select-label'
+              id='demo-simple-select'
               //value={age}
-              label="sublocation"
+              label='sublocation'
               onChange={(e) => handleSubLocationChange(e)}
               //onChange={handleChange}
             >
@@ -257,17 +259,17 @@ const SingleIncome = () => {
         </Grid>
       </Grid>
 
-      <Grid container spacing={2} sx={{ mt: "33px" }}>
+      <Grid container spacing={2} sx={{ mt: '33px' }}>
         <Grid item xs={21} sm={6}>
-          <FormControl fullWidth sx={{ width: "90%" }}>
-            <InputLabel id="demo-simple-select-label">
+          <FormControl fullWidth sx={{ width: '90%' }}>
+            <InputLabel id='demo-simple-select-label'>
               Item Description
             </InputLabel>
             <Select
-              labelId="demo-simple-select-label"
-              id="demo-simple-select"
+              labelId='demo-simple-select-label'
+              id='demo-simple-select'
               //value={age}
-              label="Description"
+              label='Description'
               //onChange={handleChange}
               onChange={handleItemChange}
             >
@@ -281,11 +283,11 @@ const SingleIncome = () => {
         </Grid>
         <Grid item xs={12} sm={6}>
           <TextField
-            id="outlined-basic"
-            label="Catagory"
-            variant="outlined"
+            id='outlined-basic'
+            label='Catagory'
+            variant='outlined'
             fullWidth
-            sx={{ width: "90%" }}
+            sx={{ width: '90%' }}
             InputProps={{
               readOnly: true,
             }}
@@ -299,14 +301,14 @@ const SingleIncome = () => {
           />
         </Grid>
       </Grid>
-      <Grid container spacing={2} sx={{ mt: "33px" }}>
+      <Grid container spacing={2} sx={{ mt: '33px' }}>
         <Grid item xs={21} sm={6}>
           <TextField
-            id="outlined-basic"
-            label="Unit of Measure"
-            variant="outlined"
+            id='outlined-basic'
+            label='Unit of Measure'
+            variant='outlined'
             fullWidth
-            sx={{ width: "90%" }}
+            sx={{ width: '90%' }}
             InputProps={{
               readOnly: true,
             }}
@@ -321,12 +323,12 @@ const SingleIncome = () => {
         </Grid>
         <Grid item xs={12} sm={6}>
           <TextField
-            id="outlined-basic"
-            label="Extended Value"
-            type="number"
-            variant="outlined"
+            id='outlined-basic'
+            label='Extended Value'
+            type='number'
+            variant='outlined'
             fullWidth
-            sx={{ width: "90%" }}
+            sx={{ width: '90%' }}
             onChange={(e) =>
               setformData({
                 ...formData,
@@ -337,15 +339,15 @@ const SingleIncome = () => {
         </Grid>
       </Grid>
 
-      <Grid container spacing={2} sx={{ mt: "33px" }}>
+      <Grid container spacing={2} sx={{ mt: '33px' }}>
         <Grid item xs={21} sm={6}>
           <TextField
-            id="outlined-basic"
-            label="Quantity"
-            variant="outlined"
-            type="number"
+            id='outlined-basic'
+            label='Quantity'
+            variant='outlined'
+            type='number'
             fullWidth
-            sx={{ width: "90%" }}
+            sx={{ width: '90%' }}
             /*  onChange={(e) =>
               setformData({
                 ...formData,
@@ -357,12 +359,12 @@ const SingleIncome = () => {
         </Grid>
         <Grid item xs={12} sm={6}>
           <TextField
-            id="outlined-basic"
-            label="Unit Cost"
-            variant="outlined"
+            id='outlined-basic'
+            label='Unit Cost'
+            variant='outlined'
             fullWidth
-            sx={{ width: "90%" }}
-            type="number"
+            sx={{ width: '90%' }}
+            type='number'
             /*   onChange={(e) =>
               setformData({
                 ...formData,
@@ -373,15 +375,15 @@ const SingleIncome = () => {
           />
         </Grid>
       </Grid>
-      <Grid container spacing={2} sx={{ mt: "33px" }}>
+      <Grid container spacing={2} sx={{ mt: '33px' }}>
         <Grid item xs={21} sm={6}>
           <TextField
-            id="outlined-basic"
-            label="Total Price"
-            variant="outlined"
-            type="number"
+            id='outlined-basic'
+            label='Total Price'
+            variant='outlined'
+            type='number'
             fullWidth
-            sx={{ width: "90%" }}
+            sx={{ width: '90%' }}
             InputProps={{
               readOnly: true,
             }}
@@ -402,12 +404,12 @@ const SingleIncome = () => {
         </Grid>
         <Grid item xs={12} sm={6}>
           <TextField
-            id="outlined-basic"
-            label="Standard Price"
-            variant="outlined"
+            id='outlined-basic'
+            label='Standard Price'
+            variant='outlined'
             fullWidth
-            sx={{ width: "90%" }}
-            type="number"
+            sx={{ width: '90%' }}
+            type='number'
             onChange={(e) =>
               setformData({
                 ...formData,
@@ -417,7 +419,7 @@ const SingleIncome = () => {
           />
         </Grid>
       </Grid>
-      <Grid container spacing={2} sx={{ mt: "33px" }}>
+      <Grid container spacing={2} sx={{ mt: '33px' }}>
         <Grid item xs={21} sm={6}>
           <LocalizationProvider dateAdapter={AdapterDayjs}>
             <DatePicker
@@ -426,18 +428,18 @@ const SingleIncome = () => {
               } */
               onChange={(newDate) => handleDateChange(newDate)}
               fullWidth
-              sx={{ width: "90%" }}
+              sx={{ width: '90%' }}
               /* format="yyyy-MM-dd" */
             />
           </LocalizationProvider>
         </Grid>
         <Grid item xs={12} sm={6}>
           <TextField
-            id="outlined-basic"
-            label="Purchase Order"
-            variant="outlined"
+            id='outlined-basic'
+            label='Purchase Order'
+            variant='outlined'
             fullWidth
-            sx={{ width: "90%" }}
+            sx={{ width: '90%' }}
             onChange={(e) =>
               setformData({
                 ...formData,
@@ -447,14 +449,14 @@ const SingleIncome = () => {
           />
         </Grid>
       </Grid>
-      <Grid container spacing={2} sx={{ mt: "33px" }}>
+      <Grid container spacing={2} sx={{ mt: '33px' }}>
         <Grid item xs={21} sm={6}>
           <TextField
-            id="outlined-basic"
-            label="P/N"
-            variant="outlined"
+            id='outlined-basic'
+            label='P/N'
+            variant='outlined'
             fullWidth
-            sx={{ width: "90%" }}
+            sx={{ width: '90%' }}
             onChange={(e) =>
               setformData({
                 ...formData,
@@ -465,11 +467,11 @@ const SingleIncome = () => {
         </Grid>
         <Grid item xs={12} sm={6}>
           <TextField
-            id="outlined-basic"
-            label="S/N"
-            variant="outlined"
+            id='outlined-basic'
+            label='S/N'
+            variant='outlined'
             fullWidth
-            sx={{ width: "90%" }}
+            sx={{ width: '90%' }}
             onChange={(e) =>
               setformData({
                 ...formData,
@@ -479,15 +481,15 @@ const SingleIncome = () => {
           />
         </Grid>
       </Grid>
-      <Grid container spacing={2} sx={{ mt: "33px" }}>
+      <Grid container spacing={2} sx={{ mt: '33px' }}>
         <Grid item xs={21} sm={6}>
-          <FormControl fullWidth sx={{ width: "90%" }}>
-            <InputLabel id="brandName">brandName</InputLabel>
+          <FormControl fullWidth sx={{ width: '90%' }}>
+            <InputLabel id='brandName'>brandName</InputLabel>
             <Select
-              labelId="brandName"
-              id="brandName"
+              labelId='brandName'
+              id='brandName'
               //value={age}
-              label="brandName"
+              label='brandName'
               onChange={(e) =>
                 setformData({
                   ...formData,
@@ -497,9 +499,9 @@ const SingleIncome = () => {
 
               //onChange={handleChange}
             >
-              {state.brand.data?.map((item, index) => (
+              {state.nonPersisted.brand.data?.map((item, index) => (
                 <MenuItem key={index} value={item?.brandName}>
-                  {" "}
+                  {' '}
                   {item?.brandName}
                 </MenuItem>
               ))}
@@ -507,16 +509,16 @@ const SingleIncome = () => {
           </FormControl>
         </Grid>
         <Grid item xs={12} sm={6}>
-          <FormControl fullWidth sx={{ width: "90%" }}>
-            <InputLabel id="demo-simple-select-label">
-              {" "}
+          <FormControl fullWidth sx={{ width: '90%' }}>
+            <InputLabel id='demo-simple-select-label'>
+              {' '}
               Select Currency
             </InputLabel>
             <Select
-              labelId="demo-simple-select-label"
-              id="demo-simple-select"
+              labelId='demo-simple-select-label'
+              id='demo-simple-select'
               //value={age}
-              label="currency"
+              label='currency'
               MenuProps={{
                 PaperProps: {
                   style: {
@@ -532,25 +534,27 @@ const SingleIncome = () => {
               }
               //onChange={handleChange}
             >
-              {state.currency.data?.currencyList?.map((item, index) => (
-                <MenuItem key={index} value={item?.currencyName}>
-                  {" "}
-                  {item?.currencyName}
-                </MenuItem>
-              ))}
+              {state.nonPersisted.currency.data?.currencyList?.map(
+                (item, index) => (
+                  <MenuItem key={index} value={item?.currencyName}>
+                    {' '}
+                    {item?.currencyName}
+                  </MenuItem>
+                )
+              )}
             </Select>
           </FormControl>
         </Grid>
       </Grid>
-      <Grid container spacing={2} sx={{ mt: "33px" }}>
+      <Grid container spacing={2} sx={{ mt: '33px' }}>
         <Grid item xs={21} sm={6}>
-          <FormControl fullWidth sx={{ width: "90%" }}>
-            <InputLabel id="demo-simple-select-label">Entity</InputLabel>
+          <FormControl fullWidth sx={{ width: '90%' }}>
+            <InputLabel id='demo-simple-select-label'>Entity</InputLabel>
             <Select
-              labelId="demo-simple-select-label"
-              id="demo-simple-select"
+              labelId='demo-simple-select-label'
+              id='demo-simple-select'
               //value={age}
-              label="entity"
+              label='entity'
               onChange={(e) =>
                 setformData({
                   ...formData,
@@ -567,9 +571,9 @@ const SingleIncome = () => {
 
               //onChange={handleChange}
             >
-              {state.entity.data?.map((item, index) => (
+              {state.nonPersisted.entity.data?.map((item, index) => (
                 <MenuItem key={index} value={item?.entityName}>
-                  {" "}
+                  {' '}
                   {item?.entityName}
                 </MenuItem>
               ))}
@@ -578,11 +582,11 @@ const SingleIncome = () => {
         </Grid>
         <Grid item xs={12} sm={6}>
           <TextField
-            id="outlined-basic"
-            label="IMPA Code"
-            variant="outlined"
+            id='outlined-basic'
+            label='IMPA Code'
+            variant='outlined'
             fullWidth
-            sx={{ width: "90%" }}
+            sx={{ width: '90%' }}
             onChange={(e) =>
               setformData({
                 ...formData,
@@ -592,14 +596,14 @@ const SingleIncome = () => {
           />
         </Grid>
       </Grid>
-      <Grid container spacing={2} sx={{ mt: "33px" }}>
+      <Grid container spacing={2} sx={{ mt: '33px' }}>
         <Grid item xs={21} sm={6}>
           <TextField
-            id="outlined-basic"
-            label="Store Number"
-            variant="outlined"
+            id='outlined-basic'
+            label='Store Number'
+            variant='outlined'
             fullWidth
-            sx={{ width: "90%" }}
+            sx={{ width: '90%' }}
             onChange={(e) =>
               setformData({
                 ...formData,
@@ -610,11 +614,11 @@ const SingleIncome = () => {
         </Grid>
         <Grid item xs={12} sm={6}>
           <TextField
-            id="outlined-basic"
-            label="Remarks"
-            variant="outlined"
+            id='outlined-basic'
+            label='Remarks'
+            variant='outlined'
             fullWidth
-            sx={{ width: "90%" }}
+            sx={{ width: '90%' }}
             onChange={(e) =>
               setformData({
                 ...formData,
@@ -625,16 +629,16 @@ const SingleIncome = () => {
         </Grid>
       </Grid>
       <Button
-        variant="contained"
-        color="secondary"
-        size="large"
+        variant='contained'
+        color='secondary'
+        size='large'
         onClick={handleClick}
         sx={{
-          mt: "33px",
-          mb: "17px",
-          marginLeft: "auto",
-          marginRight: "auto",
-          display: "block",
+          mt: '33px',
+          mb: '17px',
+          marginLeft: 'auto',
+          marginRight: 'auto',
+          display: 'block',
         }}
       >
         Add
