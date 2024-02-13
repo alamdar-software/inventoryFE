@@ -9,30 +9,31 @@ import {
   Select,
   TextField,
   Typography,
-} from '@mui/material';
-import React from 'react';
-import { useState } from 'react';
-import { useEffect } from 'react';
-import { useSelector } from 'react-redux';
-import { useDispatch } from 'react-redux';
-import { fetchItem } from '../redux/slice/ItemSlice';
-import { fetchlocation } from '../redux/slice/location';
+} from "@mui/material";
+import React from "react";
+import { useState } from "react";
+import { useEffect } from "react";
+import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { fetchItem } from "../redux/slice/ItemSlice";
+import { fetchlocation } from "../redux/slice/location";
 
 const Inventory = () => {
   const [formData, setformData] = useState({
-    description: '',
-    locationName: '',
-    address: '',
-    quantity: '',
-    consumedItem: '',
-    scrappedItem: '',
+    description: "",
+    locationName: "",
+    address: "",
+    quantity: "",
+    consumedItem: "",
+    scrappedItem: "",
   });
   const dispatch = useDispatch();
   const state = useSelector((state) => state);
+  const { currentUser } = state.persisted.user;
   const [subLocations, setSubLocations] = useState([]);
   useEffect(() => {
-    dispatch(fetchlocation());
-    dispatch(fetchItem());
+    dispatch(fetchlocation(currentUser.accessToken));
+    dispatch(fetchItem(currentUser.accessToken));
   }, []);
   const handleLocationChange = (e) => {
     const selectedLocation = e.target.value;
@@ -41,45 +42,45 @@ const Inventory = () => {
       locationName: selectedLocation,
       address: [], // Reset sublocation when location changes
     });
-    const selectedLocationObj = state.location.data.find(
+    const selectedLocationObj = state.nonPersisted.location.data.find(
       (location) => location.locationName === selectedLocation
     );
     setSubLocations(selectedLocationObj ? selectedLocationObj.addresses : []);
   };
-  console.log(formData, 'hey');
-  console.log(state, 'state');
+  console.log(formData, "hey");
+  console.log(state, "state");
 
   const handleClick = async (e) => {
     e.preventDefault();
     try {
-      const res = await fetch('http://localhost:8080/inventory/add', {
-        method: 'post',
+      const res = await fetch("http://localhost:8080/inventory/add", {
+        method: "post",
         headers: {
-          'content-type': 'application/json',
+          "content-type": "application/json",
         },
         body: JSON.stringify(formData),
       });
       const data = await res.json();
       console.log(data);
     } catch (error) {
-      console.log('something happens while adding inventory');
+      console.log("something happens while adding inventory");
     }
   };
   return (
     <>
       <Grid>
         <Card
-          color='secondary'
+          color="secondary"
           sx={{
-            width: '100%',
-            backgroundColor: 'secondary',
-            borderBottom: '2px solid yellow',
+            width: "100%",
+            backgroundColor: "secondary",
+            borderBottom: "2px solid yellow",
           }}
         >
           <CardContent>
             <Typography
-              variant='h4'
-              color='secondary'
+              variant="h4"
+              color="secondary"
               gutterBottom
               style={{ fontFamily: "'EB Garamond'" }}
             >
@@ -89,15 +90,15 @@ const Inventory = () => {
         </Card>
       </Grid>
 
-      <Grid container spacing={2} sx={{ mt: '33px' }}>
+      <Grid container spacing={2} sx={{ mt: "33px" }}>
         <Grid item xs={21} sm={6}>
-          <FormControl fullWidth sx={{ width: '90%' }}>
-            <InputLabel id='demo-simple-select-label'>Location</InputLabel>
+          <FormControl fullWidth sx={{ width: "90%" }}>
+            <InputLabel id="demo-simple-select-label">Location</InputLabel>
             <Select
-              labelId='demo-simple-select-label'
-              id='demo-simple-select'
+              labelId="demo-simple-select-label"
+              id="demo-simple-select"
               //value={age}
-              label='location'
+              label="location"
               /* onChange={(e) =>
                 setformData({
                   ...formData,
@@ -114,9 +115,9 @@ const Inventory = () => {
               }}
               //onChange={handleChange}
             >
-              {state.location.data?.map((item, index) => (
+              {state.nonPersisted.location.data?.map((item, index) => (
                 <MenuItem key={index} value={item?.locationName}>
-                  {' '}
+                  {" "}
                   {item?.locationName}
                 </MenuItem>
               ))}
@@ -124,13 +125,13 @@ const Inventory = () => {
           </FormControl>
         </Grid>
         <Grid item xs={12} sm={6}>
-          <FormControl fullWidth sx={{ width: '90%' }}>
-            <InputLabel id='demo-simple-select-label'>Sub Location</InputLabel>
+          <FormControl fullWidth sx={{ width: "90%" }}>
+            <InputLabel id="demo-simple-select-label">Sub Location</InputLabel>
             <Select
-              labelId='demo-simple-select-label'
-              id='demo-simple-select'
+              labelId="demo-simple-select-label"
+              id="demo-simple-select"
               //value={age}
-              label='sublocation'
+              label="sublocation"
               onChange={(e) =>
                 setformData({
                   ...formData,
@@ -156,17 +157,17 @@ const Inventory = () => {
         </Grid>
       </Grid>
 
-      <Grid container spacing={2} sx={{ mt: '33px' }}>
+      <Grid container spacing={2} sx={{ mt: "33px" }}>
         <Grid item xs={21} sm={6}>
-          <FormControl fullWidth sx={{ width: '90%' }}>
-            <InputLabel id='demo-simple-select-label'>
+          <FormControl fullWidth sx={{ width: "90%" }}>
+            <InputLabel id="demo-simple-select-label">
               Item Description
             </InputLabel>
             <Select
-              labelId='demo-simple-select-label'
-              id='description'
+              labelId="demo-simple-select-label"
+              id="description"
               //value={age}
-              label='description'
+              label="description"
               onChange={(e) =>
                 setformData({
                   ...formData,
@@ -180,11 +181,10 @@ const Inventory = () => {
                   },
                 },
               }}
-              //onChange={handleChange}
             >
-              {state.item.data?.map((item, index) => (
+              {state.nonPersisted.item.data?.map((item, index) => (
                 <MenuItem key={index} value={item?.description}>
-                  {' '}
+                  {" "}
                   {item?.description}
                 </MenuItem>
               ))}
@@ -193,10 +193,10 @@ const Inventory = () => {
         </Grid>
         <Grid item xs={12} sm={6}>
           <TextField
-            id='quantity'
-            label='Quantity'
-            variant='outlined'
-            type='number'
+            id="quantity"
+            label="Quantity"
+            variant="outlined"
+            type="number"
             //   onChange={(e) =>
             //     setformData({
             //       ...formData,
@@ -210,17 +210,17 @@ const Inventory = () => {
               })
             }
             fullWidth
-            sx={{ width: '90%' }}
+            sx={{ width: "90%" }}
           />
         </Grid>
       </Grid>
-      <Grid container spacing={2} sx={{ mt: '33px' }}>
+      <Grid container spacing={2} sx={{ mt: "33px" }}>
         <Grid item xs={21} sm={6}>
           <TextField
-            id='consumedItem'
-            label='Consumed Quantity'
-            variant='outlined'
-            type='number'
+            id="consumedItem"
+            label="Consumed Quantity"
+            variant="outlined"
+            type="number"
             //   onChange={(e) =>
             //     setformData({
             //       ...formData,
@@ -234,15 +234,15 @@ const Inventory = () => {
               })
             }
             fullWidth
-            sx={{ width: '90%' }}
+            sx={{ width: "90%" }}
           />
         </Grid>
         <Grid item xs={12} sm={6}>
           <TextField
-            id='scrappedItem'
-            label='Scrapped Quantity'
-            variant='outlined'
-            type='number'
+            id="scrappedItem"
+            label="Scrapped Quantity"
+            variant="outlined"
+            type="number"
             //   onChange={(e) =>
             //     setformData({
             //       ...formData,
@@ -256,23 +256,23 @@ const Inventory = () => {
               })
             }
             fullWidth
-            sx={{ width: '90%' }}
+            sx={{ width: "90%" }}
           />
         </Grid>
       </Grid>
       <Button
-        variant='contained'
-        color='secondary'
-        size='large'
+        variant="contained"
+        color="secondary"
+        size="large"
         onClick={handleClick}
         //onClick={handleClick}
 
         sx={{
-          mt: '33px',
-          mb: '17px',
-          marginLeft: 'auto',
-          marginRight: 'auto',
-          display: 'block',
+          mt: "33px",
+          mb: "17px",
+          marginLeft: "auto",
+          marginRight: "auto",
+          display: "block",
         }}
       >
         Add

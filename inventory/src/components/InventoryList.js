@@ -26,11 +26,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { PoList } from "../components/PoList";
 
 const InventoryList = () => {
+  const state = useSelector((state) => state);
+  const { currentUser } = state.persisted.user;
   const [inventoryData, setInventoryData] = useState([]);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [selectedInventory, setSelectedInventory] = useState("");
-  const state = useSelector((state) => state);
   const dispatch = useDispatch();
   const [isCardOpen, setIsCardOpen] = useState(false);
   const [isCardVisible, setIsCardVisible] = useState(false);
@@ -61,7 +62,11 @@ const InventoryList = () => {
   });
   console.log(inventoryData, "datesssss");
   useEffect(() => {
-    fetch("http://localhost:8080/inventory/view")
+    fetch("http://localhost:8080/inventory/view", {
+      headers: {
+        Authorization: `Bearer ${currentUser.accessToken}`,
+      },
+    })
       .then((res) => res.json())
       .then((result) => {
         if (result) {
