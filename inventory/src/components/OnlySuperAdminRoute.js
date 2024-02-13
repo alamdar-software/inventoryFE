@@ -1,24 +1,22 @@
-import React from "react";
-import { useEffect } from "react";
+import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
-import { Outlet, Navigate, useLocation } from "react-router-dom";
+import { Outlet } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 
 const OnlySuperAdmin = () => {
   const { currentUser } = useSelector((state) => state.persisted.user);
-  const location = useLocation();
+
   useEffect(() => {
-    if (!currentUser.roles[0] === "ROLE_SUPERADMIN") {
-      alert("You Are Not Super Admin");
+    if (currentUser.roles[0] !== "ROLE_SUPERADMIN") {
       window.location.reload();
     }
-  }, [currentUser]);
+  }, [currentUser.roles]);
 
   return currentUser.roles[0] === "ROLE_SUPERADMIN" ? (
     <Outlet />
   ) : (
     <Navigate to="/login" />
   );
-  window.location.reload();
 };
 
 export default OnlySuperAdmin;

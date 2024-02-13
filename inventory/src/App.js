@@ -82,6 +82,7 @@ import Login from "./pages/Login/Login.jsx";
 import PrivateRoute from "./components/PrivateRoute";
 import OnlySuperAdmin from "./components/OnlySuperAdminRoute";
 import ChangePassword from "./components/ChangePassword";
+import ViewUser from "./components/ViewUser";
 const theme = createTheme({
   palette: {
     background: {
@@ -117,7 +118,14 @@ function App() {
           <Routes>
             {/* Route for signup without the sidebar */}
             <Route element={<OnlySuperAdmin />}>
-              <Route path="/add-user" element={<Signup />} />
+              <Route
+                path="/add-user"
+                element={
+                  <Sidebar>
+                    <Signup />
+                  </Sidebar>
+                }
+              />
             </Route>
             <Route path="/login" element={<Login />} />
             {/* Define other routes here */}
@@ -135,6 +143,14 @@ function App() {
                 element={
                   <Sidebar>
                     <Dashboard />
+                  </Sidebar>
+                }
+              />
+              <Route
+                path="/view-user"
+                element={
+                  <Sidebar>
+                    <ViewUser />
                   </Sidebar>
                 }
               />

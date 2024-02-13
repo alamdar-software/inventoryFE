@@ -10,6 +10,7 @@ import { useNavigate } from "react-router-dom";
 
 function ChangePassword() {
   const navigate = useNavigate();
+  const [message, setmessage] = useState();
   const { currentUser } = useSelector((state) => state.persisted.user);
   const [formData, setformData] = useState({});
   const [open, setOpen] = React.useState(true); // Open the modal by default
@@ -38,13 +39,20 @@ function ChangePassword() {
       const data = await res.json();
       console.log(data);
       if (res.ok) {
-        navigate("/");
-        window.location.reload();
+        setmessage("Password Changed SuccessFully");
+        setTimeout(() => {
+          setmessage(""); // Clear the message after 5 seconds
+          navigate("/");
+          window.location.reload(); // Reload the page
+        }, 5000);
 
         /* window.location.reload(); */
         /*  console.log(currentUser, "currentlaga"); */
+      } else if (!res.ok) {
+        setmessage(res.message);
       }
     } catch (error) {
+      setmessage(error.message);
       console.log(error);
     }
   };
@@ -110,6 +118,11 @@ function ChangePassword() {
             Save
           </Button>
         </Box>
+        {message && (
+          <p style={{ color: "green", textAlign: "center", marginTop: "5px" }}>
+            {message}
+          </p>
+        )}
       </Box>
     </Modal>
   );
