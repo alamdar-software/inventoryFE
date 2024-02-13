@@ -31,6 +31,7 @@ const Inventory = () => {
   const state = useSelector((state) => state);
   const { currentUser } = state.persisted.user;
   const [subLocations, setSubLocations] = useState([]);
+
   useEffect(() => {
     dispatch(fetchlocation(currentUser.accessToken));
     dispatch(fetchItem(currentUser.accessToken));
