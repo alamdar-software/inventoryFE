@@ -83,6 +83,7 @@ import PrivateRoute from "./components/PrivateRoute";
 import OnlySuperAdmin from "./components/OnlySuperAdminRoute";
 import ChangePassword from "./components/ChangePassword";
 import ViewUser from "./components/ViewUser";
+import UpdateUser from "./components/UpdateUser";
 const theme = createTheme({
   palette: {
     background: {
@@ -133,6 +134,14 @@ function App() {
                   element={
                     <Sidebar>
                       <ViewUser />
+                    </Sidebar>
+                  }
+                />
+                <Route
+                  path="/api/user/update/:id"
+                  element={
+                    <Sidebar>
+                      <UpdateUser />
                     </Sidebar>
                   }
                 />
