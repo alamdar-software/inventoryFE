@@ -39,10 +39,11 @@ export const ViewCipl = () => {
   const [cipl, setcipl] = useState([]);
   const [allCipl, setAllCipl] = useState([]);
   const [filteredCipl, setFilteredCipl] = useState([]);
+  const { currentUser } = useSelector((state) => state.persisted.user);
 
   useEffect(() => {
-    dispatch(fetchlocation());
-    dispatch(fetchItem());
+    dispatch(fetchlocation(currentUser.accessToken));
+    dispatch(fetchItem(currentUser.accessToken));
   }, []);
 
   const [page, setPage] = useState(0);
@@ -139,7 +140,13 @@ export const ViewCipl = () => {
       });
     }; */
   useEffect(() => {
-    fetch('http://localhost:8080/cipl/view')
+    fetch('http://localhost:8080/cipl/view', {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${currentUser.accessToken}`,
+        'Content-Type': 'application/json',
+      },
+    })
       .then((res) => {
         if (!res.ok) {
           throw new Error(`HTTP error! Status: ${res.status}`);
@@ -159,10 +166,11 @@ export const ViewCipl = () => {
   const handleClick = async (e) => {
     e.preventDefault();
     try {
-      const res = await fetch("http://localhost:8080/cipl/search", {
-        method: "post",
+      const res = await fetch('http://localhost:8080/cipl/search', {
+        method: 'post',
         headers: {
-          "content-type": "application/json",
+          'content-type': 'application/json',
+          Authorization: `Bearer ${currentUser.accessToken}`,
         },
         body: JSON.stringify(formData),
       });
@@ -173,10 +181,10 @@ export const ViewCipl = () => {
 
       const data = await res.json();
       setFilteredCipl(data);
-      console.log(data, "came from backend");
+      console.log(data, 'came from backend');
     } catch (error) {
-      console.error("Error while adding inventory:", error.message);
-      alert("data not found");
+      console.error('Error while adding inventory:', error.message);
+      alert('data not found');
     }
   };
 
@@ -255,7 +263,7 @@ export const ViewCipl = () => {
                   )
                 } */
               >
-                {state.item.data?.map((item, index) => (
+                {state.nonPersisted.item.data?.map((item, index) => (
                   <MenuItem key={index} value={item?.description}>
                     {' '}
                     {item?.description}
@@ -289,7 +297,7 @@ export const ViewCipl = () => {
 
                 //onChange={handleChange}
               >
-                {state.location.data?.map((item, index) => (
+                {state.nonPersisted.location.data?.map((item, index) => (
                   <MenuItem key={index} value={item?.locationName}>
                     {' '}
                     {item?.locationName}

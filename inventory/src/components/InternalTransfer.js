@@ -54,13 +54,14 @@ const InternalTransfer = () => {
   const [partNo, setPartNo] = useState(
     Array.from({ length: formRows }, () => [])
   );
+  const { currentUser } = state.persisted.user;
   const [selectedSubLocations, setSelectedSubLocations] = useState([]);
 
   useEffect(() => {
-    dispatch(fetchlocation());
-    dispatch(fetchItem());
-    dispatch(fetchInventory());
-    dispatch(fetchIncome());
+    dispatch(fetchlocation(currentUser.accessToken));
+    dispatch(fetchItem(currentUser.accessToken));
+    dispatch(fetchInventory(currentUser.accessToken));
+    dispatch(fetchIncome(currentUser.accessToken));
   }, []);
   console.log(state);
 
@@ -75,7 +76,10 @@ const InternalTransfer = () => {
 
     fetch('http://localhost:8080/internaltransfer/add', {
       method: 'POST',
-      headers: { 'Content-type': 'application/json' },
+      headers: {
+        'Content-type': 'application/json',
+        Authorization: `Bearer ${currentUser.accessToken}`,
+      },
       body: JSON.stringify(formData),
     }).then(() => {
       console.log('Internal Transfer Added');
@@ -567,7 +571,7 @@ const InternalTransfer = () => {
               onChange={handleLocationChange}
               //onChange={handleChange}
             >
-              {state.location.data?.map((item, index) => (
+              {state.nonPersisted.location.data?.map((item, index) => (
                 <MenuItem key={index} value={item?.locationName}>
                   {' '}
                   {item?.locationName}
@@ -612,7 +616,7 @@ const InternalTransfer = () => {
                 })
               }
             >
-              {state.location.data?.flatMap((location) =>
+              {state.nonPersisted.location.data?.flatMap((location) =>
                 location.addresses.map((subLocation) => (
                   <MenuItem key={subLocation.id} value={subLocation.address}>
                     {subLocation.address}

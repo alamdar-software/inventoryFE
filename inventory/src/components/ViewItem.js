@@ -30,6 +30,7 @@ const ViewItem = () => {
   const [item, setItem] = useState([]);
   const { currentUser } = useSelector((state) => state.persisted.user);
   useEffect(() => {
+    console.log(currentUser.accessToken, 'heyyyy');
     fetch('http://localhost:8080/item/view', {
       headers: {
         Authorization: `Bearer ${currentUser.accessToken}`,

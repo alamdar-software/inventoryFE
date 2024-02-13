@@ -44,16 +44,21 @@ const ViewIncoming = () => {
   const dispatch = useDispatch();
   const [totalCount, setTotalCount] = useState(0);
   const [highlightedRows, setHighlightedRows] = useState([]);
+  const { currentUser } = state.persisted.user;
 
   useEffect(() => {
-    dispatch(fetchlocation());
-    dispatch(fetchItem());
-    dispatch(fetchCurrency());
-    dispatch(fetchentity());
+    dispatch(fetchlocation(currentUser.accessToken));
+    dispatch(fetchItem(currentUser.accessToken));
+    dispatch(fetchCurrency(currentUser.accessToken));
+    dispatch(fetchentity(currentUser.accessToken));
   }, []);
 
   useEffect(() => {
-    fetch('http://localhost:8080/bulkstock/view')
+    fetch('http://localhost:8080/bulkstock/view', {
+      headers: {
+        Authorization: `Bearer ${currentUser.accessToken}`,
+      },
+    })
       .then((res) => res.json())
       .then((result) => {
         console.log(result);
@@ -96,6 +101,7 @@ const ViewIncoming = () => {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
+        Authorization: `Bearer ${currentUser.accessToken}`,
       },
       body: JSON.stringify(formData),
     })
@@ -159,7 +165,7 @@ const ViewIncoming = () => {
                   })
                 }
               >
-                {state.item.data?.map((item, index) => (
+                {state.nonPersisted.item.data?.map((item, index) => (
                   <MenuItem key={index} value={item?.description}>
                     {' '}
                     {item?.description}
@@ -177,7 +183,7 @@ const ViewIncoming = () => {
                 label='location'
                 onChange={handleLocationChange}
               >
-                {state.location.data?.map((item, index) => (
+                {state.nonPersisted.location.data?.map((item, index) => (
                   <MenuItem key={index} value={item?.locationName}>
                     {' '}
                     {item?.locationName}
@@ -241,7 +247,7 @@ const ViewIncoming = () => {
 
                 //onChange={handleChange}
               >
-                {state.entity.data?.map((item, index) => (
+                {state.nonPersisted.entity.data?.map((item, index) => (
                   <MenuItem key={index} value={item?.entityName}>
                     {' '}
                     {item?.entityName}

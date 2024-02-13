@@ -34,6 +34,7 @@ const ViewInventoryMoc = () => {
   const dispatch = useDispatch();
   const [isCardOpen, setIsCardOpen] = useState(false);
   const [isCardVisible, setIsCardVisible] = useState(false);
+  const { currentUser } = state.persisted.user;
 
   const handleButtonClick = () => {
     setIsCardVisible(!isCardVisible);
@@ -61,7 +62,12 @@ const ViewInventoryMoc = () => {
   });
   console.log(inventoryData, 'datesssss');
   useEffect(() => {
-    fetch('http://localhost:8080/inventory/view')
+    console.log(currentUser.accessToken, 'heyyyy');
+    fetch('http://localhost:8080/inventory/view', {
+      headers: {
+        Authorization: `Bearer ${currentUser.accessToken}`,
+      },
+    })
       .then((res) => res.json())
       .then((result) => {
         if (result) {
@@ -75,6 +81,7 @@ const ViewInventoryMoc = () => {
         console.error('Error fetching inventory data:', error);
       });
   }, []);
+
   //   const deleteInventory = async (id) => {
   //     console.log(id);
   //     fetch(`http://localhost:8080/inventory/delete/${id}`, {
@@ -91,8 +98,8 @@ const ViewInventoryMoc = () => {
   //       });
   //   };
   useEffect(() => {
-    dispatch(fetchlocation());
-    dispatch(fetchItem());
+    dispatch(fetchlocation(currentUser.accessToken));
+    dispatch(fetchItem(currentUser.accessToken));
   }, []);
 
   const handleSearch = () => {

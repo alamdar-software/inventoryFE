@@ -97,16 +97,17 @@ export const Cipl = () => {
   const [partNo, setPartNo] = useState(
     Array.from({ length: formRows }, () => [])
   );
+  const { currentUser } = state.persisted.user;
   const [partNumbersData, setPartNumbersData] = useState([]);
   useEffect(() => {
-    dispatch(fetchlocation());
-    dispatch(fetchShipper());
-    dispatch(fetchConsignee());
-    dispatch(fetchPickup());
-    dispatch(fetchCurrency());
-    dispatch(fetchItem());
-    dispatch(fetchIncome());
-    dispatch(fetchInventory());
+    dispatch(fetchlocation(currentUser.accessToken));
+    dispatch(fetchShipper(currentUser.accessToken));
+    dispatch(fetchConsignee(currentUser.accessToken));
+    dispatch(fetchPickup(currentUser.accessToken));
+    dispatch(fetchCurrency(currentUser.accessToken));
+    dispatch(fetchItem(currentUser.accessToken));
+    dispatch(fetchIncome(currentUser.accessToken));
+    dispatch(fetchInventory(currentUser.accessToken));
   }, []);
   console.log(state, 'cipl');
 
@@ -117,6 +118,7 @@ export const Cipl = () => {
         method: 'post',
         headers: {
           'content-type': 'application/json',
+          Authorization: `Bearer ${currentUser.accessToken}`,
         },
         body: JSON.stringify(formData),
       });
@@ -693,7 +695,7 @@ export const Cipl = () => {
     });
   };
 
-  console.log('All Items Data:', state.item.data);
+  console.log('All Items Data:', state.nonPersisted.item.data);
   const renderFormControls = () => {
     console.log(formControls, 'yayerfgyu');
     return formControls?.map((control, index) => (
@@ -1129,7 +1131,7 @@ export const Cipl = () => {
               onChange={handleLocationChange}
               //onChange={handleChange}
             >
-              {state.location.data?.map((item, index) => (
+              {state.nonPersisted.location.data?.map((item, index) => (
                 <MenuItem key={index} value={item?.locationName}>
                   {' '}
                   {item?.locationName}
@@ -1162,7 +1164,7 @@ export const Cipl = () => {
               }
               //onChange={handleChange}
             >
-              {state.shipper.data?.map((item, index) => (
+              {state.nonPersisted.shipper.data?.map((item, index) => (
                 <MenuItem key={index} value={item?.shipperName}>
                   {' '}
                   {item?.shipperName}
@@ -1210,7 +1212,7 @@ export const Cipl = () => {
                 })
               }
             >
-              {state.consignee.data?.map((item, index) => (
+              {state.nonPersisted.consignee.data?.map((item, index) => (
                 <MenuItem key={index} value={item?.consigneeName}>
                   {' '}
                   {item?.consigneeName}
@@ -1247,7 +1249,7 @@ export const Cipl = () => {
                 })
               }
             >
-              {state.pickup.data?.map((item, index) => (
+              {state.nonPersisted.pickup.data?.map((item, index) => (
                 <MenuItem key={index} value={item?.pickupAddress}>
                   {' '}
                   {item?.pickupAddress}
@@ -1282,12 +1284,14 @@ export const Cipl = () => {
               }
               //onChange={handleChange}
             >
-              {state.currency.data?.currencyList.map((item, index) => (
-                <MenuItem key={index} value={item?.currencyName}>
-                  {' '}
-                  {item?.currencyName}
-                </MenuItem>
-              ))}
+              {state.nonPersisted.currency.data?.currencyList.map(
+                (item, index) => (
+                  <MenuItem key={index} value={item?.currencyName}>
+                    {' '}
+                    {item?.currencyName}
+                  </MenuItem>
+                )
+              )}
             </Select>
           </FormControl>
         </Grid>
