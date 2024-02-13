@@ -81,6 +81,7 @@ import Signup from "./pages/Login/Signup.jsx";
 import Login from "./pages/Login/Login.jsx";
 import PrivateRoute from "./components/PrivateRoute";
 import OnlySuperAdmin from "./components/OnlySuperAdminRoute";
+import ChangePassword from "./components/ChangePassword";
 const theme = createTheme({
   palette: {
     background: {
@@ -151,6 +152,14 @@ function App() {
                 element={
                   <Sidebar>
                     <Location />
+                  </Sidebar>
+                }
+              />
+              <Route
+                path="/change-password"
+                element={
+                  <Sidebar>
+                    <ChangePassword />
                   </Sidebar>
                 }
               />
