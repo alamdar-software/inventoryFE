@@ -28,8 +28,8 @@ import { Box } from '@mui/system';
 
 const Consignee = () => {
   const state = useSelector((state) => state);
+  const { currentUser } = state.persisted.user;
   console.log(state, 'location data');
-  const { currentUser } = useSelector((state) => state.persisted.user);
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(fetchlocation(currentUser.accessToken));
