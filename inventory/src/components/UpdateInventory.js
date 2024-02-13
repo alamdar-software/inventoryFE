@@ -29,11 +29,12 @@ const UpdateInventory = () => {
   const [inventory, setInventory] = useState();
   const state = useSelector((state) => state);
   const [subLocations, setSubLocations] = useState([]);
+  const { currentUser } = useSelector((state) => state.persisted.user);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(fetchlocation());
-    dispatch(fetchItem());
+    dispatch(fetchlocation(currentUser.accessToken));
+    dispatch(fetchItem(currentUser.accessToken));
   }, []);
   console.log(inventory, 'inventory');
   let navigate = useNavigate();
@@ -43,11 +44,18 @@ const UpdateInventory = () => {
   console.log(id);
 
   useEffect(() => {
-    fetch(`http://localhost:8080/inventory/get/${id}`)
+    fetch(`http://localhost:8080/inventory/get/${id}`, {
+      headers: {
+        Authorization: `Bearer ${currentUser.accessToken}`,
+      },
+    })
       .then((res) => res.json())
       .then((result) => {
         console.log(result);
         setInventory(result);
+      })
+      .catch((error) => {
+        console.error('Error fetching inventory data:', error);
       });
   }, []);
 
@@ -156,7 +164,7 @@ const UpdateInventory = () => {
               }}
               //onChange={handleChange}
             >
-              {state.location.data?.map((item, index) => (
+              {state.nonPersisted.location.data?.map((item, index) => (
                 <MenuItem key={index} value={item?.locationName}>
                   {' '}
                   {item?.locationName}
@@ -228,7 +236,7 @@ const UpdateInventory = () => {
               }}
               //onChange={handleChange}
             >
-              {state.item.data?.map((item, index) => (
+              {state.nonPersisted.item.data?.map((item, index) => (
                 <MenuItem key={index} value={item?.description}>
                   {' '}
                   {item?.description}

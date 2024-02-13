@@ -34,13 +34,14 @@ const ViewInternal = () => {
     transferDate: '',
   });
   useEffect(() => {
-    dispatch(fetchlocation());
-    dispatch(fetchItem());
+    dispatch(fetchlocation(currentUser.accessToken));
+    dispatch(fetchItem(currentUser.accessToken));
   }, []);
   const state = useSelector((state) => state);
   const dispatch = useDispatch();
   const [totalCount, setTotalCount] = useState(0);
   const [internal, setInternal] = useState([]);
+  const { currentUser } = state.persisted.user;
   const handleDateChange = (transferDate) => {
     setformData({
       ...formData,
@@ -49,7 +50,11 @@ const ViewInternal = () => {
   };
   console.log(formData);
   useEffect(() => {
-    fetch('http://localhost:8080/internaltransfer/view')
+    fetch('http://localhost:8080/internaltransfer/view', {
+      headers: {
+        Authorization: `Bearer ${currentUser.accessToken}`,
+      },
+    })
       .then((res) => {
         if (!res.ok) {
           throw new Error(`HTTP error! Status: ${res.status}`);
@@ -67,16 +72,18 @@ const ViewInternal = () => {
         }
       })
       .catch((error) => {
-        console.error('Error fetching MTO data:', error);
+        console.error('Error fetching internal transfer data:', error);
         // Handle the error by setting an empty array or showing an error message
         setInternal([]);
       });
   }, []);
+
   const handleSearch = () => {
     fetch('http://localhost:8080/internaltransfer/search', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
+        Authorization: `Bearer ${currentUser.accessToken}`,
       },
       body: JSON.stringify(formData),
     })
@@ -141,7 +148,7 @@ const ViewInternal = () => {
                   })
                 }
               >
-                {state.item.data?.map((item, index) => (
+                {state.nonPersisted.item.data?.map((item, index) => (
                   <MenuItem key={index} value={item?.description}>
                     {' '}
                     {item?.description}
@@ -173,7 +180,7 @@ const ViewInternal = () => {
                   })
                 }
               >
-                {state.location.data?.map((item, index) => (
+                {state.nonPersisted.location.data?.map((item, index) => (
                   <MenuItem key={index} value={item?.locationName}>
                     {' '}
                     {item?.locationName}

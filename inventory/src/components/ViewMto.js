@@ -39,13 +39,19 @@ const ViewMto = () => {
   const dispatch = useDispatch();
   const [mto, setMto] = useState([]);
   const [totalCount, setTotalCount] = useState(0);
+  const { currentUser } = state.persisted.user;
   useEffect(() => {
-    dispatch(fetchlocation());
-    dispatch(fetchItem());
+    dispatch(fetchlocation(currentUser.accessToken));
+    dispatch(fetchItem(currentUser.accessToken));
   }, []);
 
   useEffect(() => {
-    fetch('http://localhost:8080/mto/view')
+    console.log(currentUser.accessToken, 'heyyyy');
+    fetch('http://localhost:8080/mto/view', {
+      headers: {
+        Authorization: `Bearer ${currentUser.accessToken}`,
+      },
+    })
       .then((res) => {
         if (!res.ok) {
           throw new Error(`HTTP error! Status: ${res.status}`);
@@ -75,6 +81,7 @@ const ViewMto = () => {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
+        Authorization: `Bearer ${currentUser.accessToken}`,
       },
       body: JSON.stringify(formData),
     })
@@ -145,7 +152,7 @@ const ViewMto = () => {
                   })
                 }
               >
-                {state.item.data?.map((item, index) => (
+                {state.nonPersisted.item.data?.map((item, index) => (
                   <MenuItem key={index} value={item?.description}>
                     {' '}
                     {item?.description}
@@ -177,7 +184,7 @@ const ViewMto = () => {
                   })
                 }
               >
-                {state.location.data?.map((item, index) => (
+                {state.nonPersisted.location.data?.map((item, index) => (
                   <MenuItem key={index} value={item?.locationName}>
                     {' '}
                     {item?.locationName}

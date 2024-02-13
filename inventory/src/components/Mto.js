@@ -11,29 +11,29 @@ import {
   TextField,
   TextareaAutosize,
   Typography,
-} from "@mui/material";
-import React from "react";
-import { useState } from "react";
-import { useEffect } from "react";
-import { useSelector } from "react-redux";
-import { useDispatch } from "react-redux";
-import { fetchConsignee } from "../redux/slice/ConsigneeSlice";
-import { fetchlocation } from "../redux/slice/location";
-import { fetchItem } from "../redux/slice/ItemSlice";
-import AddIcon from "@mui/icons-material/Add";
-import DeleteIcon from "@mui/icons-material/Delete";
-import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import { fetchInventory } from "../redux/slice/InventorySlice";
-import { fetchIncome } from "../redux/slice/SingleIncomeSlice";
+} from '@mui/material';
+import React from 'react';
+import { useState } from 'react';
+import { useEffect } from 'react';
+import { useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
+import { fetchConsignee } from '../redux/slice/ConsigneeSlice';
+import { fetchlocation } from '../redux/slice/location';
+import { fetchItem } from '../redux/slice/ItemSlice';
+import AddIcon from '@mui/icons-material/Add';
+import DeleteIcon from '@mui/icons-material/Delete';
+import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { fetchInventory } from '../redux/slice/InventorySlice';
+import { fetchIncome } from '../redux/slice/SingleIncomeSlice';
 
 const Mto = () => {
   const [formData, setformData] = useState({
-    locationName: "",
-    destinationSubLocation: "",
-    transferDate: "",
-    consigneeName: "",
-    repairService: "",
+    locationName: '',
+    destinationSubLocation: '',
+    transferDate: '',
+    consigneeName: '',
+    repairService: '',
     SubLocation: [],
     description: [],
     sn: [],
@@ -59,15 +59,16 @@ const Mto = () => {
   const [partNo, setPartNo] = useState(
     Array.from({ length: formRows }, () => [])
   );
+  const { currentUser } = state.persisted.user;
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(fetchConsignee());
-    dispatch(fetchlocation());
-    dispatch(fetchItem());
-    dispatch(fetchInventory());
-    dispatch(fetchIncome());
+    dispatch(fetchConsignee(currentUser.accessToken));
+    dispatch(fetchlocation(currentUser.accessToken));
+    dispatch(fetchItem(currentUser.accessToken));
+    dispatch(fetchInventory(currentUser.accessToken));
+    dispatch(fetchIncome(currentUser.accessToken));
   }, []);
-  console.log(state, "mto");
+  console.log(state, 'mto');
 
   // const handleSubLocationChange = (index, value) => {
   //   updateFormDataSubLocation(index, value);
@@ -88,12 +89,12 @@ const Mto = () => {
 
     console.log(formData);
 
-    fetch("http://localhost:8080/mto/add", {
-      method: "POST",
-      headers: { "Content-type": "application/json" },
+    fetch('http://localhost:8080/mto/add', {
+      method: 'POST',
+      headers: { 'Content-type': 'application/json' },
       body: JSON.stringify(formData),
     }).then(() => {
-      console.log("MTO Added");
+      console.log('MTO Added');
       //window.location.reload();
     });
   };
@@ -110,10 +111,10 @@ const Mto = () => {
     );
     setSubLocations(selectedLocationObj ? selectedLocationObj?.addresses : []);
   };
-  console.log(subLocations, "subbbbb");
+  console.log(subLocations, 'subbbbb');
 
   const handleSubLocationChange = (e, index) => {
-    const selectedSubLocation = e.target.value || ""; // Ensure a default value if undefined
+    const selectedSubLocation = e.target.value || ''; // Ensure a default value if undefined
     updateFormDataSubLocation(index, selectedSubLocation);
     setSelectedSubLocations((prevSubLocations) => {
       const updatedSubLocations = [...prevSubLocations];
@@ -124,13 +125,13 @@ const Mto = () => {
     const selectedInventoryData = state.inventory.data.filter(
       (inventoryItem) => inventoryItem.address?.address === selectedSubLocation
     );
-    console.log(selectedInventoryData, "22");
+    console.log(selectedInventoryData, '22');
 
     // Extract item descriptions from the selected inventory data
     const itemDescriptions = selectedInventoryData.map(
       (inventoryItem) => inventoryItem.description
     );
-    console.log(itemDescriptions, "33");
+    console.log(itemDescriptions, '33');
 
     // Update the item state with the selected item descriptions
     setItem((prevItems) => {
@@ -149,12 +150,12 @@ const Mto = () => {
       };
     });
   };
-  console.log(subLocations, "subbbbbbbbbbbbb");
-  console.log(formData, "nooooooooooo");
+  console.log(subLocations, 'subbbbbbbbbbbbb');
+  console.log(formData, 'nooooooooooo');
   const handleDateChange = (transferDate) => {
     setformData({
       ...formData,
-      transferDate: transferDate.format("YYYY-MM-DD"),
+      transferDate: transferDate.format('YYYY-MM-DD'),
     });
   };
   console.log(formData);
@@ -258,8 +259,8 @@ const Mto = () => {
       (incomeItem) =>
         incomeItem.description === description.match(/^[^(]*/)[0].trim()
     );
-    console.log(selectedIncomeData, "selectttttt");
-    console.log(description, "selected item");
+    console.log(selectedIncomeData, 'selectttttt');
+    console.log(description, 'selected item');
 
     // Extract part numbers from the selected income data
     const partNumbers = selectedIncomeData.map(
@@ -273,7 +274,7 @@ const Mto = () => {
       return updatedPartNumbers;
     });
   };
-  console.log(description, "item");
+  console.log(description, 'item');
   console.log(formData);
 
   const updateFormDataDescription = (index, value) => {
@@ -300,11 +301,11 @@ const Mto = () => {
 
     // Extract the necessary data from the selected income data
     const partNumberData = {
-      date: selectedIncomeData?.date || "",
-      unitPrice: selectedIncomeData?.unitCost || "",
+      date: selectedIncomeData?.date || '',
+      unitPrice: selectedIncomeData?.unitCost || '',
 
-      sn: selectedIncomeData?.sn || "",
-      brand: selectedIncomeData?.brandName || "",
+      sn: selectedIncomeData?.sn || '',
+      brand: selectedIncomeData?.brandName || '',
     };
     updateFormDataPart(index, selectedPartNo, partNumberData);
     // Update formData with the selected part number data
@@ -337,8 +338,8 @@ const Mto = () => {
     });
   };
 
-  console.log(partNumbersData, "partNumbersData");
-  console.log(partNumbersData?.date, "dateeee");
+  console.log(partNumbersData, 'partNumbersData');
+  console.log(partNumbersData?.date, 'dateeee');
   // const updateFormDataSubLocation = (index, value) => {
   //   setformData((prevFormData) => {
   //     const updatedSubLocations = [...prevFormData.SubLocation];
@@ -356,8 +357,8 @@ const Mto = () => {
       ...prevControls,
       { key: prevControls.length },
     ]);
-    setSubLocations((prevSubLocations) => [...prevSubLocations, ""]);
-    updateFormDataSubLocation(formControls.length, "");
+    setSubLocations((prevSubLocations) => [...prevSubLocations, '']);
+    updateFormDataSubLocation(formControls.length, '');
   };
 
   const handleDeleteClick = (index) => {
@@ -417,14 +418,14 @@ const Mto = () => {
 
   const renderFormControls = () => {
     return formControls.map((control, index) => (
-      <div key={control.key} style={{ display: "flex", marginBottom: "10px" }}>
-        <FormControl fullWidth sx={{ width: "50%", marginRight: "10px" }}>
-          <InputLabel id="demo-simple-select-label">Sub Location</InputLabel>
+      <div key={control.key} style={{ display: 'flex', marginBottom: '10px' }}>
+        <FormControl fullWidth sx={{ width: '50%', marginRight: '10px' }}>
+          <InputLabel id='demo-simple-select-label'>Sub Location</InputLabel>
           <Select
-            labelId="demo-simple-select-label"
-            id="demo-simple-select"
+            labelId='demo-simple-select-label'
+            id='demo-simple-select'
             //value={age}
-            label="sublocation"
+            label='sublocation'
             MenuProps={{
               PaperProps: {
                 style: {
@@ -454,15 +455,15 @@ const Mto = () => {
             ))} */}
           </Select>
         </FormControl>
-        <FormControl fullWidth sx={{ width: "50%", marginRight: "10px" }}>
-          <InputLabel id="demo-simple-select-label">
+        <FormControl fullWidth sx={{ width: '50%', marginRight: '10px' }}>
+          <InputLabel id='demo-simple-select-label'>
             Item Description
           </InputLabel>
           <Select
-            labelId="demo-simple-select-label"
-            id="description"
+            labelId='demo-simple-select-label'
+            id='description'
             //value={age}
-            label="description"
+            label='description'
             // onChange={(e) =>
             //   setformData({
             //     ...formData,
@@ -492,13 +493,13 @@ const Mto = () => {
             ))}
           </Select>
         </FormControl>
-        <FormControl fullWidth sx={{ width: "50%", marginRight: "10px" }}>
-          <InputLabel id="demo-simple-select-label">Part No</InputLabel>
+        <FormControl fullWidth sx={{ width: '50%', marginRight: '10px' }}>
+          <InputLabel id='demo-simple-select-label'>Part No</InputLabel>
           <Select
-            labelId="demo-simple-select-label"
-            id="demo-simple-select"
+            labelId='demo-simple-select-label'
+            id='demo-simple-select'
             //value={age}
-            label="location"
+            label='location'
             MenuProps={{
               PaperProps: {
                 style: {
@@ -519,39 +520,39 @@ const Mto = () => {
           </Select>
         </FormControl>
 
-        <FormControl fullWidth sx={{ width: "30%", marginRight: "10px" }}>
+        <FormControl fullWidth sx={{ width: '30%', marginRight: '10px' }}>
           <Grid item xs={12} sm={6}>
             <TextField
-              sx={{ width: "90%" }}
-              id="outlined-basic"
-              label="S/N"
-              variant="outlined"
-              value={partNumbersData[index]?.sn || ""}
+              sx={{ width: '90%' }}
+              id='outlined-basic'
+              label='S/N'
+              variant='outlined'
+              value={partNumbersData[index]?.sn || ''}
               onChange={(e) => handleSnChange(index, e.target.value)}
               fullWidth
             />
           </Grid>
         </FormControl>
-        <FormControl fullWidth sx={{ width: "30%", marginRight: "10px" }}>
+        <FormControl fullWidth sx={{ width: '30%', marginRight: '10px' }}>
           <Grid item xs={12} sm={6}>
             <TextField
-              sx={{ width: "90%" }}
-              id="outlined-basic"
-              label="Purchase Order(D.O.P)"
-              variant="outlined"
-              value={partNumbersData[index]?.date || ""}
+              sx={{ width: '90%' }}
+              id='outlined-basic'
+              label='Purchase Order(D.O.P)'
+              variant='outlined'
+              value={partNumbersData[index]?.date || ''}
               onChange={(e) => handlePurchaseChange(index, e.target.value)}
               fullWidth
             />
           </Grid>
         </FormControl>
-        <FormControl fullWidth sx={{ width: "30%", marginRight: "10px" }}>
+        <FormControl fullWidth sx={{ width: '30%', marginRight: '10px' }}>
           <Grid item xs={12} sm={6}>
             <TextField
-              sx={{ width: "90%" }}
-              id="outlined-basic"
-              label="Quantity"
-              variant="outlined"
+              sx={{ width: '90%' }}
+              id='outlined-basic'
+              label='Quantity'
+              variant='outlined'
               // value={locationName}
               onChange={(e) => handleQuantityChange(index, e.target.value)}
               fullWidth
@@ -559,12 +560,12 @@ const Mto = () => {
           </Grid>
         </FormControl>
 
-        <FormControl fullWidth sx={{ width: "50%", marginRight: "10px" }}>
+        <FormControl fullWidth sx={{ width: '50%', marginRight: '10px' }}>
           <Grid item xs={12} sm={6}>
             <TextareaAutosize
-              sx={{ width: "90%" }}
-              aria-label="Brand"
-              placeholder="Enter Remarks"
+              sx={{ width: '90%' }}
+              aria-label='Brand'
+              placeholder='Enter Remarks'
               // value={brandValue} // You can set the value and handle changes as needed
               // onChange={(e) => handleBrandChange(e.target.value)}
               onChange={(e) => handleRemarksChange(index, e.target.value)}
@@ -574,16 +575,16 @@ const Mto = () => {
         </FormControl>
         <div
           style={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
           }}
         >
           <button>
             <AddIcon onClick={handleAddClick} />
           </button>
           <Button onClick={() => handleDeleteClick(index)}>
-            <DeleteIcon style={{ color: "red" }} />
+            <DeleteIcon style={{ color: 'red' }} />
           </Button>
         </div>
 
@@ -598,11 +599,11 @@ const Mto = () => {
           {/* Additional fields for 'Repair/Service' Yes */}
           <Grid item xs={21} sm={6}>
             <TextField
-              id="outlined-basic"
-              label="Po/SO No"
-              variant="outlined"
+              id='outlined-basic'
+              label='Po/SO No'
+              variant='outlined'
               fullWidth
-              sx={{ width: "90%" }}
+              sx={{ width: '90%' }}
               onChange={(e) =>
                 setformData({
                   ...formData,
@@ -624,18 +625,18 @@ const Mto = () => {
     <>
       <Grid>
         <Card
-          color="secondary"
+          color='secondary'
           sx={{
-            width: "100%",
-            backgroundColor: "secondary",
-            borderBottom: "2px solid yellow",
-            mb: "33px",
+            width: '100%',
+            backgroundColor: 'secondary',
+            borderBottom: '2px solid yellow',
+            mb: '33px',
           }}
         >
           <CardContent>
             <Typography
-              variant="h4"
-              color="secondary"
+              variant='h4'
+              color='secondary'
               gutterBottom
               style={{ fontFamily: "'EB Garamond'" }}
             >
@@ -644,15 +645,15 @@ const Mto = () => {
           </CardContent>
         </Card>
       </Grid>
-      <Grid container spacing={2} sx={{ mt: "23px" }}>
+      <Grid container spacing={2} sx={{ mt: '23px' }}>
         <Grid item xs={12} sm={6}>
-          <FormControl fullWidth sx={{ width: "90%" }}>
-            <InputLabel id="demo-simple-select-label">Location</InputLabel>
+          <FormControl fullWidth sx={{ width: '90%' }}>
+            <InputLabel id='demo-simple-select-label'>Location</InputLabel>
             <Select
-              labelId="demo-simple-select-label"
-              id="demo-simple-select"
+              labelId='demo-simple-select-label'
+              id='demo-simple-select'
               //value={age}
-              label="location"
+              label='location'
               MenuProps={{
                 PaperProps: {
                   style: {
@@ -663,9 +664,9 @@ const Mto = () => {
               onChange={handleLocationChange}
               //onChange={handleChange}
             >
-              {state.location.data?.map((item, index) => (
+              {state.nonPersisted.location.data?.map((item, index) => (
                 <MenuItem key={index} value={item?.locationName}>
-                  {" "}
+                  {' '}
                   {item?.locationName}
                 </MenuItem>
               ))}
@@ -673,15 +674,15 @@ const Mto = () => {
           </FormControl>
         </Grid>
         <Grid item xs={12} sm={6}>
-          <FormControl fullWidth sx={{ width: "90%" }}>
-            <InputLabel id="demo-simple-select-label">
+          <FormControl fullWidth sx={{ width: '90%' }}>
+            <InputLabel id='demo-simple-select-label'>
               Destinaton SubLocation
             </InputLabel>
             <Select
-              labelId="demo-simple-select-label"
-              id="demo-simple-select"
+              labelId='demo-simple-select-label'
+              id='demo-simple-select'
               //value={age}
-              label="location"
+              label='location'
               MenuProps={{
                 PaperProps: {
                   style: {
@@ -697,9 +698,9 @@ const Mto = () => {
               }}
               //onChange={handleChange}
             >
-              {state.location.data?.map(
+              {state.nonPersisted.location.data?.map(
                 (item, index) => (
-                  console.log(item, "meinhun"),
+                  console.log(item, 'meinhun'),
                   item.addresses.map((addressItem, addressIndex) => (
                     <MenuItem key={addressIndex} value={addressItem.address}>
                       {addressItem.address}
@@ -711,15 +712,15 @@ const Mto = () => {
           </FormControl>
         </Grid>
       </Grid>
-      <Grid container spacing={2} sx={{ mt: "23px" }}>
+      <Grid container spacing={2} sx={{ mt: '23px' }}>
         <Grid item xs={12} sm={6}>
-          <FormControl fullWidth sx={{ width: "90%" }}>
-            <InputLabel id="demo-simple-select-label">Consignee</InputLabel>
+          <FormControl fullWidth sx={{ width: '90%' }}>
+            <InputLabel id='demo-simple-select-label'>Consignee</InputLabel>
             <Select
-              labelId="demo-simple-select-label"
-              id="demo-simple-select"
+              labelId='demo-simple-select-label'
+              id='demo-simple-select'
               //value={age}
-              label="consignee"
+              label='consignee'
               onChange={(e) =>
                 setformData({
                   ...formData,
@@ -734,9 +735,9 @@ const Mto = () => {
                 },
               }}
             >
-              {state.consignee.data?.map((item, index) => (
+              {state.nonPersisted.consignee.data?.map((item, index) => (
                 <MenuItem key={index} value={item?.consigneeName}>
-                  {" "}
+                  {' '}
                   {item?.consigneeName}
                 </MenuItem>
               ))}
@@ -744,16 +745,16 @@ const Mto = () => {
           </FormControl>
         </Grid>
         <Grid item xs={12} sm={6}>
-          <FormControl fullWidth sx={{ width: "90%" }}>
-            <InputLabel id="demo-simple-select-label">
+          <FormControl fullWidth sx={{ width: '90%' }}>
+            <InputLabel id='demo-simple-select-label'>
               Repair/Service
             </InputLabel>
             <Select
-              labelId="demo-simple-select-label"
-              id="demo-simple-select"
+              labelId='demo-simple-select-label'
+              id='demo-simple-select'
               //value={age}
-              value={formData.repairService || ""}
-              label="Repair/service"
+              value={formData.repairService || ''}
+              label='Repair/service'
               //onChange={handleChange}
               onChange={(e) =>
                 setformData({
@@ -773,7 +774,7 @@ const Mto = () => {
               value={formData.transferDate}
               onChange={(newDate) => handleDateChange(newDate)}
               fullWidth
-              sx={{ width: "90%" }}
+              sx={{ width: '90%' }}
             />
           </LocalizationProvider>
         </Grid>
@@ -782,28 +783,28 @@ const Mto = () => {
 
       <div
         sx={{
-          marginTop: "5px",
+          marginTop: '5px',
 
-          flexWrap: "wrap",
-          width: "80%",
+          flexWrap: 'wrap',
+          width: '80%',
         }}
       >
         {formData.locationName && (
           <>
-            <div style={{ display: "flex", flexWrap: "wrap" }}>
+            <div style={{ display: 'flex', flexWrap: 'wrap' }}>
               <Grid
-                sx={{ overflowX: "scroll", width: "100%", flexWrap: "wrap" }}
+                sx={{ overflowX: 'scroll', width: '100%', flexWrap: 'wrap' }}
               >
                 <Card
-                  color="secondary"
+                  color='secondary'
                   sx={{
-                    width: "111%",
-                    marginTop: "20px",
-                    backgroundColor: "secondary",
+                    width: '111%',
+                    marginTop: '20px',
+                    backgroundColor: 'secondary',
                   }}
                 >
                   <CardContent
-                    sx={{ minWidth: "100%", display: "flex", flexWrap: "wrap" }}
+                    sx={{ minWidth: '100%', display: 'flex', flexWrap: 'wrap' }}
                   >
                     {renderFormControls()}
                   </CardContent>
@@ -814,12 +815,12 @@ const Mto = () => {
         )}
       </div>
 
-      <Box sx={{ display: "flex", justifyContent: "center", mt: "33px" }}>
-        {" "}
+      <Box sx={{ display: 'flex', justifyContent: 'center', mt: '33px' }}>
+        {' '}
         <Button
-          variant="contained"
-          size="large"
-          color="secondary"
+          variant='contained'
+          size='large'
+          color='secondary'
           onClick={handleClick}
         >
           Add
