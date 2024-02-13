@@ -29,9 +29,10 @@ import { Box } from '@mui/system';
 const Consignee = () => {
   const state = useSelector((state) => state);
   console.log(state, 'location data');
+  const { currentUser } = useSelector((state) => state.persisted.user);
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(fetchlocation());
+    dispatch(fetchlocation(currentUser.accessToken));
   }, []);
 
   const [formData, setformData] = useState({
@@ -49,7 +50,6 @@ const Consignee = () => {
 
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
-  const { currentUser } = useSelector((state) => state.persisted.user);
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -276,7 +276,7 @@ const Consignee = () => {
               <MenuItem value='sgr' disabled>
                 Location
               </MenuItem>
-              {state.location.data?.map((item, index) => (
+              {state.nonPersisted.location.data?.map((item, index) => (
                 <MenuItem key={index} value={item?.locationName}>
                   {' '}
                   {item?.locationName}

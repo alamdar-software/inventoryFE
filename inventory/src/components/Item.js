@@ -36,8 +36,8 @@ const Item = () => {
 
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(fetchCategory());
-    dispatch(fetchUom());
+    dispatch(fetchCategory(currentUser.accessToken));
+    dispatch(fetchUom(currentUser.accessToken));
   }, []);
 
   const handleInputChange = (e) => {
@@ -142,12 +142,14 @@ const Item = () => {
                 }
                 //onChange={handleChange}
               >
-                {state.category.data?.content.map((item, index) => (
-                  <MenuItem key={index} value={item?.name}>
-                    {' '}
-                    {item?.name}
-                  </MenuItem>
-                ))}
+                {state.nonPersisted.category.data?.content.map(
+                  (item, index) => (
+                    <MenuItem key={index} value={item?.name}>
+                      {' '}
+                      {item?.name}
+                    </MenuItem>
+                  )
+                )}
               </Select>
             </FormControl>
           </Grid>
@@ -168,7 +170,7 @@ const Item = () => {
                 }
                 //onChange={handleChange}
               >
-                {state.Uom.data?.content.map((item, index) => (
+                {state.nonPersisted.Uom.data?.content.map((item, index) => (
                   <MenuItem key={index} value={item?.unitName}>
                     {' '}
                     {item?.unitName}
