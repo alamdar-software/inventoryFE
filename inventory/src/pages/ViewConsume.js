@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from 'react';
 import {
   Card,
   CardContent,
@@ -19,17 +19,17 @@ import {
   TableBody,
   TablePagination,
   Box,
-} from "@mui/material";
-import { Link } from "react-router-dom";
-import { fetchlocation } from "../redux/slice/location";
-import { fetchItem } from "../redux/slice/ItemSlice";
-import { useDispatch } from "react-redux";
-import { useSelector } from "react-redux";
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-import { DatePicker } from "@mui/x-date-pickers/DatePicker";
-import PictureAsPdfIcon from "@mui/icons-material/PictureAsPdf";
-import { fetchConsumeItem } from "../redux/slice/ConsumeItemSlice";
+} from '@mui/material';
+import { Link } from 'react-router-dom';
+import { fetchlocation } from '../redux/slice/location';
+import { fetchItem } from '../redux/slice/ItemSlice';
+import { useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
+import { fetchConsumeItem } from '../redux/slice/ConsumeItemSlice';
 
 const ViewConsume = () => {
   const [item, setitem] = useState();
@@ -50,9 +50,9 @@ const ViewConsume = () => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [formData, setformData] = useState({
-    item: "",
-    transferDate: "",
-    locationName: "",
+    item: '',
+    transferDate: '',
+    locationName: '',
   });
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -62,7 +62,7 @@ const ViewConsume = () => {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
-  console.log(formData, "heyyy");
+  console.log(formData, 'heyyy');
   // const handleClick = () => {
   //   try {
   //     const formData = {
@@ -141,7 +141,7 @@ const ViewConsume = () => {
       });
     }; */
   useEffect(() => {
-    fetch("http://localhost:8080/consumeditem/view", {
+    fetch('http://localhost:8080/consumeditem/view', {
       headers: {
         Authorization: `Bearer ${currentUser?.accessToken}`,
       },
@@ -153,20 +153,20 @@ const ViewConsume = () => {
         setFilteredConsumed(result);
       })
       .catch((error) => {
-        console.error("Error fetching cipl data:", error);
+        console.error('Error fetching cipl data:', error);
       });
   }, []); // Make sure to include an empty dependency array if you only want this effect to run once on component mount
 
-  console.log(filteredConsumed, "filter");
+  console.log(filteredConsumed, 'filter');
 
   const handleClick = async (e) => {
     e.preventDefault();
     try {
-      const res = await fetch("http://localhost:8080/consumeditem/search", {
-        method: "post",
+      const res = await fetch('http://localhost:8080/consumeditem/search', {
+        method: 'post',
         headers: {
           Authorization: `Bearer ${currentUser.accessToken}`,
-          "content-type": "application/json",
+          'content-type': 'application/json',
         },
         body: JSON.stringify(formData),
       });
@@ -177,17 +177,17 @@ const ViewConsume = () => {
 
       const data = await res.json();
       setFilteredConsumed(data);
-      console.log(data, "came from backend");
+      console.log(data, 'came from backend');
     } catch (error) {
-      console.error("Error while finding consume:", error.message);
-      alert("data not found");
+      console.error('Error while finding consume:', error.message);
+      alert('data not found');
     }
   };
 
   const handleDateChange = (date) => {
     setformData({
       ...formData,
-      transferDate: date.format("YYYY-MM-DD"),
+      transferDate: date.format('YYYY-MM-DD'),
     });
   };
   /*   const generatePDF = async (rowData, index) => {
@@ -203,22 +203,22 @@ const ViewConsume = () => {
       pdf.save("table.pdf");
     }
   }; */
-  console.log(state, "nopppe");
+  console.log(state, 'nopppe');
   const deleteConsumed = async (id) => {
     console.log(id);
     await fetch(`http://localhost:8080/consumeditem/delete/${id}`, {
-      method: "DELETE",
+      method: 'DELETE',
       headers: {
         Authorization: `Bearer ${currentUser.accessToken}`,
-        "Content-type": "application/json",
+        'Content-type': 'application/json',
       },
     })
       .then(() => {
-        console.log("item Deleted");
+        console.log('item Deleted');
         window.location.reload();
       })
       .catch((error) => {
-        console.error("Error updating location:", error);
+        console.error('Error updating location:', error);
       });
   };
 
@@ -226,19 +226,19 @@ const ViewConsume = () => {
     <>
       <Grid>
         <Card
-          color="secondary"
+          color='secondary'
           sx={{
-            width: "100%",
+            width: '100%',
             // background:
             //   'linear-gradient(217deg, rgba(255,0,0,.8), rgba(255,0,0,0) 70.71%)',
 
-            borderBottom: "2px solid #ab47bc",
+            borderBottom: '2px solid #ab47bc',
           }}
         >
           <CardContent>
             <Typography
-              variant="h4"
-              color="secondary"
+              variant='h4'
+              color='secondary'
               gutterBottom
               style={{ fontFamily: "'EB Garamond'" }}
             >
@@ -250,21 +250,21 @@ const ViewConsume = () => {
 
       <Card
         sx={{
-          width: "100%",
-          mt: "33px",
-          pt: "33px",
-          borderBottom: "2px solid #ab47bc",
-          borderRadius: "33px",
+          width: '100%',
+          mt: '33px',
+          pt: '33px',
+          borderBottom: '2px solid #ab47bc',
+          borderRadius: '33px',
         }}
       >
-        <Grid container spacing={2} sx={{ ml: "13px" }}>
+        <Grid container spacing={2} sx={{ ml: '13px' }}>
           <Grid item xs={12} sm={6}>
             <FormControl fullWidth>
-              <InputLabel id="demo-simple-select-label">Item Desc</InputLabel>
+              <InputLabel id='demo-simple-select-label'>Item Desc</InputLabel>
               <Select
-                labelId="demo-simple-select-label"
-                id="itemName"
-                label="itemName"
+                labelId='demo-simple-select-label'
+                id='itemName'
+                label='itemName'
                 onChange={(e) => {
                   setformData({
                     ...formData,
@@ -281,7 +281,7 @@ const ViewConsume = () => {
               >
                 {state.nonPersisted.item.data?.map((item, index) => (
                   <MenuItem key={index} value={item?.description}>
-                    {" "}
+                    {' '}
                     {item?.description}
                   </MenuItem>
                 ))}
@@ -289,14 +289,14 @@ const ViewConsume = () => {
             </FormControl>
           </Grid>
           <Grid item xs={12} sm={6}>
-            <FormControl fullWidth sx={{ width: "90%" }}>
-              <InputLabel id="demo-simple-select-label">Location</InputLabel>
+            <FormControl fullWidth sx={{ width: '90%' }}>
+              <InputLabel id='demo-simple-select-label'>Location</InputLabel>
               <Select
-                labelId="demo-simple-select-label"
-                id="demo-simple-select"
+                labelId='demo-simple-select-label'
+                id='demo-simple-select'
                 //value={age}
 
-                label="location"
+                label='location'
                 MenuProps={{
                   PaperProps: {
                     style: {
@@ -313,7 +313,7 @@ const ViewConsume = () => {
               >
                 {state.nonPersisted?.location.data?.map((item, index) => (
                   <MenuItem key={index} value={item?.locationName}>
-                    {" "}
+                    {' '}
                     {item?.locationName}
                   </MenuItem>
                 ))}
@@ -321,7 +321,7 @@ const ViewConsume = () => {
             </FormControl>
           </Grid>
           <Grid item xs={12} sm={6}>
-            <FormControl fullWidth sx={{ width: "220%" }}>
+            <FormControl fullWidth sx={{ width: '220%' }}>
               <Grid item xs={12} sm={6}>
                 <LocalizationProvider dateAdapter={AdapterDayjs}>
                   <DatePicker
@@ -331,7 +331,7 @@ const ViewConsume = () => {
                     onChange={(newDate) => handleDateChange(newDate)}
                     // onChange={(newDate) => handleDateChange(newDate)}
                     fullWidth
-                    sx={{ width: "90%" }}
+                    sx={{ width: '90%' }}
                     /* format="yyyy-MM-dd" */
                   />
                 </LocalizationProvider>
@@ -341,50 +341,50 @@ const ViewConsume = () => {
         </Grid>
 
         <Button
-          variant="contained"
-          color="secondary"
-          size="large"
+          variant='contained'
+          color='secondary'
+          size='large'
           sx={{
-            mt: "33px",
-            mb: "17px",
-            marginLeft: "auto",
-            marginRight: "auto",
-            display: "block",
+            mt: '33px',
+            mb: '17px',
+            marginLeft: 'auto',
+            marginRight: 'auto',
+            display: 'block',
           }}
           onClick={handleClick}
         >
           Search
         </Button>
       </Card>
-      <Grid sx={{ mt: "33px", width: "100%", overflowX: "scroll" }}>
+      <Grid sx={{ mt: '33px', width: '100%', overflowX: 'scroll' }}>
         <TableContainer
           component={Paper}
           sx={{
-            borderRadius: "33px",
-            borderBottom: "2px solid yellow",
-            width: "98%",
+            borderRadius: '33px',
+            borderBottom: '2px solid yellow',
+            width: '98%',
           }}
         >
-          <Table sx={{ minWidth: 400 }} aria-label="simple table">
+          <Table sx={{ minWidth: 400 }} aria-label='simple table'>
             <TableHead>
               <TableRow>
-                <TableCell align="right" sx={{ fontWeight: "bold" }}>
+                <TableCell align='right' sx={{ fontWeight: 'bold' }}>
                   Item Description
                 </TableCell>
-                <TableCell align="right" sx={{ fontWeight: "bold" }}>
+                <TableCell align='right' sx={{ fontWeight: 'bold' }}>
                   Location/Vessel
                 </TableCell>
-                <TableCell align="right" sx={{ fontWeight: "bold" }}>
+                <TableCell align='right' sx={{ fontWeight: 'bold' }}>
                   SubLocation
                 </TableCell>
-                <TableCell align="right" sx={{ fontWeight: "bold" }}>
+                <TableCell align='right' sx={{ fontWeight: 'bold' }}>
                   Consumed Quantity
                 </TableCell>
-                <TableCell align="right" sx={{ fontWeight: "bold" }}>
+                <TableCell align='right' sx={{ fontWeight: 'bold' }}>
                   Date
                 </TableCell>
 
-                <TableCell align="center" sx={{ fontWeight: "bold" }}>
+                <TableCell align='center' sx={{ fontWeight: 'bold' }}>
                   Action
                 </TableCell>
               </TableRow>
@@ -397,36 +397,36 @@ const ViewConsume = () => {
                   consumedRow.item.map((item, index) => (
                     <TableRow
                       key={`${consumedRow.id}-${index}`} // Use a unique key for each row
-                      sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                      sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                     >
-                      <TableCell align="right">
+                      <TableCell align='right'>
                         {item.match(/^[^-(]*/)[0].trim()}
                       </TableCell>
-                      <TableCell align="right">
+                      <TableCell align='right'>
                         {consumedRow.locationName}
                       </TableCell>
-                      <TableCell align="right">
+                      <TableCell align='right'>
                         {consumedRow.subLocations}
                       </TableCell>
-                      <TableCell align="right">
+                      <TableCell align='right'>
                         {consumedRow.quantity}
                       </TableCell>
-                      <TableCell align="right">{consumedRow.date}</TableCell>
-                      <TableCell align="right">
+                      <TableCell align='right'>{consumedRow.date}</TableCell>
+                      <TableCell align='right'>
                         <Box>
                           <Link to={`/updateConsumed/${consumedRow.id}`}>
                             <Button
-                              sx={{ marginLeft: "11px", marginTop: "15px" }}
-                              variant="contained"
+                              sx={{ marginLeft: '11px', marginTop: '15px' }}
+                              variant='contained'
                             >
                               Update
                             </Button>
                           </Link>
 
                           <Button
-                            sx={{ marginLeft: "11px", marginTop: "15px" }}
-                            variant="contained"
-                            color="secondary"
+                            sx={{ marginLeft: '11px', marginTop: '15px' }}
+                            variant='contained'
+                            color='secondary'
                             onClick={() => deleteConsumed(consumedRow.id)}
                           >
                             Delete
@@ -441,7 +441,7 @@ const ViewConsume = () => {
         </TableContainer>
         <TablePagination
           rowsPerPageOptions={[5, 10, 25]}
-          component="div"
+          component='div'
           count={consumed.length}
           rowsPerPage={rowsPerPage}
           page={page}
