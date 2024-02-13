@@ -20,11 +20,11 @@ import { fetchUom } from '../redux/slice/UomSlice';
 const UpdateItem = () => {
   const [item, setItem] = useState();
   const state = useSelector((state) => state);
-
+  const { currentUser } = state.persisted.user;
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(fetchCategory());
-    dispatch(fetchUom());
+    dispatch(fetchCategory(currentUser.accessToken));
+    dispatch(fetchUom(currentUser.accessToken));
   }, []);
 
   const [formData, setformData] = useState({
@@ -43,11 +43,18 @@ const UpdateItem = () => {
   console.log(id);
 
   useEffect(() => {
-    fetch(`http://localhost:8080/item/get/${id}`)
+    fetch(`http://localhost:8080/item/get/${id}`, {
+      headers: {
+        Authorization: `Bearer ${currentUser.accessToken}`,
+      },
+    })
       .then((res) => res.json())
       .then((result) => {
         console.log(result);
         setItem(result);
+      })
+      .catch((error) => {
+        console.error('Error fetching item data:', error);
       });
   }, []);
 
@@ -60,7 +67,10 @@ const UpdateItem = () => {
 
     fetch(`http://localhost:8080/item/update/${id}`, {
       method: 'PUT',
-      headers: { 'Content-type': 'application/json' },
+      headers: {
+        'Content-type': 'application/json',
+        Authorization: `Bearer ${currentUser.accessToken}`,
+      },
       body: JSON.stringify(item),
     })
       .then(() => {
@@ -154,12 +164,14 @@ const UpdateItem = () => {
                 }
                 //onChange={handleChange}
               >
-                {state.category.data?.content.map((item, index) => (
-                  <MenuItem key={index} value={item?.name}>
-                    {' '}
-                    {item?.name}
-                  </MenuItem>
-                ))}
+                {state.nonPersisted.category.data?.content.map(
+                  (item, index) => (
+                    <MenuItem key={index} value={item?.name}>
+                      {' '}
+                      {item?.name}
+                    </MenuItem>
+                  )
+                )}
               </Select>
             </FormControl>
           </Grid>
@@ -180,7 +192,7 @@ const UpdateItem = () => {
                 }
                 //onChange={handleChange}
               >
-                {state.Uom.data?.content.map((item, index) => (
+                {state.nonPersisted.Uom.data?.content.map((item, index) => (
                   <MenuItem key={index} value={item?.unitName}>
                     {' '}
                     {item?.unitName}
