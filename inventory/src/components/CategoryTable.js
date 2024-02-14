@@ -9,6 +9,7 @@ import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
 import { Button } from '@mui/material';
 import ButtonGroup from '@mui/material/ButtonGroup';
+import { useSelector } from 'react-redux';
 
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
@@ -35,6 +36,8 @@ export default function CategoryTable({ data }) {
     setRowsPerPage(5);
     setPage(0);
   };
+  const state = useSelector((state) => state);
+  const { currentUser } = state.persisted.user;
   const handleDelete = async (id) => {
     try {
       const response = await fetch(
@@ -43,6 +46,7 @@ export default function CategoryTable({ data }) {
           method: 'DELETE',
           headers: {
             'Content-Type': 'application/json',
+            Authorization: `Bearer ${currentUser.accessToken}`,
           },
         }
       );

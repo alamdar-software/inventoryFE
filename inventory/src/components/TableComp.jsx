@@ -12,6 +12,8 @@ import ButtonGroup from "@mui/material/ButtonGroup";
 
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
+
 const columns = [
   { id: "Currency", label: "Currency", minWidth: 200 },
   { id: "Actions", label: "Actions", minWidth: 100 },
@@ -43,6 +45,7 @@ export default function TableComp({ data }) {
           method: "DELETE",
           headers: {
             "Content-Type": "application/json",
+            Authorization: `Bearer ${currentUser.accessToken}`
           },
         }
       );
@@ -59,6 +62,8 @@ export default function TableComp({ data }) {
       console.error("Error during delete:", error);
     }
   };
+  const state = useSelector((state) => state);
+  const { currentUser } = state.persisted.user;
   return (
     <Paper sx={{ width: "100%", margin: "0 auto", maxWidth: "1000px" }}>
       <TableContainer sx={{ maxHeight: 500 }}>

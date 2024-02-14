@@ -11,6 +11,7 @@ import {
 import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 // const currency = {
 //   currencyName: "",
 // };
@@ -25,10 +26,15 @@ export default function UpdateBrand() {
   const [data, setdata] = useState([]);
   const { id } = useParams();
   console.log(brand);
-
+  const state = useSelector((state) => state);
+  const { currentUser } = state.persisted.user;
   useEffect(() => {
     const getBrand = async () => {
-      const res = await fetch(`http://localhost:8080/brand/get/${id}`);
+      const res = await fetch(`http://localhost:8080/brand/get/${id}`, {
+        headers: {
+          Authorization: `Bearer ${currentUser.accessToken}`,
+        },
+      });
 
       const data = await res.json();
 
@@ -45,6 +51,7 @@ export default function UpdateBrand() {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
+        Authorization: `Bearer ${currentUser.accessToken}`,
       },
 
       body: JSON.stringify(brand),
@@ -75,7 +82,7 @@ export default function UpdateBrand() {
         >
           <CardContent>
             <Typography variant='h4' color='secondary' gutterBottom>
-              Update Currency
+              Update Brand
             </Typography>
           </CardContent>
         </Card>
