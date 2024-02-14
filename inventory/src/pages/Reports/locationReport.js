@@ -42,9 +42,10 @@ const LocationReport = () => {
   const [cipl, setcipl] = useState([]);
   const [allCipl, setAllCipl] = useState([]);
   const [filteredCipl, setFilteredCipl] = useState([]);
+  const { currentUser } = state.persisted.user;
 
   useEffect(() => {
-    dispatch(fetchlocation());
+    dispatch(fetchlocation(currentUser.accessToken));
   }, []);
   console.log(state, 'nowory');
   const [page, setPage] = useState(0);
@@ -146,6 +147,7 @@ const LocationReport = () => {
         method: 'post',
         headers: {
           'content-type': 'application/json',
+          Authorization: `Bearer ${currentUser.accessToken}`,
         },
         body: JSON.stringify(formData),
       });
@@ -293,7 +295,7 @@ const LocationReport = () => {
                   )
                 } */
               >
-                {state.location.data?.map((location) =>
+                {state.nonPersisted.location.data?.map((location) =>
                   location.addresses.map((address) => (
                     <MenuItem key={address.id} value={address.address}>
                       {address.address}

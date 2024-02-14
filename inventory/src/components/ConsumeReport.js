@@ -39,13 +39,14 @@ const ConsumeReport = () => {
   const [consume, setConsume] = useState([]);
   const dispatch = useDispatch();
   const state = useSelector((state) => state);
+  const { currentUser } = state.persisted.user;
   const [filteredConsume, setFilteredConsume] = useState([]);
 
   useEffect(() => {
-    dispatch(fetchlocation());
-    dispatch(fetchItem());
-    dispatch(fetchentity());
-    dispatch(fetchConsumeItem());
+    dispatch(fetchlocation(currentUser.accessToken));
+    dispatch(fetchItem(currentUser.accessToken));
+    dispatch(fetchentity(currentUser.accessToken));
+    dispatch(fetchConsumeItem(currentUser.accessToken));
   }, [dispatch]);
   const handleDateChange = (startDate) => {
     setformData({
@@ -93,6 +94,7 @@ const ConsumeReport = () => {
           method: 'post',
           headers: {
             'content-type': 'application/json',
+            Authorization: `Bearer ${currentUser.accessToken}`,
           },
           body: JSON.stringify(formData),
         }
@@ -254,7 +256,7 @@ const ConsumeReport = () => {
                   }}
                   //onChange={handleChange}
                 >
-                  {state.item.data?.map((item, index) => (
+                  {state.nonPersisted.item.data?.map((item, index) => (
                     <MenuItem key={index} value={item?.description}>
                       {' '}
                       {item?.description}
@@ -285,7 +287,7 @@ const ConsumeReport = () => {
                   }}
                   //onChange={handleLocationChange}
                 >
-                  {state.location.data?.map((item, index) => (
+                  {state.nonPersisted.location.data?.map((item, index) => (
                     <MenuItem key={index} value={item?.locationName}>
                       {' '}
                       {item?.locationName}

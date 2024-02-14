@@ -42,13 +42,14 @@ const CiplReport = () => {
   const [ciplReport, setCiplReport] = useState([]);
   const dispatch = useDispatch();
   const state = useSelector((state) => state);
+  const { currentUser } = state.persisted.user;
 
   useEffect(() => {
-    dispatch(fetchlocation());
-    dispatch(fetchItem());
-    dispatch(fetchentity());
-    dispatch(fetchShipper());
-    dispatch(fetchConsignee());
+    dispatch(fetchlocation(currentUser.accessToken));
+    dispatch(fetchItem(currentUser.accessToken));
+    dispatch(fetchentity(currentUser.accessToken));
+    dispatch(fetchShipper(currentUser.accessToken));
+    dispatch(fetchConsignee(currentUser.accessToken));
   }, [dispatch]);
   const handleDateChange = (startDate) => {
     setformData({
@@ -72,6 +73,7 @@ const CiplReport = () => {
         method: 'post',
         headers: {
           'content-type': 'application/json',
+          Authorization: `Bearer ${currentUser.accessToken}`,
         },
         body: JSON.stringify(formData),
       });
@@ -237,7 +239,7 @@ const CiplReport = () => {
               }}
               //onChange={handleChange}
             >
-              {state.item.data?.map((item, index) => (
+              {state.nonPersisted.item.data?.map((item, index) => (
                 <MenuItem key={index} value={item?.description}>
                   {' '}
                   {item?.description}
@@ -269,7 +271,7 @@ const CiplReport = () => {
               }}
               //onChange={handleChange}
             >
-              {state.shipper.data?.map((item, index) => (
+              {state.nonPersisted.shipper.data?.map((item, index) => (
                 <MenuItem key={index} value={item?.shipperName}>
                   {' '}
                   {item?.shipperName}
@@ -328,7 +330,7 @@ const CiplReport = () => {
               }}
               //onChange={handleChange}
             >
-              {state.consignee.data?.map((item, index) => (
+              {state.nonPersisted.consignee.data?.map((item, index) => (
                 <MenuItem key={index} value={item?.consigneeName}>
                   {' '}
                   {item?.consigneeName}

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from 'react';
 import {
   Card,
   CardContent,
@@ -19,18 +19,18 @@ import {
   TableBody,
   TablePagination,
   Box,
-} from "@mui/material";
-import { Link } from "react-router-dom";
-import { fetchlocation } from "../../redux/slice/location";
-import { fetchItem } from "../../redux/slice/ItemSlice";
-import { fetchCategory } from "../../redux/slice/CategorySlice";
-import { useDispatch } from "react-redux";
-import { useSelector } from "react-redux";
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-import { DatePicker } from "@mui/x-date-pickers/DatePicker";
-import PictureAsPdfIcon from "@mui/icons-material/PictureAsPdf";
-import ExcelJS from "exceljs";
+} from '@mui/material';
+import { Link } from 'react-router-dom';
+import { fetchlocation } from '../../redux/slice/location';
+import { fetchItem } from '../../redux/slice/ItemSlice';
+import { fetchCategory } from '../../redux/slice/CategorySlice';
+import { useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
+import ExcelJS from 'exceljs';
 const ReportItem = () => {
   const dispatch = useDispatch();
   const state = useSelector((state) => state);
@@ -40,18 +40,19 @@ const ReportItem = () => {
   const [cipl, setcipl] = useState([]);
   const [allCipl, setAllCipl] = useState([]);
   const [filteredCipl, setFilteredCipl] = useState([]);
+  const { currentUser } = state.persisted.user;
 
   useEffect(() => {
-    dispatch(fetchItem());
-    dispatch(fetchCategory());
+    dispatch(fetchItem(currentUser.accessToken));
+    dispatch(fetchCategory(currentUser.accessToken));
   }, []);
 
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [formData, setformData] = useState({
-    description: "",
+    description: '',
 
-    name: "",
+    name: '',
   });
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -61,15 +62,16 @@ const ReportItem = () => {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
-  console.log(formData, "heyyy");
+  console.log(formData, 'heyyy');
 
   const handleClick = async (e) => {
     e.preventDefault();
     try {
-      const res = await fetch("http://localhost:8080/inventory/searchItem", {
-        method: "post",
+      const res = await fetch('http://localhost:8080/inventory/searchItem', {
+        method: 'post',
         headers: {
-          "content-type": "application/json",
+          'content-type': 'application/json',
+          Authorization: `Bearer ${currentUser.accessToken}`,
         },
         body: JSON.stringify(formData),
       });
@@ -80,13 +82,13 @@ const ReportItem = () => {
 
       const data = await res.json();
       setFilteredCipl(data);
-      console.log(data, "came from backend");
+      console.log(data, 'came from backend');
     } catch (error) {
-      console.error("Error while adding inventory:", error.message);
-      alert("data not found");
+      console.error('Error while adding inventory:', error.message);
+      alert('data not found');
     }
   };
-  console.log(filteredCipl, "iamnuu");
+  console.log(filteredCipl, 'iamnuu');
   /*   const generatePDF = async (rowData, index) => {
     console.log("Generate PDF clicked");
     const pdf = new jsPDF();
@@ -100,19 +102,19 @@ const ReportItem = () => {
       pdf.save("table.pdf");
     }
   }; */
-  console.log(state, "hey");
+  console.log(state, 'hey');
   const handleDownloadCsv = () => {
     const boldStyle = { bold: true };
     const workbook = new ExcelJS.Workbook();
-    const worksheet = workbook.addWorksheet("Sheet 1");
+    const worksheet = workbook.addWorksheet('Sheet 1');
 
     // Add header row
     worksheet.addRow([
-      "Item Description",
-      "Category",
-      "Item",
-      "Total Quantity",
-      "MinimumStock",
+      'Item Description',
+      'Category',
+      'Item',
+      'Total Quantity',
+      'MinimumStock',
     ]).font = boldStyle;
     worksheet.getColumn(3).width = 20;
     worksheet.getColumn(2).width = 30;
@@ -123,12 +125,12 @@ const ReportItem = () => {
       const rowData = [
         serialNumber++,
         Array.isArray(ciplRow.description)
-          ? ciplRow.description.join(", ")
+          ? ciplRow.description.join(', ')
           : ciplRow.description,
         ciplRow.name,
         ciplRow.quantity,
         Array.isArray(ciplRow.minimumStock)
-          ? ciplRow.minimumStock.join(", ")
+          ? ciplRow.minimumStock.join(', ')
           : ciplRow.minimumStock,
       ];
 
@@ -138,11 +140,11 @@ const ReportItem = () => {
     // Create a blob from the workbook
     workbook.xlsx.writeBuffer().then((buffer) => {
       const blob = new Blob([buffer], {
-        type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+        type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
       });
-      const link = document.createElement("a");
+      const link = document.createElement('a');
       link.href = URL.createObjectURL(blob);
-      link.download = "reportItem.xlsx";
+      link.download = 'reportItem.xlsx';
       link.click();
     });
   };
@@ -150,19 +152,19 @@ const ReportItem = () => {
     <>
       <Grid>
         <Card
-          color="secondary"
+          color='secondary'
           sx={{
-            width: "100%",
+            width: '100%',
             // background:
             //   'linear-gradient(217deg, rgba(255,0,0,.8), rgba(255,0,0,0) 70.71%)',
 
-            borderBottom: "2px solid #ab47bc",
+            borderBottom: '2px solid #ab47bc',
           }}
         >
           <CardContent>
             <Typography
-              variant="h4"
-              color="secondary"
+              variant='h4'
+              color='secondary'
               gutterBottom
               style={{ fontFamily: "'EB Garamond'" }}
             >
@@ -174,21 +176,21 @@ const ReportItem = () => {
 
       <Card
         sx={{
-          width: "100%",
-          mt: "33px",
-          pt: "33px",
-          borderBottom: "2px solid #ab47bc",
-          borderRadius: "33px",
+          width: '100%',
+          mt: '33px',
+          pt: '33px',
+          borderBottom: '2px solid #ab47bc',
+          borderRadius: '33px',
         }}
       >
-        <Grid container spacing={2} sx={{ ml: "13px" }}>
+        <Grid container spacing={2} sx={{ ml: '13px' }}>
           <Grid item xs={12} sm={6}>
             <FormControl fullWidth>
-              <InputLabel id="demo-simple-select-label">Item Desc</InputLabel>
+              <InputLabel id='demo-simple-select-label'>Item Desc</InputLabel>
               <Select
-                labelId="demo-simple-select-label"
-                id="itemName"
-                label="itemName"
+                labelId='demo-simple-select-label'
+                id='itemName'
+                label='itemName'
                 onChange={(e) => {
                   setformData({
                     ...formData,
@@ -203,9 +205,9 @@ const ReportItem = () => {
                   )
                 } */
               >
-                {state.item.data?.map((item, index) => (
+                {state.nonPersisted.item.data?.map((item, index) => (
                   <MenuItem key={index} value={item?.description}>
-                    {" "}
+                    {' '}
                     {item?.description}
                   </MenuItem>
                 ))}
@@ -213,14 +215,14 @@ const ReportItem = () => {
             </FormControl>
           </Grid>
           <Grid item xs={12} sm={6}>
-            <FormControl fullWidth sx={{ width: "90%" }}>
-              <InputLabel id="demo-simple-select-label">Category</InputLabel>
+            <FormControl fullWidth sx={{ width: '90%' }}>
+              <InputLabel id='demo-simple-select-label'>Category</InputLabel>
               <Select
-                labelId="demo-simple-select-label"
-                id="demo-simple-select"
+                labelId='demo-simple-select-label'
+                id='demo-simple-select'
                 //value={age}
 
-                label="location"
+                label='location'
                 MenuProps={{
                   PaperProps: {
                     style: {
@@ -237,12 +239,14 @@ const ReportItem = () => {
 
                 //onChange={handleChange}
               >
-                {state.category.data?.content.map((item, index) => (
-                  <MenuItem key={index} value={item?.name}>
-                    {" "}
-                    {item?.name}
-                  </MenuItem>
-                ))}
+                {state.nonPersisted.category.data?.content.map(
+                  (item, index) => (
+                    <MenuItem key={index} value={item?.name}>
+                      {' '}
+                      {item?.name}
+                    </MenuItem>
+                  )
+                )}
               </Select>
             </FormControl>
           </Grid>
@@ -250,67 +254,67 @@ const ReportItem = () => {
 
         <Box
           sx={{
-            display: "flex",
-            justifyContent: "center",
-            flexDirection: "row",
-            mt: "33px",
-            mb: "17px",
+            display: 'flex',
+            justifyContent: 'center',
+            flexDirection: 'row',
+            mt: '33px',
+            mb: '17px',
           }}
         >
           <Button
-            variant="contained"
-            color="secondary"
-            size="large"
+            variant='contained'
+            color='secondary'
+            size='large'
             onClick={handleClick}
-            sx={{ marginRight: "8px" }}
+            sx={{ marginRight: '8px' }}
           >
             Preview
           </Button>
           <Button
-            variant="contained"
-            color="secondary"
-            size="large"
+            variant='contained'
+            color='secondary'
+            size='large'
             onClick={handleClick}
-            sx={{ marginRight: "8px" }}
+            sx={{ marginRight: '8px' }}
           >
             Dwnload Excel
           </Button>
           <Button
-            variant="contained"
-            color="secondary"
-            size="large"
+            variant='contained'
+            color='secondary'
+            size='large'
             onClick={handleClick}
           >
             Download Pdf
           </Button>
         </Box>
       </Card>
-      <Grid sx={{ mt: "33px", width: "100%", overflowX: "scroll" }}>
+      <Grid sx={{ mt: '33px', width: '100%', overflowX: 'scroll' }}>
         <TableContainer
           component={Paper}
           sx={{
-            borderRadius: "33px",
-            borderBottom: "2px solid yellow",
-            width: "95%",
+            borderRadius: '33px',
+            borderBottom: '2px solid yellow',
+            width: '95%',
           }}
         >
-          <Table sx={{ minWidth: 650 }} aria-label="simple table">
+          <Table sx={{ minWidth: 650 }} aria-label='simple table'>
             <TableHead>
               <TableRow>
                 <TableCell
-                  align="left"
-                  sx={{ fontWeight: "bold", paddingLeft: "40px" }}
+                  align='left'
+                  sx={{ fontWeight: 'bold', paddingLeft: '40px' }}
                 >
                   Item Description
                 </TableCell>
-                <TableCell align="left" sx={{ fontWeight: "bold" }}>
+                <TableCell align='left' sx={{ fontWeight: 'bold' }}>
                   Category
                 </TableCell>
 
-                <TableCell align="left" sx={{ fontWeight: "bold" }}>
+                <TableCell align='left' sx={{ fontWeight: 'bold' }}>
                   Total Quantity
                 </TableCell>
-                <TableCell align="left" sx={{ fontWeight: "bold" }}>
+                <TableCell align='left' sx={{ fontWeight: 'bold' }}>
                   Minimum Stock
                 </TableCell>
               </TableRow>
@@ -323,14 +327,14 @@ const ReportItem = () => {
 
                   <TableRow
                     key={`${ciplRow.id}`} // Use a unique key for each row
-                    sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                    sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                   >
-                    <TableCell align="right">{ciplRow.description}</TableCell>
+                    <TableCell align='right'>{ciplRow.description}</TableCell>
 
-                    <TableCell align="right">{ciplRow.name}</TableCell>
+                    <TableCell align='right'>{ciplRow.name}</TableCell>
 
-                    <TableCell align="right">{ciplRow.quantity}</TableCell>
-                    <TableCell align="right">{ciplRow.minimumStock}</TableCell>
+                    <TableCell align='right'>{ciplRow.quantity}</TableCell>
+                    <TableCell align='right'>{ciplRow.minimumStock}</TableCell>
                   </TableRow>
                 ))}
             </TableBody>
@@ -338,8 +342,8 @@ const ReportItem = () => {
         </TableContainer>
         <TablePagination
           rowsPerPageOptions={[5, 10, 25]}
-          component="div"
-          sx={{ paddingRight: "20px" }}
+          component='div'
+          sx={{ paddingRight: '20px' }}
           count={cipl.length}
           rowsPerPage={rowsPerPage}
           page={page}

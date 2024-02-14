@@ -37,13 +37,14 @@ const ItemServiceReport = () => {
     entityName: '',
   });
   const [itemService, setItemService] = useState([]);
+
   const dispatch = useDispatch();
   const state = useSelector((state) => state);
 
   useEffect(() => {
-    dispatch(fetchlocation());
-    dispatch(fetchItem());
-    dispatch(fetchentity());
+    dispatch(fetchlocation(currentUser.accessToken));
+    dispatch(fetchItem(currentUser.accessToken));
+    dispatch(fetchentity(currentUser.accessToken));
   }, [dispatch]);
   const handleDateChange = (startDate) => {
     setformData({
@@ -67,6 +68,7 @@ const ItemServiceReport = () => {
         method: 'post',
         headers: {
           'content-type': 'application/json',
+          Authorization: `Bearer ${currentUser.accessToken}`,
         },
         body: JSON.stringify(formData),
       });
@@ -193,7 +195,7 @@ const ItemServiceReport = () => {
       pdf.save('Item Service Report.pdf');
     });
   };
-
+  const { currentUser } = state.persisted.user;
   return (
     <>
       <Card
@@ -245,7 +247,7 @@ const ItemServiceReport = () => {
                   }}
                   //onChange={handleChange}
                 >
-                  {state.item.data?.map((item, index) => (
+                  {state.nonPersisted.item.data?.map((item, index) => (
                     <MenuItem key={index} value={item?.description}>
                       {' '}
                       {item?.description}
@@ -276,7 +278,7 @@ const ItemServiceReport = () => {
                   }}
                   //onChange={handleLocationChange}
                 >
-                  {state.location.data?.map((item, index) => (
+                  {state.nonPersisted.location.data?.map((item, index) => (
                     <MenuItem key={index} value={item?.locationName}>
                       {' '}
                       {item?.locationName}
