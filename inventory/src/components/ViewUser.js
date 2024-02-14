@@ -12,6 +12,7 @@ import {
 import Pagination from "@mui/material/Pagination";
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 
 function ViewUser() {
   const { currentUser } = useSelector((state) => state.persisted.user);
@@ -137,9 +138,11 @@ function ViewUser() {
                 </TableCell>
                 <TableCell>
                   {/* Action button (e.g., Edit, Delete) */}
-                  <Button variant="contained" color="primary">
-                    Edit
-                  </Button>
+                  <Link to={`/api/user/update/${user.id}`}>
+                    <Button variant="contained" color="primary">
+                      Edit
+                    </Button>
+                  </Link>
                 </TableCell>
               </TableRow>
             ))}
