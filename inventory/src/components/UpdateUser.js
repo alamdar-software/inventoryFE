@@ -44,11 +44,13 @@ const defaultTheme = createTheme();
 export default function UpdateUser() {
   const { id } = useParams();
   const { currentUser } = useSelector((state) => state.persisted.user);
-  const [user, setuser] = useState([]);
+
   const [selectedRole, setSelectedRole] = useState("");
   const navigate = useNavigate();
 
   const [formData, setformData] = useState({});
+  const [user, setuser] = useState({});
+  const [role, setrole] = useState("");
   useEffect(() => {
     const getUser = async () => {
       const res = await fetch(`http://localhost:8080/api/user/getById/${id}`, {
@@ -102,7 +104,10 @@ export default function UpdateUser() {
     setSelectedRole(value); // Update the selectedRole state with the selected value
     console.log("Form Data:", formData); // Log the updated form data
   };
-
+  const roleName = user.roles.map((role) => {
+    setrole(role);
+  });
+  console.log(role, "nama");
   return (
     <ThemeProvider theme={defaultTheme}>
       <Container component="main" maxWidth="xs">
