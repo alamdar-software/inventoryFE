@@ -76,11 +76,10 @@ export default function UpdateUser() {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      const res = await fetch(`http://localhost:8080/api/auth/update/${id}`, {
-        method: "put",
+      const res = await fetch(`http://localhost:8080/api/user/update/${id}`, {
+        method: "PUT",
         headers: {
           Authorization: `Bearer ${currentUser?.accessToken}`,
-          "content-type": "application/json",
         },
         body: JSON.stringify(user),
       });
@@ -99,6 +98,13 @@ export default function UpdateUser() {
 
     console.log(formData, "formmm");
   };
+  let roleName;
+  if (user && user.roles && user.roles.length > 0) {
+    roleName = user.roles[0].name;
+  } else {
+    // handle the case where roleName cannot be determined
+    roleName = "Unknown";
+  }
   const handleChange = (event) => {
     const { id, value } = event.target;
     console.log("Selected ID:", id); // Check the selected ID
@@ -112,6 +118,7 @@ export default function UpdateUser() {
       if (selectedRole) {
         setuser({
           ...user,
+          [id]: parsedValue,
           roles: selectedRole.name,
         });
         console.log("i am in first loggg");
@@ -123,19 +130,12 @@ export default function UpdateUser() {
       setuser({
         ...user,
         [id]: parsedValue,
+        roles: roleName,
       });
     }
 
     console.log("User Data:", user); // Log the updated user data
   };
-
-  let roleName;
-  if (user && user.roles && user.roles.length > 0) {
-    roleName = user.roles[0].name;
-  } else {
-    // handle the case where roleName cannot be determined
-    roleName = "Unknown";
-  }
 
   console.log(roleName, "nama");
 
