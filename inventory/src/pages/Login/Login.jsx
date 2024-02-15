@@ -171,23 +171,25 @@ export default function Signin() {
               >
                 Sign In
               </Button>
-              <div
-                style={{
-                  fontSize: "15px",
-                  marginRight: "8px",
-                  backgroundColor: "#ffc6c4",
-                  padding: "8px",
-                  paddingTop: "10px",
-                  color: "red",
-                  fontWeight: "bold",
-                  borderRadius: "10px",
-                  textAlign: "center", // Align text center
-                  justifyContent: "center",
-                  alignSelf: "center",
-                }}
-              >
-                {error && <p>{error}</p>}
-              </div>
+              {error && (
+                <div
+                  style={{
+                    fontSize: "15px",
+                    marginRight: "8px",
+                    backgroundColor: "#ffc6c4",
+                    padding: "8px",
+                    paddingTop: "10px",
+
+                    fontWeight: "bold",
+                    borderRadius: "10px",
+                    textAlign: "center", // Align text center
+                    justifyContent: "center",
+                    alignSelf: "center",
+                  }}
+                >
+                  {<p>{error}</p>}
+                </div>
+              )}
             </Box>
           </Box>
         </Container>
