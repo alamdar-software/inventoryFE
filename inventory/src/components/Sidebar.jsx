@@ -270,19 +270,6 @@ export default function Sidebar({ children }) {
               aria-haspopup="true"
               aria-label="user-menu"
             >
-              <div
-                style={{
-                  fontSize: "18px",
-                  marginRight: "8px",
-                  backgroundColor: "blue",
-                  padding: "4px",
-                  borderRadius: "4px",
-                  fontWeight: "bold",
-                  borderRadius: "20px",
-                }}
-              >
-                {currentUser.roles[0].split("_")[1]}
-              </div>
               <AccountCircleIcon style={{ fontSize: 50 }} />
               {currentUser && (
                 <Typography
@@ -294,6 +281,19 @@ export default function Sidebar({ children }) {
                   }}
                 >
                   {currentUser.username} <br></br>
+                  <div
+                    style={{
+                      fontSize: "11px",
+                      marginRight: "8px",
+                      backgroundColor: "#ADD8E6",
+                      padding: "4px",
+                      borderRadius: "4px",
+                      fontWeight: "bold",
+                      borderRadius: "20px",
+                    }}
+                  >
+                    {currentUser.roles[0].split("_")[1]}
+                  </div>
                   {/* Assuming the user object has a 'name' property */}
                 </Typography>
               )}
