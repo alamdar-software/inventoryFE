@@ -106,7 +106,7 @@ const Mto = () => {
       locationName: selectedLocation,
       // Reset sublocation when location changes
     });
-    const selectedLocationObj = state.location.data.find(
+    const selectedLocationObj = state.nonPersisted.location.data.find(
       (location) => location.locationName === selectedLocation
     );
     setSubLocations(selectedLocationObj ? selectedLocationObj?.addresses : []);

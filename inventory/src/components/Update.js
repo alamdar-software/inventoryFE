@@ -8,22 +8,43 @@ import {
   Typography,
 } from '@mui/material';
 import React, { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 
 const Update = () => {
   const [locationLists, setLocationLists] = useState();
   const [locationName, setLocation] = useState();
   const [address, setSubLocation] = useState();
-
+  const state = useSelector((state) => state);
+  const { currentUser } = state.persisted.user;
   let navigate = useNavigate();
 
   const { locationId, addressId } = useParams();
 
   console.log(locationId, addressId, 'noppppeee');
 
+  // useEffect(() => {
+  //   fetch(
+  //     `http://localhost:8080/location/getLocation/${locationId}/${addressId}`, {
+  //       headers: {
+  //         Authorization: `Bearer ${currentUser.accessToken}`,
+  //       },
+  //     });
+  //   )
+  //     .then((res) => res.json())
+  //     .then((result) => {
+  //       console.log(result);
+  //       setLocationLists(result);
+  //     });
+  // }, []);
   useEffect(() => {
     fetch(
-      `http://localhost:8080/location/getLocation/${locationId}/${addressId}`
+      `http://localhost:8080/location/getLocation/${locationId}/${addressId}`,
+      {
+        headers: {
+          Authorization: `Bearer ${currentUser.accessToken}`,
+        },
+      }
     )
       .then((res) => res.json())
       .then((result) => {
@@ -31,6 +52,7 @@ const Update = () => {
         setLocationLists(result);
       });
   }, []);
+
   const handleClick = (e) => {
     e.preventDefault();
     const update = {
@@ -43,6 +65,7 @@ const Update = () => {
       {
         method: 'PUT',
         headers: { 'Content-type': 'application/json' },
+        Authorization: `Bearer ${currentUser.accessToken}`,
         body: JSON.stringify(locationLists),
       }
     )
