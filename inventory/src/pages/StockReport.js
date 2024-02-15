@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from 'react';
 import {
   Card,
   CardContent,
@@ -20,19 +20,19 @@ import {
   TablePagination,
   Box,
   FormLabel,
-} from "@mui/material";
-import { Link } from "react-router-dom";
-import { fetchlocation } from "../redux/slice/location";
-import { fetchItem } from "../redux/slice/ItemSlice";
-import { useDispatch } from "react-redux";
-import { useSelector } from "react-redux";
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-import { DatePicker } from "@mui/x-date-pickers/DatePicker";
-import PictureAsPdfIcon from "@mui/icons-material/PictureAsPdf";
-import ExcelJS from "exceljs";
-import jsPDF from "jspdf";
-import html2canvas from "html2canvas";
+} from '@mui/material';
+import { Link } from 'react-router-dom';
+import { fetchlocation } from '../redux/slice/location';
+import { fetchItem } from '../redux/slice/ItemSlice';
+import { useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
+import ExcelJS from 'exceljs';
+import jsPDF from 'jspdf';
+import html2canvas from 'html2canvas';
 export const StockReport = () => {
   const dispatch = useDispatch();
   const state = useSelector((state) => state);
@@ -42,19 +42,20 @@ export const StockReport = () => {
   const [cipl, setcipl] = useState([]);
   const [allCipl, setAllCipl] = useState([]);
   const [filteredCipl, setFilteredCipl] = useState([]);
+  const { currentUser } = state.persisted.user;
 
   useEffect(() => {
-    dispatch(fetchlocation());
-    dispatch(fetchItem());
+    dispatch(fetchlocation(currentUser.accessToken));
+    dispatch(fetchItem(currentUser.accessToken));
   }, []);
 
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [formData, setformData] = useState({
-    startDate: "",
-    endDate: "",
+    startDate: '',
+    endDate: '',
 
-    repairService: "",
+    repairService: '',
   });
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -64,7 +65,7 @@ export const StockReport = () => {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
-  console.log(formData, "heyyy");
+  console.log(formData, 'heyyy');
   // const handleClick = () => {
   //   try {
   //     const formData = {
@@ -146,10 +147,11 @@ export const StockReport = () => {
   const handleClick = async (e) => {
     e.preventDefault();
     try {
-      const res = await fetch("http://localhost:8080/report/search", {
-        method: "post",
+      const res = await fetch('http://localhost:8080/report/search', {
+        method: 'post',
         headers: {
-          "content-type": "application/json",
+          'content-type': 'application/json',
+          Authorization: `Bearer ${currentUser.accessToken}`,
         },
         body: JSON.stringify(formData),
       });
@@ -160,22 +162,22 @@ export const StockReport = () => {
 
       const data = await res.json();
       setFilteredCipl(data);
-      console.log(data, "came from backend");
+      console.log(data, 'came from backend');
     } catch (error) {
-      console.error("Error while adding inventory:", error.message);
-      alert("data not found");
+      console.error('Error while adding inventory:', error.message);
+      alert('data not found');
     }
   };
   const handleDateChange = (date) => {
     setformData({
       ...formData,
-      startDate: date.format("YYYY-MM-DD"),
+      startDate: date.format('YYYY-MM-DD'),
     });
   };
   const handleToDateChange = (date) => {
     setformData({
       ...formData,
-      endDate: date.format("YYYY-MM-DD"),
+      endDate: date.format('YYYY-MM-DD'),
     });
   };
 
@@ -195,22 +197,22 @@ export const StockReport = () => {
   const handleDownloadCsv = () => {
     const boldStyle = { bold: true };
     const workbook = new ExcelJS.Workbook();
-    const worksheet = workbook.addWorksheet("Sheet 1");
+    const worksheet = workbook.addWorksheet('Sheet 1');
 
     // Add header row
     worksheet.addRow([
-      "Serial No",
-      "Reference No",
-      "Repair/Service",
-      "Source Location",
-      "SubLocation",
+      'Serial No',
+      'Reference No',
+      'Repair/Service',
+      'Source Location',
+      'SubLocation',
 
-      "Purchase",
-      "P/N",
-      "Consignee",
+      'Purchase',
+      'P/N',
+      'Consignee',
 
-      "Transfer Date",
-      "Action",
+      'Transfer Date',
+      'Action',
     ]).font = boldStyle;
     worksheet.getColumn(3).width = 20;
     worksheet.getColumn(2).width = 30;
@@ -228,15 +230,15 @@ export const StockReport = () => {
       const rowData = [
         serialNumber++,
         Array.isArray(ciplRow.referenceNo)
-          ? ciplRow.referenceNo.join(", ")
+          ? ciplRow.referenceNo.join(', ')
           : ciplRow.referenceNo,
         ciplRow.repairService,
         ciplRow.locationName,
         Array.isArray(ciplRow.subLocation)
-          ? ciplRow.subLocation.join(", ")
+          ? ciplRow.subLocation.join(', ')
           : ciplRow.subLocation,
         Array.isArray(ciplRow.purchase)
-          ? ciplRow.purchase.join(", ")
+          ? ciplRow.purchase.join(', ')
           : ciplRow.purchase,
 
         ciplRow.pn,
@@ -251,44 +253,44 @@ export const StockReport = () => {
     // Create a blob from the workbook
     workbook.xlsx.writeBuffer().then((buffer) => {
       const blob = new Blob([buffer], {
-        type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+        type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
       });
-      const link = document.createElement("a");
+      const link = document.createElement('a');
       link.href = URL.createObjectURL(blob);
-      link.download = "stockmoment.xlsx";
+      link.download = 'stockmoment.xlsx';
       link.click();
     });
   };
-  console.log(filteredCipl, "rusijk");
+  console.log(filteredCipl, 'rusijk');
   // Inside your handleDownloadPdf function
   const handleDownloadPdf = () => {
-    const input = document.getElementById("cipl-table");
+    const input = document.getElementById('cipl-table');
 
     html2canvas(input, { scrollY: -window.scrollY }).then((canvas) => {
-      const imgData = canvas.toDataURL("image/png");
-      const pdf = new jsPDF({ orientation: "landscape" });
+      const imgData = canvas.toDataURL('image/png');
+      const pdf = new jsPDF({ orientation: 'landscape' });
 
       // Divide the canvas into multiple sections if needed
       const imgHeight = (canvas.height * 208) / canvas.width;
       let heightLeft = imgHeight;
       let position = 0;
       const marginTop = 20;
-      pdf.setFont("helvetica", "bold");
-      pdf.text("Incoming Stock Report", 110, 10);
+      pdf.setFont('helvetica', 'bold');
+      pdf.text('Incoming Stock Report', 110, 10);
 
       // Add each section to the PDF
-      pdf.setFont("helvetica", "bold");
-      pdf.text("Reference No", 10, 10);
-      pdf.text("Repair/Service", 60, 10);
-      pdf.text("Source Location", 110, 10);
-      pdf.text("SubLocation", 160, 10);
-      pdf.text("Purchase", 210, 10);
-      pdf.text("P/N", 260, 10);
-      pdf.text("Consignee", 310, 10);
-      pdf.text("Transfer Date", 360, 10);
-      pdf.text("Action", 410, 10);
+      pdf.setFont('helvetica', 'bold');
+      pdf.text('Reference No', 10, 10);
+      pdf.text('Repair/Service', 60, 10);
+      pdf.text('Source Location', 110, 10);
+      pdf.text('SubLocation', 160, 10);
+      pdf.text('Purchase', 210, 10);
+      pdf.text('P/N', 260, 10);
+      pdf.text('Consignee', 310, 10);
+      pdf.text('Transfer Date', 360, 10);
+      pdf.text('Action', 410, 10);
       while (heightLeft >= 0) {
-        pdf.addImage(imgData, "PNG", 0, position + marginTop, 297, imgHeight);
+        pdf.addImage(imgData, 'PNG', 0, position + marginTop, 297, imgHeight);
         heightLeft -= 208;
         position -= 297;
         if (heightLeft >= 0) {
@@ -296,7 +298,7 @@ export const StockReport = () => {
         }
       }
 
-      pdf.save("table.pdf");
+      pdf.save('table.pdf');
     });
   };
 
@@ -304,19 +306,19 @@ export const StockReport = () => {
     <>
       <Grid>
         <Card
-          color="secondary"
+          color='secondary'
           sx={{
-            width: "100%",
+            width: '100%',
             // background:
             //   'linear-gradient(217deg, rgba(255,0,0,.8), rgba(255,0,0,0) 70.71%)',
 
-            borderBottom: "2px solid #ab47bc",
+            borderBottom: '2px solid #ab47bc',
           }}
         >
           <CardContent>
             <Typography
-              variant="h4"
-              color="secondary"
+              variant='h4'
+              color='secondary'
               gutterBottom
               style={{ fontFamily: "'EB Garamond'" }}
             >
@@ -328,16 +330,16 @@ export const StockReport = () => {
 
       <Card
         sx={{
-          width: "100%",
-          mt: "33px",
-          pt: "33px",
-          borderBottom: "2px solid #ab47bc",
-          borderRadius: "33px",
+          width: '100%',
+          mt: '33px',
+          pt: '33px',
+          borderBottom: '2px solid #ab47bc',
+          borderRadius: '33px',
         }}
       >
-        <Grid container spacing={2} sx={{ ml: "13px" }}>
+        <Grid container spacing={2} sx={{ ml: '13px' }}>
           <Grid item xs={12} sm={6}>
-            <FormControl fullWidth sx={{ width: "100%" }}>
+            <FormControl fullWidth sx={{ width: '100%' }}>
               <FormLabel>From Date</FormLabel>
               <Grid item xs={12} sm={6}>
                 <LocalizationProvider dateAdapter={AdapterDayjs}>
@@ -348,7 +350,7 @@ export const StockReport = () => {
                     onChange={(newDate) => handleDateChange(newDate)}
                     // onChange={(newDate) => handleDateChange(newDate)}
                     fullWidth
-                    sx={{ width: "90%" }}
+                    sx={{ width: '90%' }}
                     /* format="yyyy-MM-dd" */
                   />
                 </LocalizationProvider>
@@ -356,7 +358,7 @@ export const StockReport = () => {
             </FormControl>
           </Grid>
           <Grid item xs={12} sm={6}>
-            <FormControl fullWidth sx={{ width: "100%" }}>
+            <FormControl fullWidth sx={{ width: '100%' }}>
               <FormLabel>To Date</FormLabel>
               <Grid item xs={12} sm={6}>
                 <LocalizationProvider dateAdapter={AdapterDayjs}>
@@ -367,26 +369,26 @@ export const StockReport = () => {
                     onChange={(newDate) => handleToDateChange(newDate)}
                     // onChange={(newDate) => handleDateChange(newDate)}
                     fullWidth
-                    sx={{ width: "90%" }}
+                    sx={{ width: '90%' }}
                     /* format="yyyy-MM-dd" */
                   />
                 </LocalizationProvider>
               </Grid>
             </FormControl>
           </Grid>
-          <Grid container spacing={2} sx={{ ml: "0px", mt: "20px" }}>
+          <Grid container spacing={2} sx={{ ml: '0px', mt: '20px' }}>
             <Grid item xs={12} sm={6}>
-              <FormControl fullWidth sx={{ width: "45%" }}>
-                <InputLabel id="demo-simple-select-label">
+              <FormControl fullWidth sx={{ width: '45%' }}>
+                <InputLabel id='demo-simple-select-label'>
                   Repair/Service
                 </InputLabel>
                 <Select
-                  labelId="demo-simple-select-label"
-                  id="demo-simple-select"
+                  labelId='demo-simple-select-label'
+                  id='demo-simple-select'
                   value={formData?.repairService}
                   //value={age}
 
-                  label="Repair/service"
+                  label='Repair/service'
                   //onChange={handleChange}
                   onChange={(e) =>
                     setformData({
@@ -405,86 +407,86 @@ export const StockReport = () => {
 
         <Box
           sx={{
-            display: "flex",
-            justifyContent: "center",
-            flexDirection: "row",
-            mt: "33px",
-            mb: "17px",
+            display: 'flex',
+            justifyContent: 'center',
+            flexDirection: 'row',
+            mt: '33px',
+            mb: '17px',
           }}
         >
           <Button
-            variant="contained"
-            color="secondary"
-            size="large"
+            variant='contained'
+            color='secondary'
+            size='large'
             onClick={handleClick}
-            sx={{ marginRight: "8px" }}
+            sx={{ marginRight: '8px' }}
           >
             Preview
           </Button>
           <Button
-            variant="contained"
-            color="secondary"
-            size="large"
+            variant='contained'
+            color='secondary'
+            size='large'
             onClick={handleDownloadCsv}
-            sx={{ marginRight: "8px" }}
+            sx={{ marginRight: '8px' }}
           >
             Dwnload Excel
           </Button>
           <Button
-            variant="contained"
-            color="secondary"
-            size="large"
+            variant='contained'
+            color='secondary'
+            size='large'
             onClick={handleDownloadPdf}
           >
             Download Pdf
           </Button>
         </Box>
       </Card>
-      <Grid sx={{ mt: "33px", width: "100%", overflowX: "scroll" }}>
+      <Grid sx={{ mt: '33px', width: '100%', overflowX: 'scroll' }}>
         <TableContainer
-          id="cipl-table"
+          id='cipl-table'
           component={Paper}
           sx={{
-            borderRadius: "10px",
-            border: "1px   black",
-            width: "98%",
+            borderRadius: '10px',
+            border: '1px   black',
+            width: '98%',
             // Adjust the height as needed
-            overflowY: "auto",
-            background: "transparent", // Set background color to transparent
-            margin: "5px",
+            overflowY: 'auto',
+            background: 'transparent', // Set background color to transparent
+            margin: '5px',
           }}
         >
-          <Table sx={{ minWidth: 500 }} aria-label="simple table">
+          <Table sx={{ minWidth: 500 }} aria-label='simple table'>
             <TableHead>
               <TableRow>
-                <TableCell align="right" sx={{ fontWeight: "bold" }}>
+                <TableCell align='right' sx={{ fontWeight: 'bold' }}>
                   Reference No
                 </TableCell>
-                <TableCell align="right" sx={{ fontWeight: "bold" }}>
+                <TableCell align='right' sx={{ fontWeight: 'bold' }}>
                   Repair/Service
                 </TableCell>
-                <TableCell align="right" sx={{ fontWeight: "bold" }}>
+                <TableCell align='right' sx={{ fontWeight: 'bold' }}>
                   Source Location
                 </TableCell>
-                <TableCell align="right" sx={{ fontWeight: "bold" }}>
+                <TableCell align='right' sx={{ fontWeight: 'bold' }}>
                   SubLocation
                 </TableCell>
 
-                <TableCell align="right" sx={{ fontWeight: "bold" }}>
+                <TableCell align='right' sx={{ fontWeight: 'bold' }}>
                   Purchase
                 </TableCell>
-                <TableCell align="right" sx={{ fontWeight: "bold" }}>
+                <TableCell align='right' sx={{ fontWeight: 'bold' }}>
                   P/N
                 </TableCell>
 
-                <TableCell align="right" sx={{ fontWeight: "bold" }}>
+                <TableCell align='right' sx={{ fontWeight: 'bold' }}>
                   Consignee
                 </TableCell>
 
-                <TableCell align="right" sx={{ fontWeight: "bold" }}>
+                <TableCell align='right' sx={{ fontWeight: 'bold' }}>
                   Transfer Date
                 </TableCell>
-                <TableCell align="right" sx={{ fontWeight: "bold" }}>
+                <TableCell align='right' sx={{ fontWeight: 'bold' }}>
                   Action
                 </TableCell>
               </TableRow>
@@ -497,19 +499,19 @@ export const StockReport = () => {
 
                   <TableRow
                     key={`${ciplRow.id}`} // Use a unique key for each row
-                    sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                    sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                   >
-                    <TableCell align="right">{ciplRow.referenceNo}</TableCell>
-                    <TableCell align="right">
-                      {ciplRow.repairService ? "Yes" : "No"}
+                    <TableCell align='right'>{ciplRow.referenceNo}</TableCell>
+                    <TableCell align='right'>
+                      {ciplRow.repairService ? 'Yes' : 'No'}
                     </TableCell>
-                    <TableCell align="right">{ciplRow.locationName}</TableCell>
-                    <TableCell align="right">{ciplRow.subLocation}</TableCell>
-                    <TableCell align="right">{ciplRow.purchase}</TableCell>
-                    <TableCell align="right">{ciplRow.pn}</TableCell>
-                    <TableCell align="right">{ciplRow.consigneeName}</TableCell>
-                    <TableCell align="right">{ciplRow.transferDate}</TableCell>
-                    <TableCell align="right">{ciplRow.dataType}</TableCell>
+                    <TableCell align='right'>{ciplRow.locationName}</TableCell>
+                    <TableCell align='right'>{ciplRow.subLocation}</TableCell>
+                    <TableCell align='right'>{ciplRow.purchase}</TableCell>
+                    <TableCell align='right'>{ciplRow.pn}</TableCell>
+                    <TableCell align='right'>{ciplRow.consigneeName}</TableCell>
+                    <TableCell align='right'>{ciplRow.transferDate}</TableCell>
+                    <TableCell align='right'>{ciplRow.dataType}</TableCell>
                   </TableRow>
                 ))}
             </TableBody>
@@ -517,7 +519,7 @@ export const StockReport = () => {
         </TableContainer>
         <TablePagination
           rowsPerPageOptions={[5, 10, 25]}
-          component="div"
+          component='div'
           count={cipl.length}
           rowsPerPage={rowsPerPage}
           page={page}

@@ -12,6 +12,7 @@ import ButtonGroup from '@mui/material/ButtonGroup';
 
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 const columns = [
   { id: 'Brand', label: 'Brands', minWidth: 200 },
   { id: 'Actions', label: 'Actions', minWidth: 100 },
@@ -35,6 +36,8 @@ export default function BrandTable({ data }) {
     setRowsPerPage(5);
     setPage(0);
   };
+  const state = useSelector((state) => state);
+  const { currentUser } = state.persisted.user;
   const handleDelete = async (id) => {
     try {
       // Perform the delete operation
@@ -42,6 +45,7 @@ export default function BrandTable({ data }) {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',
+          Authorization: `Bearer ${currentUser.accessToken}`,
         },
       });
 
