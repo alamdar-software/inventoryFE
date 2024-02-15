@@ -15,6 +15,7 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { useState } from "react";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
+import inventoryBackground from "../../inventory.jpg";
 import {
   signInFailure,
   signinStart,
@@ -50,6 +51,7 @@ export default function Signin() {
   const location = useLocation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const [error, seterror] = useState(null);
 
   const [formData, setformData] = useState({});
   const handleChange = (e) => {
@@ -79,8 +81,12 @@ export default function Signin() {
         console.log(currentUser.accessToken, "mujhepatahai");
         /* window.location.reload(); */
         /*  console.log(currentUser, "currentlaga"); */
+      } else {
+        console.log("invaliddddmessage");
+        seterror("invalid credentials");
       }
     } catch (error) {
+      seterror(error.message);
       dispatch(signInFailure());
     }
 
@@ -88,67 +94,104 @@ export default function Signin() {
   };
 
   return (
-    <ThemeProvider theme={defaultTheme}>
-      <Container component="main" maxWidth="xs">
-        <CssBaseline />
+    <ThemeProvider theme={createTheme()}>
+      <CssBaseline />
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "row",
+          minHeight: "100vh",
+        }}
+      >
         <Box
           sx={{
-            marginTop: 8,
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
+            backgroundImage: `url(${inventoryBackground})`,
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+            flex: 1,
           }}
+        />
+        <Container
+          component="main"
+          maxWidth="xs"
+          style={{ backgroundColor: " rgb(241, 245, 241)" }}
         >
-          <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
-            <LockOutlinedIcon />
-          </Avatar>
-          <Typography component="h1" variant="h5">
-            Sign In
-          </Typography>
           <Box
-            component="form"
-            noValidate
-            onSubmit={handleSubmit}
-            sx={{ mt: 3 }}
+            sx={{
+              marginTop: 8,
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              backgroundColor: " rgb(241, 245, 241)",
+            }}
           >
-            <Grid container spacing={2}>
-              <Grid item xs={12}>
-                <TextField
-                  required
-                  fullWidth
-                  id="username"
-                  label="username"
-                  name="username"
-                  autoComplete="username"
-                  onChange={handleChange}
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  required
-                  fullWidth
-                  name="password"
-                  label="Password"
-                  type="password"
-                  id="password"
-                  autoComplete="new-password"
-                  onChange={handleChange}
-                />
-              </Grid>
-            </Grid>
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              sx={{ mt: 3, mb: 2 }}
-              onSubmit={handleSubmit}
-            >
+            <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
+              <LockOutlinedIcon />
+            </Avatar>
+            <Typography component="h1" variant="h5">
               Sign In
-            </Button>
+            </Typography>
+            <Box
+              component="form"
+              noValidate
+              onSubmit={handleSubmit}
+              sx={{ mt: 3 }}
+            >
+              <Grid container spacing={2}>
+                <Grid item xs={12}>
+                  <TextField
+                    required
+                    fullWidth
+                    id="username"
+                    label="username"
+                    name="username"
+                    autoComplete="username"
+                    onChange={handleChange}
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <TextField
+                    required
+                    fullWidth
+                    name="password"
+                    label="Password"
+                    type="password"
+                    id="password"
+                    autoComplete="new-password"
+                    onChange={handleChange}
+                  />
+                </Grid>
+              </Grid>
+              <Button
+                type="submit"
+                fullWidth
+                variant="contained"
+                sx={{ mt: 3, mb: 2 }}
+                onSubmit={handleSubmit}
+              >
+                Sign In
+              </Button>
+              <div
+                style={{
+                  fontSize: "15px",
+                  marginRight: "8px",
+                  backgroundColor: "#ffc6c4",
+                  padding: "8px",
+                  paddingTop: "10px",
+                  color: "red",
+                  fontWeight: "bold",
+                  borderRadius: "10px",
+                  textAlign: "center", // Align text center
+                  justifyContent: "center",
+                  alignSelf: "center",
+                }}
+              >
+                {error && <p>{error}</p>}
+              </div>
+            </Box>
           </Box>
-        </Box>
-        <Copyright sx={{ mt: 5 }} />
-      </Container>
+        </Container>
+      </Box>
     </ThemeProvider>
   );
 }
