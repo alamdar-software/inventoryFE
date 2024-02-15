@@ -76,28 +76,29 @@ export default function UpdateUser() {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
+      const { name, username, email, roles } = user; // Destructure user object
+      const userData = { name, username, email, roles }; // Create new object with specific fields
+
       const res = await fetch(`http://localhost:8080/api/user/update/${id}`, {
         method: "PUT",
         headers: {
           Authorization: `Bearer ${currentUser?.accessToken}`,
+          "Content-Type": "application/json", // Set content type to JSON
         },
-        body: JSON.stringify(user),
+        body: JSON.stringify(userData), // Stringify the new object with specific fields
       });
-      const data = await res.json();
-      console.log(data);
-      if (res.ok) {
-        navigate("/login");
-        window.location.reload();
 
-        /* window.location.reload(); */
-        /*  console.log(currentUser, "currentlaga"); */
+      console.log(userData, "user data sent");
+      const data = await res.json();
+      console.log(data, "response data");
+      if (res.ok) {
+        navigate("/dashboard");
       }
     } catch (error) {
       console.log(error.message);
     }
-
-    console.log(formData, "formmm");
   };
+
   let roleName;
   if (user && user.roles && user.roles.length > 0) {
     roleName = user.roles[0].name;
@@ -231,15 +232,6 @@ export default function UpdateUser() {
                   <MenuItem value="ROLE_PREPARER">ROLE_PREPARER</MenuItem>
                   <MenuItem value="ROLE_APPROVER">ROLE_APPROVER</MenuItem>
                 </Select>
-              </Grid>
-
-              <Grid item xs={12}>
-                <FormControlLabel
-                  control={
-                    <Checkbox value="allowExtraEmails" color="primary" />
-                  }
-                  label="I want to receive inspiration, marketing promotions and updates via email."
-                />
               </Grid>
             </Grid>
             <Button
