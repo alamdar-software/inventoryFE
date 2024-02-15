@@ -217,7 +217,7 @@ export default function Sidebar({ children }) {
   const handleLogout = () => {
     dispatch(signoutSuccess());
     navigate("/login");
-    window.location.reload();
+
     // Implement your logout logic here
     // For example, dispatch a logout action or redirect the user
   };
