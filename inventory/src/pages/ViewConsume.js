@@ -390,52 +390,48 @@ const ViewConsume = () => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {filteredConsumed
-                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                .map((consumedRow) =>
-                  // Render a row for each sublocation
-                  consumedRow.item.map((item, index) => (
-                    <TableRow
-                      key={`${consumedRow.id}-${index}`} // Use a unique key for each row
-                      sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                    >
-                      <TableCell align='right'>
-                        {item.match(/^[^-(]*/)[0].trim()}
-                      </TableCell>
-                      <TableCell align='right'>
-                        {consumedRow.locationName}
-                      </TableCell>
-                      <TableCell align='right'>
-                        {consumedRow.subLocations}
-                      </TableCell>
-                      <TableCell align='right'>
-                        {consumedRow.quantity}
-                      </TableCell>
-                      <TableCell align='right'>{consumedRow.date}</TableCell>
-                      <TableCell align='right'>
-                        <Box>
-                          <Link to={`/updateConsumed/${consumedRow.id}`}>
-                            <Button
-                              sx={{ marginLeft: '11px', marginTop: '15px' }}
-                              variant='contained'
-                            >
-                              Update
-                            </Button>
-                          </Link>
-
+              {filteredConsumed?.map((consumedRow) =>
+                // Render a row for each sublocation
+                consumedRow.item.map((item, index) => (
+                  <TableRow
+                    key={`${consumedRow.id}-${index}`} // Use a unique key for each row
+                    sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                  >
+                    <TableCell align='right'>
+                      {item.match(/^[^-(]*/)[0].trim()}
+                    </TableCell>
+                    <TableCell align='right'>
+                      {consumedRow.locationName}
+                    </TableCell>
+                    <TableCell align='right'>
+                      {consumedRow.subLocations}
+                    </TableCell>
+                    <TableCell align='right'>{consumedRow.quantity}</TableCell>
+                    <TableCell align='right'>{consumedRow.date}</TableCell>
+                    <TableCell align='right'>
+                      <Box>
+                        <Link to={`/updateConsumed/${consumedRow.id}`}>
                           <Button
                             sx={{ marginLeft: '11px', marginTop: '15px' }}
                             variant='contained'
-                            color='secondary'
-                            onClick={() => deleteConsumed(consumedRow.id)}
                           >
-                            Delete
+                            Update
                           </Button>
-                        </Box>
-                      </TableCell>
-                    </TableRow>
-                  ))
-                )}
+                        </Link>
+
+                        <Button
+                          sx={{ marginLeft: '11px', marginTop: '15px' }}
+                          variant='contained'
+                          color='secondary'
+                          onClick={() => deleteConsumed(consumedRow.id)}
+                        >
+                          Delete
+                        </Button>
+                      </Box>
+                    </TableCell>
+                  </TableRow>
+                ))
+              )}
             </TableBody>
           </Table>
         </TableContainer>
