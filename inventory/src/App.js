@@ -208,7 +208,7 @@ function App() {
                 path="/updatePickup/:id"
                 element={
                   <Sidebar>
-                    <Pickup />
+                    <UpdatePickup />
                   </Sidebar>
                 }
               />
