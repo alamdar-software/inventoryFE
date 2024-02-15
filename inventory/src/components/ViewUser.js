@@ -13,6 +13,7 @@ import Pagination from "@mui/material/Pagination";
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import DeleteIcon from "@mui/icons-material/Delete";
 
 function ViewUser() {
   const { currentUser } = useSelector((state) => state.persisted.user);
@@ -48,6 +49,32 @@ function ViewUser() {
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
+  };
+  const handleDelete = async (id) => {
+    try {
+      // Perform the delete operation
+      const response = await fetch(
+        `http://localhost:8080/api/user/delete/${id}`,
+        {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${currentUser.accessToken}`,
+          },
+        }
+      );
+
+      if (response.ok) {
+        // Update the state or fetch data again after deletion
+        // For simplicity, you can reload the page or fetch data again
+        window.location.reload();
+      } else {
+        // Handle the error if deletion fails
+        console.error("Delete failed");
+      }
+    } catch (error) {
+      console.error("Error during delete:", error);
+    }
   };
 
   return (
@@ -143,6 +170,9 @@ function ViewUser() {
                       Edit
                     </Button>
                   </Link>
+                  <Button onClick={() => handleDelete(user.id)} color="primary">
+                    <DeleteIcon />
+                  </Button>
                 </TableCell>
               </TableRow>
             ))}
