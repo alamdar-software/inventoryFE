@@ -231,6 +231,7 @@ export default function UpdateUser() {
                   <MenuItem value="ROLE_VERIFIER">ROLE_VERIFIER</MenuItem>
                   <MenuItem value="ROLE_PREPARER">ROLE_PREPARER</MenuItem>
                   <MenuItem value="ROLE_APPROVER">ROLE_APPROVER</MenuItem>
+                  <MenuItem value="ROLE_PREPARER">ROLE_OTHER</MenuItem>
                 </Select>
               </Grid>
             </Grid>
