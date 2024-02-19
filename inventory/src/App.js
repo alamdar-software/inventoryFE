@@ -331,30 +331,7 @@ function App() {
                     </Sidebar>
                   }
                 />
-                <Route
-                  path="/add-consumeditem"
-                  element={
-                    <Sidebar>
-                      <ConsumeItem />
-                    </Sidebar>
-                  }
-                />
-                <Route
-                  path="/view-consumeditem"
-                  element={
-                    <Sidebar>
-                      <ViewConsume />
-                    </Sidebar>
-                  }
-                />
-                <Route
-                  path="/updateConsumed/:id"
-                  element={
-                    <Sidebar>
-                      <UpdateConsumed />
-                    </Sidebar>
-                  }
-                />
+
                 <Route
                   path="/add-inventory"
                   element={
@@ -409,6 +386,30 @@ function App() {
                     </Sidebar>
                   }
                 ></Route>
+                <Route
+                  path="/add-consumeditem"
+                  element={
+                    <Sidebar>
+                      <ConsumeItem />
+                    </Sidebar>
+                  }
+                />
+                <Route
+                  path="/view-consumeditem"
+                  element={
+                    <Sidebar>
+                      <ViewConsume />
+                    </Sidebar>
+                  }
+                />
+                <Route
+                  path="/updateConsumed/:id"
+                  element={
+                    <Sidebar>
+                      <UpdateConsumed />
+                    </Sidebar>
+                  }
+                />
                 <Route
                   path="/transfer-item"
                   element={
