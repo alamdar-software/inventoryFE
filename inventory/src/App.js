@@ -375,23 +375,6 @@ function App() {
 
               <Route element={<VerifierandApprover />}>
                 <Route
-                  path="/"
-                  element={
-                    <Sidebar>
-                      <Dashboard />
-                    </Sidebar>
-                  }
-                />
-
-                <Route
-                  path="/dashboard"
-                  element={
-                    <Sidebar>
-                      <Dashboard />
-                    </Sidebar>
-                  }
-                ></Route>
-                <Route
                   path="/add-consumeditem"
                   element={
                     <Sidebar>
@@ -571,6 +554,23 @@ function App() {
                 />
 
                 <Route element={<OnlyOther />}>
+                  <Route
+                    path="/"
+                    element={
+                      <Sidebar>
+                        <Dashboard />
+                      </Sidebar>
+                    }
+                  />
+
+                  <Route
+                    path="/dashboard"
+                    element={
+                      <Sidebar>
+                        <Dashboard />
+                      </Sidebar>
+                    }
+                  ></Route>
                   <Route
                     path="/stockReport"
                     element={
