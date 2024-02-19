@@ -23,6 +23,10 @@ import {
 } from "../../redux/slice/UserSlice";
 import { useNavigate } from "react-router-dom";
 import { useLocation } from "react-router-dom";
+import InputAdornment from "@mui/material/InputAdornment";
+import IconButton from "@mui/material/IconButton";
+import Visibility from "@mui/icons-material/Visibility";
+import VisibilityOff from "@mui/icons-material/VisibilityOff";
 
 function Copyright(props) {
   return (
@@ -47,6 +51,7 @@ function Copyright(props) {
 const defaultTheme = createTheme();
 
 export default function Signin() {
+  const [showPassword, setShowPassword] = useState(false);
   const { currentUser } = useSelector((state) => state.persisted.user);
   const location = useLocation();
   const navigate = useNavigate();
@@ -91,6 +96,9 @@ export default function Signin() {
     }
 
     console.log(formData, "formmm");
+  };
+  const togglePasswordVisibility = () => {
+    setShowPassword((prevShowPassword) => !prevShowPassword);
   };
 
   return (
@@ -155,10 +163,22 @@ export default function Signin() {
                     fullWidth
                     name="password"
                     label="Password"
-                    type="password"
+                    type={showPassword ? "text" : "password"}
                     id="password"
                     autoComplete="new-password"
                     onChange={handleChange}
+                    InputProps={{
+                      endAdornment: (
+                        <InputAdornment position="end">
+                          <IconButton
+                            onClick={togglePasswordVisibility}
+                            edge="end"
+                          >
+                            {showPassword ? <VisibilityOff /> : <Visibility />}
+                          </IconButton>
+                        </InputAdornment>
+                      ),
+                    }}
                   />
                 </Grid>
               </Grid>
