@@ -147,226 +147,227 @@ function App() {
                     </Sidebar>
                   }
                 />
-                <Route element={<OnlyPreparer />}>
-                  <Route
-                    path="/add-location"
-                    element={
-                      <Sidebar>
-                        <Location />
-                      </Sidebar>
-                    }
-                  />
-                  <Route
-                    path="/change-password"
-                    element={
-                      <Sidebar>
-                        <ChangePassword />
-                      </Sidebar>
-                    }
-                  />
-                  <Route
-                    path="/item"
-                    element={
-                      <Sidebar>
-                        <Item />
-                      </Sidebar>
-                    }
-                  />
-                  <Route
-                    path="/updateItem/:id"
-                    element={
-                      <Sidebar>
-                        <UpdateItem />
-                      </Sidebar>
-                    }
-                  />
-                  <Route
-                    path="/pick-up"
-                    element={
-                      <Sidebar>
-                        <Pickup />
-                      </Sidebar>
-                    }
-                  />
-                  <Route
-                    path="/updatePickup/:id"
-                    element={
-                      <Sidebar>
-                        <UpdatePickup />
-                      </Sidebar>
-                    }
-                  />
-                  <Route
-                    path="/uom"
-                    element={
-                      <Sidebar>
-                        <Uom />
-                      </Sidebar>
-                    }
-                  />
-                  <Route
-                    path="/shipper"
-                    element={
-                      <Sidebar>
-                        <Shipper />
-                      </Sidebar>
-                    }
-                  />
-                  <Route
-                    path="/updateShipper/:id"
-                    element={
-                      <Sidebar>
-                        <UpdateShipper />
-                      </Sidebar>
-                    }
-                  />
-                  <Route
-                    path="/consignee"
-                    element={
-                      <Sidebar>
-                        <Consignee />
-                      </Sidebar>
-                    }
-                  />
+              </Route>
 
-                  <Route
-                    path="/view-location"
-                    element={
-                      <Sidebar>
-                        <LocationList />
-                      </Sidebar>
-                    }
-                  />
-                  <Route
-                    path="/MOC"
-                    element={
-                      <Sidebar>
-                        <Moc />
-                      </Sidebar>
-                    }
-                  />
-                  <Route
-                    path="/updateLocation/:locationId/addresses/:addressId"
-                    element={
-                      <Sidebar>
-                        <Update />
-                      </Sidebar>
-                    }
-                  />
-                  <Route
-                    path="/currency"
-                    element={
-                      <Sidebar>
-                        <Currency />
-                      </Sidebar>
-                    }
-                  />
-                  <Route
-                    path="/currency/update/:id"
-                    element={
-                      <Sidebar>
-                        <UpdateCurrency />
-                      </Sidebar>
-                    }
-                  />
-                  <Route
-                    path="/brand"
-                    element={
-                      <Sidebar>
-                        <Brand />
-                      </Sidebar>
-                    }
-                  />
-                  <Route
-                    path="/brand/edit/:id"
-                    element={
-                      <Sidebar>
-                        <UpdateBrand />
-                      </Sidebar>
-                    }
-                  />
-                  <Route
-                    path="/category"
-                    element={
-                      <Sidebar>
-                        <Category />
-                      </Sidebar>
-                    }
-                  />
-                  <Route
-                    path="/category/edit/:id"
-                    element={
-                      <Sidebar>
-                        <UpdateCategory />
-                      </Sidebar>
-                    }
-                  />
-                  <Route
-                    path="/Items"
-                    element={
-                      <Sidebar>
-                        <ViewItem />
-                      </Sidebar>
-                    }
-                  />
-                  <Route
-                    path="/entity"
-                    element={
-                      <Sidebar>
-                        <Entity />
-                      </Sidebar>
-                    }
-                  />
-                  <Route
-                    path="/entity/update/:id"
-                    element={
-                      <Sidebar>
-                        <UpdateEntity />
-                      </Sidebar>
-                    }
-                  />
-                  <Route
-                    path="/updateConsignee/:id"
-                    element={
-                      <Sidebar>
-                        <UpdateConsignee />
-                      </Sidebar>
-                    }
-                  />
+              <Route element={<OnlyPreparer />}>
+                <Route
+                  path="/add-location"
+                  element={
+                    <Sidebar>
+                      <Location />
+                    </Sidebar>
+                  }
+                />
+                <Route
+                  path="/change-password"
+                  element={
+                    <Sidebar>
+                      <ChangePassword />
+                    </Sidebar>
+                  }
+                />
+                <Route
+                  path="/item"
+                  element={
+                    <Sidebar>
+                      <Item />
+                    </Sidebar>
+                  }
+                />
+                <Route
+                  path="/updateItem/:id"
+                  element={
+                    <Sidebar>
+                      <UpdateItem />
+                    </Sidebar>
+                  }
+                />
+                <Route
+                  path="/pick-up"
+                  element={
+                    <Sidebar>
+                      <Pickup />
+                    </Sidebar>
+                  }
+                />
+                <Route
+                  path="/updatePickup/:id"
+                  element={
+                    <Sidebar>
+                      <UpdatePickup />
+                    </Sidebar>
+                  }
+                />
+                <Route
+                  path="/uom"
+                  element={
+                    <Sidebar>
+                      <Uom />
+                    </Sidebar>
+                  }
+                />
+                <Route
+                  path="/shipper"
+                  element={
+                    <Sidebar>
+                      <Shipper />
+                    </Sidebar>
+                  }
+                />
+                <Route
+                  path="/updateShipper/:id"
+                  element={
+                    <Sidebar>
+                      <UpdateShipper />
+                    </Sidebar>
+                  }
+                />
+                <Route
+                  path="/consignee"
+                  element={
+                    <Sidebar>
+                      <Consignee />
+                    </Sidebar>
+                  }
+                />
 
-                  <Route
-                    path="/add-inventory"
-                    element={
-                      <Sidebar>
-                        <Inventory />
-                      </Sidebar>
-                    }
-                  />
-                  <Route
-                    path="/view-inventory"
-                    element={
-                      <Sidebar>
-                        <InventoryList />
-                      </Sidebar>
-                    }
-                  />
-                  <Route
-                    path="/updateInventory/:id"
-                    element={
-                      <Sidebar>
-                        <UpdateInventory />
-                      </Sidebar>
-                    }
-                  />
-                  <Route
-                    path="/datacount"
-                    element={
-                      <Sidebar>
-                        <DailyDataCount />
-                      </Sidebar>
-                    }
-                  />
-                </Route>
+                <Route
+                  path="/view-location"
+                  element={
+                    <Sidebar>
+                      <LocationList />
+                    </Sidebar>
+                  }
+                />
+                <Route
+                  path="/MOC"
+                  element={
+                    <Sidebar>
+                      <Moc />
+                    </Sidebar>
+                  }
+                />
+                <Route
+                  path="/updateLocation/:locationId/addresses/:addressId"
+                  element={
+                    <Sidebar>
+                      <Update />
+                    </Sidebar>
+                  }
+                />
+                <Route
+                  path="/currency"
+                  element={
+                    <Sidebar>
+                      <Currency />
+                    </Sidebar>
+                  }
+                />
+                <Route
+                  path="/currency/update/:id"
+                  element={
+                    <Sidebar>
+                      <UpdateCurrency />
+                    </Sidebar>
+                  }
+                />
+                <Route
+                  path="/brand"
+                  element={
+                    <Sidebar>
+                      <Brand />
+                    </Sidebar>
+                  }
+                />
+                <Route
+                  path="/brand/edit/:id"
+                  element={
+                    <Sidebar>
+                      <UpdateBrand />
+                    </Sidebar>
+                  }
+                />
+                <Route
+                  path="/category"
+                  element={
+                    <Sidebar>
+                      <Category />
+                    </Sidebar>
+                  }
+                />
+                <Route
+                  path="/category/edit/:id"
+                  element={
+                    <Sidebar>
+                      <UpdateCategory />
+                    </Sidebar>
+                  }
+                />
+                <Route
+                  path="/Items"
+                  element={
+                    <Sidebar>
+                      <ViewItem />
+                    </Sidebar>
+                  }
+                />
+                <Route
+                  path="/entity"
+                  element={
+                    <Sidebar>
+                      <Entity />
+                    </Sidebar>
+                  }
+                />
+                <Route
+                  path="/entity/update/:id"
+                  element={
+                    <Sidebar>
+                      <UpdateEntity />
+                    </Sidebar>
+                  }
+                />
+                <Route
+                  path="/updateConsignee/:id"
+                  element={
+                    <Sidebar>
+                      <UpdateConsignee />
+                    </Sidebar>
+                  }
+                />
+
+                <Route
+                  path="/add-inventory"
+                  element={
+                    <Sidebar>
+                      <Inventory />
+                    </Sidebar>
+                  }
+                />
+                <Route
+                  path="/view-inventory"
+                  element={
+                    <Sidebar>
+                      <InventoryList />
+                    </Sidebar>
+                  }
+                />
+                <Route
+                  path="/updateInventory/:id"
+                  element={
+                    <Sidebar>
+                      <UpdateInventory />
+                    </Sidebar>
+                  }
+                />
+                <Route
+                  path="/datacount"
+                  element={
+                    <Sidebar>
+                      <DailyDataCount />
+                    </Sidebar>
+                  }
+                />
               </Route>
 
               {/*   transfer item*/}
