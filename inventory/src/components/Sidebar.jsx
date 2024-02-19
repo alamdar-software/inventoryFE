@@ -132,7 +132,7 @@ export default function Sidebar({ children }) {
   const rolePreparer = currentUser && currentUser.roles[0] === "ROLE_PREPARER";
   const roleVerifier = currentUser && currentUser.roles[0] === "ROLE_VERIFIER";
   const roleApprover = currentUser && currentUser.roles[0] === "ROLE_APPROVER";
-  const roleOthers = currentUser && currentUser.roles[0] === "ROLE_OTHERS";
+  const roleOthers = currentUser && currentUser.roles[0] === "ROLE_OTHER";
 
   const menuItems = [{ text: "Dashboard", icon: <DashboardIcon /> }];
 
