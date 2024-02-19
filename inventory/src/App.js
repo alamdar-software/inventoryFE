@@ -86,6 +86,7 @@ import ViewUser from "./components/ViewUser";
 import UpdateUser from "./components/UpdateUser";
 import VerifierandApprover from "./components/VerifierAndApproverRoute";
 import OnlyPreparer from "./components/OnlyPreparerRoute";
+import OnlyOther from "./components/OnlyOthers";
 const theme = createTheme({
   palette: {
     background: {
@@ -568,158 +569,161 @@ function App() {
                     </Sidebar>
                   }
                 />
-                <Route
-                  path="/stockReport"
-                  element={
-                    <Sidebar>
-                      <StockReport />
-                    </Sidebar>
-                  }
-                />
-                <Route
-                  path="/reportItem"
-                  element={
-                    <Sidebar>
-                      <ReportItem />
-                    </Sidebar>
-                  }
-                />
-                <Route
-                  path="/locationReport"
-                  element={
-                    <Sidebar>
-                      <LocationReport />
-                    </Sidebar>
-                  }
-                />
-                <Route
-                  path="/transferItem"
-                  element={
-                    <Sidebar>
-                      <TransferItemDashboard />
-                    </Sidebar>
-                  }
-                />
-                <Route
-                  path="/viewMto"
-                  element={
-                    <Sidebar>
-                      <ViewMto />
-                    </Sidebar>
-                  }
-                />
-                <Route
-                  path="/mto/createpdf/:id"
-                  element={
-                    <Sidebar>
-                      <PrintMto />
-                    </Sidebar>
-                  }
-                />
-                <Route
-                  path="/updateMto/:id"
-                  element={
-                    <Sidebar>
-                      <UpdateMto />
-                    </Sidebar>
-                  }
-                />
-                <Route
-                  path="/viewInternal"
-                  element={
-                    <Sidebar>
-                      <ViewInternal />
-                    </Sidebar>
-                  }
-                />
-                <Route
-                  path="/updatePickup/:id"
-                  element={
-                    <Sidebar>
-                      <UpdatePickup />
-                    </Sidebar>
-                  }
-                />
-                <Route
-                  path="/internal/createpdf/:id"
-                  element={
-                    <Sidebar>
-                      <PrintInternal />
-                    </Sidebar>
-                  }
-                />
-                <Route
-                  path="/Uom/update/:id"
-                  element={
-                    <Sidebar>
-                      <UpdateUom />
-                    </Sidebar>
-                  }
-                />
-                <Route
-                  path="/masterReport"
-                  element={
-                    <Sidebar>
-                      <MasterReports />
-                    </Sidebar>
-                  }
-                />
-                <Route
-                  path="/consumeReport"
-                  element={
-                    <Sidebar>
-                      <ConsumeReport />
-                    </Sidebar>
-                  }
-                />
-                <Route
-                  path="/scrappedReport"
-                  element={
-                    <Sidebar>
-                      <ScrappedReport />
-                    </Sidebar>
-                  }
-                />
-                <Route
-                  path="/itemService"
-                  element={
-                    <Sidebar>
-                      <ItemServiceReport />
-                    </Sidebar>
-                  }
-                />
-                <Route
-                  path="/mtoReports"
-                  element={
-                    <Sidebar>
-                      <MtoReports />
-                    </Sidebar>
-                  }
-                />
-                <Route
-                  path="/itReport"
-                  element={
-                    <Sidebar>
-                      <InternalTransferReport />
-                    </Sidebar>
-                  }
-                />
-                <Route
-                  path="/ciplReport"
-                  element={
-                    <Sidebar>
-                      <CiplReport />
-                    </Sidebar>
-                  }
-                />
-                <Route
-                  path="/view-inventoryMoc"
-                  element={
-                    <Sidebar>
-                      <ViewInventoryMoc />
-                    </Sidebar>
-                  }
-                />
+
+                <Route element={<OnlyOther />}>
+                  <Route
+                    path="/stockReport"
+                    element={
+                      <Sidebar>
+                        <StockReport />
+                      </Sidebar>
+                    }
+                  />
+                  <Route
+                    path="/reportItem"
+                    element={
+                      <Sidebar>
+                        <ReportItem />
+                      </Sidebar>
+                    }
+                  />
+                  <Route
+                    path="/locationReport"
+                    element={
+                      <Sidebar>
+                        <LocationReport />
+                      </Sidebar>
+                    }
+                  />
+                  <Route
+                    path="/transferItem"
+                    element={
+                      <Sidebar>
+                        <TransferItemDashboard />
+                      </Sidebar>
+                    }
+                  />
+                  <Route
+                    path="/viewMto"
+                    element={
+                      <Sidebar>
+                        <ViewMto />
+                      </Sidebar>
+                    }
+                  />
+                  <Route
+                    path="/mto/createpdf/:id"
+                    element={
+                      <Sidebar>
+                        <PrintMto />
+                      </Sidebar>
+                    }
+                  />
+                  <Route
+                    path="/updateMto/:id"
+                    element={
+                      <Sidebar>
+                        <UpdateMto />
+                      </Sidebar>
+                    }
+                  />
+                  <Route
+                    path="/viewInternal"
+                    element={
+                      <Sidebar>
+                        <ViewInternal />
+                      </Sidebar>
+                    }
+                  />
+                  <Route
+                    path="/updatePickup/:id"
+                    element={
+                      <Sidebar>
+                        <UpdatePickup />
+                      </Sidebar>
+                    }
+                  />
+                  <Route
+                    path="/internal/createpdf/:id"
+                    element={
+                      <Sidebar>
+                        <PrintInternal />
+                      </Sidebar>
+                    }
+                  />
+                  <Route
+                    path="/Uom/update/:id"
+                    element={
+                      <Sidebar>
+                        <UpdateUom />
+                      </Sidebar>
+                    }
+                  />
+                  <Route
+                    path="/masterReport"
+                    element={
+                      <Sidebar>
+                        <MasterReports />
+                      </Sidebar>
+                    }
+                  />
+                  <Route
+                    path="/consumeReport"
+                    element={
+                      <Sidebar>
+                        <ConsumeReport />
+                      </Sidebar>
+                    }
+                  />
+                  <Route
+                    path="/scrappedReport"
+                    element={
+                      <Sidebar>
+                        <ScrappedReport />
+                      </Sidebar>
+                    }
+                  />
+                  <Route
+                    path="/itemService"
+                    element={
+                      <Sidebar>
+                        <ItemServiceReport />
+                      </Sidebar>
+                    }
+                  />
+                  <Route
+                    path="/mtoReports"
+                    element={
+                      <Sidebar>
+                        <MtoReports />
+                      </Sidebar>
+                    }
+                  />
+                  <Route
+                    path="/itReport"
+                    element={
+                      <Sidebar>
+                        <InternalTransferReport />
+                      </Sidebar>
+                    }
+                  />
+                  <Route
+                    path="/ciplReport"
+                    element={
+                      <Sidebar>
+                        <CiplReport />
+                      </Sidebar>
+                    }
+                  />
+                  <Route
+                    path="/view-inventoryMoc"
+                    element={
+                      <Sidebar>
+                        <ViewInventoryMoc />
+                      </Sidebar>
+                    }
+                  />
+                </Route>
               </Route>
 
               {/* <Route
