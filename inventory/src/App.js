@@ -147,7 +147,7 @@ function App() {
                     </Sidebar>
                   }
                 />
-                <Route element={<OnlySuperAdmin />}>
+                <Route element={<OnlyPreparer />}>
                   <Route
                     path="/add-location"
                     element={

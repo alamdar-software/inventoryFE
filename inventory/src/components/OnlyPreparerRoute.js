@@ -6,7 +6,8 @@ import { Navigate } from "react-router-dom";
 const OnlyPreparer = () => {
   const { currentUser } = useSelector((state) => state.persisted.user);
 
-  return currentUser.roles[0] === "ROLE_PREPARER" ? (
+  return currentUser.roles[0] === "ROLE_PREPARER" ||
+    currentUser.roles[0] === "ROLE_SUPERADMIN" ? (
     <Outlet />
   ) : (
     <Navigate to="/login" />

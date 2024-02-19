@@ -6,10 +6,6 @@ import { Navigate } from "react-router-dom";
 const VerifierandApprover = () => {
   const { currentUser } = useSelector((state) => state.persisted.user);
 
-  useEffect(() => {
-    console.log(currentUser.roles[0], "huhummm");
-  }, []);
-
   /* useEffect(() => {
     console.log(currentUser.roles[0], "jamamama");
     if (
