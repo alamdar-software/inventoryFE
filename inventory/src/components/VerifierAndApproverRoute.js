@@ -21,7 +21,8 @@ const VerifierandApprover = () => {
   }, [currentUser.roles[0]]); */
   return currentUser.roles[0] === "ROLE_VERIFIER" ||
     currentUser.roles[0] === "ROLE_APPROVER" ||
-    currentUser.roles[0] === "ROLE_SUPERADMIN" ? (
+    currentUser.roles[0] === "ROLE_SUPERADMIN" ||
+    currentUser.roles[0] === "ROLE_PREPARER" ? (
     <Outlet />
   ) : (
     <Navigate to="/login" />
