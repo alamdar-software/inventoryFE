@@ -129,76 +129,243 @@ export default function Sidebar({ children }) {
   };
   const roleSuperAdmin =
     currentUser && currentUser.roles[0] === "ROLE_SUPERADMIN";
-  const menuItems = [
-    { text: "Dashboard", icon: <DashboardIcon /> },
-    {
-      text: "Location/Vessel",
-      icon: <LocationOnIcon />,
-      submenu: [{ text: "Add Location" }, { text: "View Location" }],
-    },
-    { text: "Pick up", icon: <IsoIcon /> },
-    { text: "Entity", icon: <AddCardIcon /> },
-    { text: "Currency", icon: <CurrencyRupeeIcon /> },
-    { text: "UOM", icon: <DriveFileRenameOutlineIcon /> },
-    { text: "Shipper", icon: <LocalShippingIcon /> },
-    { text: "Consignee", icon: <AddCardIcon /> },
-    { text: "Category", icon: <CategoryIcon /> },
-    { text: "Brand", icon: <BrandingWatermarkIcon /> },
-    { text: "Item", icon: <Inventory2Icon /> },
-    {
-      text: "Inventory",
-      icon: <TransferWithinAStationIcon />,
-      submenu: [{ text: "Add Inventory" }, { text: "View Inventory" }],
-    },
-    /* { text: "Transfer Item", icon: <WhatshotIcon /> }, */
-    {
-      text: "Transfer Item",
-      icon: <WhatshotIcon />,
-      submenu: [
-        {
-          text: "transfer-item",
-          icon: <AddCardIcon />,
-        },
-        { text: "View Transfer" },
-      ],
-    },
-    {
-      text: "Consume Item",
-      icon: <HighlightOffIcon />,
-      submenu: [
-        {
-          text: "Add ConsumedItem",
-          icon: <AddCardIcon />,
-        },
-        { text: "View ConsumedItem" },
-      ],
-    },
-    {
-      text: "Scrapped Item",
-      icon: <LocationOnIcon />,
-      submenu: [
-        {
-          text: "Add ScrappedItem",
-          icon: <AddCardIcon />,
-        },
-        { text: "View ScrappedItem" },
-      ],
-    },
-    {
-      text: "Incoming Stock",
-      icon: <RingVolumeIcon />,
-      submenu: [{ text: "Add Incoming" }, { text: "View Incoming" }],
-    },
+  const rolePreparer = currentUser && currentUser.roles[0] === "ROLE_PREPARER";
+  const roleVerifier = currentUser && currentUser.roles[0] === "ROLE_VERIFIER";
+  const roleApprover = currentUser && currentUser.roles[0] === "ROLE_APPROVER";
+  const roleOthers = currentUser && currentUser.roles[0] === "ROLE_OTHERS";
 
-    { text: "Reports", icon: <ReportIcon /> },
-  ];
-  if (roleSuperAdmin) {
-    menuItems.push({
-      text: "Users",
-      icon: <RingVolumeIcon />,
-      submenu: [{ text: "Add User" }, { text: "View User" }],
-    });
+  const menuItems = [{ text: "Dashboard", icon: <DashboardIcon /> }];
+
+  if (currentUser && currentUser.roles) {
+    // Check roles and conditionally add menu items
+    if (roleSuperAdmin) {
+      menuItems.push(
+        {
+          text: "Location/Vessel",
+          icon: <LocationOnIcon />,
+          submenu: [{ text: "Add Location" }, { text: "View Location" }],
+        },
+        { text: "Pick up", icon: <IsoIcon /> },
+        { text: "Entity", icon: <AddCardIcon /> },
+        { text: "Currency", icon: <CurrencyRupeeIcon /> },
+        { text: "UOM", icon: <DriveFileRenameOutlineIcon /> },
+        { text: "Shipper", icon: <LocalShippingIcon /> },
+        { text: "Consignee", icon: <AddCardIcon /> },
+        { text: "Category", icon: <CategoryIcon /> },
+        { text: "Brand", icon: <BrandingWatermarkIcon /> },
+        { text: "Item", icon: <Inventory2Icon /> },
+        {
+          text: "Inventory",
+          icon: <TransferWithinAStationIcon />,
+          submenu: [{ text: "Add Inventory" }, { text: "View Inventory" }],
+        },
+        /* { text: "Transfer Item", icon: <WhatshotIcon /> }, */
+        {
+          text: "Transfer Item",
+          icon: <WhatshotIcon />,
+          submenu: [
+            {
+              text: "transfer-item",
+              icon: <AddCardIcon />,
+            },
+            { text: "View Transfer" },
+          ],
+        },
+        {
+          text: "Consume Item",
+          icon: <HighlightOffIcon />,
+          submenu: [
+            {
+              text: "Add ConsumedItem",
+              icon: <AddCardIcon />,
+            },
+            { text: "View ConsumedItem" },
+          ],
+        },
+        {
+          text: "Scrapped Item",
+          icon: <LocationOnIcon />,
+          submenu: [
+            {
+              text: "Add ScrappedItem",
+              icon: <AddCardIcon />,
+            },
+            { text: "View ScrappedItem" },
+          ],
+        },
+        {
+          text: "Incoming Stock",
+          icon: <RingVolumeIcon />,
+          submenu: [{ text: "Add Incoming" }, { text: "View Incoming" }],
+        },
+
+        { text: "Reports", icon: <ReportIcon /> },
+        {
+          text: "Users",
+          icon: <RingVolumeIcon />,
+          submenu: [{ text: "Add User" }, { text: "View User" }],
+        }
+      );
+    }
+    if (roleVerifier) {
+      menuItems.push(
+        {
+          text: "Transfer Item",
+          icon: <WhatshotIcon />,
+          submenu: [
+            {
+              text: "transfer-item",
+              icon: <AddCardIcon />,
+            },
+            { text: "View Transfer" },
+          ],
+        },
+        {
+          text: "Consume Item",
+          icon: <HighlightOffIcon />,
+          submenu: [
+            {
+              text: "Add ConsumedItem",
+              icon: <AddCardIcon />,
+            },
+            { text: "View ConsumedItem" },
+          ],
+        },
+        {
+          text: "Scrapped Item",
+          icon: <LocationOnIcon />,
+          submenu: [
+            {
+              text: "Add ScrappedItem",
+              icon: <AddCardIcon />,
+            },
+            { text: "View ScrappedItem" },
+          ],
+        },
+        {
+          text: "Incoming Stock",
+          icon: <RingVolumeIcon />,
+          submenu: [{ text: "Add Incoming" }, { text: "View Incoming" }],
+        },
+
+        { text: "Reports", icon: <ReportIcon /> }
+      );
+    }
+    if (rolePreparer) {
+      menuItems.push(
+        {
+          text: "Location/Vessel",
+          icon: <LocationOnIcon />,
+          submenu: [{ text: "Add Location" }, { text: "View Location" }],
+        },
+        { text: "Pick up", icon: <IsoIcon /> },
+        { text: "Entity", icon: <AddCardIcon /> },
+        { text: "Currency", icon: <CurrencyRupeeIcon /> },
+        { text: "UOM", icon: <DriveFileRenameOutlineIcon /> },
+        { text: "Shipper", icon: <LocalShippingIcon /> },
+        { text: "Consignee", icon: <AddCardIcon /> },
+        { text: "Category", icon: <CategoryIcon /> },
+        { text: "Brand", icon: <BrandingWatermarkIcon /> },
+        { text: "Item", icon: <Inventory2Icon /> },
+        {
+          text: "Inventory",
+          icon: <TransferWithinAStationIcon />,
+          submenu: [{ text: "Add Inventory" }, { text: "View Inventory" }],
+        },
+        /* { text: "Transfer Item", icon: <WhatshotIcon /> }, */
+        {
+          text: "Transfer Item",
+          icon: <WhatshotIcon />,
+          submenu: [
+            {
+              text: "transfer-item",
+              icon: <AddCardIcon />,
+            },
+            { text: "View Transfer" },
+          ],
+        },
+        {
+          text: "Consume Item",
+          icon: <HighlightOffIcon />,
+          submenu: [
+            {
+              text: "Add ConsumedItem",
+              icon: <AddCardIcon />,
+            },
+            { text: "View ConsumedItem" },
+          ],
+        },
+        {
+          text: "Scrapped Item",
+          icon: <LocationOnIcon />,
+          submenu: [
+            {
+              text: "Add ScrappedItem",
+              icon: <AddCardIcon />,
+            },
+            { text: "View ScrappedItem" },
+          ],
+        },
+        {
+          text: "Incoming Stock",
+          icon: <RingVolumeIcon />,
+          submenu: [{ text: "Add Incoming" }, { text: "View Incoming" }],
+        },
+
+        { text: "Reports", icon: <ReportIcon /> }
+      );
+    }
+    if (roleApprover) {
+      menuItems.push(
+        {
+          text: "Transfer Item",
+          icon: <WhatshotIcon />,
+          submenu: [
+            {
+              text: "transfer-item",
+              icon: <AddCardIcon />,
+            },
+            { text: "View Transfer" },
+          ],
+        },
+        {
+          text: "Consume Item",
+          icon: <HighlightOffIcon />,
+          submenu: [
+            {
+              text: "Add ConsumedItem",
+              icon: <AddCardIcon />,
+            },
+            { text: "View ConsumedItem" },
+          ],
+        },
+        {
+          text: "Scrapped Item",
+          icon: <LocationOnIcon />,
+          submenu: [
+            {
+              text: "Add ScrappedItem",
+              icon: <AddCardIcon />,
+            },
+            { text: "View ScrappedItem" },
+          ],
+        },
+        {
+          text: "Incoming Stock",
+          icon: <RingVolumeIcon />,
+          submenu: [{ text: "Add Incoming" }, { text: "View Incoming" }],
+        },
+
+        { text: "Reports", icon: <ReportIcon /> }
+      );
+    }
+    if (roleOthers) {
+      menuItems.push({ text: "Reports", icon: <ReportIcon /> });
+    }
+
+    // Add other role-based menu items as needed
   }
+
   const [openSubMenu, setOpenSubMenu] = React.useState(null);
 
   const handleSubMenuClick = (index) => {
