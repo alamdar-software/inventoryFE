@@ -87,6 +87,7 @@ import UpdateUser from "./components/UpdateUser";
 import VerifierandApprover from "./components/VerifierAndApproverRoute";
 import OnlyPreparer from "./components/OnlyPreparerRoute";
 import OnlyOther from "./components/OnlyOthers";
+import NeedVerificationDashboard from "./components/dashboards/NeedVerificationDashboard.js";
 const theme = createTheme({
   palette: {
     background: {
@@ -338,10 +339,31 @@ function App() {
                 />
 
                 <Route
+                  path="/datacount"
+                  element={
+                    <Sidebar>
+                      <DailyDataCount />
+                    </Sidebar>
+                  }
+                />
+              </Route>
+
+              {/*   transfer item*/}
+
+              <Route element={<VerifierandApprover />}>
+                <Route
                   path="/add-inventory"
                   element={
                     <Sidebar>
                       <Inventory />
+                    </Sidebar>
+                  }
+                />
+                <Route
+                  path="/need-verfication"
+                  element={
+                    <Sidebar>
+                      <NeedVerificationDashboard />
                     </Sidebar>
                   }
                 />
@@ -361,19 +383,6 @@ function App() {
                     </Sidebar>
                   }
                 />
-                <Route
-                  path="/datacount"
-                  element={
-                    <Sidebar>
-                      <DailyDataCount />
-                    </Sidebar>
-                  }
-                />
-              </Route>
-
-              {/*   transfer item*/}
-
-              <Route element={<VerifierandApprover />}>
                 <Route
                   path="/add-consumeditem"
                   element={
