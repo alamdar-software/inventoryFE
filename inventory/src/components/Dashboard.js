@@ -1450,76 +1450,7 @@ const Dashboard = () => {
             margin: "-30px",
           }}
         >
-          <div style={{ display: "flex", flexDirection: "row", marginTop: 3 }}>
-            <Card
-              sx={{
-                flex: 1,
-                marginRight: 3,
-                marginLeft: 3,
-                marginTop: 3,
-                borderRadius: 5,
-                width: "100px !important",
-
-                transition: "transform 0.3s",
-                "&:hover": {
-                  transform: "scale(1.1)", // Adjust the scaling factor as needed
-                },
-              }}
-            >
-              <Link
-                to={"/view-inventoryMoc"}
-                style={{ textDecoration: "none", position: "relative" }}
-              >
-                <CardContent>
-                  {/* Your small box */}
-                  <Box
-                    sx={{
-                      position: "absolute",
-                      top: 0,
-                      left: 0,
-                      backgroundColor: "white", // Set your desired color
-                      color: "white", // Set your desired text color
-                      padding: 2,
-                    }}
-                  >
-                    {/* <CountertopsIcon
-                  fontSize='large'
-                  color='primary'
-                  sx={{ fontSize: '70px' }}
-                /> */}
-                  </Box>
-
-                  <CountertopsIcon
-                    fontSize="large"
-                    color="primary"
-                    sx={{
-                      fontSize: "50px",
-                      display: "flex",
-                      alignItems: "center",
-                      // justifyContent: 'center',
-                    }}
-                  />
-
-                  <Typography
-                    sx={{
-                      mb: 1.5,
-                      textAlign: "center",
-                      fontWeight: "bolder",
-                      fontFamily: "Montserrat",
-                    }}
-                    color="#333"
-                    variant="h5"
-                    component="div"
-                  >
-                    MOC
-                  </Typography>
-                  <Typography sx={{ mb: 1.5 }} color="text.secondary">
-                    Count:
-                  </Typography>
-                </CardContent>
-              </Link>
-            </Card>
-
+          <div style={{ display: "flex", flexDirection: "row", marginTop: 15 }}>
             <Card
               sx={{
                 //border: '2px solid yellow',
@@ -1601,94 +1532,6 @@ const Dashboard = () => {
                 //border: '2px solid yellow',
                 minWidth: 20,
                 flex: 1,
-                marginLeft: 3,
-                borderRadius: 8,
-                marginTop: 3,
-                transition: "transform 0.3s",
-                "&:hover": {
-                  transform: "scale(1.1)", // Adjust the scaling factor as needed
-                },
-              }}
-            >
-              <Link to={"/Items"} style={{ textDecoration: "none" }}>
-                <CardContent>
-                  <DescriptionIcon
-                    fontSize="large"
-                    sx={{ fontSize: "50px", color: "#c6ff00" }}
-                  />
-                  <Typography
-                    variant="h5"
-                    component="div"
-                    color="#333"
-                    sx={{
-                      mb: 1.5,
-                      textAlign: "center",
-                      fontWeight: "bolder",
-                      fontFamily: "Montserrat",
-                    }}
-                  >
-                    Items
-                  </Typography>
-                </CardContent>
-              </Link>
-            </Card>
-          </div>
-          <div style={{ display: "flex", flexDirection: "row", marginTop: 3 }}>
-            <Card
-              sx={{
-                //border: '2px solid yellow',
-                minWidth: 20,
-                flex: 1,
-                marginRight: 3,
-                marginLeft: 3,
-                marginTop: 3,
-                borderRadius: 8,
-                transition: "transform 0.3s",
-                "&:hover": {
-                  transform: "scale(1.1)", // Adjust the scaling factor as needed
-                },
-              }}
-            >
-              <Link
-                to={"/locationDashboard"}
-                style={{ textDecoration: "none" }}
-              >
-                <CardContent
-                // sx={{
-                //   display: 'flex',
-                //   flexDirection: 'column',
-                //   alignItems: 'start',
-                // }}
-                >
-                  <CountertopsIcon
-                    fontSize="large"
-                    sx={{ fontSize: "50px", color: "#c6ff00" }}
-                  />
-
-                  <Typography
-                    sx={{
-                      mb: 1.5,
-                      textAlign: "center",
-                      fontWeight: "bolder",
-                      fontFamily: "Montserrat",
-                    }}
-                    color="#333"
-                    variant="h5"
-                    component="div"
-                  >
-                    Location/Vessel
-                  </Typography>
-                  <Typography sx={{ mb: 1.5 }} color="text.secondary">
-                    Count:
-                  </Typography>
-                </CardContent>
-              </Link>
-            </Card>
-            <Card
-              sx={{
-                //border: '2px solid yellow',
-                minWidth: 20,
-                flex: 1,
                 marginRight: 3,
                 marginLeft: 3,
                 marginTop: 3,
@@ -1733,30 +1576,51 @@ const Dashboard = () => {
             </Card>
             <Card
               sx={{
-                //border: '2px solid yellow',
-                minWidth: 20,
                 flex: 1,
                 marginRight: 3,
                 marginLeft: 3,
                 marginTop: 3,
-                borderRadius: 8,
+                borderRadius: 5,
+                width: "100px !important",
+
                 transition: "transform 0.3s",
                 "&:hover": {
                   transform: "scale(1.1)", // Adjust the scaling factor as needed
                 },
               }}
             >
-              <Link to={"/transfer-item"} style={{ textDecoration: "none" }}>
-                <CardContent
-                  sx={{
-                    display: "flex",
-                    flexDirection: "column",
-                    alignItems: "start",
-                  }}
-                >
+              <Link
+                to={"/need-approval"}
+                style={{ textDecoration: "none", position: "relative" }}
+              >
+                <CardContent>
+                  {/* Your small box */}
+                  <Box
+                    sx={{
+                      position: "absolute",
+                      top: 0,
+                      left: 0,
+                      backgroundColor: "white", // Set your desired color
+                      color: "white", // Set your desired text color
+                      padding: 2,
+                    }}
+                  >
+                    {/* <CountertopsIcon
+                fontSize='large'
+                color='primary'
+                sx={{ fontSize: '70px' }}
+              /> */}
+                  </Box>
+
                   <CountertopsIcon
                     fontSize="large"
-                    style={{ color: "#9e9e9e", fontSize: "50px" }}
+                    color="primary"
+                    sx={{
+                      fontSize: "50px",
+                      display: "flex",
+                      alignItems: "center",
+                      // justifyContent: 'center',
+                    }}
                   />
 
                   <Typography
@@ -1770,14 +1634,114 @@ const Dashboard = () => {
                     variant="h5"
                     component="div"
                   >
-                    Transfer Items
-                  </Typography>
-                  <Typography sx={{ mb: 1.5 }} color="text.secondary">
-                    Count:
+                    Need Approval
                   </Typography>
                 </CardContent>
               </Link>
             </Card>
+          </div>
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              marginTop: 2,
+              marginRight: 300,
+              height: 250,
+              paddingBottom: 50,
+            }}
+          >
+            <Card
+              sx={{
+                //border: '2px solid yellow',
+                minWidth: 20,
+                flex: 1,
+                marginRight: 3,
+                marginLeft: 3,
+                marginTop: 3,
+                borderRadius: 8,
+                transition: "transform 0.3s",
+                "&:hover": {
+                  transform: "scale(1.1)", // Adjust the scaling factor as needed
+                },
+              }}
+            >
+              <Link to={"/approved"} style={{ textDecoration: "none" }}>
+                <CardContent
+                // sx={{
+                //   display: 'flex',
+                //   flexDirection: 'column',
+                //   alignItems: 'start',
+                // }}
+                >
+                  <CheckBoxIcon
+                    fontSize="large"
+                    sx={{ fontSize: "50px", color: "#c6ff00" }}
+                  />
+
+                  <Typography
+                    sx={{
+                      mb: 1.5,
+                      textAlign: "center",
+                      fontWeight: "bolder",
+                      fontFamily: "Montserrat",
+                    }}
+                    color="#333"
+                    variant="h5"
+                    component="div"
+                  >
+                    Approved
+                  </Typography>
+                </CardContent>
+              </Link>
+            </Card>
+            <Card
+              sx={{
+                //border: '2px solid yellow',
+                minWidth: 20,
+                flex: 1,
+                marginRight: 3,
+                marginLeft: 3,
+                marginTop: 3,
+                borderRadius: 8,
+                transition: "transform 0.3s",
+                "&:hover": {
+                  transform: "scale(1.1)", // Adjust the scaling factor as needed
+                },
+              }}
+            >
+              <Link
+                to={"/approved-rejected"}
+                style={{ textDecoration: "none" }}
+              >
+                <CardContent
+                // sx={{
+                //   display: 'flex',
+                //   flexDirection: 'column',
+                //   alignItems: 'start',
+                // }}
+                >
+                  <CancelIcon
+                    fontSize="large"
+                    sx={{ fontSize: "50px", color: "red" }}
+                  />
+
+                  <Typography
+                    sx={{
+                      mb: 1.5,
+                      textAlign: "center",
+                      fontWeight: "bolder",
+                      fontFamily: "Montserrat",
+                    }}
+                    color="#333"
+                    variant="h5"
+                    component="div"
+                  >
+                    Approver Rejected
+                  </Typography>
+                </CardContent>
+              </Link>
+            </Card>
+
             <Card
               sx={{
                 //border: '2px solid yellow',
@@ -1804,7 +1768,7 @@ const Dashboard = () => {
                     alignItems: "start",
                   }}
                 >
-                  <CountertopsIcon
+                  <DownloadDoneIcon
                     fontSize="large"
                     style={{ color: "#795548", fontSize: "50px" }}
                   />
@@ -1820,111 +1784,7 @@ const Dashboard = () => {
                     variant="h6"
                     component="div"
                   >
-                    Consumed Items
-                  </Typography>
-                  <Typography sx={{ mb: 1.5 }} color="text.secondary">
-                    Count:
-                  </Typography>
-                </CardContent>
-              </Link>
-            </Card>
-          </div>
-          <div style={{ display: "flex", flexDirection: "row", marginTop: 3 }}>
-            <Card
-              sx={{
-                //border: '2px solid yellow',
-                minWidth: 20,
-
-                marginRight: 3,
-                marginLeft: 3,
-                marginTop: 3,
-                borderRadius: 8,
-                width: "23%",
-                transition: "transform 0.3s",
-                "&:hover": {
-                  transform: "scale(1.1)", // Adjust the scaling factor as needed
-                },
-              }}
-            >
-              <Link to={"/view-incoming"} style={{ textDecoration: "none" }}>
-                <CardContent
-                  sx={{
-                    display: "flex",
-                    flexDirection: "column",
-                    alignItems: "start",
-                  }}
-                >
-                  <CountertopsIcon
-                    fontSize="large"
-                    style={{ color: "#ff5722", fontSize: "50px" }}
-                  />
-
-                  <Typography
-                    sx={{
-                      mb: 1.5,
-                      textAlign: "center",
-                      fontWeight: "bolder",
-                      fontFamily: "Montserrat",
-                    }}
-                    color="#333"
-                    variant="h5"
-                    component="div"
-                  >
-                    Incomming Stock
-                  </Typography>
-                  <Typography sx={{ mb: 1.5 }} color="text.secondary">
-                    Count:
-                  </Typography>
-                </CardContent>
-              </Link>
-            </Card>
-            <Card
-              sx={{
-                //border: '2px solid yellow',
-                minWidth: 20,
-
-                marginRight: 3,
-                marginLeft: 3,
-                marginTop: 3,
-                borderRadius: 8,
-                width: "23%",
-                transition: "transform 0.3s",
-                "&:hover": {
-                  transform: "scale(1.1)", // Adjust the scaling factor as needed
-                },
-              }}
-            >
-              <Link
-                to={"/view-scrappeditem"}
-                style={{ textDecoration: "none" }}
-              >
-                <CardContent
-                  sx={{
-                    display: "flex",
-                    flexDirection: "column",
-                    alignItems: "start",
-                  }}
-                >
-                  <CountertopsIcon
-                    fontSize="large"
-                    style={{ color: "#00bcd4", fontSize: "50px" }}
-                  />
-
-                  <Typography
-                    sx={{
-                      mb: 1.5,
-                      textAlign: "center",
-                      fontWeight: "bolder",
-                      fontFamily: "Montserrat",
-                    }}
-                    color="#333"
-                    variant="h5"
-                    component="div"
-                  >
-                    Scrapped Items
-                  </Typography>
-                  <Typography sx={{ mb: 1.5 }} color="text.secondary">
-                    Count:
+                    Bulk Approval/Reject Purchase
                   </Typography>
                 </CardContent>
               </Link>

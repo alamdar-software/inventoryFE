@@ -89,9 +89,12 @@ import OnlyPreparer from "./components/OnlyPreparerRoute";
 import OnlyOther from "./components/OnlyOthers";
 import NeedVerificationDashboard from "./components/dashboards/NeedVerificationDashboard.js";
 import VerifiedDashboard from "./components/dashboards/VerifiedDashboard";
+import ApprovedDashboard from "./components/dashboards/ApprovedDashboard";
 import VerifiedRejected from "./components/dashboards/VerifiedRejected";
 
 import ApproverRejected from "./components/dashboards/ApproverRejected";
+import NeedApprovalDashboard from "./components/dashboards/NeedApprovalDashboard";
+import ApprovedRejected from "./components/dashboards/ApprovedRejected";
 const theme = createTheme({
   palette: {
     background: {
@@ -372,10 +375,26 @@ function App() {
                   }
                 />
                 <Route
+                  path="/need-approval"
+                  element={
+                    <Sidebar>
+                      <NeedApprovalDashboard />
+                    </Sidebar>
+                  }
+                />
+                <Route
                   path="/verfied"
                   element={
                     <Sidebar>
                       <VerifiedDashboard />
+                    </Sidebar>
+                  }
+                />
+                <Route
+                  path="/approved"
+                  element={
+                    <Sidebar>
+                      <ApprovedDashboard />
                     </Sidebar>
                   }
                 />
@@ -388,6 +407,14 @@ function App() {
                   }
                 />
                 <Route
+                  path="/approved-rejected"
+                  element={
+                    <Sidebar>
+                      <ApprovedRejected />
+                    </Sidebar>
+                  }
+                />
+                <Route
                   path="/approver-rejected"
                   element={
                     <Sidebar>
@@ -395,6 +422,7 @@ function App() {
                     </Sidebar>
                   }
                 />
+
                 <Route
                   path="/view-inventory"
                   element={
