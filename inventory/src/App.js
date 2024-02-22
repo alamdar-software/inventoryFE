@@ -88,6 +88,10 @@ import VerifierandApprover from "./components/VerifierAndApproverRoute";
 import OnlyPreparer from "./components/OnlyPreparerRoute";
 import OnlyOther from "./components/OnlyOthers";
 import NeedVerificationDashboard from "./components/dashboards/NeedVerificationDashboard.js";
+import VerifiedDashboard from "./components/dashboards/VerifiedDashboard";
+import VerifiedRejected from "./components/dashboards/VerifiedRejected";
+
+import ApproverRejected from "./components/dashboards/ApproverRejected";
 const theme = createTheme({
   palette: {
     background: {
@@ -364,6 +368,30 @@ function App() {
                   element={
                     <Sidebar>
                       <NeedVerificationDashboard />
+                    </Sidebar>
+                  }
+                />
+                <Route
+                  path="/verfied"
+                  element={
+                    <Sidebar>
+                      <VerifiedDashboard />
+                    </Sidebar>
+                  }
+                />
+                <Route
+                  path="/verified-rejected"
+                  element={
+                    <Sidebar>
+                      <VerifiedRejected />
+                    </Sidebar>
+                  }
+                />
+                <Route
+                  path="/approver-rejected"
+                  element={
+                    <Sidebar>
+                      <ApproverRejected />
                     </Sidebar>
                   }
                 />

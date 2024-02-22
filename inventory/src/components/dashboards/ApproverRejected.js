@@ -40,7 +40,7 @@ const theme = createTheme({
   },
 });
 
-const NeedVerificationDashboard = () => {
+const ApproverRejected = () => {
   const state = useSelector((state) => state);
   const { currentUser } = state.persisted.user;
 
@@ -131,7 +131,7 @@ const NeedVerificationDashboard = () => {
                       variant="h5"
                       component="div"
                     >
-                      Need Verification Cipl
+                      Approver Rejected Cipl
                     </Typography>
                     <Typography sx={{ mb: 1.5 }} color="text.secondary">
                       Count:
@@ -172,7 +172,7 @@ const NeedVerificationDashboard = () => {
                         fontFamily: "Montserrat",
                       }}
                     >
-                      Need Verification Mto
+                      Approver Rejected Mto
                     </Typography>
                     <Typography sx={{ mb: 1.5 }} color="text.secondary">
                       Count:
@@ -211,7 +211,7 @@ const NeedVerificationDashboard = () => {
                         fontFamily: "Montserrat",
                       }}
                     >
-                      Need Verification It
+                      Approver Rejected It
                     </Typography>
                   </CardContent>
                 </Link>
@@ -247,7 +247,7 @@ const NeedVerificationDashboard = () => {
                         fontFamily: "Montserrat",
                       }}
                     >
-                      Need Verification Incoming Stock
+                      Approver Rejected Incoming Stock
                     </Typography>
                   </CardContent>
                 </Link>
@@ -303,7 +303,7 @@ const NeedVerificationDashboard = () => {
                       variant="h5"
                       component="div"
                     >
-                      Need Verification Scrapped Stock
+                      Approver Rejected Scrapped Stock
                     </Typography>
                     <Typography sx={{ mb: 1.5 }} color="text.secondary">
                       Count:
@@ -350,7 +350,7 @@ const NeedVerificationDashboard = () => {
                       variant="h5"
                       component="div"
                     >
-                      Need Verification Consumed Stock
+                      Approver Rejected Consumed Stock
                     </Typography>
                     <Typography sx={{ mb: 1.5 }} color="text.secondary">
                       Count:
@@ -366,4 +366,4 @@ const NeedVerificationDashboard = () => {
   }
 };
 
-export default NeedVerificationDashboard;
+export default ApproverRejected;

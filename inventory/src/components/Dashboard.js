@@ -1260,10 +1260,7 @@ const Dashboard = () => {
                 },
               }}
             >
-              <Link
-                to={"/locationDashboard"}
-                style={{ textDecoration: "none" }}
-              >
+              <Link to={"/verfied"} style={{ textDecoration: "none" }}>
                 <CardContent
                 // sx={{
                 //   display: 'flex',
@@ -1311,7 +1308,7 @@ const Dashboard = () => {
               }}
             >
               <Link
-                to={"/locationDashboard"}
+                to={"/verified-rejected"}
                 style={{ textDecoration: "none" }}
               >
                 <CardContent
@@ -1361,7 +1358,10 @@ const Dashboard = () => {
                 },
               }}
             >
-              <Link to={"/transfer-item"} style={{ textDecoration: "none" }}>
+              <Link
+                to={"/approver-rejected"}
+                style={{ textDecoration: "none" }}
+              >
                 <CardContent
                   sx={{
                     display: "flex",
