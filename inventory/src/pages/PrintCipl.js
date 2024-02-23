@@ -1,14 +1,20 @@
 import React from 'react';
 import { useEffect } from 'react';
 import { useState } from 'react';
+import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 
 function PrintCipl() {
+  const { currentUser } = useSelector((state) => state.persisted.user);
   const [data, setdata] = useState([]);
   const { id } = useParams();
   useEffect(() => {
     const getCipl = async () => {
-      const res = await fetch(`http://localhost:8080/cipl/createpdf/${id}`);
+      const res = await fetch(`http://localhost:8080/cipl/createpdf/${id}`,{
+        headers: {
+          Authorization: `Bearer ${currentUser.accessToken}`,
+        },
+      });
 
       const data = await res.json();
       setdata(data);

@@ -425,7 +425,7 @@ export const ViewCiplVerification = () => {
                       </TableCell>
 
                       <Box>
-                        <Link to={`/updateCipl/${ciplRow.id}`}>
+                        <Link to={`/updateCiplverifier/${ciplRow.id}`}>
                           <Button
                             sx={{ marginLeft: '11px', marginTop: '10px' }}
                             variant='contained'
