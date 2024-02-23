@@ -87,7 +87,7 @@ const NeedVerificationDashboard = () => {
                 }}
               >
                 <Link
-                  to={"/view-inventoryMoc"}
+                  to={"/cipl-created"}
                   style={{ textDecoration: "none", position: "relative" }}
                 >
                   <CardContent>

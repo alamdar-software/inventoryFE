@@ -3,7 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import { useSelector } from "react-redux";
 
 export const fetchPickup = createAsyncThunk("pickup", async (accessToken) => {
-  const { currentUser } = useSelector((state) => state.persisted.user);
+
   const res = await fetch("http://localhost:8080/pickup/view", {
     headers: {
       Authorization: `Bearer ${accessToken}`,
