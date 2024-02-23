@@ -27,6 +27,7 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { fetchInventory } from '../redux/slice/InventorySlice';
 import { fetchIncome } from '../redux/slice/SingleIncomeSlice';
 import dayjs from 'dayjs';
+import { useNavigate, useParams } from 'react-router-dom';
 
 const UpdateMto = () => {
   const [formData, setformData] = useState({
@@ -34,6 +35,7 @@ const UpdateMto = () => {
     destinationSubLocation: '',
     transferDate: '',
     consigneeName: '',
+    status: '',
     repairService: '',
     SubLocation: [],
     description: [],
@@ -41,26 +43,15 @@ const UpdateMto = () => {
     purchase: [],
     quantity: [],
     remarks: [],
-    partNo: [],
+    pn: [],
   });
 
   const [mto, setMto] = useState([]);
-  const [subLocations, setSubLocations] = useState([]);
-  const [description, setDescription] = useState([]);
-  const [sn, setSn] = useState([]);
-  const [purchase, setPurchase] = useState([]);
-  const [quantity, setQuantity] = useState([]);
-  const [remarks, setRemarks] = useState([]);
+
   const state = useSelector((state) => state);
   const [formRows, setFormRows] = useState(1);
   const [formControls, setFormControls] = useState([{ key: 0 }]);
-  const [selectedSubLocations, setSelectedSubLocations] = useState([]);
-  const [item, setItem] = useState([]);
-  const [partNumbersData, setPartNumbersData] = useState([]);
-  const [selectedPartNo, setselectedPartNo] = useState([]);
-  const [partNo, setPartNo] = useState(
-    Array.from({ length: formRows }, () => [])
-  );
+
   const { currentUser } = state.persisted.user;
   const dispatch = useDispatch();
   useEffect(() => {
@@ -82,23 +73,49 @@ const UpdateMto = () => {
   // };
   // console.log(subLocations);
   // console.log(formData);
+
+  let navigate = useNavigate();
+
+  const { id } = useParams();
+
+  console.log(id);
+
+  useEffect(() => {
+    console.log(currentUser.accessToken, 'heyyyy');
+    fetch(`http://localhost:8080/mto/get/${id}`, {
+      headers: {
+        Authorization: `Bearer ${currentUser.accessToken}`,
+      },
+    })
+      .then((res) => res.json())
+      .then((result) => {
+        console.log(result);
+        setMto(result);
+      });
+  }, []);
+
   const handleClick = (e) => {
     e.preventDefault();
+    const update = {
+      mto,
+    };
+    console.log(update);
 
-    // const formData = {
-    //   locationName,
-    // };
-
-    console.log(formData);
-
-    fetch('http://localhost:8080/mto/add', {
-      method: 'POST',
-      headers: { 'Content-type': 'application/json' },
+    fetch(`http://localhost:8080/mto/status/${id}`, {
+      method: 'PUT',
+      headers: {
+        'Content-type': 'application/json',
+        Authorization: `Bearer ${currentUser.accessToken}`,
+      },
       body: JSON.stringify(formData),
-    }).then(() => {
-      console.log('MTO Added');
-      //window.location.reload();
-    });
+    })
+      .then(() => {
+        console.log('Cipl Updated');
+        // navigate('/consignee');
+      })
+      .catch((error) => {
+        console.error('Error updating consignee:', error);
+      });
   };
 
   const handleDateChange = (transferDate) => {
@@ -107,7 +124,7 @@ const UpdateMto = () => {
       transferDate: transferDate.format('YYYY-MM-DD'),
     });
   };
-  console.log(formData);
+  console.log(formData, 'formData');
 
   // const updateFormDataSubLocation = (index, value) => {
   //   setformData((prevFormData) => {
@@ -120,175 +137,6 @@ const UpdateMto = () => {
   //   });
   // };
 
-  const handleSnChange = (index, value) => {
-    updateFormDataSn(index, value);
-    setSn((prevSn) => {
-      const updateSn = [...prevSn];
-      updateSn[index] = value;
-      return updateSn;
-    });
-  };
-
-  const updateFormDataSn = (index, value) => {
-    setformData((prevFormData) => {
-      const updateSn = [...prevFormData.sn];
-      updateSn[index] = value;
-      return {
-        ...prevFormData,
-        sn: updateSn,
-      };
-    });
-  };
-  const handlePurchaseChange = (index, value) => {
-    updateFormDataPurchase(index, value);
-    setPurchase((prevPurchase) => {
-      const updatePurchase = [...prevPurchase];
-      updatePurchase[index] = value;
-      return updatePurchase;
-    });
-  };
-  const updateFormDataPurchase = (index, value) => {
-    setformData((prevFormData) => {
-      const updatePurchase = [...prevFormData.purchase];
-      updatePurchase[index] = value;
-      return {
-        ...prevFormData,
-        purchase: updatePurchase,
-      };
-    });
-  };
-  const handleQuantityChange = (index, value) => {
-    updateFormDataQuantity(index, value);
-    setQuantity((prevQuantity) => {
-      const updateQuantity = [...prevQuantity];
-      updateQuantity[index] = value;
-      return updateQuantity;
-    });
-  };
-
-  const updateFormDataQuantity = (index, value) => {
-    setformData((prevFormData) => {
-      const updateQuantity = [...prevFormData.quantity];
-      updateQuantity[index] = value;
-      return {
-        ...prevFormData,
-        quantity: updateQuantity,
-      };
-    });
-  };
-
-  const handleRemarksChange = (index, value) => {
-    updateFormDataRemarks(index, value);
-    setRemarks((prevRemarks) => {
-      const updateRemarks = [...prevRemarks];
-      updateRemarks[index] = value;
-      return updateRemarks;
-    });
-  };
-
-  const updateFormDataRemarks = (index, value) => {
-    setformData((prevFormData) => {
-      const updateRemarks = [...prevFormData.remarks];
-      updateRemarks[index] = value;
-      return {
-        ...prevFormData,
-        remarks: updateRemarks,
-      };
-    });
-  };
-  const handleDescriptionChange = (index, description) => {
-    updateFormDataDescription(index, description);
-    setDescription((prevDescription) => {
-      const updateDescription = [...prevDescription];
-      updateDescription[index] = description;
-      return updateDescription;
-    });
-    // Find the corresponding data in state.singleincome for the selected item
-    const selectedIncomeData = state.singleIncome?.data.filter(
-      (incomeItem) =>
-        incomeItem.description === description.match(/^[^(]*/)[0].trim()
-    );
-    console.log(selectedIncomeData, 'selectttttt');
-    console.log(description, 'selected item');
-
-    // Extract part numbers from the selected income data
-    const partNumbers = selectedIncomeData.map(
-      (incomeItem) => incomeItem.pn || []
-    );
-
-    // Update the partNumbers state with the selected part numbers
-    setPartNo((prevPartNumbers) => {
-      const updatedPartNumbers = [...prevPartNumbers];
-      updatedPartNumbers[index] = partNumbers.flat(); // Use flat to flatten the nested arrays
-      return updatedPartNumbers;
-    });
-  };
-  console.log(description, 'item');
-  console.log(formData);
-
-  const updateFormDataDescription = (index, value) => {
-    setformData((prevFormData) => {
-      const updateDescription = [...prevFormData.description];
-      updateDescription[index] = value;
-      return {
-        ...prevFormData,
-        description: updateDescription,
-      };
-    });
-  };
-  const handlePartNoChange = async (
-    index,
-    selectedSubLocation,
-    selectedPartNo
-  ) => {
-    // ... (your existing code)
-
-    // Find the corresponding data in state.singleIncome for the selected part number
-    const selectedIncomeData = state.singleIncome?.data.find(
-      (incomeItem) => incomeItem.pn === selectedPartNo
-    );
-
-    // Extract the necessary data from the selected income data
-    const partNumberData = {
-      date: selectedIncomeData?.date || '',
-      unitPrice: selectedIncomeData?.unitCost || '',
-
-      sn: selectedIncomeData?.sn || '',
-      brand: selectedIncomeData?.brandName || '',
-    };
-    updateFormDataPart(index, selectedPartNo, partNumberData);
-    // Update formData with the selected part number data
-    setPartNumbersData((prevPartNumbersData) => {
-      const updatedPartNumbersData = [...prevPartNumbersData];
-      updatedPartNumbersData[index] = partNumberData;
-      return updatedPartNumbersData;
-    });
-  };
-
-  const updateFormDataPart = (index, selectedPartNo, partNumberData) => {
-    setformData((prevFormData) => {
-      const updatedPartNumbersData = [...prevFormData.partNo];
-      updatedPartNumbersData[index] = selectedPartNo;
-
-      // Update other relevant properties in formData
-      return {
-        ...prevFormData,
-        partNo: updatedPartNumbersData,
-
-        brand: [...(prevFormData.brand || []), partNumberData.brand],
-        sn: [...(prevFormData.sn || []), partNumberData.sn], // Keep the previous sn values
-        amount: [...(prevFormData.amount || []), partNumberData.amount],
-        date: [...(prevFormData.date || []), partNumberData.date],
-        unitPrice: [
-          ...(prevFormData.unitPrice || []),
-          String(partNumberData.unitPrice),
-        ],
-      };
-    });
-  };
-
-  console.log(partNumbersData, 'partNumbersData');
-  console.log(partNumbersData?.date, 'dateeee');
   // const updateFormDataSubLocation = (index, value) => {
   //   setformData((prevFormData) => {
   //     const updatedSubLocations = [...prevFormData.SubLocation];
@@ -299,48 +147,46 @@ const UpdateMto = () => {
   //     };
   //   });
   // };
-
-  console.log(formData);
 
   const renderFormControls = () => {
     return formControls.map((control, index) => (
       <div key={control.key} style={{ display: 'flex', marginBottom: '10px' }}>
-        <FormControl fullWidth sx={{ width: '50%', marginRight: '10px' }}>
-          <InputLabel id='demo-simple-select-label'>Sub Location</InputLabel>
-          <Select
-            labelId='demo-simple-select-label'
-            id='demo-simple-select'
-            //value={age}
-            label='sublocation'
-            MenuProps={{
-              PaperProps: {
-                style: {
-                  maxHeight: 120, // Adjust the height as needed
-                },
-              },
+        <Grid item xs={12} sm={6}>
+          <TextField
+            id='outlined-basic'
+            label='SubLocation'
+            variant='outlined'
+            value={mto ? mto.SubLocation : ''}
+            sx={{ width: '100px', marginRight: '23px' }}
+            InputProps={{ readOnly: true }}
+            onChange={(e) => {
+              setMto({
+                ...mto,
+                SubLocation: e.target.value,
+              });
+              setformData(e.target.value);
             }}
-            // onChange={(e) => handleSubLocationChange(e, index)}
-            // onChange={(e) =>
-            //   setformData({
-            //     ...formData,
-            //     locationName: e.target.value,
-            //   })
-            // }
-            //onChange={handleChange}
-          >
-            {subLocations.map((address, index) => (
-              <MenuItem key={index} value={address?.address}>
-                {address?.address}
-              </MenuItem>
-            ))}
-            {/* {subLocations.location.data?.map((item, index) => (
-              <MenuItem key={index} value={item?.locationName}>
-                {' '}
-                {item?.locationName}
-              </MenuItem>
-            ))} */}
-          </Select>
-        </FormControl>
+            width={'100%'}
+          />
+        </Grid>
+        <Grid item xs={12} sm={6}>
+          <TextField
+            id='outlined-basic'
+            label='Item Description'
+            variant='outlined'
+            value={mto ? mto.description : ''}
+            sx={{ width: '100px', marginRight: '23px' }}
+            InputProps={{ readOnly: true }}
+            onChange={(e) => {
+              setMto({
+                ...mto,
+                idescription: e.target.value,
+              });
+              setformData(e.target.value);
+            }}
+            width={'100%'}
+          />
+        </Grid>
         {/* <FormControl fullWidth sx={{ width: '50%', marginRight: '10px' }}>
           <InputLabel id='demo-simple-select-label'>
             Item Description
@@ -379,60 +225,71 @@ const UpdateMto = () => {
             ))}
           </Select>
         </FormControl> */}
-        {/* <FormControl fullWidth sx={{ width: '50%', marginRight: '10px' }}>
-          <InputLabel id='demo-simple-select-label'>Part No</InputLabel>
-          <Select
-            labelId='demo-simple-select-label'
-            id='demo-simple-select'
-            //value={age}
-            label='location'
-            MenuProps={{
-              PaperProps: {
-                style: {
-                  maxHeight: 120, // Adjust the height as needed
-                },
-              },
+        <Grid item xs={12} sm={6}>
+          <TextField
+            id='outlined-basic'
+            label='Part No'
+            variant='outlined'
+            value={mto ? mto.pn : ''}
+            sx={{ width: '100px', marginRight: '23px' }}
+            InputProps={{ readOnly: true }}
+            onChange={(e) => {
+              setMto({
+                ...mto,
+                pn: e.target.value,
+              });
+              setformData(e.target.value);
             }}
-            onChange={(e) =>
-              handlePartNoChange(index, selectedPartNo[index], e.target.value)
-            }
-            //onChange={handleChange}
-          >
-            {partNo[index]?.map((partNo, partIndex) => (
-              <MenuItem key={partIndex} value={partNo}>
-                {partNo}
-              </MenuItem>
-            ))}
-          </Select>
-        </FormControl> */}
+            width={'100%'}
+          />
+        </Grid>
 
-        {/* <FormControl fullWidth sx={{ width: '30%', marginRight: '10px' }}>
+        <FormControl fullWidth sx={{ width: '30%', marginRight: '10px' }}>
           <Grid item xs={12} sm={6}>
             <TextField
               sx={{ width: '90%' }}
               id='outlined-basic'
               label='S/N'
               variant='outlined'
-              value={partNumbersData[index]?.sn || ''}
-              onChange={(e) => handleSnChange(index, e.target.value)}
+              //   value={partNumbersData[index]?.sn || ''}
+              InputProps={{ readOnly: true }}
+              value={mto ? mto.sn : ''}
+              onChange={(e) => {
+                setMto({
+                  ...mto,
+                  sn: e.target.value,
+                });
+                setformData(e.target.value);
+              }}
+              //   onChange={(e) => handleSnChange(index, e.target.value)}
               fullWidth
             />
           </Grid>
         </FormControl>
-        <FormControl fullWidth sx={{ width: '30%', marginRight: '10px' }}>
+        <FormControl fullWidth sx={{ width: '90%', marginRight: '10px' }}>
           <Grid item xs={12} sm={6}>
             <TextField
               sx={{ width: '90%' }}
               id='outlined-basic'
               label='Purchase Order(D.O.P)'
               variant='outlined'
-              value={partNumbersData[index]?.date || ''}
-              onChange={(e) => handlePurchaseChange(index, e.target.value)}
+              //   value={partNumbersData[index]?.date || ''}
+              // onChange={(e) => setLocation(e.target.value)}
+              //   onChange={(e) => handlePurchaseChange(index, e.target.value)}
+              value={mto ? mto.purchase : ''}
+              InputProps={{ readOnly: true }}
+              onChange={(e) => {
+                setMto({
+                  ...mto,
+                  purchase: e.target.value,
+                });
+                setformData(e.target.value);
+              }}
               fullWidth
             />
           </Grid>
         </FormControl>
-        <FormControl fullWidth sx={{ width: '30%', marginRight: '10px' }}>
+        <FormControl fullWidth sx={{ width: '50%', marginRight: '10px' }}>
           <Grid item xs={12} sm={6}>
             <TextField
               sx={{ width: '90%' }}
@@ -440,7 +297,17 @@ const UpdateMto = () => {
               label='Quantity'
               variant='outlined'
               // value={locationName}
-              onChange={(e) => handleQuantityChange(index, e.target.value)}
+              // onChange={(e) => setLocation(e.target.value)}
+              //   onChange={(e) => handleQuantityChange(index, e.target.value)}
+              value={mto ? mto.quantity : ''}
+              InputProps={{ readOnly: true }}
+              onChange={(e) => {
+                setMto({
+                  ...mto,
+                  quantity: e.target.value,
+                });
+                setformData(e.target.value);
+              }}
               fullWidth
             />
           </Grid>
@@ -454,11 +321,20 @@ const UpdateMto = () => {
               placeholder='Enter Remarks'
               // value={brandValue} // You can set the value and handle changes as needed
               // onChange={(e) => handleBrandChange(e.target.value)}
-              onChange={(e) => handleRemarksChange(index, e.target.value)}
+              //   onChange={(e) => handleRemarksChange(index, e.target.value)}
               minRows={4} // You can adjust the number of rows as needed
+              value={mto ? mto.remarks : ''}
+              InputProps={{ readOnly: true }}
+              onChange={(e) => {
+                setMto({
+                  ...mto,
+                  remarks: e.target.value,
+                });
+                setformData(e.target.value);
+              }}
             />
           </Grid>
-        </FormControl> */}
+        </FormControl>
         {/* <div
           style={{
             display: 'flex',
@@ -477,34 +353,6 @@ const UpdateMto = () => {
         {/* Repeat similar blocks for other form controls */}
       </div>
     ));
-  };
-  const renderAdditionalFields = () => {
-    if (formData.repairService === true) {
-      return (
-        <>
-          {/* Additional fields for 'Repair/Service' Yes */}
-          <Grid item xs={21} sm={6}>
-            <TextField
-              id='outlined-basic'
-              label='Po/SO No'
-              variant='outlined'
-              fullWidth
-              sx={{ width: '90%' }}
-              onChange={(e) =>
-                setformData({
-                  ...formData,
-                  po: e.target.value,
-                })
-              }
-            />
-          </Grid>
-          {/* Add more additional fields as needed */}
-        </>
-      );
-    } else {
-      // No additional fields for 'Repair/Service' No
-      return null;
-    }
   };
 
   return (
@@ -526,7 +374,7 @@ const UpdateMto = () => {
               gutterBottom
               style={{ fontFamily: "'EB Garamond'" }}
             >
-              Transfer Mto
+              Update Mto
             </Typography>
           </CardContent>
         </Card>
@@ -538,8 +386,6 @@ const UpdateMto = () => {
             <Select
               labelId='demo-simple-select-label'
               id='demo-simple-select'
-              //value={age}
-              //   value={formData.locationName || ''}
               value={mto ? mto.locationName : ''}
               label='location'
               MenuProps={{
@@ -549,8 +395,6 @@ const UpdateMto = () => {
                   },
                 },
               }}
-              //   onChange={handleLocationChange}
-              //onChange={handleChange}
             >
               {state.nonPersisted.location.data?.map((item, index) => (
                 <MenuItem key={index} value={item?.locationName}>
@@ -708,7 +552,29 @@ const UpdateMto = () => {
             />
           </LocalizationProvider>
         </Grid>
-        {renderAdditionalFields()}
+        <Grid item xs={12} sm={6}>
+          <FormControl fullWidth sx={{ width: '90%' }}>
+            <InputLabel id='demo-simple-select-label'>Status</InputLabel>
+            <Select
+              labelId='demo-simple-select-label'
+              id='demo-simple-select'
+              //value={age}
+              value={mto ? mto.status : ''}
+              InputProps={{ readOnly: true }}
+              label='Repair/service'
+              //onChange={handleChange}
+              onChange={(e) =>
+                setformData({
+                  ...mto,
+                  status: e.target.value,
+                })
+              }
+            >
+              <MenuItem value={'verified'}>Verified</MenuItem>
+              <MenuItem value={'rejected'}>Rejected</MenuItem>
+            </Select>
+          </FormControl>
+        </Grid>
       </Grid>
 
       <div
@@ -719,43 +585,43 @@ const UpdateMto = () => {
           width: '80%',
         }}
       >
-        {formData.locationName && (
-          <>
-            <div style={{ display: 'flex', flexWrap: 'wrap' }}>
-              <Grid
-                sx={{ overflowX: 'scroll', width: '100%', flexWrap: 'wrap' }}
+        <>
+          <div style={{ display: 'flex', flexWrap: 'wrap' }}>
+            <Grid sx={{ overflowX: 'scroll', width: '100%', flexWrap: 'wrap' }}>
+              <Card
+                color='secondary'
+                sx={{
+                  width: '111%',
+                  marginTop: '20px',
+                  backgroundColor: 'secondary',
+                }}
               >
-                <Card
-                  color='secondary'
-                  sx={{
-                    width: '111%',
-                    marginTop: '20px',
-                    backgroundColor: 'secondary',
-                  }}
+                <CardContent
+                  sx={{ minWidth: '100%', display: 'flex', flexWrap: 'wrap' }}
                 >
-                  <CardContent
-                    sx={{ minWidth: '100%', display: 'flex', flexWrap: 'wrap' }}
-                  >
-                    {renderFormControls()}
-                  </CardContent>
-                </Card>
-              </Grid>
-            </div>
-          </>
-        )}
+                  {renderFormControls()}
+                </CardContent>
+              </Card>
+            </Grid>
+          </div>
+        </>
       </div>
 
-      <Box sx={{ display: 'flex', justifyContent: 'center', mt: '33px' }}>
-        {' '}
-        <Button
-          variant='contained'
-          size='large'
-          color='secondary'
-          onClick={handleClick}
-        >
-          Add
-        </Button>
-      </Box>
+      <Button
+        variant='contained'
+        color='secondary'
+        size='large'
+        onClick={handleClick}
+        sx={{
+          mt: '33px',
+          mb: '17px',
+          marginLeft: 'auto',
+          marginRight: 'auto',
+          display: 'block',
+        }}
+      >
+        Update
+      </Button>
     </>
   );
 };

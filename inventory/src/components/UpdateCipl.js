@@ -952,7 +952,6 @@ const UpdateCipl = () => {
                   status: e.target.value,
                 })
               }
-               readOnly={true}
             >
               <MenuItem value={'verified'}>Verified</MenuItem>
               <MenuItem value={'rejected'}>Rejected</MenuItem>
