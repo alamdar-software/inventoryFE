@@ -87,6 +87,14 @@ import UpdateUser from './components/UpdateUser';
 import VerifierandApprover from './components/VerifierAndApproverRoute';
 import OnlyPreparer from './components/OnlyPreparerRoute';
 import OnlyOther from './components/OnlyOthers';
+import NeedVerificationDashboard from './components/dashboards/NeedVerificationDashboard.js';
+import VerifiedDashboard from './components/dashboards/VerifiedDashboard';
+import ApprovedDashboard from './components/dashboards/ApprovedDashboard';
+import VerifiedRejected from './components/dashboards/VerifiedRejected';
+
+import ApproverRejected from './components/dashboards/ApproverRejected';
+import NeedApprovalDashboard from './components/dashboards/NeedApprovalDashboard';
+import ApprovedRejected from './components/dashboards/ApprovedRejected';
 import UpdateCipl from './components/UpdateCipl.js';
 const theme = createTheme({
   palette: {
@@ -347,6 +355,19 @@ function App() {
                 />
 
                 <Route
+                  path='/datacount'
+                  element={
+                    <Sidebar>
+                      <DailyDataCount />
+                    </Sidebar>
+                  }
+                />
+              </Route>
+
+              {/*   transfer item*/}
+
+              <Route element={<VerifierandApprover />}>
+                <Route
                   path='/add-inventory'
                   element={
                     <Sidebar>
@@ -354,6 +375,63 @@ function App() {
                     </Sidebar>
                   }
                 />
+                <Route
+                  path='/need-verfication'
+                  element={
+                    <Sidebar>
+                      <NeedVerificationDashboard />
+                    </Sidebar>
+                  }
+                />
+                <Route
+                  path='/need-approval'
+                  element={
+                    <Sidebar>
+                      <NeedApprovalDashboard />
+                    </Sidebar>
+                  }
+                />
+                <Route
+                  path='/verfied'
+                  element={
+                    <Sidebar>
+                      <VerifiedDashboard />
+                    </Sidebar>
+                  }
+                />
+                <Route
+                  path='/approved'
+                  element={
+                    <Sidebar>
+                      <ApprovedDashboard />
+                    </Sidebar>
+                  }
+                />
+                <Route
+                  path='/verified-rejected'
+                  element={
+                    <Sidebar>
+                      <VerifiedRejected />
+                    </Sidebar>
+                  }
+                />
+                <Route
+                  path='/approved-rejected'
+                  element={
+                    <Sidebar>
+                      <ApprovedRejected />
+                    </Sidebar>
+                  }
+                />
+                <Route
+                  path='/approver-rejected'
+                  element={
+                    <Sidebar>
+                      <ApproverRejected />
+                    </Sidebar>
+                  }
+                />
+
                 <Route
                   path='/view-inventory'
                   element={
@@ -370,19 +448,6 @@ function App() {
                     </Sidebar>
                   }
                 />
-                <Route
-                  path='/datacount'
-                  element={
-                    <Sidebar>
-                      <DailyDataCount />
-                    </Sidebar>
-                  }
-                />
-              </Route>
-
-              {/*   transfer item*/}
-
-              <Route element={<VerifierandApprover />}>
                 <Route
                   path='/add-consumeditem'
                   element={

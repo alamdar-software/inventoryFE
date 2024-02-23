@@ -210,42 +210,9 @@ export default function Sidebar({ children }) {
     if (roleVerifier) {
       menuItems.push(
         {
-          text: "Transfer Item",
-          icon: <WhatshotIcon />,
-          submenu: [
-            {
-              text: "transfer-item",
-              icon: <AddCardIcon />,
-            },
-            { text: "View Transfer" },
-          ],
-        },
-        {
-          text: "Consume Item",
-          icon: <HighlightOffIcon />,
-          submenu: [
-            {
-              text: "Add ConsumedItem",
-              icon: <AddCardIcon />,
-            },
-            { text: "View ConsumedItem" },
-          ],
-        },
-        {
-          text: "Scrapped Item",
-          icon: <LocationOnIcon />,
-          submenu: [
-            {
-              text: "Add ScrappedItem",
-              icon: <AddCardIcon />,
-            },
-            { text: "View ScrappedItem" },
-          ],
-        },
-        {
-          text: "Incoming Stock",
-          icon: <RingVolumeIcon />,
-          submenu: [{ text: "Add Incoming" }, { text: "View Incoming" }],
+          text: "Inventory",
+          icon: <TransferWithinAStationIcon />,
+          submenu: [{ text: "Add Inventory" }, { text: "View Inventory" }],
         },
 
         { text: "Reports", icon: <ReportIcon /> }
@@ -318,44 +285,10 @@ export default function Sidebar({ children }) {
     if (roleApprover) {
       menuItems.push(
         {
-          text: "Transfer Item",
-          icon: <WhatshotIcon />,
-          submenu: [
-            {
-              text: "transfer-item",
-              icon: <AddCardIcon />,
-            },
-            { text: "View Transfer" },
-          ],
+          text: "Inventory",
+          icon: <TransferWithinAStationIcon />,
+          submenu: [{ text: "Add Inventory" }, { text: "View Inventory" }],
         },
-        {
-          text: "Consume Item",
-          icon: <HighlightOffIcon />,
-          submenu: [
-            {
-              text: "Add ConsumedItem",
-              icon: <AddCardIcon />,
-            },
-            { text: "View ConsumedItem" },
-          ],
-        },
-        {
-          text: "Scrapped Item",
-          icon: <LocationOnIcon />,
-          submenu: [
-            {
-              text: "Add ScrappedItem",
-              icon: <AddCardIcon />,
-            },
-            { text: "View ScrappedItem" },
-          ],
-        },
-        {
-          text: "Incoming Stock",
-          icon: <RingVolumeIcon />,
-          submenu: [{ text: "Add Incoming" }, { text: "View Incoming" }],
-        },
-
         { text: "Reports", icon: <ReportIcon /> }
       );
     }
