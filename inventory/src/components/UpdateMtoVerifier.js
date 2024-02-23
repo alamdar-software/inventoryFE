@@ -29,7 +29,7 @@ import { fetchIncome } from '../redux/slice/SingleIncomeSlice';
 import dayjs from 'dayjs';
 import { useNavigate, useParams } from 'react-router-dom';
 
-const UpdateMto = () => {
+const UpdateMtoVerifier = () => {
   const [formData, setformData] = useState({
     locationName: '',
     destinationSubLocation: '',
@@ -561,7 +561,6 @@ const UpdateMto = () => {
               //value={age}
               value={mto ? mto.status : ''}
               InputProps={{ readOnly: true }}
-             
               label='Repair/service'
               //onChange={handleChange}
               onChange={(e) =>
@@ -570,7 +569,6 @@ const UpdateMto = () => {
                   status: e.target.value,
                 })
               }
-           
             >
               <MenuItem value={'verified'}>Verified</MenuItem>
               <MenuItem value={'rejected'}>Rejected</MenuItem>
@@ -628,4 +626,4 @@ const UpdateMto = () => {
   );
 };
 
-export default UpdateMto;
+export default UpdateMtoVerifier;

@@ -100,7 +100,10 @@ import ViewCiplVerification from './pages/ViewCiplVerification.js';
 import UpdateCiplVerifier from './components/UpdateCiplVerifier.js';
 import ViewCiplVerified from './pages/ViewCiplVeried.js';
 import ViewCiplRejected from './pages/ViewCiplRejected.js';
-import UpdateIt from './components/UpdateIt.js';
+import UpdateMtoVerifier from './components/UpdateMtoVerifier.js';
+import ViewMtoVerified from './components/ViewMtoVerified.js';
+import VerifiedMto from './components/VerifiedMto.js';
+import RejectedMto from './components/RejectedMto.js';
 const theme = createTheme({
   palette: {
     background: {
@@ -420,11 +423,44 @@ function App() {
                     </Sidebar>
                   }
                 />
+
                 <Route
                   path='/rejected-cipl'
                   element={
                     <Sidebar>
                       <ViewCiplRejected />
+                    </Sidebar>
+                  }
+                />
+                <Route
+                  path='/mto-created'
+                  element={
+                    <Sidebar>
+                      <ViewMtoVerified />
+                    </Sidebar>
+                  }
+                />
+                <Route
+                  path='/verified-mto'
+                  element={
+                    <Sidebar>
+                      <VerifiedMto />
+                    </Sidebar>
+                  }
+                />
+                <Route
+                  path='/rejected-mto'
+                  element={
+                    <Sidebar>
+                      <RejectedMto />
+                    </Sidebar>
+                  }
+                />
+                <Route
+                  path='/updateMtoVerified/:id'
+                  element={
+                    <Sidebar>
+                      <UpdateMtoVerifier />
                     </Sidebar>
                   }
                 />
