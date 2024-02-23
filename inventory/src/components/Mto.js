@@ -28,6 +28,7 @@ import { fetchInventory } from '../redux/slice/InventorySlice';
 import { fetchIncome } from '../redux/slice/SingleIncomeSlice';
 
 const Mto = () => {
+  const state = useSelector((state) => state);
   const [formData, setformData] = useState({
     locationName: '',
     destinationSubLocation: '',
@@ -49,7 +50,7 @@ const Mto = () => {
   const [purchase, setPurchase] = useState([]);
   const [quantity, setQuantity] = useState([]);
   const [remarks, setRemarks] = useState([]);
-  const state = useSelector((state) => state);
+
   const [formRows, setFormRows] = useState(1);
   const [formControls, setFormControls] = useState([{ key: 0 }]);
   const [selectedSubLocations, setSelectedSubLocations] = useState([]);
@@ -91,7 +92,10 @@ const Mto = () => {
 
     fetch('http://localhost:8080/mto/add', {
       method: 'POST',
-      headers: { 'Content-type': 'application/json' },
+      headers: { 'Content-type': 'application/json',
+      Authorization: `Bearer ${currentUser.accessToken}`,
+    
+    },
       body: JSON.stringify(formData),
     }).then(() => {
       console.log('MTO Added');
@@ -122,7 +126,7 @@ const Mto = () => {
       return updatedSubLocations;
     });
 
-    const selectedInventoryData = state.inventory.data.filter(
+    const selectedInventoryData = state.nonPersisted.inventory.data.filter(
       (inventoryItem) => inventoryItem.address?.address === selectedSubLocation
     );
     console.log(selectedInventoryData, '22');
@@ -255,7 +259,7 @@ const Mto = () => {
       return updateDescription;
     });
     // Find the corresponding data in state.singleincome for the selected item
-    const selectedIncomeData = state.singleIncome?.data.filter(
+    const selectedIncomeData = state.nonPersisted.singleIncome?.data.filter(
       (incomeItem) =>
         incomeItem.description === description.match(/^[^(]*/)[0].trim()
     );
@@ -295,7 +299,7 @@ const Mto = () => {
     // ... (your existing code)
 
     // Find the corresponding data in state.singleIncome for the selected part number
-    const selectedIncomeData = state.singleIncome?.data.find(
+    const selectedIncomeData = state.nonPersisted.singleIncome?.data.find(
       (incomeItem) => incomeItem.pn === selectedPartNo
     );
 

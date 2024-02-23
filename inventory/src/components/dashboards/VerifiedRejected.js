@@ -154,7 +154,7 @@ const VerifiedRejected = () => {
                   },
                 }}
               >
-                <Link to={"/datacount"} style={{ textDecoration: "none" }}>
+                <Link to={"/rejected-mto"} style={{ textDecoration: "none" }}>
                   <CardContent>
                     <ArticleIcon
                       fontSize="large"

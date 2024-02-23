@@ -561,6 +561,7 @@ const UpdateMto = () => {
               //value={age}
               value={mto ? mto.status : ''}
               InputProps={{ readOnly: true }}
+             
               label='Repair/service'
               //onChange={handleChange}
               onChange={(e) =>
@@ -569,6 +570,7 @@ const UpdateMto = () => {
                   status: e.target.value,
                 })
               }
+           
             >
               <MenuItem value={'verified'}>Verified</MenuItem>
               <MenuItem value={'rejected'}>Rejected</MenuItem>

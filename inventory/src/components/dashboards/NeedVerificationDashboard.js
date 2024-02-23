@@ -154,7 +154,7 @@ const NeedVerificationDashboard = () => {
                   },
                 }}
               >
-                <Link to={"/mto-verify"} style={{ textDecoration: "none" }}>
+                <Link to={"/mto-created"} style={{ textDecoration: "none" }}>
                   <CardContent>
                     <ArticleIcon
                       fontSize="large"
