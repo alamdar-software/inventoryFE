@@ -419,7 +419,7 @@ export const ViewCipl = () => {
                       </TableCell>
 
                       <Box>
-                        <Link to={`/updateConsignee/${ciplRow.id}`}>
+                        <Link to={`/updateCipl/${ciplRow.id}`}>
                           <Button
                             sx={{ marginLeft: '11px', marginTop: '10px' }}
                             variant='contained'

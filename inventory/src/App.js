@@ -1,96 +1,97 @@
-import Dashboard from "./components/Dashboard";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
-import CssBaseline from "@mui/material/CssBaseline";
+import Dashboard from './components/Dashboard';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+import CssBaseline from '@mui/material/CssBaseline';
 
-import "./App.css";
-import Home from "./pages/Home";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { Location } from "./components/Location";
-import Sidebar from "./components/Sidebar.jsx";
-import Item from "./components/Item.js";
-import Pickup from "./components/Pickup.js";
-import Uom from "./components/Uom.js";
-import Shipper from "./components/Shipper.js";
-import Consignee from "./components/Consignee.js";
+import './App.css';
+import Home from './pages/Home';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { Location } from './components/Location';
+import Sidebar from './components/Sidebar.jsx';
+import Item from './components/Item.js';
+import Pickup from './components/Pickup.js';
+import Uom from './components/Uom.js';
+import Shipper from './components/Shipper.js';
+import Consignee from './components/Consignee.js';
 
-import { Currency } from "./components/Currency.jsx";
-import LocationList from "./components/LocationList.js";
-import Moc from "./pages/Moc.jsx";
-import Update from "./components/Update.js";
-import Brand from "./pages/Brand";
-import UpdateBrand from "./pages/UpdateBrand";
-import Category from "./pages/Category";
-import UpdateCategory from "./pages/UpdateCategory";
-import TransferItem from "./pages/TransferItem.js";
+import { Currency } from './components/Currency.jsx';
+import LocationList from './components/LocationList.js';
+import Moc from './pages/Moc.jsx';
+import Update from './components/Update.js';
+import Brand from './pages/Brand';
+import UpdateBrand from './pages/UpdateBrand';
+import Category from './pages/Category';
+import UpdateCategory from './pages/UpdateCategory';
+import TransferItem from './pages/TransferItem.js';
 
-import Mto from "./components/Mto.js";
-import InternalTransfer from "./components/InternalTransfer.js";
-import ViewConsignee from "./pages/ViewConsignee";
-import UpdateConsignee from "./components/UpdateConsignee.js";
-import ConsumeItem from "./components/ConsumeItem.js";
-import Inventory from "./components/Inventory.js";
-import ScrappedItem from "./components/ScrappedItem.js";
-import IncomingStock from "./pages/IncomingStock.js";
-import SingleIncome from "./components/SingleIncome.js";
-import BulkIncome from "./components/BulkIncome.js";
-import User from "./components/User.js";
-import DailyDataCount from "./pages/DailyDataCount.js";
-import UpdateCurrency from "./pages/UpdateCurrency";
-import UpdateShipper from "./components/UpdateShipper";
-import ViewItem from "./components/ViewItem.js";
-import Cipl from "./components/Cipl.js";
-import ViewCipl from "./pages/ViewCipl";
-import PrintCipl from "./pages/PrintCipl";
-import ViewTransfer from "./pages/ViewTransfer";
-import UpdateEntity from "./components/UpdateEntity";
-import Entity from "./pages/Entity";
-import InventoryList from "./components/InventoryList.js";
-import UpdateInventory from "./components/UpdateInventory.js";
-import ViewIncoming from "./components/ViewIncoming.js";
-import UpdateIncoming from "./components/UpdateIncoming.js";
-import ReportsDashboard from "./pages/ReportsDashboard";
-import StockReportDashboard from "./pages/StockReportDashboard";
-import SearchInventory from "./pages/SearchInventory";
-import SearchIncoming from "./pages/SearchIncoming";
-import StockReport from "./pages/StockReport";
-import ViewMto from "./components/ViewMto.js";
-import PrintMto from "./components/PrintMto.js";
-import UpdateMto from "./components/UpdateMto.js";
-import ViewInternal from "./components/ViewInternal.js";
-import PrintInternal from "./components/PrintInternal.js";
-import MasterReports from "./components/MasterReports.js";
-import ConsumeReport from "./components/ConsumeReport.js";
-import ScrappedReport from "./components/ScrappedReport.js";
-import ItemServiceReport from "./components/ItemServiceReport.js";
-import ReportItem from "./pages/Reports/ReportItem.js";
-import LocationReport from "./pages/Reports/locationReport.js";
-import TransferItemDashboard from "./pages/Dashboards/transferItemDashboard.js";
-import MtoReports from "./components/MtoReports.js";
-import InternalTransferReport from "./components/InternalTransferReport.js";
-import CiplReport from "./components/CiplReport.js";
-import UpdatePickup from "./components/UpdatePickup.js";
-import UpdateUom from "./components/UpdateUom.js";
-import UpdateItem from "./components/UpdateItem.js";
-import UpdateConsumed from "./pages/UpdateConsumed.js";
-import ViewConsume from "./pages/ViewConsume.js";
-import ViewScrapp from "./pages/ViewScrap";
-import UpdateScrapped from "./pages/UpdateScrapped";
-import ViewInventoryMoc from "./components/ViewInventoryMoc.js";
-import LocationDashboard from "./components/LocationDashboard.js";
-import Signup from "./pages/Login/Signup.jsx";
-import Login from "./pages/Login/Login.jsx";
-import PrivateRoute from "./components/PrivateRoute";
-import OnlySuperAdmin from "./components/OnlySuperAdminRoute";
-import ChangePassword from "./components/ChangePassword";
-import ViewUser from "./components/ViewUser";
-import UpdateUser from "./components/UpdateUser";
-import VerifierandApprover from "./components/VerifierAndApproverRoute";
-import OnlyPreparer from "./components/OnlyPreparerRoute";
-import OnlyOther from "./components/OnlyOthers";
+import Mto from './components/Mto.js';
+import InternalTransfer from './components/InternalTransfer.js';
+import ViewConsignee from './pages/ViewConsignee';
+import UpdateConsignee from './components/UpdateConsignee.js';
+import ConsumeItem from './components/ConsumeItem.js';
+import Inventory from './components/Inventory.js';
+import ScrappedItem from './components/ScrappedItem.js';
+import IncomingStock from './pages/IncomingStock.js';
+import SingleIncome from './components/SingleIncome.js';
+import BulkIncome from './components/BulkIncome.js';
+import User from './components/User.js';
+import DailyDataCount from './pages/DailyDataCount.js';
+import UpdateCurrency from './pages/UpdateCurrency';
+import UpdateShipper from './components/UpdateShipper';
+import ViewItem from './components/ViewItem.js';
+import Cipl from './components/Cipl.js';
+import ViewCipl from './pages/ViewCipl';
+import PrintCipl from './pages/PrintCipl';
+import ViewTransfer from './pages/ViewTransfer';
+import UpdateEntity from './components/UpdateEntity';
+import Entity from './pages/Entity';
+import InventoryList from './components/InventoryList.js';
+import UpdateInventory from './components/UpdateInventory.js';
+import ViewIncoming from './components/ViewIncoming.js';
+import UpdateIncoming from './components/UpdateIncoming.js';
+import ReportsDashboard from './pages/ReportsDashboard';
+import StockReportDashboard from './pages/StockReportDashboard';
+import SearchInventory from './pages/SearchInventory';
+import SearchIncoming from './pages/SearchIncoming';
+import StockReport from './pages/StockReport';
+import ViewMto from './components/ViewMto.js';
+import PrintMto from './components/PrintMto.js';
+import UpdateMto from './components/UpdateMto.js';
+import ViewInternal from './components/ViewInternal.js';
+import PrintInternal from './components/PrintInternal.js';
+import MasterReports from './components/MasterReports.js';
+import ConsumeReport from './components/ConsumeReport.js';
+import ScrappedReport from './components/ScrappedReport.js';
+import ItemServiceReport from './components/ItemServiceReport.js';
+import ReportItem from './pages/Reports/ReportItem.js';
+import LocationReport from './pages/Reports/locationReport.js';
+import TransferItemDashboard from './pages/Dashboards/transferItemDashboard.js';
+import MtoReports from './components/MtoReports.js';
+import InternalTransferReport from './components/InternalTransferReport.js';
+import CiplReport from './components/CiplReport.js';
+import UpdatePickup from './components/UpdatePickup.js';
+import UpdateUom from './components/UpdateUom.js';
+import UpdateItem from './components/UpdateItem.js';
+import UpdateConsumed from './pages/UpdateConsumed.js';
+import ViewConsume from './pages/ViewConsume.js';
+import ViewScrapp from './pages/ViewScrap';
+import UpdateScrapped from './pages/UpdateScrapped';
+import ViewInventoryMoc from './components/ViewInventoryMoc.js';
+import LocationDashboard from './components/LocationDashboard.js';
+import Signup from './pages/Login/Signup.jsx';
+import Login from './pages/Login/Login.jsx';
+import PrivateRoute from './components/PrivateRoute';
+import OnlySuperAdmin from './components/OnlySuperAdminRoute';
+import ChangePassword from './components/ChangePassword';
+import ViewUser from './components/ViewUser';
+import UpdateUser from './components/UpdateUser';
+import VerifierandApprover from './components/VerifierAndApproverRoute';
+import OnlyPreparer from './components/OnlyPreparerRoute';
+import OnlyOther from './components/OnlyOthers';
+import UpdateCipl from './components/UpdateCipl.js';
 const theme = createTheme({
   palette: {
     background: {
-      default: "rgb(241, 245, 241)",
+      default: 'rgb(241, 245, 241)',
     },
   },
 });
@@ -121,11 +122,11 @@ function App() {
           <CssBaseline />
 
           <Routes>
-            <Route path="/login" element={<Login />} />
+            <Route path='/login' element={<Login />} />
             <Route element={<PrivateRoute />}>
               <Route element={<OnlySuperAdmin />}>
                 <Route
-                  path="/add-user"
+                  path='/add-user'
                   element={
                     <Sidebar>
                       <Signup />
@@ -133,7 +134,7 @@ function App() {
                   }
                 />
                 <Route
-                  path="/view-user"
+                  path='/view-user'
                   element={
                     <Sidebar>
                       <ViewUser />
@@ -141,7 +142,7 @@ function App() {
                   }
                 />
                 <Route
-                  path="/api/user/update/:id"
+                  path='/api/user/update/:id'
                   element={
                     <Sidebar>
                       <UpdateUser />
@@ -152,7 +153,7 @@ function App() {
 
               <Route element={<OnlyPreparer />}>
                 <Route
-                  path="/add-location"
+                  path='/add-location'
                   element={
                     <Sidebar>
                       <Location />
@@ -160,7 +161,7 @@ function App() {
                   }
                 />
                 <Route
-                  path="/change-password"
+                  path='/change-password'
                   element={
                     <Sidebar>
                       <ChangePassword />
@@ -168,7 +169,7 @@ function App() {
                   }
                 />
                 <Route
-                  path="/item"
+                  path='/item'
                   element={
                     <Sidebar>
                       <Item />
@@ -176,7 +177,7 @@ function App() {
                   }
                 />
                 <Route
-                  path="/updateItem/:id"
+                  path='/updateItem/:id'
                   element={
                     <Sidebar>
                       <UpdateItem />
@@ -184,7 +185,7 @@ function App() {
                   }
                 />
                 <Route
-                  path="/pick-up"
+                  path='/pick-up'
                   element={
                     <Sidebar>
                       <Pickup />
@@ -192,7 +193,7 @@ function App() {
                   }
                 />
                 <Route
-                  path="/updatePickup/:id"
+                  path='/updatePickup/:id'
                   element={
                     <Sidebar>
                       <UpdatePickup />
@@ -200,7 +201,7 @@ function App() {
                   }
                 />
                 <Route
-                  path="/uom"
+                  path='/uom'
                   element={
                     <Sidebar>
                       <Uom />
@@ -208,7 +209,7 @@ function App() {
                   }
                 />
                 <Route
-                  path="/shipper"
+                  path='/shipper'
                   element={
                     <Sidebar>
                       <Shipper />
@@ -216,7 +217,7 @@ function App() {
                   }
                 />
                 <Route
-                  path="/updateShipper/:id"
+                  path='/updateShipper/:id'
                   element={
                     <Sidebar>
                       <UpdateShipper />
@@ -224,7 +225,7 @@ function App() {
                   }
                 />
                 <Route
-                  path="/consignee"
+                  path='/consignee'
                   element={
                     <Sidebar>
                       <Consignee />
@@ -233,7 +234,7 @@ function App() {
                 />
 
                 <Route
-                  path="/view-location"
+                  path='/view-location'
                   element={
                     <Sidebar>
                       <LocationList />
@@ -241,7 +242,7 @@ function App() {
                   }
                 />
                 <Route
-                  path="/MOC"
+                  path='/MOC'
                   element={
                     <Sidebar>
                       <Moc />
@@ -249,7 +250,7 @@ function App() {
                   }
                 />
                 <Route
-                  path="/updateLocation/:locationId/addresses/:addressId"
+                  path='/updateLocation/:locationId/addresses/:addressId'
                   element={
                     <Sidebar>
                       <Update />
@@ -257,7 +258,7 @@ function App() {
                   }
                 />
                 <Route
-                  path="/currency"
+                  path='/currency'
                   element={
                     <Sidebar>
                       <Currency />
@@ -265,7 +266,7 @@ function App() {
                   }
                 />
                 <Route
-                  path="/currency/update/:id"
+                  path='/currency/update/:id'
                   element={
                     <Sidebar>
                       <UpdateCurrency />
@@ -273,7 +274,7 @@ function App() {
                   }
                 />
                 <Route
-                  path="/brand"
+                  path='/brand'
                   element={
                     <Sidebar>
                       <Brand />
@@ -281,7 +282,7 @@ function App() {
                   }
                 />
                 <Route
-                  path="/brand/edit/:id"
+                  path='/brand/edit/:id'
                   element={
                     <Sidebar>
                       <UpdateBrand />
@@ -289,7 +290,7 @@ function App() {
                   }
                 />
                 <Route
-                  path="/category"
+                  path='/category'
                   element={
                     <Sidebar>
                       <Category />
@@ -297,7 +298,7 @@ function App() {
                   }
                 />
                 <Route
-                  path="/category/edit/:id"
+                  path='/category/edit/:id'
                   element={
                     <Sidebar>
                       <UpdateCategory />
@@ -305,7 +306,7 @@ function App() {
                   }
                 />
                 <Route
-                  path="/Items"
+                  path='/Items'
                   element={
                     <Sidebar>
                       <ViewItem />
@@ -313,7 +314,7 @@ function App() {
                   }
                 />
                 <Route
-                  path="/entity"
+                  path='/entity'
                   element={
                     <Sidebar>
                       <Entity />
@@ -321,7 +322,7 @@ function App() {
                   }
                 />
                 <Route
-                  path="/entity/update/:id"
+                  path='/entity/update/:id'
                   element={
                     <Sidebar>
                       <UpdateEntity />
@@ -329,16 +330,24 @@ function App() {
                   }
                 />
                 <Route
-                  path="/updateConsignee/:id"
+                  path='/updateConsignee/:id'
                   element={
                     <Sidebar>
                       <UpdateConsignee />
                     </Sidebar>
                   }
                 />
+                <Route
+                  path='/updateCipl/:id'
+                  element={
+                    <Sidebar>
+                      <UpdateCipl />
+                    </Sidebar>
+                  }
+                />
 
                 <Route
-                  path="/add-inventory"
+                  path='/add-inventory'
                   element={
                     <Sidebar>
                       <Inventory />
@@ -346,7 +355,7 @@ function App() {
                   }
                 />
                 <Route
-                  path="/view-inventory"
+                  path='/view-inventory'
                   element={
                     <Sidebar>
                       <InventoryList />
@@ -354,7 +363,7 @@ function App() {
                   }
                 />
                 <Route
-                  path="/updateInventory/:id"
+                  path='/updateInventory/:id'
                   element={
                     <Sidebar>
                       <UpdateInventory />
@@ -362,7 +371,7 @@ function App() {
                   }
                 />
                 <Route
-                  path="/datacount"
+                  path='/datacount'
                   element={
                     <Sidebar>
                       <DailyDataCount />
@@ -375,7 +384,7 @@ function App() {
 
               <Route element={<VerifierandApprover />}>
                 <Route
-                  path="/add-consumeditem"
+                  path='/add-consumeditem'
                   element={
                     <Sidebar>
                       <ConsumeItem />
@@ -383,7 +392,7 @@ function App() {
                   }
                 />
                 <Route
-                  path="/view-consumeditem"
+                  path='/view-consumeditem'
                   element={
                     <Sidebar>
                       <ViewConsume />
@@ -391,7 +400,7 @@ function App() {
                   }
                 />
                 <Route
-                  path="/updateConsumed/:id"
+                  path='/updateConsumed/:id'
                   element={
                     <Sidebar>
                       <UpdateConsumed />
@@ -399,7 +408,7 @@ function App() {
                   }
                 />
                 <Route
-                  path="/transfer-item"
+                  path='/transfer-item'
                   element={
                     <Sidebar>
                       <TransferItem />
@@ -407,7 +416,7 @@ function App() {
                   }
                 />
                 <Route
-                  path="/view-transfer"
+                  path='/view-transfer'
                   element={
                     <Sidebar>
                       <ViewTransfer />
@@ -415,7 +424,7 @@ function App() {
                   }
                 />
                 <Route
-                  path="/cipl"
+                  path='/cipl'
                   element={
                     <Sidebar>
                       <Cipl />
@@ -423,7 +432,7 @@ function App() {
                   }
                 />
                 <Route
-                  path="/view-cipl"
+                  path='/view-cipl'
                   element={
                     <Sidebar>
                       <ViewCipl />
@@ -431,7 +440,7 @@ function App() {
                   }
                 />
                 <Route
-                  path="/cipl/createpdf/:id"
+                  path='/cipl/createpdf/:id'
                   element={
                     <Sidebar>
                       <PrintCipl />
@@ -439,7 +448,7 @@ function App() {
                   }
                 />
                 <Route
-                  path="/mto"
+                  path='/mto'
                   element={
                     <Sidebar>
                       <Mto />
@@ -447,7 +456,7 @@ function App() {
                   }
                 />
                 <Route
-                  path="/it"
+                  path='/it'
                   element={
                     <Sidebar>
                       <InternalTransfer />
@@ -456,7 +465,7 @@ function App() {
                 />
 
                 <Route
-                  path="/add-scrappeditem"
+                  path='/add-scrappeditem'
                   element={
                     <Sidebar>
                       <ScrappedItem />
@@ -464,7 +473,7 @@ function App() {
                   }
                 />
                 <Route
-                  path="/view-scrappeditem"
+                  path='/view-scrappeditem'
                   element={
                     <Sidebar>
                       <ViewScrapp />
@@ -472,7 +481,7 @@ function App() {
                   }
                 />
                 <Route
-                  path="/updateScapped/:id"
+                  path='/updateScapped/:id'
                   element={
                     <Sidebar>
                       <UpdateScrapped />
@@ -480,7 +489,7 @@ function App() {
                   }
                 />
                 <Route
-                  path="/add-incoming"
+                  path='/add-incoming'
                   element={
                     <Sidebar>
                       <IncomingStock />
@@ -488,7 +497,7 @@ function App() {
                   }
                 />
                 <Route
-                  path="/view-incoming"
+                  path='/view-incoming'
                   element={
                     <Sidebar>
                       <ViewIncoming />
@@ -496,7 +505,7 @@ function App() {
                   }
                 />
                 <Route
-                  path="/updateIncoming/:id"
+                  path='/updateIncoming/:id'
                   element={
                     <Sidebar>
                       <UpdateIncoming />
@@ -504,7 +513,7 @@ function App() {
                   }
                 />
                 <Route
-                  path="/singleIncome"
+                  path='/singleIncome'
                   element={
                     <Sidebar>
                       <SingleIncome />
@@ -512,7 +521,7 @@ function App() {
                   }
                 />
                 <Route
-                  path="/bulkIncome"
+                  path='/bulkIncome'
                   element={
                     <Sidebar>
                       <BulkIncome />
@@ -521,7 +530,7 @@ function App() {
                 />
 
                 <Route
-                  path="/reports"
+                  path='/reports'
                   element={
                     <Sidebar>
                       <ReportsDashboard />
@@ -529,7 +538,7 @@ function App() {
                   }
                 />
                 <Route
-                  path="/StockReportDashboard"
+                  path='/StockReportDashboard'
                   element={
                     <Sidebar>
                       <StockReportDashboard />
@@ -537,7 +546,7 @@ function App() {
                   }
                 />
                 <Route
-                  path="/searchInventory"
+                  path='/searchInventory'
                   element={
                     <Sidebar>
                       <SearchInventory />
@@ -545,7 +554,7 @@ function App() {
                   }
                 />
                 <Route
-                  path="/searchIncoming"
+                  path='/searchIncoming'
                   element={
                     <Sidebar>
                       <SearchIncoming />
@@ -555,7 +564,7 @@ function App() {
 
                 <Route element={<OnlyOther />}>
                   <Route
-                    path="/"
+                    path='/'
                     element={
                       <Sidebar>
                         <Dashboard />
@@ -564,7 +573,7 @@ function App() {
                   />
 
                   <Route
-                    path="/dashboard"
+                    path='/dashboard'
                     element={
                       <Sidebar>
                         <Dashboard />
@@ -572,7 +581,7 @@ function App() {
                     }
                   ></Route>
                   <Route
-                    path="/stockReport"
+                    path='/stockReport'
                     element={
                       <Sidebar>
                         <StockReport />
@@ -580,7 +589,7 @@ function App() {
                     }
                   />
                   <Route
-                    path="/reportItem"
+                    path='/reportItem'
                     element={
                       <Sidebar>
                         <ReportItem />
@@ -588,7 +597,7 @@ function App() {
                     }
                   />
                   <Route
-                    path="/locationReport"
+                    path='/locationReport'
                     element={
                       <Sidebar>
                         <LocationReport />
@@ -596,7 +605,7 @@ function App() {
                     }
                   />
                   <Route
-                    path="/transferItem"
+                    path='/transferItem'
                     element={
                       <Sidebar>
                         <TransferItemDashboard />
@@ -604,7 +613,7 @@ function App() {
                     }
                   />
                   <Route
-                    path="/viewMto"
+                    path='/viewMto'
                     element={
                       <Sidebar>
                         <ViewMto />
@@ -612,7 +621,7 @@ function App() {
                     }
                   />
                   <Route
-                    path="/mto/createpdf/:id"
+                    path='/mto/createpdf/:id'
                     element={
                       <Sidebar>
                         <PrintMto />
@@ -620,7 +629,7 @@ function App() {
                     }
                   />
                   <Route
-                    path="/updateMto/:id"
+                    path='/updateMto/:id'
                     element={
                       <Sidebar>
                         <UpdateMto />
@@ -628,7 +637,7 @@ function App() {
                     }
                   />
                   <Route
-                    path="/viewInternal"
+                    path='/viewInternal'
                     element={
                       <Sidebar>
                         <ViewInternal />
@@ -636,7 +645,7 @@ function App() {
                     }
                   />
                   <Route
-                    path="/updatePickup/:id"
+                    path='/updatePickup/:id'
                     element={
                       <Sidebar>
                         <UpdatePickup />
@@ -644,7 +653,7 @@ function App() {
                     }
                   />
                   <Route
-                    path="/internal/createpdf/:id"
+                    path='/internal/createpdf/:id'
                     element={
                       <Sidebar>
                         <PrintInternal />
@@ -652,7 +661,7 @@ function App() {
                     }
                   />
                   <Route
-                    path="/Uom/update/:id"
+                    path='/Uom/update/:id'
                     element={
                       <Sidebar>
                         <UpdateUom />
@@ -660,7 +669,7 @@ function App() {
                     }
                   />
                   <Route
-                    path="/masterReport"
+                    path='/masterReport'
                     element={
                       <Sidebar>
                         <MasterReports />
@@ -668,7 +677,7 @@ function App() {
                     }
                   />
                   <Route
-                    path="/consumeReport"
+                    path='/consumeReport'
                     element={
                       <Sidebar>
                         <ConsumeReport />
@@ -676,7 +685,7 @@ function App() {
                     }
                   />
                   <Route
-                    path="/scrappedReport"
+                    path='/scrappedReport'
                     element={
                       <Sidebar>
                         <ScrappedReport />
@@ -684,7 +693,7 @@ function App() {
                     }
                   />
                   <Route
-                    path="/itemService"
+                    path='/itemService'
                     element={
                       <Sidebar>
                         <ItemServiceReport />
@@ -692,7 +701,7 @@ function App() {
                     }
                   />
                   <Route
-                    path="/mtoReports"
+                    path='/mtoReports'
                     element={
                       <Sidebar>
                         <MtoReports />
@@ -700,7 +709,7 @@ function App() {
                     }
                   />
                   <Route
-                    path="/itReport"
+                    path='/itReport'
                     element={
                       <Sidebar>
                         <InternalTransferReport />
@@ -708,7 +717,7 @@ function App() {
                     }
                   />
                   <Route
-                    path="/ciplReport"
+                    path='/ciplReport'
                     element={
                       <Sidebar>
                         <CiplReport />
@@ -716,7 +725,7 @@ function App() {
                     }
                   />
                   <Route
-                    path="/view-inventoryMoc"
+                    path='/view-inventoryMoc'
                     element={
                       <Sidebar>
                         <ViewInventoryMoc />
