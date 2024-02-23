@@ -282,6 +282,9 @@ const ViewInternal = () => {
                         </Button>
                       </Link>
                     </TableCell>
+                    <Link to={`/updateIt/${internal.id}`}>
+                      <Button color='success'>Update</Button>
+                    </Link>
 
                     {/* <Link to={`/updateMto/${mto.id}`}>
                        <Button>

@@ -100,6 +100,7 @@ import ViewCiplVerification from './pages/ViewCiplVerification.js';
 import UpdateCiplVerifier from './components/UpdateCiplVerifier.js';
 import ViewCiplVerified from './pages/ViewCiplVeried.js';
 import ViewCiplRejected from './pages/ViewCiplRejected.js';
+import UpdateIt from './components/UpdateIt.js';
 const theme = createTheme({
   palette: {
     background: {
@@ -193,6 +194,14 @@ function App() {
                   element={
                     <Sidebar>
                       <UpdateItem />
+                    </Sidebar>
+                  }
+                />
+                <Route
+                  path='/updateIt/:id'
+                  element={
+                    <Sidebar>
+                      <UpdateIt />
                     </Sidebar>
                   }
                 />
@@ -349,7 +358,6 @@ function App() {
                     </Sidebar>
                   }
                 />
-             
 
                 <Route
                   path='/datacount'
@@ -362,13 +370,13 @@ function App() {
               </Route>
 
               <Route
-                  path='/pick-up'
-                  element={
-                    <Sidebar>
-                      <Pickup />
-                    </Sidebar>
-                  }
-                />
+                path='/pick-up'
+                element={
+                  <Sidebar>
+                    <Pickup />
+                  </Sidebar>
+                }
+              />
               {/*   transfer item*/}
 
               <Route element={<VerifierandApprover />}>
@@ -380,7 +388,7 @@ function App() {
                     </Sidebar>
                   }
                 />
-                 <Route
+                <Route
                   path='/cipl'
                   element={
                     <Sidebar>
@@ -404,7 +412,7 @@ function App() {
                     </Sidebar>
                   }
                 />
-                  <Route
+                <Route
                   path='/verified-cipl'
                   element={
                     <Sidebar>
@@ -420,7 +428,7 @@ function App() {
                     </Sidebar>
                   }
                 />
-                   <Route
+                <Route
                   path='/updateCipl/:id'
                   element={
                     <Sidebar>
@@ -428,7 +436,7 @@ function App() {
                     </Sidebar>
                   }
                 />
-                    <Route
+                <Route
                   path='/updateCiplverifier/:id'
                   element={
                     <Sidebar>
@@ -436,7 +444,7 @@ function App() {
                     </Sidebar>
                   }
                 />
-                 <Route
+                <Route
                   path='/cipl/createpdf/:id'
                   element={
                     <Sidebar>
@@ -557,8 +565,7 @@ function App() {
                     </Sidebar>
                   }
                 />
-               
-               
+
                 <Route
                   path='/mto'
                   element={
