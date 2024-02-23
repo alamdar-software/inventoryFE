@@ -138,6 +138,7 @@ const UpdateCipl = () => {
             //   onChange={(e) => handleBrandChange(index, e.target.value)}
 
             value={cipl ? cipl.totalWeight : ''}
+            InputProps={{ readOnly: true }}
             onChange={(e) => {
               setCipl({
                 ...cipl,
@@ -155,6 +156,7 @@ const UpdateCipl = () => {
             label='Total Package'
             variant='outlined'
             value={cipl ? cipl.totalPackage : ''}
+            InputProps={{ readOnly: true }}
             onChange={(e) => {
               setCipl({
                 ...cipl,
@@ -172,6 +174,7 @@ const UpdateCipl = () => {
             label='Total Amount'
             variant='outlined'
             value={cipl ? cipl.totalAmount : ''}
+            InputProps={{ readOnly: true }}
             onChange={(e) => {
               setCipl({
                 ...cipl,
@@ -189,7 +192,7 @@ const UpdateCipl = () => {
     console.log(formControls, 'yayerfgyu');
     return formControls?.map((control, index) => (
       <div key={control.key} style={{ display: 'flex', marginBottom: '10px' }}>
-        <FormControl fullWidth sx={{ width: '90%' }}>
+        {/* <FormControl fullWidth sx={{ width: '90%' }}>
           <InputLabel id='demo-simple-select-label'>Sub Location</InputLabel>
 
           <Select
@@ -218,8 +221,26 @@ const UpdateCipl = () => {
               </MenuItem>
             ))}
           </Select>
-        </FormControl>
+        </FormControl> */}
         <Grid item xs={12} sm={6}>
+          <TextField
+            id='outlined-basic'
+            label='SubLocation'
+            variant='outlined'
+            value={cipl ? cipl.SubLocations : ''}
+            sx={{ width: '100px', marginRight: '23px' }}
+            InputProps={{ readOnly: true }}
+            onChange={(e) => {
+              setCipl({
+                ...cipl,
+                SubLocations: e.target.value,
+              });
+              setformData(e.target.value);
+            }}
+            width={'100%'}
+          />
+        </Grid>
+        {/* <Grid item xs={12} sm={6}>
           <FormControl fullWidth sx={{ width: '90%', marginRight: '100px' }}>
             <InputLabel id='demo-simple-select-label'>
               Item Description
@@ -230,14 +251,11 @@ const UpdateCipl = () => {
               value={cipl ? cipl.description : ''}
               label='description'
               onChange={(e) => {
-                setformData({
-                  ...formData,
-                  description: e.target.value,
-                });
                 setCipl({
                   ...cipl,
                   description: e.target.value,
                 });
+                setformData(e.target.value);
               }}
               MenuProps={{
                 PaperProps: {
@@ -256,6 +274,24 @@ const UpdateCipl = () => {
               ))}
             </Select>
           </FormControl>
+        </Grid> */}
+        <Grid item xs={12} sm={6}>
+          <TextField
+            id='outlined-basic'
+            label='Item Description'
+            variant='outlined'
+            value={cipl ? cipl.item : ''}
+            sx={{ width: '100px', marginRight: '23px' }}
+            InputProps={{ readOnly: true }}
+            onChange={(e) => {
+              setCipl({
+                ...cipl,
+                item: e.target.value,
+              });
+              setformData(e.target.value);
+            }}
+            width={'100%'}
+          />
         </Grid>
         <FormControl fullWidth sx={{ width: '70%', marginRight: '10px' }}>
           <Grid item xs={12} sm={6}>
@@ -265,6 +301,7 @@ const UpdateCipl = () => {
               label='Package Name'
               variant='outlined'
               value={cipl ? cipl.packageName : ''}
+              InputProps={{ readOnly: true }}
               // value={locationName}
               onChange={(e) => {
                 setCipl({
@@ -287,6 +324,7 @@ const UpdateCipl = () => {
               label='Hs'
               variant='outlined'
               value={cipl ? cipl.hs : ''}
+              InputProps={{ readOnly: true }}
               // value={sn}
               //   onChange={(e) => handleHsChange(index, e.target.value)}
               onChange={(e) => {
@@ -308,6 +346,7 @@ const UpdateCipl = () => {
               label='Country Of Origin'
               variant='outlined'
               value={cipl ? cipl.cor : ''}
+              InputProps={{ readOnly: true }}
               onChange={(e) => {
                 setCipl({
                   ...cipl,
@@ -330,6 +369,7 @@ const UpdateCipl = () => {
               label='Dimension(CM)'
               variant='outlined'
               value={cipl ? cipl.dimension : ''}
+              InputProps={{ readOnly: true }}
               onChange={(e) => {
                 setCipl({
                   ...cipl,
@@ -350,6 +390,7 @@ const UpdateCipl = () => {
               label='Weights(Kg)'
               variant='outlined'
               value={cipl ? cipl.weights : ''}
+              InputProps={{ readOnly: true }}
               onChange={(e) => {
                 setCipl({
                   ...cipl,
@@ -363,34 +404,24 @@ const UpdateCipl = () => {
           </Grid>
         </FormControl>
 
-        <FormControl
-          fullWidth
-          sx={{ width: '50%', marginRight: '10px' }}
-          key={control.key}
-        >
-          <InputLabel id={`part-no-label-${index}`}>Part No</InputLabel>
-          <Select
-            labelId={`part-no-label-${index}`}
-            id={`part-no-select-${index}`}
+        <Grid item xs={12} sm={6}>
+          <TextField
+            id='outlined-basic'
             label='Part No'
-            MenuProps={{
-              PaperProps: {
-                style: {
-                  maxHeight: 120, // Adjust the height as needed
-                },
-              },
+            variant='outlined'
+            value={cipl ? cipl.partNo : ''}
+            sx={{ width: '100px', marginRight: '23px' }}
+            InputProps={{ readOnly: true }}
+            onChange={(e) => {
+              setCipl({
+                ...cipl,
+                partNo: e.target.value,
+              });
+              setformData(e.target.value);
             }}
-            // onChange={(e) =>
-            //   handlePartNoChange(index, selectedPartNo[index], e.target.value)
-            // }
-          >
-            {/* {partNo[index]?.map((partNo, partIndex) => (
-              <MenuItem key={partIndex} value={partNo}>
-                {partNo}
-              </MenuItem>
-            ))} */}
-          </Select>
-        </FormControl>
+            width={'100%'}
+          />
+        </Grid>
         <FormControl fullWidth sx={{ width: '30%', marginRight: '10px' }}>
           <Grid item xs={12} sm={6}>
             <TextField
@@ -399,6 +430,7 @@ const UpdateCipl = () => {
               label='S/N'
               variant='outlined'
               //   value={partNumbersData[index]?.sn || ''}
+              InputProps={{ readOnly: true }}
               value={cipl ? cipl.sn : ''}
               onChange={(e) => {
                 setCipl({
@@ -423,6 +455,7 @@ const UpdateCipl = () => {
               // onChange={(e) => setLocation(e.target.value)}
               //   onChange={(e) => handlePurchaseChange(index, e.target.value)}
               value={cipl ? cipl.purchase : ''}
+              InputProps={{ readOnly: true }}
               onChange={(e) => {
                 setCipl({
                   ...cipl,
@@ -444,6 +477,7 @@ const UpdateCipl = () => {
               //   value={partNumbersData[index]?.unitPrice || ''}
               value={cipl ? cipl.unitPrice : ''}
               //   onChange={(e) => handleUnitPriceChange(index, e.target.value)}
+              InputProps={{ readOnly: true }}
               onChange={(e) => {
                 setCipl({
                   ...cipl,
@@ -466,6 +500,7 @@ const UpdateCipl = () => {
               // onChange={(e) => setLocation(e.target.value)}
               //   onChange={(e) => handleQuantityChange(index, e.target.value)}
               value={cipl ? cipl.quantity : ''}
+              InputProps={{ readOnly: true }}
               onChange={(e) => {
                 setCipl({
                   ...cipl,
@@ -489,6 +524,7 @@ const UpdateCipl = () => {
               // onChange={(e) => setLocation(e.target.value)}
               /* onChange={(e) => handleAmountChange(index, e.target.value)} */
               value={cipl ? cipl.amount : ''}
+              InputProps={{ readOnly: true }}
               onChange={(e) => {
                 setCipl({
                   ...cipl,
@@ -514,6 +550,7 @@ const UpdateCipl = () => {
               //   onChange={(e) => handleBrandChange(index, e.target.value)}
 
               value={cipl ? cipl.brand : ''}
+              InputProps={{ readOnly: true }}
               onChange={(e) => {
                 setCipl({
                   ...cipl,
@@ -535,6 +572,7 @@ const UpdateCipl = () => {
               //   onChange={(e) => handleRemarksChange(index, e.target.value)}
               minRows={4} // You can adjust the number of rows as needed
               value={cipl ? cipl.remarks : ''}
+              InputProps={{ readOnly: true }}
               onChange={(e) => {
                 setCipl({
                   ...cipl,
@@ -619,7 +657,7 @@ const UpdateCipl = () => {
             </Select>
           </FormControl>
         </Grid>
-        <Grid item xs={21} sm={6}>
+        {/* <Grid item xs={21} sm={6}>
           <FormControl fullWidth sx={{ width: '90%' }}>
             <InputLabel id='demo-simple-select-label'>Shipper</InputLabel>
             <Select
@@ -651,6 +689,25 @@ const UpdateCipl = () => {
               ))}
             </Select>
           </FormControl>
+        </Grid> */}
+
+        <Grid item xs={12} sm={6}>
+          <TextField
+            id='outlined-basic'
+            label='Shipper'
+            variant='outlined'
+            value={cipl ? cipl.shipperName : ''}
+            sx={{ width: '590px' }}
+            InputProps={{ readOnly: true }}
+            onChange={(e) => {
+              setCipl({
+                ...cipl,
+                shipperName: e.target.value,
+              });
+              setformData(e.target.value);
+            }}
+            // width={'100%'}
+          />
         </Grid>
       </Grid>
       <Grid container spacing={2} sx={{ mt: '23px' }}>
@@ -669,7 +726,7 @@ const UpdateCipl = () => {
             />
           </LocalizationProvider>
         </Grid>
-        <Grid item xs={12} sm={6}>
+        {/* <Grid item xs={12} sm={6}>
           <FormControl fullWidth sx={{ width: '90%' }}>
             <InputLabel id='demo-simple-select-label'>Consignee</InputLabel>
             <Select
@@ -702,10 +759,28 @@ const UpdateCipl = () => {
               ))}
             </Select>
           </FormControl>
+        </Grid> */}
+        <Grid item xs={12} sm={6}>
+          <TextField
+            id='outlined-basic'
+            label='Consignee'
+            variant='outlined'
+            value={cipl ? cipl.consigneeName : ''}
+            sx={{ width: '590px' }}
+            InputProps={{ readOnly: true }}
+            onChange={(e) => {
+              setCipl({
+                ...cipl,
+                consigneeName: e.target.value,
+              });
+              setformData(e.target.value);
+            }}
+            // width={'100%'}
+          />
         </Grid>
       </Grid>
       <Grid container spacing={2} sx={{ mt: '23px' }}>
-        <Grid item xs={12} sm={6}>
+        {/* <Grid item xs={12} sm={6}>
           <FormControl fullWidth sx={{ width: '90%' }}>
             <InputLabel id='demo-simple-select-label'>
               Pickup Address
@@ -714,7 +789,7 @@ const UpdateCipl = () => {
               labelId='demo-simple-select-label'
               id='demo-simple-select'
               //value={age}
-              value={formData.pickupAddress || ''}
+              value={cipl ? cipl.pickupAddress : ''}
               //   value={cipl ? cipl.pickupAddress : ''}
               label='pickupAddress'
               //onChange={handleChange}
@@ -727,7 +802,7 @@ const UpdateCipl = () => {
               }}
               onChange={(e) =>
                 setformData({
-                  ...formData,
+                  ...cipl,
                   pickupAddress: e.target.value,
                 })
               }
@@ -740,8 +815,26 @@ const UpdateCipl = () => {
               ))}
             </Select>
           </FormControl>
-        </Grid>
+        </Grid> */}
         <Grid item xs={12} sm={6}>
+          <TextField
+            id='outlined-basic'
+            label='Pickup Address'
+            variant='outlined'
+            value={cipl ? cipl.pickupAddress : ''}
+            sx={{ width: '590px' }}
+            InputProps={{ readOnly: true }}
+            onChange={(e) => {
+              setCipl({
+                ...cipl,
+                pickupAddress: e.target.value,
+              });
+              setformData(e.target.value);
+            }}
+            // width={'100%'}
+          />
+        </Grid>
+        {/* <Grid item xs={12} sm={6}>
           <FormControl fullWidth sx={{ width: '90%' }}>
             <InputLabel id='demo-simple-select-label'>
               Select Currency
@@ -777,6 +870,25 @@ const UpdateCipl = () => {
               )}
             </Select>
           </FormControl>
+        </Grid> */}
+
+        <Grid item xs={12} sm={6}>
+          <TextField
+            id='outlined-basic'
+            label='Pickup Address'
+            variant='outlined'
+            value={cipl ? cipl.currencyName : ''}
+            sx={{ width: '590px' }}
+            InputProps={{ readOnly: true }}
+            onChange={(e) => {
+              setCipl({
+                ...cipl,
+                currencyName: e.target.value,
+              });
+              setformData(e.target.value);
+            }}
+            // width={'100%'}
+          />
         </Grid>
       </Grid>
       <Grid container spacing={2} sx={{ mt: '23px' }}>
@@ -831,6 +943,7 @@ const UpdateCipl = () => {
               id='demo-simple-select'
               //value={age}
               value={cipl ? cipl.status : ''}
+              InputProps={{ readOnly: true }}
               label='Repair/service'
               //onChange={handleChange}
               onChange={(e) =>
