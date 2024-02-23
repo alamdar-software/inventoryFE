@@ -1,6 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { createSlice } from '@reduxjs/toolkit';
-import { useSelector } from 'react-redux';
+
 
 export const fetchConsumeItem = createAsyncThunk(
   'fetchConsume',
