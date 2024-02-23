@@ -1249,7 +1249,7 @@ export const Cipl = () => {
                 })
               }
             >
-              {state.nonPersisted.pickup.data?.map((item, index) => (
+              {state?.nonPersisted.pickup.data?.map((item, index) => (
                 <MenuItem key={index} value={item?.pickupAddress}>
                   {" "}
                   {item?.pickupAddress}
