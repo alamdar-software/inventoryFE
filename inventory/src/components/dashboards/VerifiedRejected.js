@@ -87,7 +87,7 @@ const VerifiedRejected = () => {
                 }}
               >
                 <Link
-                  to={"/view-inventoryMoc"}
+                  to={"/rejected-cipl"}
                   style={{ textDecoration: "none", position: "relative" }}
                 >
                   <CardContent>

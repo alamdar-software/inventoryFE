@@ -87,7 +87,7 @@ const VerifiedDashboard = () => {
                 }}
               >
                 <Link
-                  to={"/view-inventoryMoc"}
+                  to={"/verified-cipl"}
                   style={{ textDecoration: "none", position: "relative" }}
                 >
                   <CardContent>

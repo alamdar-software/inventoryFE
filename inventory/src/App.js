@@ -98,6 +98,8 @@ import ApprovedRejected from './components/dashboards/ApprovedRejected';
 import UpdateCipl from './components/UpdateCipl.js';
 import ViewCiplVerification from './pages/ViewCiplVerification.js';
 import UpdateCiplVerifier from './components/UpdateCiplVerifier.js';
+import ViewCiplVerified from './pages/ViewCiplVeried.js';
+import ViewCiplRejected from './pages/ViewCiplRejected.js';
 const theme = createTheme({
   palette: {
     background: {
@@ -399,6 +401,22 @@ function App() {
                   element={
                     <Sidebar>
                       <ViewCiplVerification />
+                    </Sidebar>
+                  }
+                />
+                  <Route
+                  path='/verified-cipl'
+                  element={
+                    <Sidebar>
+                      <ViewCiplVerified />
+                    </Sidebar>
+                  }
+                />
+                <Route
+                  path='/rejected-cipl'
+                  element={
+                    <Sidebar>
+                      <ViewCiplRejected />
                     </Sidebar>
                   }
                 />
