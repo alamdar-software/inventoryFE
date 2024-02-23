@@ -24,7 +24,7 @@ import { fetchShipper } from '../redux/slice/ShipperSlice';
 import { fetchCurrency } from '../redux/slice/CurrencySlice';
 import { fetchPickup } from '../redux/slice/PickUpSlice';
 
-const UpdateCipl = () => {
+const UpdateCiplVerifier = () => {
   const [formData, setformData] = useState({
     itemName: '',
     repairService: '',
@@ -112,7 +112,7 @@ const UpdateCipl = () => {
         'Content-type': 'application/json',
         Authorization: `Bearer ${currentUser.accessToken}`,
       },
-      body: JSON.stringify(cipl),
+      body: JSON.stringify(formData),
     })
       .then(() => {
         console.log('Cipl Updated');
@@ -943,7 +943,7 @@ const UpdateCipl = () => {
               id='demo-simple-select'
               //value={age}
               value={cipl ? cipl.status : ''}
-              InputProps={{ readOnly: true }}
+             
               label='Repair/service'
               //onChange={handleChange}
               onChange={(e) =>
@@ -952,7 +952,7 @@ const UpdateCipl = () => {
                   status: e.target.value,
                 })
               }
-               readOnly={true}
+           
             >
               <MenuItem value={'verified'}>Verified</MenuItem>
               <MenuItem value={'rejected'}>Rejected</MenuItem>
@@ -998,4 +998,4 @@ const UpdateCipl = () => {
   );
 };
 
-export default UpdateCipl;
+export default UpdateCiplVerifier;

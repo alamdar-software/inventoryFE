@@ -97,6 +97,7 @@ import NeedApprovalDashboard from './components/dashboards/NeedApprovalDashboard
 import ApprovedRejected from './components/dashboards/ApprovedRejected';
 import UpdateCipl from './components/UpdateCipl.js';
 import ViewCiplVerification from './pages/ViewCiplVerification.js';
+import UpdateCiplVerifier from './components/UpdateCiplVerifier.js';
 const theme = createTheme({
   palette: {
     background: {
@@ -409,6 +410,22 @@ function App() {
                     </Sidebar>
                   }
                 />
+                    <Route
+                  path='/updateCiplverifier/:id'
+                  element={
+                    <Sidebar>
+                      <UpdateCiplVerifier />
+                    </Sidebar>
+                  }
+                />
+                 <Route
+                  path='/cipl/createpdf/:id'
+                  element={
+                    <Sidebar>
+                      <PrintCipl />
+                    </Sidebar>
+                  }
+                />
                 <Route
                   path='/need-verfication'
                   element={
@@ -523,14 +540,7 @@ function App() {
                   }
                 />
                
-                <Route
-                  path='/cipl/createpdf/:id'
-                  element={
-                    <Sidebar>
-                      <PrintCipl />
-                    </Sidebar>
-                  }
-                />
+               
                 <Route
                   path='/mto'
                   element={
