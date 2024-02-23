@@ -100,6 +100,7 @@ import ViewCiplVerification from './pages/ViewCiplVerification.js';
 import UpdateCiplVerifier from './components/UpdateCiplVerifier.js';
 import ViewCiplVerified from './pages/ViewCiplVeried.js';
 import ViewCiplRejected from './pages/ViewCiplRejected.js';
+import UpdateMtoVerifier from './components/UpdateMtoVerifier.js';
 const theme = createTheme({
   palette: {
     background: {
@@ -417,6 +418,14 @@ function App() {
                   element={
                     <Sidebar>
                       <ViewCiplRejected />
+                    </Sidebar>
+                  }
+                />
+                  <Route
+                  path='/mto-verify'
+                  element={
+                    <Sidebar>
+                      <UpdateMtoVerifier />
                     </Sidebar>
                   }
                 />
