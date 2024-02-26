@@ -64,7 +64,7 @@ const UpdateIncomingVerifier = () => {
     })
       .then(() => {
         console.log('Incoming Updated');
-        navigate('/incoming-created');
+       
       })
       .catch((error) => {
         console.error('Error updating incoming:', error);
