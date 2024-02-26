@@ -384,6 +384,9 @@ const ViewScrapApproval = () => {
                 <TableCell align='right' sx={{ fontWeight: 'bold' }}>
                   Date
                 </TableCell>
+                <TableCell align='right' sx={{ fontWeight: 'bold' }}>
+                  Status
+                </TableCell>
 
                 <TableCell align='center' sx={{ fontWeight: 'bold' }}>
                   Action
@@ -413,6 +416,7 @@ const ViewScrapApproval = () => {
                         {consumedRow.quantity}
                       </TableCell>
                       <TableCell align='right'>{consumedRow.date}</TableCell>
+                      <TableCell align='right'>{consumedRow.status}</TableCell>
                       <TableCell align='right'>
                         <Box>
                           <Link

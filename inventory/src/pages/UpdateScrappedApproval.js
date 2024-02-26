@@ -41,10 +41,9 @@ function UpdateScrappedApproval() {
 
   const [locationName, setlocationName] = useState();
   const [transferDate, settransferDate] = useState();
-  const [consumed, setconsumed] = useState([]);
-  const [allConsumed, setAllConsumed] = useState([]);
-  const [filteredConsumed, setFilteredConsumed] = useState([]);
-
+  const [Scrapped, setScrapped] = useState([]);
+  const [allScrapped, setAllScrapped] = useState([]);
+  const [filteredScrapped, setFilteredScrapped] = useState([]);
   useEffect(() => {
     fetch(`http://localhost:8080/scrappeditem/get/${id}`, {
       headers: {
@@ -55,16 +54,16 @@ function UpdateScrappedApproval() {
       .then((res) => res.json())
       .then((result) => {
         console.log(result);
-        setconsumed(result);
+        setScrapped(result);
       });
   }, []);
-  console.log(consumed, 'rupali');
+  console.log(Scrapped, 'rupali');
   useEffect(() => {
-    dispatch(fetchlocation());
-    dispatch(fetchItem());
-    dispatch(fetchConsumeItem());
+    dispatch(fetchlocation(currentUser.accessToken));
+    dispatch(fetchItem(currentUser.accessToken));
+    dispatch(fetchConsumeItem(currentUser.accessToken));
   }, []);
-  /*   console.log("consumed.SubLocations:", consumed?.SubLocations[0]); */
+  /*   console.log("Scrapped.SubLocations:", Scrapped?.SubLocations[0]); */
 
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
@@ -100,7 +99,7 @@ function UpdateScrappedApproval() {
       }
 
       const data = await res.json();
-      setFilteredConsumed(data);
+      setFilteredScrapped(data);
       console.log(data, 'came from backend');
     } catch (error) {
       console.error('Error while finding consume:', error.message);
@@ -163,6 +162,26 @@ function UpdateScrappedApproval() {
       };
     });
   };
+  const handleUpdate = (e) => {
+    e.preventDefault();
+
+    fetch(`http://localhost:8080/scrappeditem/status/${id}`, {
+      method: 'PUT',
+      headers: {
+        'Content-type': 'application/json',
+        Authorization: `Bearer ${currentUser.accessToken}`,
+      },
+      body: JSON.stringify(formData),
+    })
+      .then(() => {
+        console.log('Scrapped Updated');
+        // navigate('/consignee');
+      })
+      .catch((error) => {
+        console.error('Error updating scrapped:', error);
+      });
+  };
+  console.log(formData, 'rashmidesaiii');
   return (
     <div>
       <Grid>
@@ -183,7 +202,7 @@ function UpdateScrappedApproval() {
               gutterBottom
               style={{ fontFamily: "'EB Garamond'" }}
             >
-              View Consumed Items
+              Update Scrapped Items
             </Typography>
           </CardContent>
         </Card>
@@ -205,7 +224,7 @@ function UpdateScrappedApproval() {
               <Select
                 labelId='demo-simple-select-label'
                 id='demo-simple-select'
-                value={consumed?.locationName || ''}
+                value={Scrapped?.locationName || ''}
                 //value={age}
                 label='location'
                 /* onChange={handleLocationChange} */
@@ -233,12 +252,12 @@ function UpdateScrappedApproval() {
           <Grid item xs={12} sm={6}>
             <FormControl fullWidth sx={{ width: '90%' }}>
               <InputLabel id='demo-simple-select-label'>
-                {consumed?.SubLocations}
+                {Scrapped?.SubLocations}
               </InputLabel>
               <Select
                 labelId='demo-simple-select-label'
                 id='demo-simple-select-label'
-                value={consumed?.SubLocations}
+                value={Scrapped?.SubLocations}
                 //value={age}
                 label='sublocation'
                 onChange={(e) => handleSubLocationChange(e)}
@@ -266,8 +285,8 @@ function UpdateScrappedApproval() {
                 <LocalizationProvider dateAdapter={AdapterDayjs}>
                   <DatePicker
                     value={
-                      consumed?.transferDate
-                        ? dayjs(consumed?.transferDate)
+                      Scrapped?.transferDate
+                        ? dayjs(Scrapped?.transferDate)
                         : null
                     }
                     /* value={
@@ -289,6 +308,28 @@ function UpdateScrappedApproval() {
                   />
                 </LocalizationProvider>
               </Grid>
+            </FormControl>
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <FormControl fullWidth sx={{ width: '90%' }}>
+              <InputLabel id='demo-simple-select-label'>Status</InputLabel>
+              <Select
+                labelId='demo-simple-select-label'
+                id='demo-simple-select'
+                //value={age}
+                value={Scrapped ? Scrapped.status : ''}
+                label='Repair/service'
+                //onChange={handleChange}
+                onChange={(e) =>
+                  setformData({
+                    ...Scrapped,
+                    status: e.target.value,
+                  })
+                }
+              >
+                <MenuItem value={'approved'}>Approved</MenuItem>
+                <MenuItem value={'rejected'}>Rejected</MenuItem>
+              </Select>
             </FormControl>
           </Grid>
           <Grid sx={{ mt: '33px', width: '100%', overflowX: 'scroll' }}>
@@ -326,15 +367,15 @@ function UpdateScrappedApproval() {
                 </TableHead>
 
                 <TableBody>
-                  {consumed ? (
-                    <TableRow key={consumed.id}>
+                  {Scrapped ? (
+                    <TableRow key={Scrapped.id}>
                       <TableCell align='left'>
                         <Typography
                           fontWeight='bold'
                           style={{ color: 'black' }}
                         >
                           <TextField
-                            value={consumed?.item || ''}
+                            value={Scrapped?.item || ''}
                             fullWidth
                             variant='outlined'
                             size='small'
@@ -350,7 +391,7 @@ function UpdateScrappedApproval() {
                       </TableCell>
                       <TableCell align='right'>
                         <TextField
-                          value={consumed?.partNo || ''}
+                          value={Scrapped?.partNo || ''}
                           fullWidth
                           variant='outlined'
                           size='small'
@@ -365,7 +406,7 @@ function UpdateScrappedApproval() {
                       </TableCell>
                       <TableCell align='right'>
                         <TextField
-                          value={consumed?.sn || ''}
+                          value={Scrapped?.sn || ''}
                           fullWidth
                           variant='outlined'
                           size='small'
@@ -380,7 +421,7 @@ function UpdateScrappedApproval() {
                       </TableCell>
                       <TableCell align='right'>
                         <TextField
-                          value={consumed?.date || ''}
+                          value={Scrapped?.date || ''}
                           fullWidth
                           variant='outlined'
                           size='small'
@@ -395,7 +436,7 @@ function UpdateScrappedApproval() {
                       </TableCell>
                       <TableCell align='right'>
                         <TextField
-                          value={consumed?.quantity || ''}
+                          value={Scrapped?.quantity || ''}
                           fullWidth
                           variant='outlined'
                           size='small'
@@ -410,7 +451,7 @@ function UpdateScrappedApproval() {
                       </TableCell>
                       <TableCell align='right'>
                         <TextField
-                          value={consumed?.remarks || ''}
+                          value={Scrapped?.remarks || ''}
                           fullWidth
                           variant='outlined'
                           size='small'
@@ -444,6 +485,21 @@ function UpdateScrappedApproval() {
           onRowsPerPageChange={handleChangeRowsPerPage}
         /> */}
           </Grid>
+          <Button
+            variant='contained'
+            color='secondary'
+            size='large'
+            onClick={handleUpdate}
+            sx={{
+              mt: '33px',
+              mb: '17px',
+              marginLeft: 'auto',
+              marginRight: 'auto',
+              display: 'block',
+            }}
+          >
+            Update
+          </Button>
         </Grid>
       </Card>
     </div>
