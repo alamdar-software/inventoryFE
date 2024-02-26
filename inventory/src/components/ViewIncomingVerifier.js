@@ -84,7 +84,7 @@ const ViewIncomingVerifier = () => {
       locationName: selectedLocation,
       //   address: [], // Reset sublocation when location changes
     });
-    const selectedLocationObj = state.location.data.find(
+    const selectedLocationObj = state.nonPersisted.location.data.find(
       (location) => location.locationName === selectedLocation
     );
   };
