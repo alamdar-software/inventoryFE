@@ -63,9 +63,9 @@ const ViewIncomingVerifier = () => {
       .then((result) => {
         console.log(result);
 
-        if (Array.isArray(result.stockViewList)) {
-          setIncoming(result.stockViewList);
-          setTotalCount(result.totalCount); // Set the total count
+        if (Array.isArray(result)) {
+          setIncoming(result);
+          setTotalCount(result.totalCount||0); // Set the total count
         } else {
           console.error('Received data does not contain an array:', result);
           setIncoming([]);
@@ -84,7 +84,7 @@ const ViewIncomingVerifier = () => {
       locationName: selectedLocation,
       //   address: [], // Reset sublocation when location changes
     });
-    const selectedLocationObj = state.location.data.find(
+    const selectedLocationObj = state.nonPersisted.location.data.find(
       (location) => location.locationName === selectedLocation
     );
   };

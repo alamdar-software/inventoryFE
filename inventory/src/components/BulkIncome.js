@@ -154,7 +154,8 @@ const BulkIncome = () => {
 
     fetch('http://localhost:8080/bulkstock/add', {
       method: 'POST',
-      headers: { 'Content-type': 'application/json' },
+      headers: { 'Content-type': 'application/json',
+      Authorization: `Bearer ${currentUser.accessToken}` },
       body: JSON.stringify(formData),
     }).then(() => {
       console.log('Bulk Added');
@@ -204,7 +205,7 @@ const BulkIncome = () => {
       locationName: selectedLocation,
       address: [], // Reset sublocation when location changes
     });
-    const selectedLocationObj = state.location.data.find(
+    const selectedLocationObj = state.nonPersisted.location.data.find(
       (location) => location.locationName === selectedLocation
     );
     setSubLocations(selectedLocationObj ? selectedLocationObj.addresses : []);
@@ -215,7 +216,7 @@ const BulkIncome = () => {
 
     if (selectedDescriptions) {
       const selectedItemsInfo = selectedDescriptions.map((description) => {
-        const selectedItem = state.item.data.find(
+        const selectedItem = state.nonPersisted.item.data.find(
           (item) => item.description === description
         );
         console.log(
@@ -618,7 +619,7 @@ const BulkIncome = () => {
 
             //onChange={handleChange}
           >
-            {state.brand.data?.map((item, index) => (
+            {state.nonPersisted.brand.data?.map((item, index) => (
               <MenuItem key={index} value={item?.brandName}>
                 {' '}
                 {item?.brandName}
