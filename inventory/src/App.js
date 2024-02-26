@@ -121,6 +121,13 @@ import ViewConsumeCreated from './pages/ViewConsumeCreated.js';
 import ViewConsumeVerified from './pages/ViewConsumeVerified.js';
 import ViewConsumeRejected from './pages/ViewConsumeRejected.js';
 import UpdateConsumedVerifier from './pages/UpdateConsumedVerifier.js';
+import ViewCiplApproval from './pages/ViewCiplApproval.js';
+import UpdateMtoApproval from './components/UpdateMtoApproval.js';
+import UpdateCiplApproval from './components/UpdateCiplApproval.js';
+import ViewInternalApproval from './components/ViewInternalApproval.js';
+import UpdateItApproval from './components/UpdateItApproval.js';
+// import ViewScrapApproval from './pages/ViewScrapApproval.js';
+// import UpdateScrappedApproval from './pages/UpdateScrappedApproval.js';
 const theme = createTheme({
   palette: {
     background: {
