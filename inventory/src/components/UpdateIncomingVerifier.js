@@ -64,7 +64,7 @@ const UpdateIncomingVerifier = () => {
     })
       .then(() => {
         console.log('Incoming Updated');
-        //navigate('/consignee');
+       
       })
       .catch((error) => {
         console.error('Error updating incoming:', error);

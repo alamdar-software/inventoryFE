@@ -404,7 +404,7 @@ export const ViewCiplVerification = () => {
                         {ciplRow.consigneeName}
                       </TableCell>
                       <TableCell align='right'>
-                        {ciplRow.consigneeName}
+                        {ciplRow.referenceNo}
                       </TableCell>
                       <TableCell align='right'>
                         {ciplRow.transferDate}
