@@ -236,7 +236,7 @@ const NeedApprovalDashboard = () => {
                   },
                 }}
               >
-                <Link to={'/Items'} style={{ textDecoration: 'none' }}>
+                <Link to={'/needApproval'} style={{ textDecoration: 'none' }}>
                   <CardContent>
                     <ArticleIcon
                       fontSize='large'
