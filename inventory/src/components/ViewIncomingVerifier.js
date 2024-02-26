@@ -53,26 +53,32 @@ const ViewIncomingVerifier = () => {
     dispatch(fetchentity(currentUser.accessToken));
   }, []);
 
+
   useEffect(() => {
     fetch('http://localhost:8080/bulkstock/created', {
       headers: {
         Authorization: `Bearer ${currentUser.accessToken}`,
       },
     })
-      .then((res) => res.json())
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error(`HTTP error! Status: ${res.status}`);
+        }
+        return res.json();
+      })
       .then((result) => {
-        console.log(result);
-
-        if (Array.isArray(result)) {
+        if (result && Array.isArray(result)) {
           setIncoming(result);
           setTotalCount(result.totalCount||0); // Set the total count
         } else {
-          console.error('Received data does not contain an array:', result);
+          console.error('Invalid data structure:', result);
+          // Handle the situation where the expected data is not available
           setIncoming([]);
         }
       })
       .catch((error) => {
-        console.error('Error fetching data:', error);
+        console.error('Error fetching internal transfer data:', error);
+        // Handle the error by setting an empty array or showing an error message
         setIncoming([]);
       });
   }, []);
