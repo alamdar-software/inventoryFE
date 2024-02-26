@@ -27,22 +27,31 @@ const UpdateIncoming = () => {
   const state = useSelector((state) => state);
   const dispatch = useDispatch();
   let navigate = useNavigate();
+  const { currentUser } = useSelector((state) => state.persisted.user);
 
   const { id } = useParams();
 
   console.log(id);
   useEffect(() => {
-    dispatch(fetchBrand());
+    dispatch(fetchBrand(currentUser.accessToken));
   }, []);
 
   useEffect(() => {
-    fetch(`http://localhost:8080/bulkstock/get/${id}`)
+    fetch(`http://localhost:8080/bulkstock/get/${id}`, {
+      headers: {
+        Authorization: `Bearer ${currentUser.accessToken}`,
+      },
+    })
       .then((res) => res.json())
       .then((result) => {
         console.log(result);
         setIncoming(result);
+      })
+      .catch((error) => {
+        console.error('Error fetching data:', error);
       });
   }, []);
+
   const handleClick = (e) => {
     e.preventDefault();
     const update = {
@@ -378,7 +387,7 @@ const UpdateIncoming = () => {
 
                 //onChange={(e) => handleBrandChange(index, e.target.value)}
               >
-                {state.brand.data?.map((item, index) => (
+                {state.nonPersisted.brand.data?.map((item, index) => (
                   <MenuItem key={index} value={item?.brandName}>
                     {' '}
                     {item?.brandName}
@@ -410,12 +419,14 @@ const UpdateIncoming = () => {
                   })
                 }
               >
-                {state.currency.data?.currencyList?.map((item, index) => (
-                  <MenuItem key={index} value={item?.currencyName}>
-                    {' '}
-                    {item?.currencyName}
-                  </MenuItem>
-                ))}
+                {state.nonPersisted.currency.data?.currencyList?.map(
+                  (item, index) => (
+                    <MenuItem key={index} value={item?.currencyName}>
+                      {' '}
+                      {item?.currencyName}
+                    </MenuItem>
+                  )
+                )}
               </Select>
             </FormControl>
           </Grid>
