@@ -127,9 +127,9 @@ import UpdateMtoApproval from './components/UpdateMtoApproval.js';
 import UpdateCiplApproval from './components/UpdateCiplApproval.js';
 import ViewInternalApproval from './components/ViewInternalApproval.js';
 import UpdateItApproval from './components/UpdateItApproval.js';
+import ViewScrapApproval from './pages/ViewScrapApproval.js';
+import UpdateScrappedApproval from './pages/UpdateScrappedApproval.js';
 import ViewMtoApproval from './components/ViewMtoApproval.js';
-// import ViewScrapApproval from './pages/ViewScrapApproval.js';
-// import UpdateScrappedApproval from './pages/UpdateScrappedApproval.js';
 const theme = createTheme({
   palette: {
     background: {
@@ -549,6 +549,14 @@ function App() {
                   }
                 />
                 <Route
+                  path='/viewScrapApproval'
+                  element={
+                    <Sidebar>
+                      <ViewScrapApproval />
+                    </Sidebar>
+                  }
+                />
+                <Route
                   path='/updateIt/:id'
                   element={
                     <Sidebar>
@@ -569,6 +577,14 @@ function App() {
                   element={
                     <Sidebar>
                       <UpdateItApproval />
+                    </Sidebar>
+                  }
+                />
+                <Route
+                  path='/updateScrappedApproval/:id'
+                  element={
+                    <Sidebar>
+                      <UpdateScrappedApproval />
                     </Sidebar>
                   }
                 />
@@ -685,7 +701,7 @@ function App() {
                     </Sidebar>
                   }
                 />
-                  <Route
+                <Route
                   path='/consumed-created'
                   element={
                     <Sidebar>
@@ -693,7 +709,7 @@ function App() {
                     </Sidebar>
                   }
                 />
-                  <Route
+                <Route
                   path='/verified-consumed'
                   element={
                     <Sidebar>
@@ -701,7 +717,7 @@ function App() {
                     </Sidebar>
                   }
                 />
-                     <Route
+                <Route
                   path='/rejected-consumedstock'
                   element={
                     <Sidebar>
@@ -709,8 +725,7 @@ function App() {
                     </Sidebar>
                   }
                 />
-                   
-                  
+
                 <Route
                   path='/updateConsumed/:id'
                   element={
@@ -719,7 +734,7 @@ function App() {
                     </Sidebar>
                   }
                 />
-                 <Route
+                <Route
                   path='/updateConsumed-Verifier/:id'
                   element={
                     <Sidebar>
@@ -793,7 +808,7 @@ function App() {
                     </Sidebar>
                   }
                 />
-                   <Route
+                <Route
                   path='/verified-scrapped'
                   element={
                     <Sidebar>
@@ -801,7 +816,7 @@ function App() {
                     </Sidebar>
                   }
                 />
-                   <Route
+                <Route
                   path='/rejected-scrapped'
                   element={
                     <Sidebar>
@@ -809,7 +824,7 @@ function App() {
                     </Sidebar>
                   }
                 />
-                 <Route
+                <Route
                   path='/updateScapped-verifier/:id'
                   element={
                     <Sidebar>
