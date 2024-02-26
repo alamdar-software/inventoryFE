@@ -25,6 +25,7 @@ const UpdateIncomingVerifier = () => {
   });
   const [incoming, setIncoming] = useState();
   const state = useSelector((state) => state);
+  const { currentUser } = state.persisted.user;
   const dispatch = useDispatch();
   let navigate = useNavigate();
 
@@ -32,11 +33,15 @@ const UpdateIncomingVerifier = () => {
 
   console.log(id);
   useEffect(() => {
-    dispatch(fetchBrand());
+    dispatch(fetchBrand(currentUser.accessToken));
   }, []);
 
   useEffect(() => {
-    fetch(`http://localhost:8080/bulkstock/get/${id}`)
+    fetch(`http://localhost:8080/bulkstock/get/${id}`,{
+      headers: {
+        Authorization: `Bearer ${currentUser.accessToken}`,
+      },
+    })
       .then((res) => res.json())
       .then((result) => {
         console.log(result);
@@ -50,9 +55,11 @@ const UpdateIncomingVerifier = () => {
     };
     console.log(update);
 
-    fetch(`http://localhost:8080/bulkstock/update/${id}`, {
+    fetch(`http://localhost:8080/bulkstock/status/${id}`, {
       method: 'PUT',
-      headers: { 'Content-type': 'application/json' },
+      headers: { 'Content-type': 'application/json',
+      Authorization: `Bearer ${currentUser.accessToken}`
+    },
       body: JSON.stringify(incoming),
     })
       .then(() => {
@@ -378,7 +385,7 @@ const UpdateIncomingVerifier = () => {
 
                 //onChange={(e) => handleBrandChange(index, e.target.value)}
               >
-                {state.brand.data?.map((item, index) => (
+                {state.nonPersisted.brand.data?.map((item, index) => (
                   <MenuItem key={index} value={item?.brandName}>
                     {' '}
                     {item?.brandName}
@@ -410,7 +417,7 @@ const UpdateIncomingVerifier = () => {
                   })
                 }
               >
-                {state.currency.data?.currencyList?.map((item, index) => (
+                {state.nonPersisted.currency.data?.currencyList?.map((item, index) => (
                   <MenuItem key={index} value={item?.currencyName}>
                     {' '}
                     {item?.currencyName}
@@ -493,6 +500,31 @@ const UpdateIncomingVerifier = () => {
               sx={{ width: '90%' }}
             />
           </Grid>
+          <Grid item xs={12} sm={6}>
+          <FormControl fullWidth sx={{ width: '90%' }}>
+            <InputLabel id='demo-simple-select-label'>Status</InputLabel>
+            <Select
+              labelId='demo-simple-select-label'
+              id='demo-simple-select'
+              //value={age}
+              value={incoming ? incoming.status : ''}
+              InputProps={{ readOnly: true }}
+              label='Repair/service'
+              //onChange={handleChange}
+           
+              onChange={(e) => {
+                setIncoming({
+                  ...incoming,
+                  status: e.target.value,
+                });
+                setformData(e.target.value);
+              }}
+            >
+              <MenuItem value={'verified'}>Verified</MenuItem>
+              <MenuItem value={'rejected'}>Rejected</MenuItem>
+            </Select>
+          </FormControl>
+        </Grid>
         </Grid>
         <Button
           variant='contained'
