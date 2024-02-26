@@ -206,6 +206,8 @@ export const ViewCiplVerification = () => {
       // pdf.save('table.pdf');
     }
   };
+  console.log(allCipl,"rumiiiiii");
+  console.log(filteredCipl,"muiiiiii");
   return (
     <>
       <Grid>
