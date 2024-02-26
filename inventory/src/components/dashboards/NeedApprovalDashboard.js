@@ -197,7 +197,7 @@ const NeedApprovalDashboard = () => {
                   },
                 }}
               >
-                <Link to={'/Reports'} style={{ textDecoration: 'none' }}>
+                <Link to={'/ViewItApproval'} style={{ textDecoration: 'none' }}>
                   <CardContent>
                     <SummarizeIcon
                       fontSize='large'

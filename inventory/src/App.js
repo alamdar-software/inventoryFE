@@ -119,6 +119,8 @@ import ViewMtoApproval from './components/ViewMtoApproval.js';
 import ViewCiplApproval from './pages/ViewCiplApproval.js';
 import UpdateMtoApproval from './components/UpdateMtoApproval.js';
 import UpdateCiplApproval from './components/UpdateCiplApproval.js';
+import ViewInternalApproval from './components/ViewInternalApproval.js';
+import UpdateItApproval from './components/UpdateItApproval.js';
 const theme = createTheme({
   palette: {
     background: {
@@ -530,6 +532,14 @@ function App() {
                   }
                 />
                 <Route
+                  path='/viewInternalApproval'
+                  element={
+                    <Sidebar>
+                      <ViewInternalApproval />
+                    </Sidebar>
+                  }
+                />
+                <Route
                   path='/updateIt/:id'
                   element={
                     <Sidebar>
@@ -542,6 +552,14 @@ function App() {
                   element={
                     <Sidebar>
                       <UpdateItVerifier />
+                    </Sidebar>
+                  }
+                />
+                <Route
+                  path='/updateItApproval/:id'
+                  element={
+                    <Sidebar>
+                      <UpdateItApproval />
                     </Sidebar>
                   }
                 />
