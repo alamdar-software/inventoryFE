@@ -332,7 +332,10 @@ const NeedApprovalDashboard = () => {
                   },
                 }}
               >
-                <Link to={'/view-inventory'} style={{ textDecoration: 'none' }}>
+                <Link
+                  to={'/viewConsumeApproval'}
+                  style={{ textDecoration: 'none' }}
+                >
                   <CardContent
                     sx={{
                       display: 'flex',

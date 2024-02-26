@@ -130,6 +130,8 @@ import UpdateItApproval from './components/UpdateItApproval.js';
 import ViewScrapApproval from './pages/ViewScrapApproval.js';
 import UpdateScrappedApproval from './pages/UpdateScrappedApproval.js';
 import ViewMtoApproval from './components/ViewMtoApproval.js';
+import ViewConsumeApproval from './pages/ViewConsumeApproval.js';
+import UpdateConsumedApproval from './pages/UpdateConsumedApproval.js';
 const theme = createTheme({
   palette: {
     background: {
@@ -483,6 +485,14 @@ function App() {
                     </Sidebar>
                   }
                 />
+                <Route
+                  path='/ViewConsumeApproval'
+                  element={
+                    <Sidebar>
+                      <ViewConsumeApproval />
+                    </Sidebar>
+                  }
+                />
 
                 <Route
                   path='/rejected-mto'
@@ -585,6 +595,14 @@ function App() {
                   element={
                     <Sidebar>
                       <UpdateScrappedApproval />
+                    </Sidebar>
+                  }
+                />
+                <Route
+                  path='/updateConsumedApproval/:id'
+                  element={
+                    <Sidebar>
+                      <UpdateConsumedApproval />
                     </Sidebar>
                   }
                 />
