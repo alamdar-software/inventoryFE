@@ -110,10 +110,15 @@ import UpdateItVerifier from './components/UpdateItVerifier.js';
 import ViewInternalVerified from './components/ViewInternalVerified.js';
 import ViewInternalRejected from './components/ViewInternalRejected.js';
 import ViewIncomingVerifier from './components/ViewIncomingVerifier.js';
-import ViewCiplApproval from './pages/ViewCiplApproval.js';
-import UpdateCiplApproval from './components/UpdateCiplApproval.js';
+import UpdateIncomingVerifier from './components/UpdateIncomingVerifier.js';
+import ViewIncomingVerified from './components/ViewIncomingVerified.js';
+import ViewIncomingRejected from './components/ViewIncomingRejected.js';
+import ViewScrappVerifier from './pages/ViewScrapVerifier.js';
+import UpdateScrappedVerifier from './pages/UpdateScrappedVerifier.js';
 import ViewMtoApproval from './components/ViewMtoApproval.js';
+import ViewCiplApproval from './pages/ViewCiplApproval.js';
 import UpdateMtoApproval from './components/UpdateMtoApproval.js';
+import UpdateCiplApproval from './components/UpdateCiplApproval.js';
 const theme = createTheme({
   palette: {
     background: {
@@ -712,10 +717,26 @@ function App() {
                   }
                 />
                 <Route
+                  path='/scrapped-created'
+                  element={
+                    <Sidebar>
+                      <ViewScrappVerifier />
+                    </Sidebar>
+                  }
+                />
+                <Route
                   path='/updateScapped/:id'
                   element={
                     <Sidebar>
                       <UpdateScrapped />
+                    </Sidebar>
+                  }
+                />
+                <Route
+                  path='/updateScapped-verifier/:id'
+                  element={
+                    <Sidebar>
+                      <UpdateScrappedVerifier />
                     </Sidebar>
                   }
                 />
@@ -748,6 +769,30 @@ function App() {
                   element={
                     <Sidebar>
                       <UpdateIncoming />
+                    </Sidebar>
+                  }
+                />
+                <Route
+                  path='/updateIncoming-verifier/:id'
+                  element={
+                    <Sidebar>
+                      <UpdateIncomingVerifier />
+                    </Sidebar>
+                  }
+                />
+                <Route
+                  path='/verified-incoming'
+                  element={
+                    <Sidebar>
+                      <ViewIncomingVerified />
+                    </Sidebar>
+                  }
+                />
+                <Route
+                  path='/rejected-incomingstock'
+                  element={
+                    <Sidebar>
+                      <ViewIncomingRejected />
                     </Sidebar>
                   }
                 />

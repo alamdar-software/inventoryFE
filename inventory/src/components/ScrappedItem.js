@@ -123,7 +123,7 @@ const ScrappedItem = () => {
       locationName: selectedLocation,
       SubLocations: [''], // Reset sublocation when location changes
     });
-    const selectedLocationObj = state.location.data.find(
+    const selectedLocationObj = state.nonPersisted.location.data.find(
       (location) => location.locationName === selectedLocation
     );
     setSubLocations(selectedLocationObj && selectedLocationObj?.addresses);
@@ -144,7 +144,7 @@ const ScrappedItem = () => {
     });
 
     // Find the corresponding item descriptions in the inventory data
-    const selectedInventoryData = state.inventory.data.filter(
+    const selectedInventoryData = state.nonPersisted.inventory.data.filter(
       (inventoryItem) => inventoryItem.address?.address === selectedSubLocation
     );
     console.log(selectedInventoryData, '22');
@@ -276,7 +276,7 @@ const ScrappedItem = () => {
     });
 
     // Find the corresponding data in state.singleincome for the selected item
-    const selectedIncomeData = state.singleIncome?.data.filter(
+    const selectedIncomeData = state.nonPersisted.singleIncome?.data.filter(
       (incomeItem) =>
         incomeItem.description === selectedItem.match(/^[^(]*/)[0].trim()
     );
@@ -317,7 +317,7 @@ const ScrappedItem = () => {
     // ... (your existing code)
 
     // Find the corresponding data in state.singleIncome for the selected part number
-    const selectedIncomeData = state.singleIncome?.data.find(
+    const selectedIncomeData = state.nonPersisted.singleIncome?.data.find(
       (incomeItem) => incomeItem.pn === selectedPartNo
     );
 

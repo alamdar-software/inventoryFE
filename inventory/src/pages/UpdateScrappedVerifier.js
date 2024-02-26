@@ -33,7 +33,7 @@ import { fetchConsumeItem } from "../redux/slice/ConsumeItemSlice";
 import { useParams } from "react-router-dom";
 import dayjs from "dayjs";
 
-function UpdateScrapped() {
+function UpdateScrappedVerifier() {
   const { id } = useParams();
   const dispatch = useDispatch();
   const state = useSelector((state) => state);
@@ -44,7 +44,6 @@ function UpdateScrapped() {
   const [consumed, setconsumed] = useState([]);
   const [allConsumed, setAllConsumed] = useState([]);
   const [filteredConsumed, setFilteredConsumed] = useState([]);
-
   useEffect(() => {
     fetch(`http://localhost:8080/scrappeditem/get/${id}`,{
       headers: {
@@ -60,9 +59,9 @@ function UpdateScrapped() {
   }, []);
   console.log(consumed, "rupali");
   useEffect(() => {
-    dispatch(fetchlocation());
-    dispatch(fetchItem());
-    dispatch(fetchConsumeItem());
+    dispatch(fetchlocation(currentUser.accessToken));
+    dispatch(fetchItem(currentUser.accessToken));
+    dispatch(fetchConsumeItem(currentUser.accessToken));
   }, []);
   /*   console.log("consumed.SubLocations:", consumed?.SubLocations[0]); */
 
@@ -163,6 +162,27 @@ function UpdateScrapped() {
       };
     });
   };
+  const handleUpdate = (e) => {
+    e.preventDefault();
+   
+
+    fetch(`http://localhost:8080/scrappeditem/status/${id}`, {
+      method: 'PUT',
+      headers: {
+        'Content-type': 'application/json',
+        Authorization: `Bearer ${currentUser.accessToken}`,
+      },
+      body: JSON.stringify(formData),
+    })
+      .then(() => {
+        console.log('Cipl Updated');
+        // navigate('/consignee');
+      })
+      .catch((error) => {
+        console.error('Error updating scrapped:', error);
+      });
+  };
+  console.log(formData,"rashmidesaiii");
   return (
     <div>
       <Grid>
@@ -183,7 +203,7 @@ function UpdateScrapped() {
               gutterBottom
               style={{ fontFamily: "'EB Garamond'" }}
             >
-              View Consumed Items
+              Update Scrapped Items
             </Typography>
           </CardContent>
         </Card>
@@ -290,6 +310,30 @@ function UpdateScrapped() {
                 </LocalizationProvider>
               </Grid>
             </FormControl>
+          </Grid>
+            <Grid item xs={12} sm={6}>
+            <FormControl fullWidth sx={{ width: '90%' }}>
+            <InputLabel id='demo-simple-select-label'>Status</InputLabel>
+            <Select
+              labelId='demo-simple-select-label'
+              id='demo-simple-select'
+              //value={age}
+              value={consumed ? consumed.status : ''}
+             
+              label='Repair/service'
+              //onChange={handleChange}
+              onChange={(e) =>
+                setformData({
+                  ...consumed,
+                  status: e.target.value,
+                })
+              }
+           
+            >
+              <MenuItem value={'verified'}>Verified</MenuItem>
+              <MenuItem value={'rejected'}>Rejected</MenuItem>
+            </Select>
+          </FormControl>
           </Grid>
           <Grid sx={{ mt: "33px", width: "100%", overflowX: "scroll" }}>
             <TableContainer
@@ -444,10 +488,25 @@ function UpdateScrapped() {
           onRowsPerPageChange={handleChangeRowsPerPage}
         /> */}
           </Grid>
+          <Button
+        variant='contained'
+        color='secondary'
+        size='large'
+        onClick={handleUpdate}
+        sx={{
+          mt: '33px',
+          mb: '17px',
+          marginLeft: 'auto',
+          marginRight: 'auto',
+          display: 'block',
+        }}
+      >
+        Update
+      </Button>
         </Grid>
       </Card>
     </div>
   );
 }
 
-export default UpdateScrapped;
+export default UpdateScrappedVerifier;
