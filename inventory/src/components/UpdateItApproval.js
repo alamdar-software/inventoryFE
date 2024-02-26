@@ -71,7 +71,7 @@ const UpdateItApproval = () => {
     };
     console.log(update);
 
-    fetch(`http://localhost:8080/internaltransfer/update/${id}`, {
+    fetch(`http://localhost:8080/internaltransfer/status/${id}`, {
       method: 'PUT',
       headers: {
         'Content-type': 'application/json',
