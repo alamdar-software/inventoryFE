@@ -115,14 +115,21 @@ import ViewIncomingVerified from './components/ViewIncomingVerified.js';
 import ViewIncomingRejected from './components/ViewIncomingRejected.js';
 import ViewScrappVerifier from './pages/ViewScrapVerifier.js';
 import UpdateScrappedVerifier from './pages/UpdateScrappedVerifier.js';
-import ViewMtoApproval from './components/ViewMtoApproval.js';
+import ViewScrappVerified from './pages/ViewScrapVerified.js';
+import ViewScrappRejected from './pages/ViewScrapRejected.js';
+import ViewConsumeCreated from './pages/ViewConsumeCreated.js';
+import ViewConsumeVerified from './pages/ViewConsumeVerified.js';
+import ViewConsumeRejected from './pages/ViewConsumeRejected.js';
+import UpdateConsumedVerifier from './pages/UpdateConsumedVerifier.js';
 import ViewCiplApproval from './pages/ViewCiplApproval.js';
+
 import UpdateMtoApproval from './components/UpdateMtoApproval.js';
 import UpdateCiplApproval from './components/UpdateCiplApproval.js';
 import ViewInternalApproval from './components/ViewInternalApproval.js';
 import UpdateItApproval from './components/UpdateItApproval.js';
 import ViewScrapApproval from './pages/ViewScrapApproval.js';
 import UpdateScrappedApproval from './pages/UpdateScrappedApproval.js';
+import ViewMtoApproval from './components/ViewMtoApproval.js';
 const theme = createTheme({
   palette: {
     background: {
@@ -695,10 +702,43 @@ function App() {
                   }
                 />
                 <Route
+                  path='/consumed-created'
+                  element={
+                    <Sidebar>
+                      <ViewConsumeCreated />
+                    </Sidebar>
+                  }
+                />
+                <Route
+                  path='/verified-consumed'
+                  element={
+                    <Sidebar>
+                      <ViewConsumeVerified />
+                    </Sidebar>
+                  }
+                />
+                <Route
+                  path='/rejected-consumedstock'
+                  element={
+                    <Sidebar>
+                      <ViewConsumeRejected />
+                    </Sidebar>
+                  }
+                />
+
+                <Route
                   path='/updateConsumed/:id'
                   element={
                     <Sidebar>
                       <UpdateConsumed />
+                    </Sidebar>
+                  }
+                />
+                <Route
+                  path='/updateConsumed-Verifier/:id'
+                  element={
+                    <Sidebar>
+                      <UpdateConsumedVerifier />
                     </Sidebar>
                   }
                 />
@@ -765,6 +805,22 @@ function App() {
                   element={
                     <Sidebar>
                       <UpdateScrapped />
+                    </Sidebar>
+                  }
+                />
+                <Route
+                  path='/verified-scrapped'
+                  element={
+                    <Sidebar>
+                      <ViewScrappVerified />
+                    </Sidebar>
+                  }
+                />
+                <Route
+                  path='/rejected-scrapped'
+                  element={
+                    <Sidebar>
+                      <ViewScrappRejected />
                     </Sidebar>
                   }
                 />
