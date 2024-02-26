@@ -114,6 +114,7 @@ import UpdateIncomingVerifier from './components/UpdateIncomingVerifier.js';
 import ViewIncomingVerified from './components/ViewIncomingVerified.js';
 import ViewIncomingRejected from './components/ViewIncomingRejected.js';
 import ViewScrappVerifier from './pages/ViewScrapVerifier.js';
+import UpdateScrappedVerifier from './pages/UpdateScrappedVerifier.js';
 const theme = createTheme({
   palette: {
     background: {
@@ -691,6 +692,14 @@ function App() {
                   element={
                     <Sidebar>
                       <UpdateScrapped />
+                    </Sidebar>
+                  }
+                />
+                 <Route
+                  path='/updateScapped-verifier/:id'
+                  element={
+                    <Sidebar>
+                      <UpdateScrappedVerifier />
                     </Sidebar>
                   }
                 />

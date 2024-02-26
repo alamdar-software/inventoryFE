@@ -37,13 +37,13 @@ function UpdateScrappedVerifier() {
   const { id } = useParams();
   const dispatch = useDispatch();
   const state = useSelector((state) => state);
+  const { currentUser } = useSelector((state) => state.persisted.user);
 
   const [locationName, setlocationName] = useState();
   const [transferDate, settransferDate] = useState();
   const [consumed, setconsumed] = useState([]);
   const [allConsumed, setAllConsumed] = useState([]);
   const [filteredConsumed, setFilteredConsumed] = useState([]);
-  const { currentUser } = useSelector((state) => state.persisted.user);
   useEffect(() => {
     fetch(`http://localhost:8080/scrappeditem/get/${id}`,{
       headers: {
@@ -59,9 +59,9 @@ function UpdateScrappedVerifier() {
   }, []);
   console.log(consumed, "rupali");
   useEffect(() => {
-    dispatch(fetchlocation());
-    dispatch(fetchItem());
-    dispatch(fetchConsumeItem());
+    dispatch(fetchlocation(currentUser.accessToken));
+    dispatch(fetchItem(currentUser.accessToken));
+    dispatch(fetchConsumeItem(currentUser.accessToken));
   }, []);
   /*   console.log("consumed.SubLocations:", consumed?.SubLocations[0]); */
 
@@ -121,7 +121,7 @@ function UpdateScrappedVerifier() {
       SubLocations: [""], // Reset sublocation when location changes
     });
 
-    const selectedLocationObj = state.location.data.find(
+    const selectedLocationObj = state.nonPersisted.location.data.find(
       (location) => location.locationName === selectedLocation
     );
     setSubLocations(selectedLocationObj && selectedLocationObj?.addresses);
@@ -137,7 +137,7 @@ function UpdateScrappedVerifier() {
     setSelectedSubLocations([selectedSubLocation]); // Wrap in an array if it's a single value
 
     // Find the corresponding item descriptions in the inventory data
-    const selectedInventoryData = state.inventory?.data.filter(
+    const selectedInventoryData = state.nonPersisted.inventory?.data.filter(
       (inventoryItem) => inventoryItem.address?.address === selectedSubLocation
     );
     console.log(selectedInventoryData, "22");
@@ -162,6 +162,27 @@ function UpdateScrappedVerifier() {
       };
     });
   };
+  const handleUpdate = (e) => {
+    e.preventDefault();
+   
+
+    fetch(`http://localhost:8080/scrappeditem/status/${id}`, {
+      method: 'PUT',
+      headers: {
+        'Content-type': 'application/json',
+        Authorization: `Bearer ${currentUser.accessToken}`,
+      },
+      body: JSON.stringify(formData),
+    })
+      .then(() => {
+        console.log('Cipl Updated');
+        // navigate('/consignee');
+      })
+      .catch((error) => {
+        console.error('Error updating scrapped:', error);
+      });
+  };
+  console.log(formData,"rashmidesaiii");
   return (
     <div>
       <Grid>
@@ -182,7 +203,7 @@ function UpdateScrappedVerifier() {
               gutterBottom
               style={{ fontFamily: "'EB Garamond'" }}
             >
-              View Consumed Items
+              Update Scrapped Items
             </Typography>
           </CardContent>
         </Card>
@@ -219,7 +240,7 @@ function UpdateScrappedVerifier() {
                 disabled
               >
                 /*{" "}
-                {state.location.data?.map((item, index) => (
+                {state.nonPersisted.location.data?.map((item, index) => (
                   <MenuItem key={index} value={item?.locationName}>
                     {" "}
                     {item?.locationName}
@@ -289,6 +310,30 @@ function UpdateScrappedVerifier() {
                 </LocalizationProvider>
               </Grid>
             </FormControl>
+          </Grid>
+            <Grid item xs={12} sm={6}>
+            <FormControl fullWidth sx={{ width: '90%' }}>
+            <InputLabel id='demo-simple-select-label'>Status</InputLabel>
+            <Select
+              labelId='demo-simple-select-label'
+              id='demo-simple-select'
+              //value={age}
+              value={consumed ? consumed.status : ''}
+             
+              label='Repair/service'
+              //onChange={handleChange}
+              onChange={(e) =>
+                setformData({
+                  ...consumed,
+                  status: e.target.value,
+                })
+              }
+           
+            >
+              <MenuItem value={'verified'}>Verified</MenuItem>
+              <MenuItem value={'rejected'}>Rejected</MenuItem>
+            </Select>
+          </FormControl>
           </Grid>
           <Grid sx={{ mt: "33px", width: "100%", overflowX: "scroll" }}>
             <TableContainer
@@ -443,6 +488,21 @@ function UpdateScrappedVerifier() {
           onRowsPerPageChange={handleChangeRowsPerPage}
         /> */}
           </Grid>
+          <Button
+        variant='contained'
+        color='secondary'
+        size='large'
+        onClick={handleUpdate}
+        sx={{
+          mt: '33px',
+          mb: '17px',
+          marginLeft: 'auto',
+          marginRight: 'auto',
+          display: 'block',
+        }}
+      >
+        Update
+      </Button>
         </Grid>
       </Card>
     </div>

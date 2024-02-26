@@ -37,6 +37,7 @@ function UpdateScrapped() {
   const { id } = useParams();
   const dispatch = useDispatch();
   const state = useSelector((state) => state);
+  const { currentUser } = useSelector((state) => state.persisted.user);
 
   const [locationName, setlocationName] = useState();
   const [transferDate, settransferDate] = useState();
@@ -45,7 +46,12 @@ function UpdateScrapped() {
   const [filteredConsumed, setFilteredConsumed] = useState([]);
 
   useEffect(() => {
-    fetch(`http://localhost:8080/scrappeditem/get/${id}`)
+    fetch(`http://localhost:8080/scrappeditem/get/${id}`,{
+      headers: {
+        Authorization: `Bearer ${currentUser.accessToken}`,
+        'Content-Type': 'application/json',
+      },
+    })
       .then((res) => res.json())
       .then((result) => {
         console.log(result);
@@ -116,7 +122,7 @@ function UpdateScrapped() {
       SubLocations: [""], // Reset sublocation when location changes
     });
 
-    const selectedLocationObj = state.location.data.find(
+    const selectedLocationObj = state.nonPersisted.location.data.find(
       (location) => location.locationName === selectedLocation
     );
     setSubLocations(selectedLocationObj && selectedLocationObj?.addresses);
@@ -132,7 +138,7 @@ function UpdateScrapped() {
     setSelectedSubLocations([selectedSubLocation]); // Wrap in an array if it's a single value
 
     // Find the corresponding item descriptions in the inventory data
-    const selectedInventoryData = state.inventory?.data.filter(
+    const selectedInventoryData = state.nonPersisted.inventory?.data.filter(
       (inventoryItem) => inventoryItem.address?.address === selectedSubLocation
     );
     console.log(selectedInventoryData, "22");
@@ -214,7 +220,7 @@ function UpdateScrapped() {
                 disabled
               >
                 /*{" "}
-                {state.location.data?.map((item, index) => (
+                {state.nonPersisted.location.data?.map((item, index) => (
                   <MenuItem key={index} value={item?.locationName}>
                     {" "}
                     {item?.locationName}
