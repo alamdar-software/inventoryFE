@@ -110,6 +110,10 @@ import UpdateItVerifier from './components/UpdateItVerifier.js';
 import ViewInternalVerified from './components/ViewInternalVerified.js';
 import ViewInternalRejected from './components/ViewInternalRejected.js';
 import ViewIncomingVerifier from './components/ViewIncomingVerifier.js';
+import UpdateIncomingVerifier from './components/UpdateIncomingVerifier.js';
+import ViewIncomingVerified from './components/ViewIncomingVerified.js';
+import ViewIncomingRejected from './components/ViewIncomingRejected.js';
+import ViewScrappVerifier from './pages/ViewScrapVerifier.js';
 const theme = createTheme({
   palette: {
     background: {
@@ -674,6 +678,14 @@ function App() {
                     </Sidebar>
                   }
                 />
+                  <Route
+                  path='/scrapped-created'
+                  element={
+                    <Sidebar>
+                      <ViewScrappVerifier />
+                    </Sidebar>
+                  }
+                />
                 <Route
                   path='/updateScapped/:id'
                   element={
@@ -711,6 +723,30 @@ function App() {
                   element={
                     <Sidebar>
                       <UpdateIncoming />
+                    </Sidebar>
+                  }
+                />
+                  <Route
+                  path='/updateIncoming-verifier/:id'
+                  element={
+                    <Sidebar>
+                      <UpdateIncomingVerifier />
+                    </Sidebar>
+                  }
+                />
+                     <Route
+                  path='/verified-incoming'
+                  element={
+                    <Sidebar>
+                      <ViewIncomingVerified />
+                    </Sidebar>
+                  }
+                />
+                     <Route
+                  path='/rejected-incomingstock'
+                  element={
+                    <Sidebar>
+                      <ViewIncomingRejected />
                     </Sidebar>
                   }
                 />

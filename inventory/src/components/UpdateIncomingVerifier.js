@@ -16,7 +16,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 import { fetchBrand } from '../redux/slice/BrandSlice';
 
-const UpdateIncoming = () => {
+const UpdateIncomingVerifier = () => {
   const [formData, setformData] = useState({
     locationName: '',
     address: '',
@@ -514,4 +514,4 @@ const UpdateIncoming = () => {
   );
 };
 
-export default UpdateIncoming;
+export default UpdateIncomingVerifier;

@@ -277,7 +277,7 @@ const NeedVerificationDashboard = () => {
                 }}
               >
                 <Link
-                  to={"/locationDashboard"}
+                  to={"/scrapped-created"}
                   style={{ textDecoration: "none" }}
                 >
                   <CardContent
