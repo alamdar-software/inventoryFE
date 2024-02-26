@@ -383,10 +383,11 @@ const ViewConsumeRejected = () => {
                 <TableCell align='right' sx={{ fontWeight: 'bold' }}>
                   Date
                 </TableCell>
-
-                <TableCell align='center' sx={{ fontWeight: 'bold' }}>
-                  Action
+                <TableCell align='right' sx={{ fontWeight: 'bold' }}>
+                  STatus
                 </TableCell>
+
+               
               </TableRow>
             </TableHead>
             <TableBody>
@@ -408,27 +409,8 @@ const ViewConsumeRejected = () => {
                     </TableCell>
                     <TableCell align='right'>{consumedRow.quantity}</TableCell>
                     <TableCell align='right'>{consumedRow.date}</TableCell>
-                    <TableCell align='right'>
-                      <Box>
-                        <Link to={`/updateConsumed/${consumedRow.id}`}>
-                          <Button
-                            sx={{ marginLeft: '11px', marginTop: '15px' }}
-                            variant='contained'
-                          >
-                            Update
-                          </Button>
-                        </Link>
-
-                        <Button
-                          sx={{ marginLeft: '11px', marginTop: '15px' }}
-                          variant='contained'
-                          color='secondary'
-                          onClick={() => deleteConsumed(consumedRow.id)}
-                        >
-                          Delete
-                        </Button>
-                      </Box>
-                    </TableCell>
+                    <TableCell align='right'>{consumedRow.status}</TableCell>
+                    
                   </TableRow>
                 ))
               )}
