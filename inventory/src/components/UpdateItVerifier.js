@@ -26,7 +26,7 @@ import { fetchInventory } from '../redux/slice/InventorySlice';
 import { fetchIncome } from '../redux/slice/SingleIncomeSlice';
 import dayjs from 'dayjs';
 import { useNavigate, useParams } from 'react-router-dom';
-const UpdateIt = () => {
+const UpdateItVerifier = () => {
   const [formData, setformData] = useState({
     locationName: '',
     transferDate: '',
@@ -71,7 +71,7 @@ const UpdateIt = () => {
     };
     console.log(update);
 
-    fetch(`http://localhost:8080/internaltransfer/update/${id}`, {
+    fetch(`http://localhost:8080/internaltransfer/status/${id}`, {
       method: 'PUT',
       headers: {
         'Content-type': 'application/json',
@@ -81,7 +81,7 @@ const UpdateIt = () => {
     })
       .then(() => {
         console.log('Internal Transfer Updated');
-        // navigate('/consignee');
+        navigate('/it-created');
       })
       .catch((error) => {
         console.error('Error updating consignee:', error);
@@ -351,7 +351,7 @@ const UpdateIt = () => {
               id='demo-simple-select'
               //value={age}
               value={internal ? internal.status : ''}
-              InputProps={{ readOnly: true }}
+              
               label='Repair/service'
               //onChange={handleChange}
               onChange={(e) =>
@@ -416,4 +416,4 @@ const UpdateIt = () => {
   );
 };
 
-export default UpdateIt;
+export default UpdateItVerifier;

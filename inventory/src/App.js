@@ -32,6 +32,7 @@ import Inventory from './components/Inventory.js';
 import ScrappedItem from './components/ScrappedItem.js';
 import IncomingStock from './pages/IncomingStock.js';
 import SingleIncome from './components/SingleIncome.js';
+import UpdateIt from './components/UpdateIt.js';
 import BulkIncome from './components/BulkIncome.js';
 import User from './components/User.js';
 import DailyDataCount from './pages/DailyDataCount.js';
@@ -104,6 +105,11 @@ import UpdateMtoVerifier from './components/UpdateMtoVerifier.js';
 import ViewMtoVerified from './components/ViewMtoVerified.js';
 import VerifiedMto from './components/VerifiedMto.js';
 import RejectedMto from './components/RejectedMto.js';
+import ViewInternalVerifier from './components/ViewInternalVerifier.js';
+import UpdateItVerifier from './components/UpdateItVerifier.js';
+import ViewInternalVerified from './components/ViewInternalVerified.js';
+import ViewInternalRejected from './components/ViewInternalRejected.js';
+import ViewIncomingVerifier from './components/ViewIncomingVerifier.js';
 const theme = createTheme({
   palette: {
     background: {
@@ -200,14 +206,7 @@ function App() {
                     </Sidebar>
                   }
                 />
-                <Route
-                  path='/updateIt/:id'
-                  element={
-                    <Sidebar>
-                      <UpdateIt />
-                    </Sidebar>
-                  }
-                />
+               
                 <Route
                   path='/pick-up'
                   element={
@@ -480,6 +479,46 @@ function App() {
                     </Sidebar>
                   }
                 />
+                  <Route
+                  path='/it-created'
+                  element={
+                    <Sidebar>
+                      <ViewInternalVerifier />
+                    </Sidebar>
+                  }
+                />
+                 <Route
+                  path='/updateIt/:id'
+                  element={
+                    <Sidebar>
+                      <UpdateIt />
+                    </Sidebar>
+                  }
+                />
+                   <Route
+                  path='/updateItVerifier/:id'
+                  element={
+                    <Sidebar>
+                      <UpdateItVerifier />
+                    </Sidebar>
+                  }
+                />
+                   <Route
+                  path='/verified-it'
+                  element={
+                    <Sidebar>
+                      <ViewInternalVerified />
+                    </Sidebar>
+                  }
+                />
+                     <Route
+                  path='/rejected-it'
+                  element={
+                    <Sidebar>
+                      <ViewInternalRejected />
+                    </Sidebar>
+                  }
+                />
                 <Route
                   path='/cipl/createpdf/:id'
                   element={
@@ -656,6 +695,14 @@ function App() {
                   element={
                     <Sidebar>
                       <ViewIncoming />
+                    </Sidebar>
+                  }
+                />
+                   <Route
+                  path='/incoming-created'
+                  element={
+                    <Sidebar>
+                      <ViewIncomingVerifier />
                     </Sidebar>
                   }
                 />

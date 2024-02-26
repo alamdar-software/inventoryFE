@@ -194,7 +194,7 @@ const VerifiedRejected = () => {
                   },
                 }}
               >
-                <Link to={"/Reports"} style={{ textDecoration: "none" }}>
+                <Link to={"/rejected-it"} style={{ textDecoration: "none" }}>
                   <CardContent>
                     <SummarizeIcon
                       fontSize="large"
@@ -230,7 +230,7 @@ const VerifiedRejected = () => {
                   },
                 }}
               >
-                <Link to={"/Items"} style={{ textDecoration: "none" }}>
+                <Link to={"/rejected-incomingstock"} style={{ textDecoration: "none" }}>
                   <CardContent>
                     <ArticleIcon
                       fontSize="large"
@@ -277,7 +277,7 @@ const VerifiedRejected = () => {
                 }}
               >
                 <Link
-                  to={"/locationDashboard"}
+                  to={"/rejected-scrapped"}
                   style={{ textDecoration: "none" }}
                 >
                   <CardContent
@@ -326,7 +326,7 @@ const VerifiedRejected = () => {
                   },
                 }}
               >
-                <Link to={"/view-inventory"} style={{ textDecoration: "none" }}>
+                <Link to={"/rejected-consumedstock"} style={{ textDecoration: "none" }}>
                   <CardContent
                     sx={{
                       display: "flex",
