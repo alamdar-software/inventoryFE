@@ -110,6 +110,10 @@ import UpdateItVerifier from './components/UpdateItVerifier.js';
 import ViewInternalVerified from './components/ViewInternalVerified.js';
 import ViewInternalRejected from './components/ViewInternalRejected.js';
 import ViewIncomingVerifier from './components/ViewIncomingVerifier.js';
+import ViewCiplApproval from './pages/ViewCiplApproval.js';
+import UpdateCiplApproval from './components/UpdateCiplApproval.js';
+import ViewMtoApproval from './components/ViewMtoApproval.js';
+import UpdateMtoApproval from './components/UpdateMtoApproval.js';
 const theme = createTheme({
   palette: {
     background: {
@@ -206,7 +210,7 @@ function App() {
                     </Sidebar>
                   }
                 />
-               
+
                 <Route
                   path='/pick-up'
                   element={
@@ -415,6 +419,14 @@ function App() {
                   }
                 />
                 <Route
+                  path='/viewCiplApproval'
+                  element={
+                    <Sidebar>
+                      <ViewCiplApproval />
+                    </Sidebar>
+                  }
+                />
+                <Route
                   path='/verified-cipl'
                   element={
                     <Sidebar>
@@ -448,6 +460,15 @@ function App() {
                   }
                 />
                 <Route
+                  path='/ViewMtoApproval'
+                  element={
+                    <Sidebar>
+                      <ViewMtoApproval />
+                    </Sidebar>
+                  }
+                />
+
+                <Route
                   path='/rejected-mto'
                   element={
                     <Sidebar>
@@ -460,6 +481,14 @@ function App() {
                   element={
                     <Sidebar>
                       <UpdateMtoVerifier />
+                    </Sidebar>
+                  }
+                />
+                <Route
+                  path='/updateMtoApproval/:id'
+                  element={
+                    <Sidebar>
+                      <UpdateMtoApproval />
                     </Sidebar>
                   }
                 />
@@ -479,7 +508,15 @@ function App() {
                     </Sidebar>
                   }
                 />
-                  <Route
+                <Route
+                  path='/updateCiplApproval/:id'
+                  element={
+                    <Sidebar>
+                      <UpdateCiplApproval />
+                    </Sidebar>
+                  }
+                />
+                <Route
                   path='/it-created'
                   element={
                     <Sidebar>
@@ -487,7 +524,7 @@ function App() {
                     </Sidebar>
                   }
                 />
-                 <Route
+                <Route
                   path='/updateIt/:id'
                   element={
                     <Sidebar>
@@ -495,7 +532,7 @@ function App() {
                     </Sidebar>
                   }
                 />
-                   <Route
+                <Route
                   path='/updateItVerifier/:id'
                   element={
                     <Sidebar>
@@ -503,7 +540,7 @@ function App() {
                     </Sidebar>
                   }
                 />
-                   <Route
+                <Route
                   path='/verified-it'
                   element={
                     <Sidebar>
@@ -511,7 +548,7 @@ function App() {
                     </Sidebar>
                   }
                 />
-                     <Route
+                <Route
                   path='/rejected-it'
                   element={
                     <Sidebar>
@@ -698,7 +735,7 @@ function App() {
                     </Sidebar>
                   }
                 />
-                   <Route
+                <Route
                   path='/incoming-created'
                   element={
                     <Sidebar>
