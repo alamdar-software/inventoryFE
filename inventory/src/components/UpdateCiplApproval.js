@@ -24,7 +24,7 @@ import { fetchShipper } from '../redux/slice/ShipperSlice';
 import { fetchCurrency } from '../redux/slice/CurrencySlice';
 import { fetchPickup } from '../redux/slice/PickUpSlice';
 
-const UpdateCipl = () => {
+const UpdateCiplApproval = () => {
   const [formData, setformData] = useState({
     itemName: '',
     repairService: '',
@@ -621,7 +621,7 @@ const UpdateCipl = () => {
         >
           <CardContent>
             <Typography variant='h4' color='secondary' gutterBottom>
-              Update Cipl
+              Update Cipl Approval
             </Typography>
           </CardContent>
         </Card>
@@ -953,7 +953,7 @@ const UpdateCipl = () => {
                 })
               }
             >
-              <MenuItem value={'verified'}>Verified</MenuItem>
+              <MenuItem value={'approved'}>Approved</MenuItem>
               <MenuItem value={'rejected'}>Rejected</MenuItem>
             </Select>
           </FormControl>
@@ -997,4 +997,4 @@ const UpdateCipl = () => {
   );
 };
 
-export default UpdateCipl;
+export default UpdateCiplApproval;

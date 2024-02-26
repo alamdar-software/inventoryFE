@@ -217,7 +217,7 @@ function App() {
                     </Sidebar>
                   }
                 />
-               
+
                 <Route
                   path='/pick-up'
                   element={
@@ -426,6 +426,14 @@ function App() {
                   }
                 />
                 <Route
+                  path='/viewCiplApproval'
+                  element={
+                    <Sidebar>
+                      <ViewCiplApproval />
+                    </Sidebar>
+                  }
+                />
+                <Route
                   path='/verified-cipl'
                   element={
                     <Sidebar>
@@ -459,6 +467,15 @@ function App() {
                   }
                 />
                 <Route
+                  path='/ViewMtoApproval'
+                  element={
+                    <Sidebar>
+                      <ViewMtoApproval />
+                    </Sidebar>
+                  }
+                />
+
+                <Route
                   path='/rejected-mto'
                   element={
                     <Sidebar>
@@ -471,6 +488,14 @@ function App() {
                   element={
                     <Sidebar>
                       <UpdateMtoVerifier />
+                    </Sidebar>
+                  }
+                />
+                <Route
+                  path='/updateMtoApproval/:id'
+                  element={
+                    <Sidebar>
+                      <UpdateMtoApproval />
                     </Sidebar>
                   }
                 />
@@ -490,7 +515,15 @@ function App() {
                     </Sidebar>
                   }
                 />
-                  <Route
+                <Route
+                  path='/updateCiplApproval/:id'
+                  element={
+                    <Sidebar>
+                      <UpdateCiplApproval />
+                    </Sidebar>
+                  }
+                />
+                <Route
                   path='/it-created'
                   element={
                     <Sidebar>
@@ -498,7 +531,15 @@ function App() {
                     </Sidebar>
                   }
                 />
-                 <Route
+                <Route
+                  path='/viewInternalApproval'
+                  element={
+                    <Sidebar>
+                      <ViewInternalApproval />
+                    </Sidebar>
+                  }
+                />
+                <Route
                   path='/updateIt/:id'
                   element={
                     <Sidebar>
@@ -506,7 +547,7 @@ function App() {
                     </Sidebar>
                   }
                 />
-                   <Route
+                <Route
                   path='/updateItVerifier/:id'
                   element={
                     <Sidebar>
@@ -514,7 +555,15 @@ function App() {
                     </Sidebar>
                   }
                 />
-                   <Route
+                <Route
+                  path='/updateItApproval/:id'
+                  element={
+                    <Sidebar>
+                      <UpdateItApproval />
+                    </Sidebar>
+                  }
+                />
+                <Route
                   path='/verified-it'
                   element={
                     <Sidebar>
@@ -522,7 +571,7 @@ function App() {
                     </Sidebar>
                   }
                 />
-                     <Route
+                <Route
                   path='/rejected-it'
                   element={
                     <Sidebar>
@@ -719,7 +768,7 @@ function App() {
                     </Sidebar>
                   }
                 />
-                  <Route
+                <Route
                   path='/scrapped-created'
                   element={
                     <Sidebar>
@@ -775,7 +824,7 @@ function App() {
                     </Sidebar>
                   }
                 />
-                   <Route
+                <Route
                   path='/incoming-created'
                   element={
                     <Sidebar>
@@ -791,7 +840,7 @@ function App() {
                     </Sidebar>
                   }
                 />
-                  <Route
+                <Route
                   path='/updateIncoming-verifier/:id'
                   element={
                     <Sidebar>
@@ -799,7 +848,7 @@ function App() {
                     </Sidebar>
                   }
                 />
-                     <Route
+                <Route
                   path='/verified-incoming'
                   element={
                     <Sidebar>
@@ -807,7 +856,7 @@ function App() {
                     </Sidebar>
                   }
                 />
-                     <Route
+                <Route
                   path='/rejected-incomingstock'
                   element={
                     <Sidebar>
