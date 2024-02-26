@@ -139,7 +139,7 @@ const InternalTransfer = () => {
     // ... (your existing code)
 
     // Find the corresponding data in state.singleIncome for the selected part number
-    const selectedIncomeData = state.singleIncome?.data.find(
+    const selectedIncomeData = state.nonPersisted.singleIncome?.data.find(
       (incomeItem) => incomeItem.pn === selectedPartNo
     );
 
@@ -201,7 +201,7 @@ const InternalTransfer = () => {
       return updatedSubLocations;
     });
 
-    const selectedInventoryData = state.inventory.data.filter(
+    const selectedInventoryData = state.nonPersisted.inventory.data.filter(
       (inventoryItem) => inventoryItem.address?.address === selectedSubLocation
     );
     console.log(selectedInventoryData, '22');
@@ -240,7 +240,7 @@ const InternalTransfer = () => {
       return updateDescription;
     });
     // Find the corresponding data in state.singleincome for the selected item
-    const selectedIncomeData = state.singleIncome?.data.filter(
+    const selectedIncomeData = state.nonPersisted.singleIncome?.data.filter(
       (incomeItem) =>
         incomeItem.description === description.match(/^[^(]*/)[0].trim()
     );

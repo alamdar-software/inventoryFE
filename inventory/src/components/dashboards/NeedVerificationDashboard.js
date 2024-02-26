@@ -194,7 +194,7 @@ const NeedVerificationDashboard = () => {
                   },
                 }}
               >
-                <Link to={"/Reports"} style={{ textDecoration: "none" }}>
+                <Link to={"/it-created"} style={{ textDecoration: "none" }}>
                   <CardContent>
                     <SummarizeIcon
                       fontSize="large"
@@ -230,7 +230,7 @@ const NeedVerificationDashboard = () => {
                   },
                 }}
               >
-                <Link to={"/Items"} style={{ textDecoration: "none" }}>
+                <Link to={"/incoming-created"} style={{ textDecoration: "none" }}>
                   <CardContent>
                     <ArticleIcon
                       fontSize="large"

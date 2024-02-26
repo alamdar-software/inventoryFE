@@ -194,7 +194,7 @@ const VerifiedDashboard = () => {
                   },
                 }}
               >
-                <Link to={"/Reports"} style={{ textDecoration: "none" }}>
+                <Link to={"/verified-it"} style={{ textDecoration: "none" }}>
                   <CardContent>
                     <SummarizeIcon
                       fontSize="large"
@@ -230,7 +230,7 @@ const VerifiedDashboard = () => {
                   },
                 }}
               >
-                <Link to={"/Items"} style={{ textDecoration: "none" }}>
+                <Link to={"/verified-incoming"} style={{ textDecoration: "none" }}>
                   <CardContent>
                     <ArticleIcon
                       fontSize="large"
@@ -277,7 +277,7 @@ const VerifiedDashboard = () => {
                 }}
               >
                 <Link
-                  to={"/locationDashboard"}
+                  to={"/verified-scrapped"}
                   style={{ textDecoration: "none" }}
                 >
                   <CardContent
@@ -326,7 +326,7 @@ const VerifiedDashboard = () => {
                   },
                 }}
               >
-                <Link to={"/view-inventory"} style={{ textDecoration: "none" }}>
+                <Link to={"/verified-consumed"} style={{ textDecoration: "none" }}>
                   <CardContent
                     sx={{
                       display: "flex",
