@@ -326,7 +326,7 @@ const NeedVerificationDashboard = () => {
                   },
                 }}
               >
-                <Link to={"/view-inventory"} style={{ textDecoration: "none" }}>
+                <Link to={"/consumed-created"} style={{ textDecoration: "none" }}>
                   <CardContent
                     sx={{
                       display: "flex",
