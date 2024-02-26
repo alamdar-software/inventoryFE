@@ -152,9 +152,9 @@ const UpdateMto = () => {
     return formControls.map((control, index) => (
       <div key={control.key} style={{ display: 'flex', marginBottom: '10px' }}>
         <Grid item xs={12} sm={6}>
+          <InputLabel htmlFor='outlined-basic'>SubLocation</InputLabel>
           <TextField
             id='outlined-basic'
-            label='SubLocation'
             variant='outlined'
             value={mto ? mto.SubLocation : ''}
             sx={{ width: '100px', marginRight: '23px' }}
@@ -170,9 +170,9 @@ const UpdateMto = () => {
           />
         </Grid>
         <Grid item xs={12} sm={6}>
+          <InputLabel htmlFor='outlined-basic'>Item Description</InputLabel>
           <TextField
             id='outlined-basic'
-            label='Item Description'
             variant='outlined'
             value={mto ? mto.description : ''}
             sx={{ width: '100px', marginRight: '23px' }}
@@ -226,9 +226,9 @@ const UpdateMto = () => {
           </Select>
         </FormControl> */}
         <Grid item xs={12} sm={6}>
+          <InputLabel htmlFor='outlined-basic'>Part No</InputLabel>
           <TextField
             id='outlined-basic'
-            label='Part No'
             variant='outlined'
             value={mto ? mto.pn : ''}
             sx={{ width: '100px', marginRight: '23px' }}
@@ -244,97 +244,95 @@ const UpdateMto = () => {
           />
         </Grid>
 
-        <FormControl fullWidth sx={{ width: '30%', marginRight: '10px' }}>
-          <Grid item xs={12} sm={6}>
-            <TextField
-              sx={{ width: '90%' }}
-              id='outlined-basic'
-              label='S/N'
-              variant='outlined'
-              //   value={partNumbersData[index]?.sn || ''}
-              InputProps={{ readOnly: true }}
-              value={mto ? mto.sn : ''}
-              onChange={(e) => {
-                setMto({
-                  ...mto,
-                  sn: e.target.value,
-                });
-                setformData(e.target.value);
-              }}
-              //   onChange={(e) => handleSnChange(index, e.target.value)}
-              fullWidth
-            />
-          </Grid>
-        </FormControl>
-        <FormControl fullWidth sx={{ width: '90%', marginRight: '10px' }}>
-          <Grid item xs={12} sm={6}>
-            <TextField
-              sx={{ width: '90%' }}
-              id='outlined-basic'
-              label='Purchase Order(D.O.P)'
-              variant='outlined'
-              //   value={partNumbersData[index]?.date || ''}
-              // onChange={(e) => setLocation(e.target.value)}
-              //   onChange={(e) => handlePurchaseChange(index, e.target.value)}
-              value={mto ? mto.purchase : ''}
-              InputProps={{ readOnly: true }}
-              onChange={(e) => {
-                setMto({
-                  ...mto,
-                  purchase: e.target.value,
-                });
-                setformData(e.target.value);
-              }}
-              fullWidth
-            />
-          </Grid>
-        </FormControl>
-        <FormControl fullWidth sx={{ width: '50%', marginRight: '10px' }}>
-          <Grid item xs={12} sm={6}>
-            <TextField
-              sx={{ width: '90%' }}
-              id='outlined-basic'
-              label='Quantity'
-              variant='outlined'
-              // value={locationName}
-              // onChange={(e) => setLocation(e.target.value)}
-              //   onChange={(e) => handleQuantityChange(index, e.target.value)}
-              value={mto ? mto.quantity : ''}
-              InputProps={{ readOnly: true }}
-              onChange={(e) => {
-                setMto({
-                  ...mto,
-                  quantity: e.target.value,
-                });
-                setformData(e.target.value);
-              }}
-              fullWidth
-            />
-          </Grid>
-        </FormControl>
+        <Grid item xs={12} sm={6}>
+          <InputLabel htmlFor='outlined-basic'> S/N</InputLabel>
+          <TextField
+            sx={{ width: '90%' }}
+            id='outlined-basic'
+            variant='outlined'
+            //   value={partNumbersData[index]?.sn || ''}
+            InputProps={{ readOnly: true }}
+            value={mto ? mto.sn : ''}
+            onChange={(e) => {
+              setMto({
+                ...mto,
+                sn: e.target.value,
+              });
+              setformData(e.target.value);
+            }}
+            //   onChange={(e) => handleSnChange(index, e.target.value)}
+            fullWidth
+          />
+        </Grid>
 
-        <FormControl fullWidth sx={{ width: '50%', marginRight: '10px' }}>
-          <Grid item xs={12} sm={6}>
-            <TextareaAutosize
-              sx={{ width: '90%' }}
-              aria-label='Brand'
-              placeholder='Enter Remarks'
-              // value={brandValue} // You can set the value and handle changes as needed
-              // onChange={(e) => handleBrandChange(e.target.value)}
-              //   onChange={(e) => handleRemarksChange(index, e.target.value)}
-              minRows={4} // You can adjust the number of rows as needed
-              value={mto ? mto.remarks : ''}
-              InputProps={{ readOnly: true }}
-              onChange={(e) => {
-                setMto({
-                  ...mto,
-                  remarks: e.target.value,
-                });
-                setformData(e.target.value);
-              }}
-            />
-          </Grid>
-        </FormControl>
+        <Grid item xs={12} sm={6}>
+          <InputLabel htmlFor='outlined-basic'>
+            {' '}
+            Purchase Order(D.O.P)
+          </InputLabel>
+          <TextField
+            sx={{ width: '90%' }}
+            id='outlined-basic'
+            variant='outlined'
+            //   value={partNumbersData[index]?.date || ''}
+            // onChange={(e) => setLocation(e.target.value)}
+            //   onChange={(e) => handlePurchaseChange(index, e.target.value)}
+            value={mto ? mto.purchase : ''}
+            InputProps={{ readOnly: true }}
+            onChange={(e) => {
+              setMto({
+                ...mto,
+                purchase: e.target.value,
+              });
+              setformData(e.target.value);
+            }}
+            fullWidth
+          />
+        </Grid>
+
+        <Grid item xs={12} sm={6}>
+          <InputLabel htmlFor='outlined-basic'> Quantity</InputLabel>
+          <TextField
+            sx={{ width: '90%' }}
+            id='outlined-basic'
+            variant='outlined'
+            // value={locationName}
+            // onChange={(e) => setLocation(e.target.value)}
+            //   onChange={(e) => handleQuantityChange(index, e.target.value)}
+            value={mto ? mto.quantity : ''}
+            InputProps={{ readOnly: true }}
+            onChange={(e) => {
+              setMto({
+                ...mto,
+                quantity: e.target.value,
+              });
+              setformData(e.target.value);
+            }}
+            fullWidth
+          />
+        </Grid>
+
+        <Grid item xs={12} sm={6}>
+          <TextareaAutosize
+            sx={{ width: '90%' }}
+            aria-label='Brand'
+            placeholder='Enter Remarks'
+            // value={brandValue} // You can set the value and handle changes as needed
+            // onChange={(e) => handleBrandChange(e.target.value)}
+            //   onChange={(e) => handleRemarksChange(index, e.target.value)}
+            minRows={4} // You can adjust the number of rows as needed
+            value={mto ? mto.remarks : ''}
+            InputProps={{ readOnly: true }}
+            onChange={(e) => {
+              setMto({
+                ...mto,
+                remarks: e.target.value,
+              });
+              setformData(e.target.value);
+            }}
+          />
+        </Grid>
+
         {/* <div
           style={{
             display: 'flex',
@@ -381,29 +379,21 @@ const UpdateMto = () => {
       </Grid>
       <Grid container spacing={2} sx={{ mt: '23px' }}>
         <Grid item xs={12} sm={6}>
-          <FormControl fullWidth sx={{ width: '90%' }}>
-            <InputLabel id='demo-simple-select-label'>Location</InputLabel>
-            <Select
-              labelId='demo-simple-select-label'
-              id='demo-simple-select'
-              value={mto ? mto.locationName : ''}
-              label='location'
-              MenuProps={{
-                PaperProps: {
-                  style: {
-                    maxHeight: 120, // Adjust the height as needed
-                  },
-                },
-              }}
-            >
-              {state.nonPersisted.location.data?.map((item, index) => (
-                <MenuItem key={index} value={item?.locationName}>
-                  {' '}
-                  {item?.locationName}
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
+          <InputLabel htmlFor='outlined-basic'>Location/Vessel</InputLabel>
+          <TextField
+            id='outlined-basic'
+            variant='outlined'
+            value={mto ? mto.locationName : ''}
+            sx={{ width: '570px' }}
+            onChange={(e) => {
+              setformData({
+                ...mto,
+                locationName: e.target.value,
+              });
+              setMto(e.target.value);
+            }}
+            width={'50%'}
+          />
         </Grid>
         {/* <Grid item xs={12} sm={6}>
           <FormControl fullWidth sx={{ width: '90%' }}>
@@ -444,9 +434,11 @@ const UpdateMto = () => {
           </FormControl>
         </Grid> */}
         <Grid item xs={12} sm={6}>
+          <InputLabel htmlFor='outlined-basic'>
+            Destination SubLocation
+          </InputLabel>
           <TextField
             id='outlined-basic'
-            label='Destination SubLocation'
             variant='outlined'
             value={mto ? mto.destinationSubLocation : ''}
             sx={{ width: '590px' }}
@@ -496,9 +488,9 @@ const UpdateMto = () => {
         </Grid> */}
 
         <Grid item xs={12} sm={6}>
+          <InputLabel htmlFor='outlined-basic'>Consignee</InputLabel>
           <TextField
             id='outlined-basic'
-            label='Consignee '
             variant='outlined'
             value={mto ? mto.consigneeName : ''}
             sx={{ width: '590px' }}
@@ -514,7 +506,7 @@ const UpdateMto = () => {
           />
         </Grid>
         <Grid item xs={12} sm={6}>
-          <FormControl fullWidth sx={{ width: '90%' }}>
+          <FormControl fullWidth sx={{ width: '90%', mt: '23px' }}>
             <InputLabel id='demo-simple-select-label'>
               Repair/Service
             </InputLabel>
@@ -538,6 +530,7 @@ const UpdateMto = () => {
           </FormControl>
         </Grid>
         <Grid item xs={12} sm={6}>
+          <InputLabel id='demo-simple-select-label'>Date</InputLabel>
           <LocalizationProvider dateAdapter={AdapterDayjs}>
             <DatePicker
               value={mto?.transferDate ? dayjs(mto?.date) : null}
@@ -553,7 +546,7 @@ const UpdateMto = () => {
           </LocalizationProvider>
         </Grid>
         <Grid item xs={12} sm={6}>
-          <FormControl fullWidth sx={{ width: '90%' }}>
+          <FormControl fullWidth sx={{ width: '90%', mt: '23px' }}>
             <InputLabel id='demo-simple-select-label'>Status</InputLabel>
             <Select
               labelId='demo-simple-select-label'
@@ -561,7 +554,6 @@ const UpdateMto = () => {
               //value={age}
               value={mto ? mto.status : ''}
               InputProps={{ readOnly: true }}
-             
               label='Repair/service'
               //onChange={handleChange}
               onChange={(e) =>
@@ -570,7 +562,6 @@ const UpdateMto = () => {
                   status: e.target.value,
                 })
               }
-           
             >
               <MenuItem value={'verified'}>Verified</MenuItem>
               <MenuItem value={'rejected'}>Rejected</MenuItem>
