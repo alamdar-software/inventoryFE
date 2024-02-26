@@ -87,7 +87,7 @@ const ApprovedRejected = () => {
                 }}
               >
                 <Link
-                  to={'/viewCiplRejected'}
+                  to={'/approvalCiplRejected'}
                   style={{ textDecoration: 'none', position: 'relative' }}
                 >
                   <CardContent>

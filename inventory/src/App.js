@@ -132,6 +132,7 @@ import UpdateScrappedApproval from './pages/UpdateScrappedApproval.js';
 import ViewMtoApproval from './components/ViewMtoApproval.js';
 import ViewConsumeApproval from './pages/ViewConsumeApproval.js';
 import UpdateConsumedApproval from './pages/UpdateConsumedApproval.js';
+import ApprovalCiplRejected from './pages/ApprovalCiplRejected.js';
 const theme = createTheme({
   palette: {
     background: {
@@ -563,6 +564,14 @@ function App() {
                   element={
                     <Sidebar>
                       <ViewScrapApproval />
+                    </Sidebar>
+                  }
+                />
+                <Route
+                  path='/approvalCiplRejected'
+                  element={
+                    <Sidebar>
+                      <ApprovalCiplRejected />
                     </Sidebar>
                   }
                 />
