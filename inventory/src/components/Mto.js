@@ -92,10 +92,10 @@ const Mto = () => {
 
     fetch('http://localhost:8080/mto/add', {
       method: 'POST',
-      headers: { 'Content-type': 'application/json',
-      Authorization: `Bearer ${currentUser.accessToken}`,
-    
-    },
+      headers: {
+        'Content-type': 'application/json',
+        Authorization: `Bearer ${currentUser.accessToken}`,
+      },
       body: JSON.stringify(formData),
     }).then(() => {
       console.log('MTO Added');
