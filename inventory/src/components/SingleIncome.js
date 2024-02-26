@@ -87,7 +87,7 @@ const SingleIncome = () => {
     setSelectedSubLocations([selectedSubLocation]); // Wrap in an array if it's a single value
 
     // Find the corresponding item descriptions in the inventory data
-    const selectedInventoryData = state.inventory?.data.filter(
+    const selectedInventoryData = state.nonPersisted.inventory?.data.filter(
       (inventoryItem) => inventoryItem.address?.address === selectedSubLocation
     );
     console.log(selectedInventoryData, '22');
@@ -150,7 +150,7 @@ const SingleIncome = () => {
   const handleItemChange = (e) => {
     console.log(e.target.value);
     const selectedDescription = e.target.value.match(/^[^(]*/)[0].trim();
-    const selectedItem = state.item?.data.find(
+    const selectedItem = state.nonPersisted.item?.data.find(
       (item) => item.description === selectedDescription
     );
 
