@@ -154,7 +154,7 @@ export const ViewCiplRejected = () => {
         return res.json();
       })
       .then((result) => {
-        console.log(result,"meinhunkhalnayak");
+        console.log(result, 'meinhunkhalnayak');
         setAllCipl(result);
         setFilteredCipl(result);
       })
@@ -380,7 +380,6 @@ export const ViewCiplRejected = () => {
                 <TableCell align='right' sx={{ fontWeight: 'bold' }}>
                   Print
                 </TableCell>
-                
               </TableRow>
             </TableHead>
             <TableBody>
@@ -407,9 +406,7 @@ export const ViewCiplRejected = () => {
                       <TableCell align='right'>
                         {ciplRow.transferDate}
                       </TableCell>
-                      <TableCell align='right'>
-                        {ciplRow.status}
-                      </TableCell>
+                      <TableCell align='right'>{ciplRow.status}</TableCell>
                       <TableCell align='right'>
                         <Link to={`/cipl/createpdf/${ciplRow.id}`}>
                           <Button
@@ -421,7 +418,6 @@ export const ViewCiplRejected = () => {
                           </Button>
                         </Link>
                       </TableCell>
-
                     </TableRow>
                   ))
                 )}
