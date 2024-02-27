@@ -39,7 +39,10 @@ import dayjs from 'dayjs';
 import TextareaAutosize from '@mui/material/TextareaAutosize';
 import { fetchIncome } from '../redux/slice/SingleIncomeSlice';
 import { fetchInventory } from '../redux/slice/InventorySlice';
+import { useLocation } from 'react-router-dom';
 export const Cipl = () => {
+
+  const location = useLocation();
   const state = useSelector((state) => state);
 
   const dispatch = useDispatch();
@@ -125,6 +128,7 @@ export const Cipl = () => {
       const data = await res.json();
       console.log(data, 'came from backend');
       alert('cipl added successfully');
+      window.location.reload();
     } catch (error) {
       console.log('something happens while adding cipl');
     }
