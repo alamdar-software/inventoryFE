@@ -141,7 +141,7 @@ export const ViewCipl = () => {
     }; */
   useEffect(() => {
     fetch('http://localhost:8080/cipl/view', {
-      method: 'POST',
+      method: 'GET',
       headers: {
         Authorization: `Bearer ${currentUser.accessToken}`,
         'Content-Type': 'application/json',
