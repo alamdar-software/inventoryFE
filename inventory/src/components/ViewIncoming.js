@@ -1,4 +1,5 @@
 import {
+  Alert,
   Box,
   Button,
   Card,
@@ -115,6 +116,23 @@ const ViewIncoming = () => {
         setIncoming([]);
       });
   };console.log(incoming,"mujhmeinhai");
+  const handledeleteincome = async (id) => {
+
+    fetch(`http://localhost:8080/bulkstock/delete/${id}`, {
+      method: "DELETE",
+      headers: { "Content-type": "application/json" , 
+       Authorization: `Bearer ${currentUser.accessToken}`},
+     
+    })
+      .then(() => {
+        alert("deleted")
+        console.log("incoming Deleted");
+        
+      })
+      .catch((error) => {
+        console.error("Error updating pickup:", error);
+      });
+    };
 
   return (
     <>
@@ -302,6 +320,9 @@ const ViewIncoming = () => {
                 <TableCell align='right' sx={{ fontWeight: 'bold' }}>
                   Purchase Date
                 </TableCell>
+                <TableCell align='right' sx={{ fontWeight: 'bold' }}>
+                  Action
+                </TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -315,7 +336,7 @@ const ViewIncoming = () => {
                     <TableCell align='right'>{item.quantity}</TableCell>
                     <TableCell align='right'>{item.purchaseOrder}</TableCell>
                     <TableCell align='right'>{item.date}</TableCell>
-
+                    <TableCell align='right'>
                     <Link to={`/updateIncoming/${item.id}`}>
                       <Button>
                         <BorderColorSharpIcon
@@ -324,6 +345,15 @@ const ViewIncoming = () => {
                         />
                       </Button>
                     </Link>
+                    <Button
+                          sx={{ marginLeft: '11px' }}
+                          variant='contained'
+                          color='secondary'
+                            onClick={() => handledeleteincome(item.id)} 
+                        >
+                          Delete
+                        </Button>
+                        </TableCell>
 
                     {/* Add more TableCell components for other properties as needed */}
                   </TableRow>
