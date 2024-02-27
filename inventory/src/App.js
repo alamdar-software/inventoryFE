@@ -133,6 +133,16 @@ import ViewMtoApproval from './components/ViewMtoApproval.js';
 import ViewConsumeApproval from './pages/ViewConsumeApproval.js';
 import UpdateConsumedApproval from './pages/UpdateConsumedApproval.js';
 import ApprovalCiplRejected from './pages/ApprovalCiplRejected.js';
+import ApprovalMtoRejected from './components/ApprovalMtoRejected.js';
+import ApprovalInternalrejected from './components/ApprovalInternalRejected.js';
+import ApprovalScrapRejected from './pages/ApprovalScrapRejected.js';
+import ApprovalConsumeRejected from './pages/ApprovalConsumeRejected.js';
+import ApprovalIncomingRejected from './components/ApprovalIncomungRejected.js';
+import ApprovedCipl from './pages/ApprovedCipl.js';
+import ApprovedInternal from './components/ApprovedInternal.js';
+import ApprovedIncoming from './components/ApprovedIncoming.js';
+import ApprovedScrapped from './pages/ApprovedScrapped.js';
+import ApprovedConsumed from './pages/ApprovedConsumed.js';
 const theme = createTheme({
   palette: {
     background: {
@@ -504,6 +514,46 @@ function App() {
                   }
                 />
                 <Route
+                  path='/approvedMto'
+                  element={
+                    <Sidebar>
+                      <RejectedMto />
+                    </Sidebar>
+                  }
+                />
+                <Route
+                  path='/approvedInternal'
+                  element={
+                    <Sidebar>
+                      <ApprovedInternal />
+                    </Sidebar>
+                  }
+                />
+                <Route
+                  path='/approvedIncoming'
+                  element={
+                    <Sidebar>
+                      <ApprovedIncoming />
+                    </Sidebar>
+                  }
+                />
+                <Route
+                  path='/approvedScrap'
+                  element={
+                    <Sidebar>
+                      <ApprovedScrapped />
+                    </Sidebar>
+                  }
+                />
+                <Route
+                  path='/approvedConsumed'
+                  element={
+                    <Sidebar>
+                      <ApprovedConsumed />
+                    </Sidebar>
+                  }
+                />
+                <Route
                   path='/updateMtoVerified/:id'
                   element={
                     <Sidebar>
@@ -572,6 +622,54 @@ function App() {
                   element={
                     <Sidebar>
                       <ApprovalCiplRejected />
+                    </Sidebar>
+                  }
+                />
+                <Route
+                  path='/approvalMtoRejected'
+                  element={
+                    <Sidebar>
+                      <ApprovalMtoRejected />
+                    </Sidebar>
+                  }
+                />
+                <Route
+                  path='/approvalItRejected'
+                  element={
+                    <Sidebar>
+                      <ApprovalInternalrejected />
+                    </Sidebar>
+                  }
+                />
+                <Route
+                  path='/approvalScrapRejected'
+                  element={
+                    <Sidebar>
+                      <ApprovalScrapRejected />
+                    </Sidebar>
+                  }
+                />
+                <Route
+                  path='/approvalConsumeRejected'
+                  element={
+                    <Sidebar>
+                      <ApprovalConsumeRejected />
+                    </Sidebar>
+                  }
+                />
+                <Route
+                  path='/approvalIncomingRejected'
+                  element={
+                    <Sidebar>
+                      <ApprovalIncomingRejected />
+                    </Sidebar>
+                  }
+                />
+                <Route
+                  path='/ApprovedCipl'
+                  element={
+                    <Sidebar>
+                      <ApprovedCipl />
                     </Sidebar>
                   }
                 />
