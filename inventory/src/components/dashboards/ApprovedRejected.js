@@ -154,7 +154,10 @@ const ApprovedRejected = () => {
                   },
                 }}
               >
-                <Link to={'/datacount'} style={{ textDecoration: 'none' }}>
+                <Link
+                  to={'/approvalMtoRejected'}
+                  style={{ textDecoration: 'none' }}
+                >
                   <CardContent>
                     <ArticleIcon
                       fontSize='large'
@@ -194,7 +197,10 @@ const ApprovedRejected = () => {
                   },
                 }}
               >
-                <Link to={'/Reports'} style={{ textDecoration: 'none' }}>
+                <Link
+                  to={'/approvalItRejected'}
+                  style={{ textDecoration: 'none' }}
+                >
                   <CardContent>
                     <SummarizeIcon
                       fontSize='large'
@@ -230,7 +236,10 @@ const ApprovedRejected = () => {
                   },
                 }}
               >
-                <Link to={'/Items'} style={{ textDecoration: 'none' }}>
+                <Link
+                  to={'/approvalIncomingRejected'}
+                  style={{ textDecoration: 'none' }}
+                >
                   <CardContent>
                     <ArticleIcon
                       fontSize='large'
@@ -277,7 +286,7 @@ const ApprovedRejected = () => {
                 }}
               >
                 <Link
-                  to={'/locationDashboard'}
+                  to={'/approvalScrapRejected'}
                   style={{ textDecoration: 'none' }}
                 >
                   <CardContent
@@ -326,7 +335,10 @@ const ApprovedRejected = () => {
                   },
                 }}
               >
-                <Link to={'/view-inventory'} style={{ textDecoration: 'none' }}>
+                <Link
+                  to={'/approvalConsumeRejected'}
+                  style={{ textDecoration: 'none' }}
+                >
                   <CardContent
                     sx={{
                       display: 'flex',
