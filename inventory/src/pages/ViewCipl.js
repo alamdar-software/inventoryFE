@@ -155,7 +155,7 @@ export const ViewCipl = () => {
         return res.json();
       })
       .then((result) => {
-        console.log(result);
+        console.log(result, 'rupaaaaaaaaaaa');
         setAllCipl(result);
         setFilteredCipl(result);
       })
