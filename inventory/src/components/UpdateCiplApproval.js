@@ -112,7 +112,7 @@ const UpdateCiplApproval = () => {
         'Content-type': 'application/json',
         Authorization: `Bearer ${currentUser.accessToken}`,
       },
-      body: JSON.stringify(cipl),
+      body: JSON.stringify(formData),
     })
       .then(() => {
         console.log('Cipl Updated');
