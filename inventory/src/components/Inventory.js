@@ -57,7 +57,8 @@ const Inventory = () => {
       const res = await fetch("http://localhost:8080/inventory/add", {
         method: "post",
         headers: {
-          "content-type": "application/json",
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${currentUser.accessToken}`
         },
         body: JSON.stringify(formData),
       });
