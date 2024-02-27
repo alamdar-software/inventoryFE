@@ -330,7 +330,7 @@ export const Cipl = () => {
     });
 
     // Find the corresponding data in state.singleincome for the selected item
-    const selectedIncomeData = state.nonPersisted.singleIncome?.data.filter(
+    const selectedIncomeData = state?.nonPersisted.singleIncome?.data?.filter(
       (incomeItem) => incomeItem.description === selectedItem
     );
     console.log(selectedIncomeData, 'selectttttt');
