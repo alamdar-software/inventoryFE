@@ -17,11 +17,12 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import ButtonGroup from '@mui/material/ButtonGroup';
 import UomTable from './UomTable';
 import { useSelector } from 'react-redux';
 export const Uom = () => {
+  const location = useLocation();
   const [unit, setunit] = useState({
     unitName: '',
   });
@@ -63,6 +64,7 @@ export const Uom = () => {
       body: JSON.stringify(unit),
     });
     const data = await res.text();
+    window.location.reload();
   };
   const handleChange = (e) => {
     setunit({

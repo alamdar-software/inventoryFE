@@ -122,14 +122,15 @@ export const ViewCipl = () => {
         console.error('Error fetching pickup data:', error);
       });
   }, []);
-
-  const deletePickup = async (id) => {
+*/
+  const handledeleteCipl = async (id) => {
     alert("Deleted Successfully!");
     console.log(id);
-    fetch(`http://localhost:8080/pickup/delete/${id}`, {
+    fetch(`http://localhost:8080/cipl/delete/${id}`, {
       method: "DELETE",
-      headers: { "Content-type": "application/json" },
-      body: JSON.stringify(Pickup),
+      headers: { "Content-type": "application/json" , 
+       Authorization: `Bearer ${currentUser.accessToken}`},
+     
     })
       .then(() => {
         console.log("Pickup Deleted");
@@ -138,7 +139,7 @@ export const ViewCipl = () => {
       .catch((error) => {
         console.error("Error updating pickup:", error);
       });
-    }; */
+    };
   useEffect(() => {
     fetch('http://localhost:8080/cipl/view', {
       method: 'GET',
@@ -432,7 +433,7 @@ export const ViewCipl = () => {
                           sx={{ marginLeft: '11px' }}
                           variant='contained'
                           color='secondary'
-                          /*  onClick={() => deleteConsignee(consignee.id)} */
+                            onClick={() => handledeleteCipl(ciplRow.id)} 
                         >
                           Delete
                         </Button>

@@ -61,7 +61,7 @@ const ViewIncoming = () => {
     })
       .then((res) => res.json())
       .then((result) => {
-        console.log(result);
+        console.log(result,"kabsetuhai");
 
         if (Array.isArray(result.stockViewList)) {
           setIncoming(result.stockViewList);

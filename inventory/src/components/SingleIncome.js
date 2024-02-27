@@ -27,7 +27,10 @@ import dayjs from 'dayjs';
 import { fetchCurrency } from '../redux/slice/CurrencySlice';
 import { fetchentity } from '../redux/slice/entitySlice';
 import { fetchInventory } from '../redux/slice/InventorySlice';
+import { useLocation } from 'react-router-dom';
 const SingleIncome = () => {
+
+  const location = useLocation()
   const [formData, setformData] = useState({
     locationName: '',
     address: '',
@@ -188,6 +191,7 @@ const SingleIncome = () => {
       const data = await res.json();
       console.log(data, 'came from backend');
       alert('income added successfully');
+      window.location.reload();
     } catch (error) {
       console.log(error, 'something happens while adding income');
     }
