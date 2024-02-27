@@ -107,12 +107,8 @@ const ViewIncoming = () => {
     })
       .then((res) => res.json())
       .then((result) => {
-        if (Array.isArray(result.stockViewList||result)) {
-          setIncoming(result.stockViewList||result);
-        } else {
-          console.error('Received data does not contain an array:', result);
-          setIncoming([]);
-        }
+        setIncoming(result)
+        
       })
       .catch((error) => {
         console.error('Error searching data:', error);
