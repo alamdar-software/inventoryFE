@@ -49,9 +49,9 @@ export const ViewCipl = () => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [formData, setformData] = useState({
-    itemDescription: '',
-    date: '',
-    location: '',
+    item: '',
+    transferDate: '',
+    locationName: '',
   });
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -191,7 +191,7 @@ export const ViewCipl = () => {
   const handleDateChange = (date) => {
     setformData({
       ...formData,
-      date: date.format('YYYY-MM-DD'),
+      transferDate: date.format('YYYY-MM-DD'),
     });
   };
   const generatePDF = async (rowData, index) => {
