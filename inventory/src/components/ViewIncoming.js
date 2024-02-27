@@ -107,8 +107,8 @@ const ViewIncoming = () => {
     })
       .then((res) => res.json())
       .then((result) => {
-        if (Array.isArray(result)) {
-          setIncoming(result);
+        if (Array.isArray(result.stockViewList||result)) {
+          setIncoming(result.stockViewList||result);
         } else {
           console.error('Received data does not contain an array:', result);
           setIncoming([]);
@@ -118,7 +118,7 @@ const ViewIncoming = () => {
         console.error('Error searching data:', error);
         setIncoming([]);
       });
-  };
+  };console.log(incoming,"mujhmeinhai");
 
   return (
     <>
