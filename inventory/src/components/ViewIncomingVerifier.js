@@ -125,6 +125,7 @@ const ViewIncomingVerifier = () => {
         setIncoming([]);
       });
   };
+  console.log(incoming,"puuuja");
 
   return (
     <>
@@ -323,7 +324,7 @@ const ViewIncomingVerifier = () => {
                   <TableRow key={item.id}>
                     <TableCell align='right'>{item.description}</TableCell>
                     <TableCell align='right'>{item.locationName}</TableCell>
-                    <TableCell align='right'>{item.address}</TableCell>
+                    <TableCell align='right'>{item.address.address||item.address}</TableCell>
                     <TableCell align='right'>{item.entityName}</TableCell>
                     <TableCell align='right'>{item.quantity}</TableCell>
                     <TableCell align='right'>{item.purchaseOrder}</TableCell>

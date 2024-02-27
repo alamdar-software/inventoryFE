@@ -966,6 +966,7 @@ function App() {
                 />
 
                 <Route element={<OnlyOther />}>
+                <Route path='/login' element={<Login />} />
                   <Route
                     path='/'
                     element={
