@@ -41,7 +41,6 @@ import { fetchIncome } from '../redux/slice/SingleIncomeSlice';
 import { fetchInventory } from '../redux/slice/InventorySlice';
 import { useLocation } from 'react-router-dom';
 export const Cipl = () => {
-
   const location = useLocation();
   const state = useSelector((state) => state);
 
