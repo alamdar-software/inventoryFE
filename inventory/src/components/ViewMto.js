@@ -119,6 +119,25 @@ const ViewMto = () => {
       transferDate: transferDate.format('YYYY-MM-DD'),
     });
   };
+
+  const handledeleteMto = async (id) => {
+    alert('Deleted Successfully!');
+    console.log(id);
+    fetch(`http://localhost:8080/mto/delete/${id}`, {
+      method: 'DELETE',
+      headers: {
+        'Content-type': 'application/json',
+        Authorization: `Bearer ${currentUser.accessToken}`,
+      },
+    })
+      .then(() => {
+        console.log('Pickup Deleted');
+        window.location.reload();
+      })
+      .catch((error) => {
+        console.error('Error updating pickup:', error);
+      });
+  };
   console.log(formData);
   return (
     <>
@@ -298,14 +317,15 @@ const ViewMto = () => {
                         </Link>
                       </TableCell>
 
-                      <Link to={`/updateMto/${mto.id}`}>
-                        <Button>
-                          <BorderColorSharpIcon
-                            // onClick={() => handleDeleteClick(index)}
-                            style={{ color: 'green' }}
-                          />
-                        </Button>
-                      </Link>
+                      <Link to={`/updateMto/${mto.id}`}></Link>
+                      <Button
+                        sx={{ marginLeft: '11px', mt: '11px' }}
+                        variant='contained'
+                        color='secondary'
+                        onClick={() => handledeleteMto(mto.id)}
+                      >
+                        Delete
+                      </Button>
 
                       {/* Add more TableCell components for other properties as needed */}
                     </TableRow>

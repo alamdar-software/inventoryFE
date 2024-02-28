@@ -28,6 +28,7 @@ import { fetchlocation } from '../redux/slice/location';
 import { fetchItem } from '../redux/slice/ItemSlice';
 import { Link } from 'react-router-dom';
 import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
+import BorderColorSharpIcon from '@mui/icons-material/BorderColorSharp';
 
 const ViewInternal = () => {
   const [formData, setformData] = useState({
@@ -114,6 +115,24 @@ const ViewInternal = () => {
       });
   };
 
+  const handledeleteIt = async (id) => {
+    alert('Deleted Successfully!');
+    console.log(id);
+    fetch(`http://localhost:8080/internaltransfer/delete/${id}`, {
+      method: 'DELETE',
+      headers: {
+        'Content-type': 'application/json',
+        Authorization: `Bearer ${currentUser.accessToken}`,
+      },
+    })
+      .then(() => {
+        console.log('Pickup Deleted');
+        window.location.reload();
+      })
+      .catch((error) => {
+        console.error('Error updating pickup:', error);
+      });
+  };
   console.log(internal);
   return (
     <>
@@ -314,14 +333,14 @@ const ViewInternal = () => {
                         <Button color='success'>Update</Button>
                       </Link>
 
-                      {/* <Link to={`/updateMto/${mto.id}`}>
-                       <Button>
-                         <BorderColorSharpIcon
-                           // onClick={() => handleDeleteClick(index)}
-                           style={{ color: 'green' }}
-                         />
-                       </Button>
-                     </Link>  */}
+                      <Button
+                        sx={{ marginLeft: '11px', mt: '11px' }}
+                        variant='contained'
+                        color='secondary'
+                        onClick={() => handledeleteIt(internal.id)}
+                      >
+                        Delete
+                      </Button>
                     </TableRow>
                   ))
               ) : (
