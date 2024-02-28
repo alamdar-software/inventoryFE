@@ -68,7 +68,7 @@ const UpdateInventory = () => {
 
     fetch(`http://localhost:8080/inventory/update/${id}`, {
       method: 'PUT',
-      headers: { 'Content-type': 'application/json' },
+      headers: { 'Content-type': 'application/json' , Authorization: `Bearer ${currentUser.accessToken}`},
       body: JSON.stringify(inventory),
     })
       .then(() => {
