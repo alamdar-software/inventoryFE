@@ -127,6 +127,7 @@ const ViewIncoming = () => {
       .then(() => {
         alert("deleted")
         console.log("incoming Deleted");
+        window.location.reload();
         
       })
       .catch((error) => {
