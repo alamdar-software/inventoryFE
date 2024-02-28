@@ -15,7 +15,9 @@ import {
   TableBody,
   TableCell,
   TableContainer,
+  TableFooter,
   TableHead,
+  TablePagination,
   TableRow,
   TextField,
   Typography,
@@ -45,7 +47,17 @@ const ViewIncoming = () => {
   const dispatch = useDispatch();
   const [totalCount, setTotalCount] = useState(0);
   const [highlightedRows, setHighlightedRows] = useState([]);
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(5);
   const { currentUser } = state.persisted.user;
+  const handleChangePage = (event, newPage) => {
+    setPage(newPage);
+  };
+
+  const handleChangeRowsPerPage = (event) => {
+    setRowsPerPage(parseInt(event.target.value, 10));
+    setPage(0);
+  };
 
   useEffect(() => {
     dispatch(fetchlocation(currentUser.accessToken));
@@ -62,7 +74,7 @@ const ViewIncoming = () => {
     })
       .then((res) => res.json())
       .then((result) => {
-        console.log(result,"kabsetuhai");
+        console.log(result, 'kabsetuhai');
 
         if (Array.isArray(result.stockViewList)) {
           setIncoming(result.stockViewList);
@@ -108,32 +120,31 @@ const ViewIncoming = () => {
     })
       .then((res) => res.json())
       .then((result) => {
-        setIncoming(result)
-        
+        setIncoming(result);
       })
       .catch((error) => {
         console.error('Error searching data:', error);
         setIncoming([]);
       });
-  };console.log(incoming,"mujhmeinhai");
+  };
+  console.log(incoming, 'mujhmeinhai');
   const handledeleteincome = async (id) => {
-
     fetch(`http://localhost:8080/bulkstock/delete/${id}`, {
-      method: "DELETE",
-      headers: { "Content-type": "application/json" , 
-       Authorization: `Bearer ${currentUser.accessToken}`},
-     
+      method: 'DELETE',
+      headers: {
+        'Content-type': 'application/json',
+        Authorization: `Bearer ${currentUser.accessToken}`,
+      },
     })
       .then(() => {
-        alert("deleted")
-        console.log("incoming Deleted");
+        alert('deleted');
+        console.log('incoming Deleted');
         window.location.reload();
-        
       })
       .catch((error) => {
-        console.error("Error updating pickup:", error);
+        console.error('Error updating pickup:', error);
       });
-    };
+  };
 
   return (
     <>
@@ -328,37 +339,39 @@ const ViewIncoming = () => {
             </TableHead>
             <TableBody>
               {incoming.length > 0 ? (
-                incoming.map((item) => (
-                  <TableRow key={item.id}>
-                    <TableCell align='right'>{item.description}</TableCell>
-                    <TableCell align='right'>{item.locationName}</TableCell>
-                    <TableCell align='right'>{item.address}</TableCell>
-                    <TableCell align='right'>{item.entityName}</TableCell>
-                    <TableCell align='right'>{item.quantity}</TableCell>
-                    <TableCell align='right'>{item.purchaseOrder}</TableCell>
-                    <TableCell align='right'>{item.date}</TableCell>
-                    <TableCell align='right'>
-                    <Link to={`/updateIncoming/${item.id}`}>
-                      <Button>
-                        <BorderColorSharpIcon
-                          // onClick={() => handleDeleteClick(index)}
-                          style={{ color: 'green' }}
-                        />
-                      </Button>
-                    </Link>
-                    <Button
+                incoming
+                  .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                  .map((item) => (
+                    <TableRow key={item.id}>
+                      <TableCell align='right'>{item.description}</TableCell>
+                      <TableCell align='right'>{item.locationName}</TableCell>
+                      <TableCell align='right'>{item.address}</TableCell>
+                      <TableCell align='right'>{item.entityName}</TableCell>
+                      <TableCell align='right'>{item.quantity}</TableCell>
+                      <TableCell align='right'>{item.purchaseOrder}</TableCell>
+                      <TableCell align='right'>{item.date}</TableCell>
+                      <TableCell align='right'>
+                        <Link to={`/updateIncoming/${item.id}`}>
+                          <Button>
+                            <BorderColorSharpIcon
+                              // onClick={() => handleDeleteClick(index)}
+                              style={{ color: 'green' }}
+                            />
+                          </Button>
+                        </Link>
+                        <Button
                           sx={{ marginLeft: '11px' }}
                           variant='contained'
                           color='secondary'
-                            onClick={() => handledeleteincome(item.id)} 
+                          onClick={() => handledeleteincome(item.id)}
                         >
                           Delete
                         </Button>
-                        </TableCell>
+                      </TableCell>
 
-                    {/* Add more TableCell components for other properties as needed */}
-                  </TableRow>
-                ))
+                      {/* Add more TableCell components for other properties as needed */}
+                    </TableRow>
+                  ))
               ) : (
                 <TableRow>
                   <TableCell colSpan={7} align='center'>
@@ -367,6 +380,31 @@ const ViewIncoming = () => {
                 </TableRow>
               )}
             </TableBody>
+            <TableFooter>
+              <TableRow>
+                <TableCell colSpan={7} align='center'>
+                  <TablePagination
+                    rowsPerPageOptions={[5, 10, 25]}
+                    component='div'
+                    count={incoming.length}
+                    rowsPerPage={rowsPerPage}
+                    page={page}
+                    onPageChange={handleChangePage}
+                    onRowsPerPageChange={handleChangeRowsPerPage}
+                    style={{ fontWeight: 'bolder' }}
+                    labelRowsPerPage={
+                      <span
+                        style={{
+                          fontWeight: 'bold',
+                        }}
+                      >
+                        Rows per page:
+                      </span>
+                    }
+                  />
+                </TableCell>
+              </TableRow>
+            </TableFooter>
           </Table>
         </TableContainer>
         {/* <TablePagination

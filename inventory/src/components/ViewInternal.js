@@ -14,7 +14,9 @@ import {
   TableBody,
   TableCell,
   TableContainer,
+  TableFooter,
   TableHead,
+  TablePagination,
   TableRow,
   Typography,
 } from '@mui/material';
@@ -38,6 +40,8 @@ const ViewInternal = () => {
     dispatch(fetchItem(currentUser.accessToken));
   }, []);
   const state = useSelector((state) => state);
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(5);
   const dispatch = useDispatch();
   const [totalCount, setTotalCount] = useState(0);
   const [internal, setInternal] = useState([]);
@@ -49,6 +53,14 @@ const ViewInternal = () => {
     });
   };
   console.log(formData);
+  const handleChangePage = (event, newPage) => {
+    setPage(newPage);
+  };
+
+  const handleChangeRowsPerPage = (event) => {
+    setRowsPerPage(parseInt(event.target.value, 10));
+    setPage(0);
+  };
   useEffect(() => {
     fetch('http://localhost:8080/internaltransfer/view', {
       headers: {
@@ -262,31 +274,47 @@ const ViewInternal = () => {
 
             <TableBody>
               {internal.length > 0 ? (
-                internal.map((internal) => (
-                  <TableRow key={internal.id}>
-                    <TableCell align='right'>{internal.locationName}</TableCell>
-                    <TableCell align='right'>{internal.SubLocation}</TableCell>
-                    <TableCell align='right'>{internal.locationName}</TableCell>
-                    <TableCell align='right'>{internal.destination}</TableCell>
-                    <TableCell align='right'>{internal.referenceNo}</TableCell>
-                    <TableCell align='right'>{internal.transferDate}</TableCell>
-                    <TableCell align='right'>{internal.description}</TableCell>
-                    <TableCell align='right'>
-                      <Link to={`/internal/createpdf/${internal.id}`}>
-                        <Button
-                          variant='contained'
-                          color='primary'
-                          /*  onClick={() => generatePDF(ciplRow.id, index)} */
-                        >
-                          {<PictureAsPdfIcon />}
-                        </Button>
+                internal
+                  .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                  .map((internal) => (
+                    <TableRow key={internal.id}>
+                      <TableCell align='right'>
+                        {internal.locationName}
+                      </TableCell>
+                      <TableCell align='right'>
+                        {internal.SubLocation}
+                      </TableCell>
+                      <TableCell align='right'>
+                        {internal.locationName}
+                      </TableCell>
+                      <TableCell align='right'>
+                        {internal.destination}
+                      </TableCell>
+                      <TableCell align='right'>
+                        {internal.referenceNo}
+                      </TableCell>
+                      <TableCell align='right'>
+                        {internal.transferDate}
+                      </TableCell>
+                      <TableCell align='right'>
+                        {internal.description}
+                      </TableCell>
+                      <TableCell align='right'>
+                        <Link to={`/internal/createpdf/${internal.id}`}>
+                          <Button
+                            variant='contained'
+                            color='primary'
+                            /*  onClick={() => generatePDF(ciplRow.id, index)} */
+                          >
+                            {<PictureAsPdfIcon />}
+                          </Button>
+                        </Link>
+                      </TableCell>
+                      <Link to={`/updateIt/${internal.id}`}>
+                        <Button color='success'>Update</Button>
                       </Link>
-                    </TableCell>
-                    <Link to={`/updateIt/${internal.id}`}>
-                      <Button color='success'>Update</Button>
-                    </Link>
 
-                    {/* <Link to={`/updateMto/${mto.id}`}>
+                      {/* <Link to={`/updateMto/${mto.id}`}>
                        <Button>
                          <BorderColorSharpIcon
                            // onClick={() => handleDeleteClick(index)}
@@ -294,8 +322,8 @@ const ViewInternal = () => {
                          />
                        </Button>
                      </Link>  */}
-                  </TableRow>
-                ))
+                    </TableRow>
+                  ))
               ) : (
                 <TableRow>
                   <TableCell colSpan={7} align='center'>
@@ -304,17 +332,33 @@ const ViewInternal = () => {
                 </TableRow>
               )}
             </TableBody>
+            <TableFooter>
+              <TableRow>
+                <TableCell colSpan={7} align='center'>
+                  <TablePagination
+                    rowsPerPageOptions={[5, 10, 25]}
+                    component='div'
+                    count={internal.length}
+                    rowsPerPage={rowsPerPage}
+                    page={page}
+                    onPageChange={handleChangePage}
+                    onRowsPerPageChange={handleChangeRowsPerPage}
+                    style={{ fontWeight: 'bolder' }}
+                    labelRowsPerPage={
+                      <span
+                        style={{
+                          fontWeight: 'bold',
+                        }}
+                      >
+                        Rows per page:
+                      </span>
+                    }
+                  />
+                </TableCell>
+              </TableRow>
+            </TableFooter>
           </Table>
         </TableContainer>
-        {/* <TablePagination
-          rowsPerPageOptions={[5, 10, 25]}
-          component='div'
-          count={consignee.length}
-          rowsPerPage={rowsPerPage}
-          page={page}
-          onPageChange={handleChangePage}
-          onRowsPerPageChange={handleChangeRowsPerPage}
-        /> */}
       </Grid>
     </>
   );
