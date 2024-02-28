@@ -19,6 +19,7 @@ import {
   TableBody,
   TablePagination,
   Box,
+  TableFooter,
 } from '@mui/material';
 import { Link } from 'react-router-dom';
 import { fetchlocation } from '../redux/slice/location';
@@ -124,22 +125,23 @@ export const ViewCipl = () => {
   }, []);
 */
   const handledeleteCipl = async (id) => {
-    alert("Deleted Successfully!");
+    alert('Deleted Successfully!');
     console.log(id);
     fetch(`http://localhost:8080/cipl/delete/${id}`, {
-      method: "DELETE",
-      headers: { "Content-type": "application/json" , 
-       Authorization: `Bearer ${currentUser.accessToken}`},
-     
+      method: 'DELETE',
+      headers: {
+        'Content-type': 'application/json',
+        Authorization: `Bearer ${currentUser.accessToken}`,
+      },
     })
       .then(() => {
-        console.log("Pickup Deleted");
+        console.log('Pickup Deleted');
         window.location.reload();
       })
       .catch((error) => {
-        console.error("Error updating pickup:", error);
+        console.error('Error updating pickup:', error);
       });
-    };
+  };
   useEffect(() => {
     fetch('http://localhost:8080/cipl/view', {
       method: 'GET',
@@ -343,13 +345,12 @@ export const ViewCipl = () => {
           Search
         </Button>
       </Card>
-      <Grid sx={{ mt: '33px', width: '100%', overflowX: 'scroll' }}>
+      <Grid sx={{ mt: '33px' }}>
         <TableContainer
           component={Paper}
           sx={{
             borderRadius: '33px',
             borderBottom: '2px solid yellow',
-            width: '110%',
           }}
         >
           <Table sx={{ minWidth: 650 }} aria-label='simple table'>
@@ -433,7 +434,7 @@ export const ViewCipl = () => {
                           sx={{ marginLeft: '11px' }}
                           variant='contained'
                           color='secondary'
-                            onClick={() => handledeleteCipl(ciplRow.id)} 
+                          onClick={() => handledeleteCipl(ciplRow.id)}
                         >
                           Delete
                         </Button>
@@ -442,17 +443,34 @@ export const ViewCipl = () => {
                   ))
                 )}
             </TableBody>
+            <TableFooter>
+              <TableRow>
+                <TableCell colSpan={7} align='center'>
+                  <hr style={{ width: '100%', marginLeft: '100px' }} />
+                  <TablePagination
+                    rowsPerPageOptions={[5, 10, 25]}
+                    component='div'
+                    count={filteredCipl.length}
+                    rowsPerPage={rowsPerPage}
+                    page={page}
+                    onPageChange={handleChangePage}
+                    onRowsPerPageChange={handleChangeRowsPerPage}
+                    style={{ fontWeight: 'bolder' }}
+                    labelRowsPerPage={
+                      <span
+                        style={{
+                          fontWeight: 'bold',
+                        }}
+                      >
+                        Rows per page:
+                      </span>
+                    }
+                  />
+                </TableCell>
+              </TableRow>
+            </TableFooter>
           </Table>
         </TableContainer>
-        <TablePagination
-          rowsPerPageOptions={[5, 10, 25]}
-          component='div'
-          count={cipl.length}
-          rowsPerPage={rowsPerPage}
-          page={page}
-          onPageChange={handleChangePage}
-          onRowsPerPageChange={handleChangeRowsPerPage}
-        />
       </Grid>
     </>
   );

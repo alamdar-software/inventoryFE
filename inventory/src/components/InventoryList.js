@@ -13,6 +13,7 @@ import {
   TableBody,
   TableCell,
   TableContainer,
+  TableFooter,
   TableHead,
   TablePagination,
   TableRow,
@@ -416,16 +417,33 @@ const InventoryList = () => {
                   </TableRow>
                 ))}
             </TableBody>
+            <TableFooter>
+              <TableRow>
+                <TableCell colSpan={7} align='center'>
+                  <hr style={{ width: '100%' }} />
+                  <TablePagination
+                    rowsPerPageOptions={[5, 10, 25]}
+                    component='div'
+                    count={inventoryData.length}
+                    rowsPerPage={rowsPerPage}
+                    page={page}
+                    onPageChange={handleChangePage}
+                    onRowsPerPageChange={handleChangeRowsPerPage}
+                    style={{ fontWeight: 'bolder' }}
+                    labelRowsPerPage={
+                      <span
+                        style={{
+                          fontWeight: 'bold',
+                        }}
+                      >
+                        Rows per page:
+                      </span>
+                    }
+                  />
+                </TableCell>
+              </TableRow>
+            </TableFooter>
           </Table>
-          <TablePagination
-            rowsPerPageOptions={[5, 10, 25]}
-            component='div'
-            count={inventoryData.length}
-            rowsPerPage={rowsPerPage}
-            page={page}
-            onPageChange={handleChangePage}
-            onRowsPerPageChange={handleChangeRowsPerPage}
-          />
         </TableContainer>
       </Grid>
     </>

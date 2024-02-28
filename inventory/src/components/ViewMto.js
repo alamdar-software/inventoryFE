@@ -235,13 +235,13 @@ const ViewMto = () => {
           Search
         </Button>
       </Box>
-      <Grid sx={{ mt: '33px', width: '100%', overflowX: 'scroll' }}>
+      <Grid sx={{ mt: '33px' }}>
         <TableContainer
           component={Paper}
           sx={{
             borderRadius: '33px',
             borderBottom: '2px solid yellow',
-            width: '110%',
+            // width: '110%',
           }}
         >
           <Table sx={{ minWidth: 650 }} aria-label='simple table'>
@@ -321,6 +321,7 @@ const ViewMto = () => {
             <TableFooter>
               <TableRow>
                 <TableCell colSpan={7} align='center'>
+                  {/* <hr style={{ width: '100%', marginLeft: '100px' }} /> */}
                   <TablePagination
                     rowsPerPageOptions={[5, 10, 25]}
                     component='div'
