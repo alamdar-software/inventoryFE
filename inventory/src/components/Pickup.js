@@ -141,6 +141,7 @@ const Pickup = () => {
         console.error('Error updating pickup:', error);
       });
   };
+
   return (
     <>
       <Grid>
