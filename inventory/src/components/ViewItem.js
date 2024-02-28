@@ -9,6 +9,7 @@ import {
   TableCell,
   TableContainer,
   TableHead,
+  TablePagination,
   TableRow,
   Typography,
 } from '@mui/material';
@@ -27,6 +28,16 @@ const ViewItem = () => {
   //   const [itemName, setItemName] = useState();
   //   const [minimumStock, setMinmumStock] = useState();
   //   const [description, setDescription] = useState();
+  const handleChangePage = (event, newPage) => {
+    setPage(newPage);
+  };
+
+  const handleChangeRowsPerPage = (event) => {
+    setRowsPerPage(parseInt(event.target.value, 10));
+    setPage(0);
+  };
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(5);
   const [item, setItem] = useState([]);
   const { currentUser } = useSelector((state) => state.persisted.user);
   useEffect(() => {
@@ -111,41 +122,52 @@ const ViewItem = () => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {item.map((item) => (
-                <TableRow
-                  key={item.name}
-                  sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                >
-                  <TableCell align='right'>{item.itemName}</TableCell>
-                  <TableCell align='right'>{item.description}</TableCell>
-                  <TableCell align='right'>{item.name}</TableCell>
-                  <TableCell align='left'>{item.unitName}</TableCell>
-                  <TableCell align='left'>{item.minimumStock}</TableCell>
-                  <Link to={`/updateItem/${item.id}`}>
-                    <Button sx={{ marginRight: '11px' }} variant='contained'>
-                      View Inventory
-                    </Button>
-                  </Link>
+              {item
+                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                .map((item) => (
+                  <TableRow
+                    key={item.name}
+                    sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                  >
+                    <TableCell align='right'>{item.itemName}</TableCell>
+                    <TableCell align='right'>{item.description}</TableCell>
+                    <TableCell align='right'>{item.name}</TableCell>
+                    <TableCell align='left'>{item.unitName}</TableCell>
+                    <TableCell align='left'>{item.minimumStock}</TableCell>
+                    <Link to={`/updateItem/${item.id}`}>
+                      <Button sx={{ marginRight: '11px' }} variant='contained'>
+                        View Inventory
+                      </Button>
+                    </Link>
 
-                  <Link
-                    sx={{ marginLeft: '11px' }}
-                    to={`/updateItem/${item.id}`}
-                  >
-                    <Button variant='contained'>Update</Button>
-                  </Link>
-                  <Button
-                    sx={{ marginLeft: '11px' }}
-                    variant='contained'
-                    color='secondary'
-                    onClick={() => deleteItem(item.id)}
-                  >
-                    Delete
-                  </Button>
-                </TableRow>
-              ))}
+                    <Link
+                      sx={{ marginLeft: '11px' }}
+                      to={`/updateItem/${item.id}`}
+                    >
+                      <Button variant='contained'>Update</Button>
+                    </Link>
+                    <Button
+                      sx={{ marginLeft: '11px' }}
+                      variant='contained'
+                      color='secondary'
+                      onClick={() => deleteItem(item.id)}
+                    >
+                      Delete
+                    </Button>
+                  </TableRow>
+                ))}
             </TableBody>
           </Table>
         </TableContainer>
+        <TablePagination
+          rowsPerPageOptions={[5, 10, 25]}
+          component='div'
+          count={item.length}
+          rowsPerPage={rowsPerPage}
+          page={page}
+          onPageChange={handleChangePage}
+          onRowsPerPageChange={handleChangeRowsPerPage}
+        />
       </Grid>
     </>
   );
