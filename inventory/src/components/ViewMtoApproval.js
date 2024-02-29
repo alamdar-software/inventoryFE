@@ -14,7 +14,9 @@ import {
   TableBody,
   TableCell,
   TableContainer,
+  TableFooter,
   TableHead,
+  TablePagination,
   TableRow,
   Typography,
 } from '@mui/material';
@@ -41,6 +43,17 @@ const ViewMtoApproval = () => {
   const [FilteredMto, setFilteredMto] = useState([]);
   const [totalCount, setTotalCount] = useState(0);
   const { currentUser } = state.persisted.user;
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(5);
+
+  const handleChangePage = (event, newPage) => {
+    setPage(newPage);
+  };
+
+  const handleChangeRowsPerPage = (event) => {
+    setRowsPerPage(parseInt(event.target.value, 10));
+    setPage(0);
+  };
   useEffect(() => {
     dispatch(fetchlocation(currentUser.accessToken));
     dispatch(fetchItem(currentUser.accessToken));
@@ -247,13 +260,14 @@ const ViewMtoApproval = () => {
           Search
         </Button>
       </Box>
-      <Grid sx={{ mt: '33px', width: '100%', overflowX: 'scroll' }}>
+      {/* <Grid sx={{ mt: '33px', width: '100%', overflowX: 'scroll' }}> */}
+      <Grid sx={{ mt: '33px' }}>
         <TableContainer
           component={Paper}
           sx={{
             borderRadius: '33px',
             borderBottom: '2px solid yellow',
-            width: '110%',
+            // width: '110%',
           }}
         >
           <Table sx={{ minWidth: 650 }} aria-label='simple table'>
@@ -290,40 +304,42 @@ const ViewMtoApproval = () => {
 
             <TableBody>
               {mto.length > 0 ? (
-                mto.map((mto) => (
-                  <TableRow key={mto.id}>
-                    <TableCell align='right'>{mto.locationName}</TableCell>
-                    <TableCell align='right'>{mto.SubLocation}</TableCell>
-                    <TableCell align='right'>{mto.consigneeName}</TableCell>
-                    <TableCell align='right'>{mto.referenceNo}</TableCell>
+                mto
+                  .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                  .map((mto) => (
+                    <TableRow key={mto.id}>
+                      <TableCell align='right'>{mto.locationName}</TableCell>
+                      <TableCell align='right'>{mto.SubLocation}</TableCell>
+                      <TableCell align='right'>{mto.consigneeName}</TableCell>
+                      <TableCell align='right'>{mto.referenceNo}</TableCell>
 
-                    <TableCell align='right'>{mto.transferDate}</TableCell>
-                    <TableCell align='right'>{mto.status}</TableCell>
-                    <TableCell align='right'>{mto.description}</TableCell>
-                    <TableCell align='right'>
-                      <Link to={`/mto/createpdf/${mto.id}`}>
-                        <Button
-                          variant='contained'
-                          color='primary'
-                          /*  onClick={() => generatePDF(ciplRow.id, index)} */
-                        >
-                          {<PictureAsPdfIcon />}
+                      <TableCell align='right'>{mto.transferDate}</TableCell>
+                      <TableCell align='right'>{mto.status}</TableCell>
+                      <TableCell align='right'>{mto.description}</TableCell>
+                      <TableCell align='right'>
+                        <Link to={`/mto/createpdf/${mto.id}`}>
+                          <Button
+                            variant='contained'
+                            color='primary'
+                            /*  onClick={() => generatePDF(ciplRow.id, index)} */
+                          >
+                            {<PictureAsPdfIcon />}
+                          </Button>
+                        </Link>
+                      </TableCell>
+
+                      <Link to={`/updateMtoApproval/${mto.id}`}>
+                        <Button>
+                          <BorderColorSharpIcon
+                            // onClick={() => handleDeleteClick(index)}
+                            style={{ color: 'green' }}
+                          />
                         </Button>
                       </Link>
-                    </TableCell>
 
-                    <Link to={`/updateMtoApproval/${mto.id}`}>
-                      <Button>
-                        <BorderColorSharpIcon
-                          // onClick={() => handleDeleteClick(index)}
-                          style={{ color: 'green' }}
-                        />
-                      </Button>
-                    </Link>
-
-                    {/* Add more TableCell components for other properties as needed */}
-                  </TableRow>
-                ))
+                      {/* Add more TableCell components for other properties as needed */}
+                    </TableRow>
+                  ))
               ) : (
                 <TableRow>
                   <TableCell colSpan={7} align='center'>
@@ -332,6 +348,31 @@ const ViewMtoApproval = () => {
                 </TableRow>
               )}
             </TableBody>
+            <TableFooter>
+              <TableRow>
+                <TableCell colSpan={7} align='center'>
+                  <TablePagination
+                    rowsPerPageOptions={[5, 10, 25]}
+                    component='div'
+                    count={mto.length}
+                    rowsPerPage={rowsPerPage}
+                    page={page}
+                    onPageChange={handleChangePage}
+                    onRowsPerPageChange={handleChangeRowsPerPage}
+                    style={{ fontWeight: 'bolder' }}
+                    labelRowsPerPage={
+                      <span
+                        style={{
+                          fontWeight: 'bold',
+                        }}
+                      >
+                        Rows per page:
+                      </span>
+                    }
+                  />
+                </TableCell>
+              </TableRow>
+            </TableFooter>
           </Table>
         </TableContainer>
         {/* <TablePagination
