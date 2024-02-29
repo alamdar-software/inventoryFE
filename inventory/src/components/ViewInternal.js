@@ -63,7 +63,7 @@ const ViewInternal = () => {
     setPage(0);
   };
   useEffect(() => {
-    fetch('http://localhost:8080/internaltransfer/view', {
+    fetch('http://localhost:8080/internaltransfer/approved', {
       headers: {
         Authorization: `Bearer ${currentUser.accessToken}`,
       },
