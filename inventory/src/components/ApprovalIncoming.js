@@ -14,7 +14,9 @@ import {
   TableBody,
   TableCell,
   TableContainer,
+  TableFooter,
   TableHead,
+  TablePagination,
   TableRow,
   TextField,
   Typography,
@@ -45,6 +47,16 @@ const ApprovalIncoming = () => {
   const [totalCount, setTotalCount] = useState(0);
   const [highlightedRows, setHighlightedRows] = useState([]);
   const { currentUser } = state.persisted.user;
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(5);
+  const handleChangePage = (event, newPage) => {
+    setPage(newPage);
+  };
+
+  const handleChangeRowsPerPage = (event) => {
+    setRowsPerPage(parseInt(event.target.value, 10));
+    setPage(0);
+  };
 
   useEffect(() => {
     dispatch(fetchlocation(currentUser.accessToken));
@@ -273,13 +285,12 @@ const ApprovalIncoming = () => {
           Search
         </Button>
       </Box>
-      <Grid sx={{ mt: '33px', width: '100%', overflowX: 'scroll' }}>
+      <Grid sx={{ mt: '33px' }}>
         <TableContainer
           component={Paper}
           sx={{
             borderRadius: '33px',
             borderBottom: '2px solid yellow',
-            width: '110%',
           }}
         >
           <Table sx={{ minWidth: 650 }} aria-label='simple table'>
@@ -313,29 +324,31 @@ const ApprovalIncoming = () => {
             </TableHead>
             <TableBody>
               {incoming.length > 0 ? (
-                incoming.map((item) => (
-                  <TableRow key={item.id}>
-                    <TableCell align='right'>{item.description}</TableCell>
-                    <TableCell align='right'>{item.locationName}</TableCell>
-                    <TableCell align='right'>{item.address}</TableCell>
-                    <TableCell align='right'>{item.entityName}</TableCell>
-                    <TableCell align='right'>{item.quantity}</TableCell>
-                    <TableCell align='right'>{item.purchaseOrder}</TableCell>
-                    <TableCell align='right'>{item.date}</TableCell>
-                    <TableCell align='right'>{item.status}</TableCell>
+                incoming
+                  .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                  .map((item) => (
+                    <TableRow key={item.id}>
+                      <TableCell align='right'>{item.description}</TableCell>
+                      <TableCell align='right'>{item.locationName}</TableCell>
+                      <TableCell align='right'>{item.address}</TableCell>
+                      <TableCell align='right'>{item.entityName}</TableCell>
+                      <TableCell align='right'>{item.quantity}</TableCell>
+                      <TableCell align='right'>{item.purchaseOrder}</TableCell>
+                      <TableCell align='right'>{item.date}</TableCell>
+                      <TableCell align='right'>{item.status}</TableCell>
 
-                    <Link to={`/updateIncomingApproval/${item.id}`}>
-                      <Button>
-                        <BorderColorSharpIcon
-                          // onClick={() => handleDeleteClick(index)}
-                          style={{ color: 'green' }}
-                        />
-                      </Button>
-                    </Link>
+                      <Link to={`/updateIncomingApproval/${item.id}`}>
+                        <Button>
+                          <BorderColorSharpIcon
+                            // onClick={() => handleDeleteClick(index)}
+                            style={{ color: 'green' }}
+                          />
+                        </Button>
+                      </Link>
 
-                    {/* Add more TableCell components for other properties as needed */}
-                  </TableRow>
-                ))
+                      {/* Add more TableCell components for other properties as needed */}
+                    </TableRow>
+                  ))
               ) : (
                 <TableRow>
                   <TableCell colSpan={7} align='center'>
@@ -344,17 +357,33 @@ const ApprovalIncoming = () => {
                 </TableRow>
               )}
             </TableBody>
+            <TableFooter>
+              <TableRow>
+                <TableCell colSpan={7} align='center'>
+                  <TablePagination
+                    rowsPerPageOptions={[5, 10, 25]}
+                    component='div'
+                    count={incoming.length}
+                    rowsPerPage={rowsPerPage}
+                    page={page}
+                    onPageChange={handleChangePage}
+                    onRowsPerPageChange={handleChangeRowsPerPage}
+                    style={{ fontWeight: 'bolder' }}
+                    labelRowsPerPage={
+                      <span
+                        style={{
+                          fontWeight: 'bold',
+                        }}
+                      >
+                        Rows per page:
+                      </span>
+                    }
+                  />
+                </TableCell>
+              </TableRow>
+            </TableFooter>
           </Table>
         </TableContainer>
-        {/* <TablePagination
-          rowsPerPageOptions={[5, 10, 25]}
-          component='div'
-          count={consignee.length}
-          rowsPerPage={rowsPerPage}
-          page={page}
-          onPageChange={handleChangePage}
-          onRowsPerPageChange={handleChangeRowsPerPage}
-        /> */}
       </Grid>
     </>
   );

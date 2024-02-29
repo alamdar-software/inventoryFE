@@ -19,6 +19,7 @@ import {
   TableBody,
   TablePagination,
   Box,
+  TableFooter,
 } from '@mui/material';
 import { Link } from 'react-router-dom';
 import { fetchlocation } from '../redux/slice/location';
@@ -334,7 +335,7 @@ export const ViewCiplApproval = () => {
             mt: '33px',
             mb: '17px',
             marginLeft: 'auto',
-            marginRight: 'auto',
+            marginleft: 'auto',
             display: 'block',
           }}
           onClick={handleClick}
@@ -348,37 +349,37 @@ export const ViewCiplApproval = () => {
           sx={{
             borderRadius: '33px',
             borderBottom: '2px solid yellow',
-            width: '110%',
+            // width: '110%',
           }}
         >
           <Table sx={{ minWidth: 650 }} aria-label='simple table'>
             <TableHead>
               <TableRow>
-                <TableCell align='right' sx={{ fontWeight: 'bold' }}>
+                <TableCell align='left' sx={{ fontWeight: 'bold' }}>
                   Source Location
                 </TableCell>
-                <TableCell align='right' sx={{ fontWeight: 'bold' }}>
+                <TableCell align='left' sx={{ fontWeight: 'bold' }}>
                   SubLocations
                 </TableCell>
-                <TableCell align='right' sx={{ fontWeight: 'bold' }}>
+                <TableCell align='left' sx={{ fontWeight: 'bold' }}>
                   Shipper
                 </TableCell>
-                <TableCell align='right' sx={{ fontWeight: 'bold' }}>
+                <TableCell align='left' sx={{ fontWeight: 'bold' }}>
                   Consignee
                 </TableCell>
-                <TableCell align='right' sx={{ fontWeight: 'bold' }}>
+                <TableCell align='left' sx={{ fontWeight: 'bold' }}>
                   Ref Number
                 </TableCell>
 
-                <TableCell align='right' sx={{ fontWeight: 'bold' }}>
+                <TableCell align='left' sx={{ fontWeight: 'bold' }}>
                   Transfer Date
                 </TableCell>
 
-                <TableCell align='right' sx={{ fontWeight: 'bold' }}>
+                <TableCell align='left' sx={{ fontWeight: 'bold' }}>
                   Status
                 </TableCell>
 
-                <TableCell align='right' sx={{ fontWeight: 'bold' }}>
+                <TableCell align='left' sx={{ fontWeight: 'bold' }}>
                   Print
                 </TableCell>
                 <TableCell align='left' sx={{ fontWeight: 'bold' }}>
@@ -396,22 +397,18 @@ export const ViewCiplApproval = () => {
                       key={`${ciplRow.id}-${index}`} // Use a unique key for each row
                       sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                     >
-                      <TableCell align='right'>
-                        {ciplRow.locationName}
-                      </TableCell>
-                      <TableCell align='right'>{subLocation}</TableCell>
-                      <TableCell align='right'>{ciplRow.shipperName}</TableCell>
-                      <TableCell align='right'>
+                      <TableCell align='left'>{ciplRow.locationName}</TableCell>
+                      <TableCell align='left'>{subLocation}</TableCell>
+                      <TableCell align='left'>{ciplRow.shipperName}</TableCell>
+                      <TableCell align='left'>
                         {ciplRow.consigneeName}
                       </TableCell>
-                      <TableCell align='right'>
+                      <TableCell align='left'>
                         {ciplRow.consigneeName}
                       </TableCell>
-                      <TableCell align='right'>
-                        {ciplRow.transferDate}
-                      </TableCell>
-                      <TableCell align='right'>{ciplRow.status}</TableCell>
-                      <TableCell align='right'>
+                      <TableCell align='left'>{ciplRow.transferDate}</TableCell>
+                      <TableCell align='left'>{ciplRow.status}</TableCell>
+                      <TableCell align='left'>
                         <Link to={`/cipl/createpdf/${ciplRow.id}`}>
                           <Button
                             variant='contained'
@@ -446,17 +443,34 @@ export const ViewCiplApproval = () => {
                   ))
                 )}
             </TableBody>
+            <TableFooter>
+              <TableRow>
+                <TableCell colSpan={7} align='center'>
+                  <hr style={{ width: '100%', marginLeft: '70px' }} />
+                  <TablePagination
+                    rowsPerPageOptions={[5, 10, 25]}
+                    component='div'
+                    count={cipl.length}
+                    rowsPerPage={rowsPerPage}
+                    page={page}
+                    onPageChange={handleChangePage}
+                    onRowsPerPageChange={handleChangeRowsPerPage}
+                    style={{ fontWeight: 'bolder' }}
+                    labelRowsPerPage={
+                      <span
+                        style={{
+                          fontWeight: 'bold',
+                        }}
+                      >
+                        Rows per page:
+                      </span>
+                    }
+                  />
+                </TableCell>
+              </TableRow>
+            </TableFooter>
           </Table>
         </TableContainer>
-        <TablePagination
-          rowsPerPageOptions={[5, 10, 25]}
-          component='div'
-          count={cipl.length}
-          rowsPerPage={rowsPerPage}
-          page={page}
-          onPageChange={handleChangePage}
-          onRowsPerPageChange={handleChangeRowsPerPage}
-        />
       </Grid>
     </>
   );
