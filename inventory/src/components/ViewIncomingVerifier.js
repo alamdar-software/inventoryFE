@@ -67,8 +67,9 @@ const ViewIncomingVerifier = () => {
         return res.json();
       })
       .then((result) => {
-        if (result && Array.isArray(result)) {
-          setIncoming(result);
+        console.log(result,"jaiiiii");
+        if (result.stockViewList && Array.isArray(result.stockViewList)) {
+          setIncoming(result.stockViewList);
           setTotalCount(result.totalCount||0); // Set the total count
         } else {
           console.error('Invalid data structure:', result);
