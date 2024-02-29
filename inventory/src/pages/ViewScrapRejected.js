@@ -19,6 +19,7 @@ import {
   TableBody,
   TablePagination,
   Box,
+  TableFooter,
 } from '@mui/material';
 import { Link } from 'react-router-dom';
 import { fetchlocation } from '../redux/slice/location';
@@ -419,7 +420,9 @@ const ViewScrappRejected = () => {
                       <TableCell align='right'>{consumedRow.status}</TableCell>
                       <TableCell align='right'>
                         <Box>
-                          <Link to={`/updateScapped-verifier/${consumedRow.id}`}>
+                          <Link
+                            to={`/updateScapped-verifier/${consumedRow.id}`}
+                          >
                             <Button
                               sx={{ marginLeft: '11px', marginTop: '15px' }}
                               variant='contained'
@@ -442,17 +445,33 @@ const ViewScrappRejected = () => {
                   ))
                 )}
             </TableBody>
+            <TableFooter>
+              <TableRow>
+                <TableCell colSpan={7} align='center'>
+                  <TablePagination
+                    rowsPerPageOptions={[5, 10, 25]}
+                    component='div'
+                    count={filteredConsumed.length}
+                    rowsPerPage={rowsPerPage}
+                    page={page}
+                    onPageChange={handleChangePage}
+                    onRowsPerPageChange={handleChangeRowsPerPage}
+                    style={{ fontWeight: 'bolder' }}
+                    labelRowsPerPage={
+                      <span
+                        style={{
+                          fontWeight: 'bold',
+                        }}
+                      >
+                        Rows per page:
+                      </span>
+                    }
+                  />
+                </TableCell>
+              </TableRow>
+            </TableFooter>
           </Table>
         </TableContainer>
-        <TablePagination
-          rowsPerPageOptions={[5, 10, 25]}
-          component='div'
-          count={consumed.length}
-          rowsPerPage={rowsPerPage}
-          page={page}
-          onPageChange={handleChangePage}
-          onRowsPerPageChange={handleChangeRowsPerPage}
-        />
       </Grid>
     </>
   );

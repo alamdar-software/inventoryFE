@@ -14,7 +14,9 @@ import {
   TableBody,
   TableCell,
   TableContainer,
+  TableFooter,
   TableHead,
+  TablePagination,
   TableRow,
   Typography,
 } from '@mui/material';
@@ -42,6 +44,17 @@ const ViewInternalRejected = () => {
   const [totalCount, setTotalCount] = useState(0);
   const [internal, setInternal] = useState([]);
   const { currentUser } = state.persisted.user;
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(5);
+  const handleChangePage = (event, newPage) => {
+    setPage(newPage);
+  };
+
+  const handleChangeRowsPerPage = (event) => {
+    setRowsPerPage(parseInt(event.target.value, 10));
+    setPage(0);
+  };
+
   const handleDateChange = (transferDate) => {
     setformData({
       ...formData,
@@ -64,7 +77,7 @@ const ViewInternalRejected = () => {
       .then((result) => {
         if (result && Array.isArray(result)) {
           setInternal(result);
-          setTotalCount(result.totalCount||0);
+          setTotalCount(result.totalCount || 0);
         } else {
           console.error('Invalid data structure:', result);
           // Handle the situation where the expected data is not available
@@ -218,13 +231,13 @@ const ViewInternalRejected = () => {
           Search
         </Button>
       </Box>
-      <Grid sx={{ mt: '33px', width: '100%', overflowX: 'scroll' }}>
+      <Grid sx={{ mt: '33px' }}>
         <TableContainer
           component={Paper}
           sx={{
             borderRadius: '33px',
             borderBottom: '2px solid yellow',
-            width: '110%',
+            // width: '110%',
           }}
         >
           <Table sx={{ minWidth: 650 }} aria-label='simple table'>
@@ -268,32 +281,48 @@ const ViewInternalRejected = () => {
 
             <TableBody>
               {internal.length > 0 ? (
-                internal.map((internal) => (
-                  <TableRow key={internal.id}>
-                    <TableCell align='right'>{internal.locationName}</TableCell>
-                    <TableCell align='right'>{internal.SubLocation}</TableCell>
-                    <TableCell align='right'>{internal.locationName}</TableCell>
-                    <TableCell align='right'>{internal.destination}</TableCell>
-                    <TableCell align='right'>{internal.referenceNo}</TableCell>
-                    <TableCell align='right'>{internal.transferDate}</TableCell>
-                    <TableCell align='right'>{internal.description}</TableCell>
-                    <TableCell align='right'>{internal.status}</TableCell>
-                    <TableCell align='right'>
-                      <Link to={`/internal/createpdf/${internal.id}`}>
-                        <Button
-                          variant='contained'
-                          color='primary'
-                          /*  onClick={() => generatePDF(ciplRow.id, index)} */
-                        >
-                          {<PictureAsPdfIcon />}
-                        </Button>
+                internal
+                  .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                  .map((internal) => (
+                    <TableRow key={internal.id}>
+                      <TableCell align='right'>
+                        {internal.locationName}
+                      </TableCell>
+                      <TableCell align='right'>
+                        {internal.SubLocation}
+                      </TableCell>
+                      <TableCell align='right'>
+                        {internal.locationName}
+                      </TableCell>
+                      <TableCell align='right'>
+                        {internal.destination}
+                      </TableCell>
+                      <TableCell align='right'>
+                        {internal.referenceNo}
+                      </TableCell>
+                      <TableCell align='right'>
+                        {internal.transferDate}
+                      </TableCell>
+                      <TableCell align='right'>
+                        {internal.description}
+                      </TableCell>
+                      <TableCell align='right'>{internal.status}</TableCell>
+                      <TableCell align='right'>
+                        <Link to={`/internal/createpdf/${internal.id}`}>
+                          <Button
+                            variant='contained'
+                            color='primary'
+                            /*  onClick={() => generatePDF(ciplRow.id, index)} */
+                          >
+                            {<PictureAsPdfIcon />}
+                          </Button>
+                        </Link>
+                      </TableCell>
+                      <Link to={`/updateItVerifier/${internal.id}`}>
+                        <Button color='success'>Update</Button>
                       </Link>
-                    </TableCell>
-                    <Link to={`/updateItVerifier/${internal.id}`}>
-                      <Button color='success'>Update</Button>
-                    </Link>
 
-                    {/* <Link to={`/updateMto/${mto.id}`}>
+                      {/* <Link to={`/updateMto/${mto.id}`}>
                        <Button>
                          <BorderColorSharpIcon
                            // onClick={() => handleDeleteClick(index)}
@@ -301,8 +330,8 @@ const ViewInternalRejected = () => {
                          />
                        </Button>
                      </Link>  */}
-                  </TableRow>
-                ))
+                    </TableRow>
+                  ))
               ) : (
                 <TableRow>
                   <TableCell colSpan={7} align='center'>
@@ -311,17 +340,33 @@ const ViewInternalRejected = () => {
                 </TableRow>
               )}
             </TableBody>
+            <TableFooter>
+              <TableRow>
+                <TableCell colSpan={7} align='center'>
+                  <TablePagination
+                    rowsPerPageOptions={[5, 10, 25]}
+                    component='div'
+                    count={internal.length}
+                    rowsPerPage={rowsPerPage}
+                    page={page}
+                    onPageChange={handleChangePage}
+                    onRowsPerPageChange={handleChangeRowsPerPage}
+                    style={{ fontWeight: 'bolder' }}
+                    labelRowsPerPage={
+                      <span
+                        style={{
+                          fontWeight: 'bold',
+                        }}
+                      >
+                        Rows per page:
+                      </span>
+                    }
+                  />
+                </TableCell>
+              </TableRow>
+            </TableFooter>
           </Table>
         </TableContainer>
-        {/* <TablePagination
-          rowsPerPageOptions={[5, 10, 25]}
-          component='div'
-          count={consignee.length}
-          rowsPerPage={rowsPerPage}
-          page={page}
-          onPageChange={handleChangePage}
-          onRowsPerPageChange={handleChangeRowsPerPage}
-        /> */}
       </Grid>
     </>
   );
