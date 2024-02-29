@@ -78,9 +78,10 @@ const ViewIncomingVerifier = () => {
         return res.json();
       })
       .then((result) => {
-        if (result && Array.isArray(result)) {
-          setIncoming(result);
-          setTotalCount(result.totalCount || 0); // Set the total count
+        console.log(result,"jaiiiii");
+        if (result.stockViewList && Array.isArray(result.stockViewList)) {
+          setIncoming(result.stockViewList);
+          setTotalCount(result.totalCount||0); // Set the total count
         } else {
           console.error('Invalid data structure:', result);
           // Handle the situation where the expected data is not available
@@ -325,6 +326,9 @@ const ViewIncomingVerifier = () => {
                   Purchase Date
                 </TableCell>
                 <TableCell align='right' sx={{ fontWeight: 'bold' }}>
+                  Incoming Stock
+                </TableCell>
+                <TableCell align='right' sx={{ fontWeight: 'bold' }}>
                   Status
                 </TableCell>
               </TableRow>
@@ -344,6 +348,7 @@ const ViewIncomingVerifier = () => {
                       <TableCell align='right'>{item.quantity}</TableCell>
                       <TableCell align='right'>{item.purchaseOrder}</TableCell>
                       <TableCell align='right'>{item.date}</TableCell>
+                      <TableCell align='right'>{item.dataType}</TableCell>
                       <TableCell align='right'>{item.status}</TableCell>
 
                       <Link to={`/updateIncoming-verifier/${item.id}`}>

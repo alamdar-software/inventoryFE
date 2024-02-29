@@ -37,14 +37,14 @@ const UpdateIncomingVerifier = () => {
   }, []);
 
   useEffect(() => {
-    fetch(`http://localhost:8080/bulkstock/get/${id}`,{
+    fetch(`http://localhost:8080/bulkstock/getBoth/${id}`,{
       headers: {
         Authorization: `Bearer ${currentUser.accessToken}`,
       },
     })
       .then((res) => res.json())
       .then((result) => {
-        console.log(result);
+        console.log(result,"bulkiiiiiiiii");
         setIncoming(result);
       });
   }, []);

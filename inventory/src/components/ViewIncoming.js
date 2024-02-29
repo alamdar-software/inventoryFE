@@ -67,7 +67,7 @@ const ViewIncoming = () => {
   }, []);
 
   useEffect(() => {
-    fetch('http://localhost:8080/bulkstock/approved', {
+    fetch('http://localhost:8080/bulkstock/view', {
       headers: {
         Authorization: `Bearer ${currentUser.accessToken}`,
       },
@@ -333,6 +333,9 @@ const ViewIncoming = () => {
                   Purchase Date
                 </TableCell>
                 <TableCell align='right' sx={{ fontWeight: 'bold' }}>
+                  Incoming Stock
+                </TableCell>
+                <TableCell align='right' sx={{ fontWeight: 'bold' }}>
                   Action
                 </TableCell>
               </TableRow>
@@ -350,6 +353,7 @@ const ViewIncoming = () => {
                       <TableCell align='right'>{item.quantity}</TableCell>
                       <TableCell align='right'>{item.purchaseOrder}</TableCell>
                       <TableCell align='right'>{item.date}</TableCell>
+                      <TableCell align='right'>{item.dataType}</TableCell>
                       <TableCell align='right'>
                         <Link to={`/updateIncoming/${item.id}`}>
                           <Button>
