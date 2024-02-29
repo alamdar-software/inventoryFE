@@ -41,6 +41,7 @@ const ViewInternalApproval = () => {
   const dispatch = useDispatch();
   const [totalCount, setTotalCount] = useState(0);
   const [internal, setInternal] = useState([]);
+  const [filteredIt, setFilteredIt] = useState([]);
   const { currentUser } = state.persisted.user;
   const handleDateChange = (transferDate) => {
     setformData({
@@ -49,10 +50,41 @@ const ViewInternalApproval = () => {
     });
   };
   console.log(formData);
+  // useEffect(() => {
+  //   fetch('http://localhost:8080/internaltransfer/verified', {
+  //     headers: {
+  //       Authorization: `Bearer ${currentUser.accessToken}`,
+  //     },
+  //   })
+  //     .then((res) => {
+  //       if (!res.ok) {
+  //         throw new Error(`HTTP error! Status: ${res.status}`);
+  //       }
+  //       return res.json();
+  //     })
+  //     .then((result) => {
+  //       if (result.mtoList && Array.isArray(result.mtoList)) {
+  //         setInternal(result.mtoList);
+  //         setTotalCount(result.totalCount);
+  //       } else {
+  //         console.error('Invalid data structure:', result);
+  //         // Handle the situation where the expected data is not available
+  //         setInternal([]);
+  //       }
+  //     })
+  //     .catch((error) => {
+  //       console.error('Error fetching internal transfer data:', error);
+  //       // Handle the error by setting an empty array or showing an error message
+  //       setInternal([]);
+  //     });
+  // }, []);
+
   useEffect(() => {
     fetch('http://localhost:8080/internaltransfer/verified', {
+      method: 'GET',
       headers: {
         Authorization: `Bearer ${currentUser.accessToken}`,
+        'Content-Type': 'application/json',
       },
     })
       .then((res) => {
@@ -62,19 +94,12 @@ const ViewInternalApproval = () => {
         return res.json();
       })
       .then((result) => {
-        if (result.mtoList && Array.isArray(result.mtoList)) {
-          setInternal(result.mtoList);
-          setTotalCount(result.totalCount);
-        } else {
-          console.error('Invalid data structure:', result);
-          // Handle the situation where the expected data is not available
-          setInternal([]);
-        }
+        console.log(result);
+        setInternal(result);
+        setFilteredIt(result);
       })
       .catch((error) => {
-        console.error('Error fetching internal transfer data:', error);
-        // Handle the error by setting an empty array or showing an error message
-        setInternal([]);
+        console.error('Error fetching pickup data:', error);
       });
   }, []);
 

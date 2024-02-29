@@ -141,7 +141,7 @@ const ViewConsumeApproval = () => {
       });
     }; */
   useEffect(() => {
-    fetch('http://localhost:8080/consumeditem/view', {
+    fetch('http://localhost:8080/consumeditem/verified', {
       headers: {
         Authorization: `Bearer ${currentUser?.accessToken}`,
       },
