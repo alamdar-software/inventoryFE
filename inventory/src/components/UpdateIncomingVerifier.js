@@ -27,7 +27,7 @@ const UpdateIncomingVerifier = () => {
   const state = useSelector((state) => state);
   const { currentUser } = state.persisted.user;
   const dispatch = useDispatch();
-  let navigate = useNavigate();
+  const navigate = useNavigate();
 
   const { id } = useParams();
 
@@ -64,6 +64,8 @@ const UpdateIncomingVerifier = () => {
     })
       .then(() => {
         console.log('Incoming Updated');
+        navigate("incoming-created")
+
        
       })
       .catch((error) => {

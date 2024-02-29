@@ -30,7 +30,7 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
-
+import EditIcon from '@mui/icons-material/Edit';
 export const ViewCipl = () => {
   const dispatch = useDispatch();
   const state = useSelector((state) => state);
@@ -143,7 +143,7 @@ export const ViewCipl = () => {
       });
   };
   useEffect(() => {
-    fetch('http://localhost:8080/cipl/view', {
+    fetch('http://localhost:8080/cipl/approved', {
       method: 'GET',
       headers: {
         Authorization: `Bearer ${currentUser.accessToken}`,
@@ -375,6 +375,9 @@ export const ViewCipl = () => {
                 <TableCell align='right' sx={{ fontWeight: 'bold' }}>
                   Transfer Date
                 </TableCell>
+                <TableCell align='right' sx={{ fontWeight: 'bold' }}>
+                  Status
+                </TableCell>
 
                 <TableCell align='right' sx={{ fontWeight: 'bold' }}>
                   Print
@@ -409,6 +412,9 @@ export const ViewCipl = () => {
                         {ciplRow.transferDate}
                       </TableCell>
                       <TableCell align='right'>
+                        {ciplRow.status}
+                      </TableCell>
+                      <TableCell align='right'>
                         <Link to={`/cipl/createpdf/${ciplRow.id}`}>
                           <Button
                             variant='contained'
@@ -422,12 +428,8 @@ export const ViewCipl = () => {
 
                       <Box>
                         <Link to={`/updateCipl/${ciplRow.id}`}>
-                          <Button
-                            sx={{ marginLeft: '11px', marginTop: '10px' }}
-                            variant='contained'
-                          >
-                            Update
-                          </Button>
+                          <EditIcon/>
+                          
                         </Link>
 
                         <Button

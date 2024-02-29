@@ -74,7 +74,7 @@ const UpdateMtoVerifier = () => {
   // console.log(subLocations);
   // console.log(formData);
 
-  let navigate = useNavigate();
+  const navigate = useNavigate();
 
   const { id } = useParams();
 
@@ -111,7 +111,7 @@ const UpdateMtoVerifier = () => {
     })
       .then(() => {
         console.log('Cipl Updated');
-        // navigate('/consignee');
+        navigate('/mto-created');
       })
       .catch((error) => {
         console.error('Error updating consignee:', error);

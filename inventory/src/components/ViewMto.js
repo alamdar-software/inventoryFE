@@ -60,7 +60,7 @@ const ViewMto = () => {
 
   useEffect(() => {
     console.log(currentUser.accessToken, 'heyyyy');
-    fetch('http://localhost:8080/mto/view', {
+    fetch('http://localhost:8080/mto/approved', {
       headers: {
         Authorization: `Bearer ${currentUser.accessToken}`,
       },

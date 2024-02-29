@@ -116,7 +116,7 @@ const UpdateCiplVerifier = () => {
     })
       .then(() => {
         console.log('Cipl Updated');
-        // navigate('/consignee');
+        navigate('/cipl-created');
       })
       .catch((error) => {
         console.error('Error updating consignee:', error);
