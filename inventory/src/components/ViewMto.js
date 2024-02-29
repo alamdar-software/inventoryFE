@@ -119,6 +119,25 @@ const ViewMto = () => {
       transferDate: transferDate.format('YYYY-MM-DD'),
     });
   };
+
+  const handledeleteMto = async (id) => {
+    alert('Deleted Successfully!');
+    console.log(id);
+    fetch(`http://localhost:8080/mto/delete/${id}`, {
+      method: 'DELETE',
+      headers: {
+        'Content-type': 'application/json',
+        Authorization: `Bearer ${currentUser.accessToken}`,
+      },
+    })
+      .then(() => {
+        console.log('Pickup Deleted');
+        window.location.reload();
+      })
+      .catch((error) => {
+        console.error('Error updating pickup:', error);
+      });
+  };
   console.log(formData);
   return (
     <>
@@ -235,13 +254,13 @@ const ViewMto = () => {
           Search
         </Button>
       </Box>
-      <Grid sx={{ mt: '33px', width: '100%', overflowX: 'scroll' }}>
+      <Grid sx={{ mt: '33px' }}>
         <TableContainer
           component={Paper}
           sx={{
             borderRadius: '33px',
             borderBottom: '2px solid yellow',
-            width: '110%',
+            // width: '110%',
           }}
         >
           <Table sx={{ minWidth: 650 }} aria-label='simple table'>
@@ -298,14 +317,15 @@ const ViewMto = () => {
                         </Link>
                       </TableCell>
 
-                      <Link to={`/updateMto/${mto.id}`}>
-                        <Button>
-                          <BorderColorSharpIcon
-                            // onClick={() => handleDeleteClick(index)}
-                            style={{ color: 'green' }}
-                          />
-                        </Button>
-                      </Link>
+                      <Link to={`/updateMto/${mto.id}`}></Link>
+                      <Button
+                        sx={{ marginLeft: '11px', mt: '11px' }}
+                        variant='contained'
+                        color='secondary'
+                        onClick={() => handledeleteMto(mto.id)}
+                      >
+                        Delete
+                      </Button>
 
                       {/* Add more TableCell components for other properties as needed */}
                     </TableRow>
@@ -321,6 +341,7 @@ const ViewMto = () => {
             <TableFooter>
               <TableRow>
                 <TableCell colSpan={7} align='center'>
+                  {/* <hr style={{ width: '100%', marginLeft: '100px' }} /> */}
                   <TablePagination
                     rowsPerPageOptions={[5, 10, 25]}
                     component='div'

@@ -141,6 +141,7 @@ const Pickup = () => {
         console.error('Error updating pickup:', error);
       });
   };
+
   return (
     <>
       <Grid>
@@ -315,6 +316,7 @@ const Pickup = () => {
             <TableFooter>
               <TableRow>
                 <TableCell colSpan={7} align='center'>
+                  <hr style={{ width: '100%' }} />
                   <TablePagination
                     rowsPerPageOptions={[5, 10, 25]}
                     component='div'

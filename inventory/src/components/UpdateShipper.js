@@ -55,7 +55,7 @@ export const UpdateShipper = () => {
       body: JSON.stringify(shipperList),
     })
       .then(() => {
-        console.log('Class Updated');
+        console.log('Shipper Updated');
         navigate('/shipper');
       })
       .catch((error) => {
