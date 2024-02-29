@@ -14,7 +14,9 @@ import {
   TableBody,
   TableCell,
   TableContainer,
+  TableFooter,
   TableHead,
+  TablePagination,
   TableRow,
   Typography,
 } from '@mui/material';
@@ -40,6 +42,17 @@ const ViewMtoVerified = () => {
   const [mto, setMto] = useState([]);
   const [totalCount, setTotalCount] = useState(0);
   const { currentUser } = state.persisted.user;
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(5);
+
+  const handleChangePage = (event, newPage) => {
+    setPage(newPage);
+  };
+
+  const handleChangeRowsPerPage = (event) => {
+    setRowsPerPage(parseInt(event.target.value, 10));
+    setPage(0);
+  };
   useEffect(() => {
     dispatch(fetchlocation(currentUser.accessToken));
     dispatch(fetchItem(currentUser.accessToken));
@@ -61,7 +74,7 @@ const ViewMtoVerified = () => {
       .then((result) => {
         if (result && Array.isArray(result)) {
           setMto(result);
-          setTotalCount(result.totalCount||0);
+          setTotalCount(result.totalCount || 0);
         } else {
           console.error('Invalid data structure:', result);
           // Handle the situation where the expected data is not available
@@ -265,40 +278,42 @@ const ViewMtoVerified = () => {
 
             <TableBody>
               {mto.length > 0 ? (
-                mto.map((mto) => (
-                  <TableRow key={mto.id}>
-                    <TableCell align='right'>{mto.locationName}</TableCell>
-                    <TableCell align='right'>{mto.SubLocation}</TableCell>
-                    <TableCell align='right'>{mto.consigneeName}</TableCell>
-                    <TableCell align='right'>{mto.referenceNo}</TableCell>
+                mto
+                  .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                  .map((mto) => (
+                    <TableRow key={mto.id}>
+                      <TableCell align='right'>{mto.locationName}</TableCell>
+                      <TableCell align='right'>{mto.SubLocation}</TableCell>
+                      <TableCell align='right'>{mto.consigneeName}</TableCell>
+                      <TableCell align='right'>{mto.referenceNo}</TableCell>
 
-                    <TableCell align='right'>{mto.transferDate}</TableCell>
-                    <TableCell align='right'>{mto.description}</TableCell>
-                    <TableCell align='right'>{mto.status}</TableCell>
-                    <TableCell align='right'>
-                      <Link to={`/mto/createpdf/${mto.id}`}>
-                        <Button
-                          variant='contained'
-                          color='primary'
-                          /*  onClick={() => generatePDF(ciplRow.id, index)} */
-                        >
-                          {<PictureAsPdfIcon />}
+                      <TableCell align='right'>{mto.transferDate}</TableCell>
+                      <TableCell align='right'>{mto.description}</TableCell>
+                      <TableCell align='right'>{mto.status}</TableCell>
+                      <TableCell align='right'>
+                        <Link to={`/mto/createpdf/${mto.id}`}>
+                          <Button
+                            variant='contained'
+                            color='primary'
+                            /*  onClick={() => generatePDF(ciplRow.id, index)} */
+                          >
+                            {<PictureAsPdfIcon />}
+                          </Button>
+                        </Link>
+                      </TableCell>
+
+                      <Link to={`/updateMtoVerified/${mto.id}`}>
+                        <Button>
+                          <BorderColorSharpIcon
+                            // onClick={() => handleDeleteClick(index)}
+                            style={{ color: 'green' }}
+                          />
                         </Button>
                       </Link>
-                    </TableCell>
 
-                    <Link to={`/updateMtoVerified/${mto.id}`}>
-                      <Button>
-                        <BorderColorSharpIcon
-                          // onClick={() => handleDeleteClick(index)}
-                          style={{ color: 'green' }}
-                        />
-                      </Button>
-                    </Link>
-
-                    {/* Add more TableCell components for other properties as needed */}
-                  </TableRow>
-                ))
+                      {/* Add more TableCell components for other properties as needed */}
+                    </TableRow>
+                  ))
               ) : (
                 <TableRow>
                   <TableCell colSpan={7} align='center'>
@@ -307,6 +322,32 @@ const ViewMtoVerified = () => {
                 </TableRow>
               )}
             </TableBody>
+            <TableFooter>
+              <TableRow>
+                <TableCell colSpan={7} align='center'>
+                  <hr style={{ width: '100%' }} />
+                  <TablePagination
+                    rowsPerPageOptions={[5, 10, 25]}
+                    component='div'
+                    count={mto.length}
+                    rowsPerPage={rowsPerPage}
+                    page={page}
+                    onPageChange={handleChangePage}
+                    onRowsPerPageChange={handleChangeRowsPerPage}
+                    style={{ fontWeight: 'bolder' }}
+                    labelRowsPerPage={
+                      <span
+                        style={{
+                          fontWeight: 'bold',
+                        }}
+                      >
+                        Rows per page:
+                      </span>
+                    }
+                  />
+                </TableCell>
+              </TableRow>
+            </TableFooter>
           </Table>
         </TableContainer>
         {/* <TablePagination

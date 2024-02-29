@@ -14,7 +14,9 @@ import {
   TableBody,
   TableCell,
   TableContainer,
+  TableFooter,
   TableHead,
+  TablePagination,
   TableRow,
   TextField,
   Typography,
@@ -52,7 +54,16 @@ const ViewIncomingVerifier = () => {
     dispatch(fetchCurrency(currentUser.accessToken));
     dispatch(fetchentity(currentUser.accessToken));
   }, []);
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(5);
+  const handleChangePage = (event, newPage) => {
+    setPage(newPage);
+  };
 
+  const handleChangeRowsPerPage = (event) => {
+    setRowsPerPage(parseInt(event.target.value, 10));
+    setPage(0);
+  };
 
   useEffect(() => {
     fetch('http://localhost:8080/bulkstock/created', {
@@ -69,7 +80,7 @@ const ViewIncomingVerifier = () => {
       .then((result) => {
         if (result && Array.isArray(result)) {
           setIncoming(result);
-          setTotalCount(result.totalCount||0); // Set the total count
+          setTotalCount(result.totalCount || 0); // Set the total count
         } else {
           console.error('Invalid data structure:', result);
           // Handle the situation where the expected data is not available
@@ -125,7 +136,7 @@ const ViewIncomingVerifier = () => {
         setIncoming([]);
       });
   };
-  console.log(incoming,"puuuja");
+  console.log(incoming, 'puuuja');
 
   return (
     <>
@@ -320,29 +331,33 @@ const ViewIncomingVerifier = () => {
             </TableHead>
             <TableBody>
               {incoming.length > 0 ? (
-                incoming.map((item) => (
-                  <TableRow key={item.id}>
-                    <TableCell align='right'>{item.description}</TableCell>
-                    <TableCell align='right'>{item.locationName}</TableCell>
-                    <TableCell align='right'>{item.address.address||item.address}</TableCell>
-                    <TableCell align='right'>{item.entityName}</TableCell>
-                    <TableCell align='right'>{item.quantity}</TableCell>
-                    <TableCell align='right'>{item.purchaseOrder}</TableCell>
-                    <TableCell align='right'>{item.date}</TableCell>
-                    <TableCell align='right'>{item.status}</TableCell>
+                incoming
+                  .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                  .map((item) => (
+                    <TableRow key={item.id}>
+                      <TableCell align='right'>{item.description}</TableCell>
+                      <TableCell align='right'>{item.locationName}</TableCell>
+                      <TableCell align='right'>
+                        {item.address.address || item.address}
+                      </TableCell>
+                      <TableCell align='right'>{item.entityName}</TableCell>
+                      <TableCell align='right'>{item.quantity}</TableCell>
+                      <TableCell align='right'>{item.purchaseOrder}</TableCell>
+                      <TableCell align='right'>{item.date}</TableCell>
+                      <TableCell align='right'>{item.status}</TableCell>
 
-                    <Link to={`/updateIncoming-verifier/${item.id}`}>
-                      <Button>
-                        <BorderColorSharpIcon
-                          // onClick={() => handleDeleteClick(index)}
-                          style={{ color: 'green' }}
-                        />
-                      </Button>
-                    </Link>
+                      <Link to={`/updateIncoming-verifier/${item.id}`}>
+                        <Button>
+                          <BorderColorSharpIcon
+                            // onClick={() => handleDeleteClick(index)}
+                            style={{ color: 'green' }}
+                          />
+                        </Button>
+                      </Link>
 
-                    {/* Add more TableCell components for other properties as needed */}
-                  </TableRow>
-                ))
+                      {/* Add more TableCell components for other properties as needed */}
+                    </TableRow>
+                  ))
               ) : (
                 <TableRow>
                   <TableCell colSpan={7} align='center'>
@@ -351,6 +366,31 @@ const ViewIncomingVerifier = () => {
                 </TableRow>
               )}
             </TableBody>
+            <TableFooter>
+              <TableRow>
+                <TableCell colSpan={7} align='center'>
+                  <TablePagination
+                    rowsPerPageOptions={[5, 10, 25]}
+                    component='div'
+                    count={incoming.length}
+                    rowsPerPage={rowsPerPage}
+                    page={page}
+                    onPageChange={handleChangePage}
+                    onRowsPerPageChange={handleChangeRowsPerPage}
+                    style={{ fontWeight: 'bolder' }}
+                    labelRowsPerPage={
+                      <span
+                        style={{
+                          fontWeight: 'bold',
+                        }}
+                      >
+                        Rows per page:
+                      </span>
+                    }
+                  />
+                </TableCell>
+              </TableRow>
+            </TableFooter>
           </Table>
         </TableContainer>
         {/* <TablePagination
