@@ -50,7 +50,7 @@ const ViewInternalApproval = () => {
   };
   console.log(formData);
   useEffect(() => {
-    fetch('http://localhost:8080/internaltransfer/view', {
+    fetch('http://localhost:8080/internaltransfer/verified', {
       headers: {
         Authorization: `Bearer ${currentUser.accessToken}`,
       },
