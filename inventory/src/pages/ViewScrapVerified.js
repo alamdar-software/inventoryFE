@@ -19,6 +19,7 @@ import {
   TableBody,
   TablePagination,
   Box,
+  TableFooter,
 } from '@mui/material';
 import { Link } from 'react-router-dom';
 import { fetchlocation } from '../redux/slice/location';
@@ -419,7 +420,9 @@ const ViewScrappVerified = () => {
                       <TableCell align='right'>{consumedRow.status}</TableCell>
                       <TableCell align='right'>
                         <Box>
-                          <Link to={`/updateScapped-verifier/${consumedRow.id}`}>
+                          <Link
+                            to={`/updateScapped-verifier/${consumedRow.id}`}
+                          >
                             <Button
                               sx={{ marginLeft: '11px', marginTop: '15px' }}
                               variant='contained'
@@ -442,9 +445,35 @@ const ViewScrappVerified = () => {
                   ))
                 )}
             </TableBody>
+            <TableFooter>
+              <TableRow>
+                <TableCell colSpan={7} align='center'>
+                  <hr style={{ width: '100%' }} />
+                  <TablePagination
+                    rowsPerPageOptions={[5, 10, 25]}
+                    component='div'
+                    count={consumed.length}
+                    rowsPerPage={rowsPerPage}
+                    page={page}
+                    onPageChange={handleChangePage}
+                    onRowsPerPageChange={handleChangeRowsPerPage}
+                    style={{ fontWeight: 'bolder' }}
+                    labelRowsPerPage={
+                      <span
+                        style={{
+                          fontWeight: 'bold',
+                        }}
+                      >
+                        Rows per page:
+                      </span>
+                    }
+                  />
+                </TableCell>
+              </TableRow>
+            </TableFooter>
           </Table>
         </TableContainer>
-        <TablePagination
+        {/* <TablePagination
           rowsPerPageOptions={[5, 10, 25]}
           component='div'
           count={consumed.length}
@@ -452,7 +481,7 @@ const ViewScrappVerified = () => {
           page={page}
           onPageChange={handleChangePage}
           onRowsPerPageChange={handleChangeRowsPerPage}
-        />
+        /> */}
       </Grid>
     </>
   );

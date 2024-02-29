@@ -14,7 +14,9 @@ import {
   TableBody,
   TableCell,
   TableContainer,
+  TableFooter,
   TableHead,
+  TablePagination,
   TableRow,
   Typography,
 } from '@mui/material';
@@ -42,6 +44,17 @@ const ViewInternalVerified = () => {
   const [totalCount, setTotalCount] = useState(0);
   const [internal, setInternal] = useState([]);
   const { currentUser } = state.persisted.user;
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(5);
+
+  const handleChangePage = (event, newPage) => {
+    setPage(newPage);
+  };
+
+  const handleChangeRowsPerPage = (event) => {
+    setRowsPerPage(parseInt(event.target.value, 10));
+    setPage(0);
+  };
   const handleDateChange = (transferDate) => {
     setformData({
       ...formData,
@@ -64,7 +77,7 @@ const ViewInternalVerified = () => {
       .then((result) => {
         if (result && Array.isArray(result)) {
           setInternal(result);
-          setTotalCount(result.totalCount||0);
+          setTotalCount(result.totalCount || 0);
         } else {
           console.error('Invalid data structure:', result);
           // Handle the situation where the expected data is not available
@@ -260,7 +273,6 @@ const ViewInternalVerified = () => {
                 <TableCell align='right' sx={{ fontWeight: 'bold' }}>
                   Print
                 </TableCell>
-               
               </TableRow>
             </TableHead>
 
@@ -287,7 +299,6 @@ const ViewInternalVerified = () => {
                         </Button>
                       </Link>
                     </TableCell>
-                   
 
                     {/* <Link to={`/updateMto/${mto.id}`}>
                        <Button>
@@ -307,6 +318,32 @@ const ViewInternalVerified = () => {
                 </TableRow>
               )}
             </TableBody>
+            <TableFooter>
+              <TableRow>
+                <TableCell colSpan={7} align='center'>
+                  <hr style={{ width: '100%' }} />
+                  <TablePagination
+                    rowsPerPageOptions={[5, 10, 25]}
+                    component='div'
+                    count={internal.length}
+                    rowsPerPage={rowsPerPage}
+                    page={page}
+                    onPageChange={handleChangePage}
+                    onRowsPerPageChange={handleChangeRowsPerPage}
+                    style={{ fontWeight: 'bolder' }}
+                    labelRowsPerPage={
+                      <span
+                        style={{
+                          fontWeight: 'bold',
+                        }}
+                      >
+                        Rows per page:
+                      </span>
+                    }
+                  />
+                </TableCell>
+              </TableRow>
+            </TableFooter>
           </Table>
         </TableContainer>
         {/* <TablePagination

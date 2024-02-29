@@ -14,7 +14,9 @@ import {
   TableBody,
   TableCell,
   TableContainer,
+  TableFooter,
   TableHead,
+  TablePagination,
   TableRow,
   TextField,
   Typography,
@@ -46,6 +48,17 @@ const ViewIncomingVerified = () => {
   const [highlightedRows, setHighlightedRows] = useState([]);
   const { currentUser } = state.persisted.user;
 
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(5);
+  const handleChangePage = (event, newPage) => {
+    setPage(newPage);
+  };
+
+  const handleChangeRowsPerPage = (event) => {
+    setRowsPerPage(parseInt(event.target.value, 10));
+    setPage(0);
+  };
+
   useEffect(() => {
     dispatch(fetchlocation(currentUser.accessToken));
     dispatch(fetchItem(currentUser.accessToken));
@@ -65,7 +78,7 @@ const ViewIncomingVerified = () => {
 
         if (Array.isArray(result)) {
           setIncoming(result);
-          setTotalCount(result.totalCount||0); // Set the total count
+          setTotalCount(result.totalCount || 0); // Set the total count
         } else {
           console.error('Received data does not contain an array:', result);
           setIncoming([]);
@@ -344,6 +357,32 @@ const ViewIncomingVerified = () => {
                 </TableRow>
               )}
             </TableBody>
+            <TableFooter>
+              <TableRow>
+                <TableCell colSpan={7} align='center'>
+                  <hr style={{ width: '100%' }} />
+                  <TablePagination
+                    rowsPerPageOptions={[5, 10, 25]}
+                    component='div'
+                    count={incoming.length}
+                    rowsPerPage={rowsPerPage}
+                    page={page}
+                    onPageChange={handleChangePage}
+                    onRowsPerPageChange={handleChangeRowsPerPage}
+                    style={{ fontWeight: 'bolder' }}
+                    labelRowsPerPage={
+                      <span
+                        style={{
+                          fontWeight: 'bold',
+                        }}
+                      >
+                        Rows per page:
+                      </span>
+                    }
+                  />
+                </TableCell>
+              </TableRow>
+            </TableFooter>
           </Table>
         </TableContainer>
         {/* <TablePagination

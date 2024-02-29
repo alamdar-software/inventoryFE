@@ -19,6 +19,7 @@ import {
   TableBody,
   TablePagination,
   Box,
+  TableFooter,
 } from '@mui/material';
 import { Link } from 'react-router-dom';
 import { fetchlocation } from '../redux/slice/location';
@@ -154,7 +155,7 @@ export const ViewCiplVerification = () => {
         return res.json();
       })
       .then((result) => {
-        console.log(result,"meinhunkhalnayak");
+        console.log(result, 'meinhunkhalnayak');
         setAllCipl(result);
         setFilteredCipl(result);
       })
@@ -206,8 +207,8 @@ export const ViewCiplVerification = () => {
       // pdf.save('table.pdf');
     }
   };
-  console.log(allCipl,"rumiiiiii");
-  console.log(filteredCipl,"muiiiiii");
+  console.log(allCipl, 'rumiiiiii');
+  console.log(filteredCipl, 'muiiiiii');
   return (
     <>
       <Grid>
@@ -405,15 +406,11 @@ export const ViewCiplVerification = () => {
                       <TableCell align='right'>
                         {ciplRow.consigneeName}
                       </TableCell>
-                      <TableCell align='right'>
-                        {ciplRow.referenceNo}
-                      </TableCell>
+                      <TableCell align='right'>{ciplRow.referenceNo}</TableCell>
                       <TableCell align='right'>
                         {ciplRow.transferDate}
                       </TableCell>
-                      <TableCell align='right'>
-                        {ciplRow.status}
-                      </TableCell>
+                      <TableCell align='right'>{ciplRow.status}</TableCell>
                       <TableCell align='right'>
                         <Link to={`/cipl/createpdf/${ciplRow.id}`}>
                           <Button
@@ -449,9 +446,35 @@ export const ViewCiplVerification = () => {
                   ))
                 )}
             </TableBody>
+            <TableFooter>
+              <TableRow>
+                <TableCell colSpan={7} align='center'>
+                  <hr style={{ width: '100%' }} />
+                  <TablePagination
+                    rowsPerPageOptions={[5, 10, 25]}
+                    component='div'
+                    count={cipl.length}
+                    rowsPerPage={rowsPerPage}
+                    page={page}
+                    onPageChange={handleChangePage}
+                    onRowsPerPageChange={handleChangeRowsPerPage}
+                    style={{ fontWeight: 'bolder' }}
+                    labelRowsPerPage={
+                      <span
+                        style={{
+                          fontWeight: 'bold',
+                        }}
+                      >
+                        Rows per page:
+                      </span>
+                    }
+                  />
+                </TableCell>
+              </TableRow>
+            </TableFooter>
           </Table>
         </TableContainer>
-        <TablePagination
+        {/* <TablePagination
           rowsPerPageOptions={[5, 10, 25]}
           component='div'
           count={cipl.length}
@@ -459,7 +482,7 @@ export const ViewCiplVerification = () => {
           page={page}
           onPageChange={handleChangePage}
           onRowsPerPageChange={handleChangeRowsPerPage}
-        />
+        /> */}
       </Grid>
     </>
   );
