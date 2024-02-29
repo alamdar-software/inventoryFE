@@ -68,6 +68,7 @@ export const SearchIncoming = () => {
     setPage(0);
   };
   console.log(formData, 'heyyy');
+  console.log(state,"kjswckjdb");
   // const handleClick = () => {
   //   try {
   //     const formData = {
@@ -306,7 +307,7 @@ export const SearchIncoming = () => {
               gutterBottom
               style={{ fontFamily: "'EB Garamond'" }}
             >
-              Stock Report
+             Incoming Stock Report
             </Typography>
           </CardContent>
         </Card>
@@ -390,10 +391,10 @@ export const SearchIncoming = () => {
 
                       //onChange={handleChange}
                     >
-                      {state.nonPersisted.location.data?.map((item, index) => (
-                        <MenuItem key={index} value={item?.locationName}>
+                      {state.nonPersisted.entity.data?.map((item, index) => (
+                        <MenuItem key={index} value={item?.entityName}>
                           {' '}
-                          {item?.locationName}
+                          {item?.entityName}
                         </MenuItem>
                       ))}
                     </Select>

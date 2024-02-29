@@ -329,12 +329,12 @@ const ReportItem = () => {
                     key={`${ciplRow.id}`} // Use a unique key for each row
                     sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                   >
-                    <TableCell align='right'>{ciplRow.description}</TableCell>
+                    <TableCell align='left'>{ciplRow.description}</TableCell>
 
-                    <TableCell align='right'>{ciplRow.name}</TableCell>
+                    <TableCell align='left'>{ciplRow.name}</TableCell>
 
-                    <TableCell align='right'>{ciplRow.quantity}</TableCell>
-                    <TableCell align='right'>{ciplRow.minimumStock}</TableCell>
+                    <TableCell align='left'>{ciplRow.quantity}</TableCell>
+                    <TableCell align='left'>{ciplRow.minimumStock}</TableCell>
                   </TableRow>
                 ))}
             </TableBody>

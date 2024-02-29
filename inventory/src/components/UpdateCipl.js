@@ -138,7 +138,7 @@ const UpdateCipl = () => {
             //   onChange={(e) => handleBrandChange(index, e.target.value)}
 
             value={cipl ? cipl.totalWeight : ''}
-            InputProps={{ readOnly: true }}
+          
             onChange={(e) => {
               setCipl({
                 ...cipl,
@@ -156,7 +156,7 @@ const UpdateCipl = () => {
             label='Total Package'
             variant='outlined'
             value={cipl ? cipl.totalPackage : ''}
-            InputProps={{ readOnly: true }}
+            
             onChange={(e) => {
               setCipl({
                 ...cipl,
@@ -174,7 +174,7 @@ const UpdateCipl = () => {
             label='Total Amount'
             variant='outlined'
             value={cipl ? cipl.totalAmount : ''}
-            InputProps={{ readOnly: true }}
+          
             onChange={(e) => {
               setCipl({
                 ...cipl,
@@ -229,7 +229,7 @@ const UpdateCipl = () => {
             variant='outlined'
             value={cipl ? cipl.SubLocations : ''}
             sx={{ width: '100px', marginRight: '23px' }}
-            InputProps={{ readOnly: true }}
+         
             onChange={(e) => {
               setCipl({
                 ...cipl,
@@ -282,7 +282,7 @@ const UpdateCipl = () => {
             variant='outlined'
             value={cipl ? cipl.item : ''}
             sx={{ width: '100px', marginRight: '23px' }}
-            InputProps={{ readOnly: true }}
+           
             onChange={(e) => {
               setCipl({
                 ...cipl,
@@ -301,7 +301,7 @@ const UpdateCipl = () => {
               label='Package Name'
               variant='outlined'
               value={cipl ? cipl.packageName : ''}
-              InputProps={{ readOnly: true }}
+            
               // value={locationName}
               onChange={(e) => {
                 setCipl({
@@ -324,7 +324,7 @@ const UpdateCipl = () => {
               label='Hs'
               variant='outlined'
               value={cipl ? cipl.hs : ''}
-              InputProps={{ readOnly: true }}
+            
               // value={sn}
               //   onChange={(e) => handleHsChange(index, e.target.value)}
               onChange={(e) => {
@@ -346,7 +346,7 @@ const UpdateCipl = () => {
               label='Country Of Origin'
               variant='outlined'
               value={cipl ? cipl.cor : ''}
-              InputProps={{ readOnly: true }}
+            
               onChange={(e) => {
                 setCipl({
                   ...cipl,
@@ -369,7 +369,7 @@ const UpdateCipl = () => {
               label='Dimension(CM)'
               variant='outlined'
               value={cipl ? cipl.dimension : ''}
-              InputProps={{ readOnly: true }}
+          
               onChange={(e) => {
                 setCipl({
                   ...cipl,
@@ -390,7 +390,7 @@ const UpdateCipl = () => {
               label='Weights(Kg)'
               variant='outlined'
               value={cipl ? cipl.weights : ''}
-              InputProps={{ readOnly: true }}
+            
               onChange={(e) => {
                 setCipl({
                   ...cipl,
@@ -411,7 +411,7 @@ const UpdateCipl = () => {
             variant='outlined'
             value={cipl ? cipl.partNo : ''}
             sx={{ width: '100px', marginRight: '23px' }}
-            InputProps={{ readOnly: true }}
+          
             onChange={(e) => {
               setCipl({
                 ...cipl,
@@ -430,7 +430,7 @@ const UpdateCipl = () => {
               label='S/N'
               variant='outlined'
               //   value={partNumbersData[index]?.sn || ''}
-              InputProps={{ readOnly: true }}
+          
               value={cipl ? cipl.sn : ''}
               onChange={(e) => {
                 setCipl({
@@ -455,7 +455,7 @@ const UpdateCipl = () => {
               // onChange={(e) => setLocation(e.target.value)}
               //   onChange={(e) => handlePurchaseChange(index, e.target.value)}
               value={cipl ? cipl.purchase : ''}
-              InputProps={{ readOnly: true }}
+            
               onChange={(e) => {
                 setCipl({
                   ...cipl,
@@ -477,7 +477,7 @@ const UpdateCipl = () => {
               //   value={partNumbersData[index]?.unitPrice || ''}
               value={cipl ? cipl.unitPrice : ''}
               //   onChange={(e) => handleUnitPriceChange(index, e.target.value)}
-              InputProps={{ readOnly: true }}
+          
               onChange={(e) => {
                 setCipl({
                   ...cipl,
@@ -500,7 +500,7 @@ const UpdateCipl = () => {
               // onChange={(e) => setLocation(e.target.value)}
               //   onChange={(e) => handleQuantityChange(index, e.target.value)}
               value={cipl ? cipl.quantity : ''}
-              InputProps={{ readOnly: true }}
+           
               onChange={(e) => {
                 setCipl({
                   ...cipl,
@@ -524,7 +524,7 @@ const UpdateCipl = () => {
               // onChange={(e) => setLocation(e.target.value)}
               /* onChange={(e) => handleAmountChange(index, e.target.value)} */
               value={cipl ? cipl.amount : ''}
-              InputProps={{ readOnly: true }}
+            
               onChange={(e) => {
                 setCipl({
                   ...cipl,
@@ -533,7 +533,7 @@ const UpdateCipl = () => {
                 setformData(e.target.value);
               }}
               fullWidth
-              readOnly
+      
             />
           </Grid>
         </FormControl>
@@ -550,7 +550,7 @@ const UpdateCipl = () => {
               //   onChange={(e) => handleBrandChange(index, e.target.value)}
 
               value={cipl ? cipl.brand : ''}
-              InputProps={{ readOnly: true }}
+       
               onChange={(e) => {
                 setCipl({
                   ...cipl,
@@ -572,7 +572,7 @@ const UpdateCipl = () => {
               //   onChange={(e) => handleRemarksChange(index, e.target.value)}
               minRows={4} // You can adjust the number of rows as needed
               value={cipl ? cipl.remarks : ''}
-              InputProps={{ readOnly: true }}
+           
               onChange={(e) => {
                 setCipl({
                   ...cipl,
@@ -698,7 +698,7 @@ const UpdateCipl = () => {
             variant='outlined'
             value={cipl ? cipl.shipperName : ''}
             sx={{ width: '590px' }}
-            InputProps={{ readOnly: true }}
+        
             onChange={(e) => {
               setCipl({
                 ...cipl,
@@ -767,7 +767,7 @@ const UpdateCipl = () => {
             variant='outlined'
             value={cipl ? cipl.consigneeName : ''}
             sx={{ width: '590px' }}
-            InputProps={{ readOnly: true }}
+         
             onChange={(e) => {
               setCipl({
                 ...cipl,
@@ -823,7 +823,7 @@ const UpdateCipl = () => {
             variant='outlined'
             value={cipl ? cipl.pickupAddress : ''}
             sx={{ width: '590px' }}
-            InputProps={{ readOnly: true }}
+           
             onChange={(e) => {
               setCipl({
                 ...cipl,
@@ -879,7 +879,7 @@ const UpdateCipl = () => {
             variant='outlined'
             value={cipl ? cipl.currencyName : ''}
             sx={{ width: '590px' }}
-            InputProps={{ readOnly: true }}
+          
             onChange={(e) => {
               setCipl({
                 ...cipl,
