@@ -19,6 +19,7 @@ import {
   TableBody,
   TablePagination,
   Box,
+  TableFooter,
 } from '@mui/material';
 import { Link } from 'react-router-dom';
 import { fetchlocation } from '../redux/slice/location';
@@ -384,10 +385,8 @@ const ViewConsumeVerified = () => {
                   Date
                 </TableCell>
                 <TableCell align='right' sx={{ fontWeight: 'bold' }}>
-                Status
+                  Status
                 </TableCell>
-
-                
               </TableRow>
             </TableHead>
             <TableBody>
@@ -410,15 +409,39 @@ const ViewConsumeVerified = () => {
                     <TableCell align='right'>{consumedRow.quantity}</TableCell>
                     <TableCell align='right'>{consumedRow.date}</TableCell>
                     <TableCell align='right'>{consumedRow.status}</TableCell>
-                 
-                 
                   </TableRow>
                 ))
               )}
             </TableBody>
+            <TableFooter>
+              <TableRow>
+                <TableCell colSpan={7} align='center'>
+                  <hr style={{ width: '100%' }} />
+                  <TablePagination
+                    rowsPerPageOptions={[5, 10, 25]}
+                    component='div'
+                    count={consumed.length}
+                    rowsPerPage={rowsPerPage}
+                    page={page}
+                    onPageChange={handleChangePage}
+                    onRowsPerPageChange={handleChangeRowsPerPage}
+                    style={{ fontWeight: 'bolder' }}
+                    labelRowsPerPage={
+                      <span
+                        style={{
+                          fontWeight: 'bold',
+                        }}
+                      >
+                        Rows per page:
+                      </span>
+                    }
+                  />
+                </TableCell>
+              </TableRow>
+            </TableFooter>
           </Table>
         </TableContainer>
-        <TablePagination
+        {/* <TablePagination
           rowsPerPageOptions={[5, 10, 25]}
           component='div'
           count={consumed.length}
@@ -426,7 +449,7 @@ const ViewConsumeVerified = () => {
           page={page}
           onPageChange={handleChangePage}
           onRowsPerPageChange={handleChangeRowsPerPage}
-        />
+        /> */}
       </Grid>
     </>
   );

@@ -19,6 +19,7 @@ import {
   TableBody,
   TablePagination,
   Box,
+  TableFooter,
 } from '@mui/material';
 import { Link } from 'react-router-dom';
 import { fetchlocation } from '../redux/slice/location';
@@ -154,7 +155,7 @@ export const ViewCiplVerified = () => {
         return res.json();
       })
       .then((result) => {
-        console.log(result,"meinhunkhalnayak");
+        console.log(result, 'meinhunkhalnayak');
         setAllCipl(result);
         setFilteredCipl(result);
       })
@@ -380,7 +381,6 @@ export const ViewCiplVerified = () => {
                 <TableCell align='right' sx={{ fontWeight: 'bold' }}>
                   Print
                 </TableCell>
-                
               </TableRow>
             </TableHead>
             <TableBody>
@@ -407,9 +407,7 @@ export const ViewCiplVerified = () => {
                       <TableCell align='right'>
                         {ciplRow.transferDate}
                       </TableCell>
-                      <TableCell align='right'>
-                        {ciplRow.status}
-                      </TableCell>
+                      <TableCell align='right'>{ciplRow.status}</TableCell>
                       <TableCell align='right'>
                         <Link to={`/cipl/createpdf/${ciplRow.id}`}>
                           <Button
@@ -421,22 +419,38 @@ export const ViewCiplVerified = () => {
                           </Button>
                         </Link>
                       </TableCell>
-
                     </TableRow>
                   ))
                 )}
             </TableBody>
+            <TableFooter>
+              <TableRow>
+                <TableCell colSpan={7} align='center'>
+                  <hr style={{ width: '100%' }} />
+                  <TablePagination
+                    rowsPerPageOptions={[5, 10, 25]}
+                    component='div'
+                    count={cipl.length}
+                    rowsPerPage={rowsPerPage}
+                    page={page}
+                    onPageChange={handleChangePage}
+                    onRowsPerPageChange={handleChangeRowsPerPage}
+                    style={{ fontWeight: 'bolder' }}
+                    labelRowsPerPage={
+                      <span
+                        style={{
+                          fontWeight: 'bold',
+                        }}
+                      >
+                        Rows per page:
+                      </span>
+                    }
+                  />
+                </TableCell>
+              </TableRow>
+            </TableFooter>
           </Table>
         </TableContainer>
-        <TablePagination
-          rowsPerPageOptions={[5, 10, 25]}
-          component='div'
-          count={cipl.length}
-          rowsPerPage={rowsPerPage}
-          page={page}
-          onPageChange={handleChangePage}
-          onRowsPerPageChange={handleChangeRowsPerPage}
-        />
       </Grid>
     </>
   );

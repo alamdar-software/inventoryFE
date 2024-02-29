@@ -14,7 +14,9 @@ import {
   TableBody,
   TableCell,
   TableContainer,
+  TableFooter,
   TableHead,
+  TablePagination,
   TableRow,
   Typography,
 } from '@mui/material';
@@ -38,8 +40,20 @@ const VerifiedMto = () => {
   const state = useSelector((state) => state);
   const dispatch = useDispatch();
   const [mto, setMto] = useState([]);
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(5);
+
   const [totalCount, setTotalCount] = useState(0);
   const { currentUser } = state.persisted.user;
+
+  const handleChangePage = (event, newPage) => {
+    setPage(newPage);
+  };
+
+  const handleChangeRowsPerPage = (event) => {
+    setRowsPerPage(parseInt(event.target.value, 10));
+    setPage(0);
+  };
   useEffect(() => {
     dispatch(fetchlocation(currentUser.accessToken));
     dispatch(fetchItem(currentUser.accessToken));
@@ -61,7 +75,7 @@ const VerifiedMto = () => {
       .then((result) => {
         if (result && Array.isArray(result)) {
           setMto(result);
-          setTotalCount(result.totalCount||0);
+          setTotalCount(result.totalCount || 0);
         } else {
           console.error('Invalid data structure:', result);
           // Handle the situation where the expected data is not available
@@ -106,7 +120,7 @@ const VerifiedMto = () => {
       transferDate: transferDate.format('YYYY-MM-DD'),
     });
   };
-  console.log(mto,"mein nahi to koun");
+  console.log(mto, 'mein nahi to koun');
   return (
     <>
       <Box>
@@ -254,7 +268,7 @@ const VerifiedMto = () => {
                   Item Description
                 </TableCell>
                 <TableCell align='right' sx={{ fontWeight: 'bold' }}>
-                 Status
+                  Status
                 </TableCell>
 
                 <TableCell align='right' sx={{ fontWeight: 'bold' }}>
@@ -287,7 +301,6 @@ const VerifiedMto = () => {
                       </Link>
                     </TableCell>
 
-
                     {/* Add more TableCell components for other properties as needed */}
                   </TableRow>
                 ))
@@ -299,6 +312,32 @@ const VerifiedMto = () => {
                 </TableRow>
               )}
             </TableBody>
+            <TableFooter>
+              <TableRow>
+                <TableCell colSpan={7} align='center'>
+                  <hr style={{ width: '100%' }} />
+                  <TablePagination
+                    rowsPerPageOptions={[5, 10, 25]}
+                    component='div'
+                    count={mto.length}
+                    rowsPerPage={rowsPerPage}
+                    page={page}
+                    onPageChange={handleChangePage}
+                    onRowsPerPageChange={handleChangeRowsPerPage}
+                    style={{ fontWeight: 'bolder' }}
+                    labelRowsPerPage={
+                      <span
+                        style={{
+                          fontWeight: 'bold',
+                        }}
+                      >
+                        Rows per page:
+                      </span>
+                    }
+                  />
+                </TableCell>
+              </TableRow>
+            </TableFooter>
           </Table>
         </TableContainer>
         {/* <TablePagination
