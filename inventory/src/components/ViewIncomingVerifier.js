@@ -326,6 +326,9 @@ const ViewIncomingVerifier = () => {
                   Purchase Date
                 </TableCell>
                 <TableCell align='right' sx={{ fontWeight: 'bold' }}>
+                  Incoming Stock
+                </TableCell>
+                <TableCell align='right' sx={{ fontWeight: 'bold' }}>
                   Status
                 </TableCell>
               </TableRow>
@@ -345,6 +348,7 @@ const ViewIncomingVerifier = () => {
                       <TableCell align='right'>{item.quantity}</TableCell>
                       <TableCell align='right'>{item.purchaseOrder}</TableCell>
                       <TableCell align='right'>{item.date}</TableCell>
+                      <TableCell align='right'>{item.dataType}</TableCell>
                       <TableCell align='right'>{item.status}</TableCell>
 
                       <Link to={`/updateIncoming-verifier/${item.id}`}>

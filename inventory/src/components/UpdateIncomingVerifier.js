@@ -44,7 +44,7 @@ const UpdateIncomingVerifier = () => {
     })
       .then((res) => res.json())
       .then((result) => {
-        console.log(result);
+        console.log(result,"bulkiiiiiiiii");
         setIncoming(result);
       });
   }, []);
