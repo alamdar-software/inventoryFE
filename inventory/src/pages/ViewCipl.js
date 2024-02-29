@@ -30,7 +30,7 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
-
+import EditIcon from '@mui/icons-material/Edit';
 export const ViewCipl = () => {
   const dispatch = useDispatch();
   const state = useSelector((state) => state);
@@ -428,12 +428,8 @@ export const ViewCipl = () => {
 
                       <Box>
                         <Link to={`/updateCipl/${ciplRow.id}`}>
-                          <Button
-                            sx={{ marginLeft: '11px', marginTop: '10px' }}
-                            variant='contained'
-                          >
-                            Update
-                          </Button>
+                          <EditIcon/>
+                          
                         </Link>
 
                         <Button

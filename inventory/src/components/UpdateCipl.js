@@ -106,7 +106,7 @@ const UpdateCipl = () => {
     };
     console.log(update);
 
-    fetch(`http://localhost:8080/cipl/status/${id}`, {
+    fetch(`http://localhost:8080/cipl/update/${id}`, {
       method: 'PUT',
       headers: {
         'Content-type': 'application/json',
@@ -936,27 +936,7 @@ const UpdateCipl = () => {
       </Grid>
       <Grid container spacing={2} sx={{ mt: '23px' }}>
         <Grid item xs={12} sm={6}>
-          <FormControl fullWidth sx={{ width: '90%' }}>
-            <InputLabel id='demo-simple-select-label'>Status</InputLabel>
-            <Select
-              labelId='demo-simple-select-label'
-              id='demo-simple-select'
-              //value={age}
-              value={cipl ? cipl.status : ''}
-              InputProps={{ readOnly: true }}
-              label='Repair/service'
-              //onChange={handleChange}
-              onChange={(e) =>
-                setformData({
-                  ...cipl,
-                  status: e.target.value,
-                })
-              }
-            >
-              <MenuItem value={'verified'}>Verified</MenuItem>
-              <MenuItem value={'rejected'}>Rejected</MenuItem>
-            </Select>
-          </FormControl>
+      
         </Grid>
       </Grid>
       <div style={{ display: 'flex', flexWrap: 'wrap' }}>
