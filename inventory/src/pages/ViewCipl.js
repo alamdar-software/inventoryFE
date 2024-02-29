@@ -141,7 +141,7 @@ export const ViewCipl = () => {
       });
     };
   useEffect(() => {
-    fetch('http://localhost:8080/cipl/view', {
+    fetch('http://localhost:8080/cipl/approved', {
       method: 'GET',
       headers: {
         Authorization: `Bearer ${currentUser.accessToken}`,
@@ -374,6 +374,9 @@ export const ViewCipl = () => {
                 <TableCell align='right' sx={{ fontWeight: 'bold' }}>
                   Transfer Date
                 </TableCell>
+                <TableCell align='right' sx={{ fontWeight: 'bold' }}>
+                  Status
+                </TableCell>
 
                 <TableCell align='right' sx={{ fontWeight: 'bold' }}>
                   Print
@@ -406,6 +409,9 @@ export const ViewCipl = () => {
                       </TableCell>
                       <TableCell align='right'>
                         {ciplRow.transferDate}
+                      </TableCell>
+                      <TableCell align='right'>
+                        {ciplRow.status}
                       </TableCell>
                       <TableCell align='right'>
                         <Link to={`/cipl/createpdf/${ciplRow.id}`}>
