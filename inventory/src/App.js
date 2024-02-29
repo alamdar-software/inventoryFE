@@ -143,6 +143,8 @@ import ApprovedInternal from './components/ApprovedInternal.js';
 import ApprovedIncoming from './components/ApprovedIncoming.js';
 import ApprovedScrapped from './pages/ApprovedScrapped.js';
 import ApprovedConsumed from './pages/ApprovedConsumed.js';
+import ApprovalIncoming from './components/ApprovalIncoming.js';
+import UpdateIncomingApproval from './components/UpdateIncomingApproval.js';
 const theme = createTheme({
   palette: {
     background: {
@@ -554,6 +556,14 @@ function App() {
                   }
                 />
                 <Route
+                  path='/needApproval'
+                  element={
+                    <Sidebar>
+                      <ApprovalIncoming />
+                    </Sidebar>
+                  }
+                />
+                <Route
                   path='/updateMtoVerified/:id'
                   element={
                     <Sidebar>
@@ -590,6 +600,14 @@ function App() {
                   element={
                     <Sidebar>
                       <UpdateCiplApproval />
+                    </Sidebar>
+                  }
+                />
+                <Route
+                  path='/updateIncomingApproval/:id'
+                  element={
+                    <Sidebar>
+                      <UpdateIncomingApproval />
                     </Sidebar>
                   }
                 />
@@ -1064,7 +1082,7 @@ function App() {
                 />
 
                 <Route element={<OnlyOther />}>
-                <Route path='/login' element={<Login />} />
+                  <Route path='/login' element={<Login />} />
                   <Route
                     path='/'
                     element={

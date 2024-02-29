@@ -16,93 +16,88 @@ import {
   TableContainer,
   TableHead,
   TableRow,
+  TextField,
   Typography,
 } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { fetchentity } from '../redux/slice/entitySlice';
+import { fetchCurrency } from '../redux/slice/CurrencySlice';
 import { fetchItem } from '../redux/slice/ItemSlice';
 import { fetchlocation } from '../redux/slice/location';
 import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import { Link } from 'react-router-dom';
-import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
+import DeleteIcon from '@mui/icons-material/Delete';
 import BorderColorSharpIcon from '@mui/icons-material/BorderColorSharp';
+import { Link } from 'react-router-dom';
 
-const ViewMtoApproval = () => {
+const ApprovalIncoming = () => {
   const [formData, setformData] = useState({
     description: '',
     locationName: '',
-    transferDate: '',
+    date: '',
+    purchaseOrder: '',
+    entityName: '',
   });
-  console.log(formData);
+  const [incoming, setIncoming] = useState([]);
   const state = useSelector((state) => state);
   const dispatch = useDispatch();
-  const [mto, setMto] = useState([]);
-  const [FilteredMto, setFilteredMto] = useState([]);
   const [totalCount, setTotalCount] = useState(0);
+  const [highlightedRows, setHighlightedRows] = useState([]);
   const { currentUser } = state.persisted.user;
+
   useEffect(() => {
     dispatch(fetchlocation(currentUser.accessToken));
     dispatch(fetchItem(currentUser.accessToken));
+    dispatch(fetchCurrency(currentUser.accessToken));
+    dispatch(fetchentity(currentUser.accessToken));
   }, []);
 
-  // useEffect(() => {
-  //   console.log(currentUser.accessToken, 'heyyyy');
-  //   fetch('http://localhost:8080/mto/verified', {
-  //     headers: {
-  //       Authorization: `Bearer ${currentUser.accessToken}`,
-  //     },
-  //   })
-  //     .then((res) => {
-  //       if (!res.ok) {
-  //         throw new Error(`HTTP error! Status: ${res.status}`);
-  //       }
-  //       return res.json();
-  //     })
-  //     .then((result) => {
-  //       if (result.mtoList && Array.isArray(result.mtoList)) {
-  //         setMto(result.mtoList);
-  //         setTotalCount(result.totalCount);
-  //       } else {
-  //         console.error('Invalid data structure:', result);
-  //         // Handle the situation where the expected data is not available
-  //         setMto([]);
-  //       }
-  //     })
-  //     .catch((error) => {
-  //       console.error('Error fetching MTO data:', error);
-  //       // Handle the error by setting an empty array or showing an error message
-  //       setMto([]);
-  //     });
-  // }, []);
-
   useEffect(() => {
-    fetch('http://localhost:8080/mto/verified', {
-      method: 'GET',
+    fetch('http://localhost:8080/bulkstock/verified', {
       headers: {
         Authorization: `Bearer ${currentUser.accessToken}`,
-        'Content-Type': 'application/json',
       },
     })
-      .then((res) => {
-        if (!res.ok) {
-          throw new Error(`HTTP error! Status: ${res.status}`);
-        }
-        return res.json();
-      })
+      .then((res) => res.json())
       .then((result) => {
         console.log(result);
-        setMto(result);
-        setFilteredMto(result);
+
+        if (Array.isArray(result)) {
+          setIncoming(result);
+          setTotalCount(result.totalCount || 0); // Set the total count
+        } else {
+          console.error('Received data does not contain an array:', result);
+          setIncoming([]);
+        }
       })
       .catch((error) => {
-        console.error('Error fetching pickup data:', error);
+        console.error('Error fetching data:', error);
+        setIncoming([]);
       });
   }, []);
 
-  console.log(mto);
+  const handleLocationChange = (e) => {
+    const selectedLocation = e.target.value;
+    setformData({
+      ...formData,
+      locationName: selectedLocation,
+      //   address: [], // Reset sublocation when location changes
+    });
+    const selectedLocationObj = state.location.data.find(
+      (location) => location.locationName === selectedLocation
+    );
+  };
+  console.log(formData);
+
+  const handleDateChange = (date) => {
+    setformData({
+      ...formData,
+      date: date.format('YYYY-MM-DD'),
+    });
+  };
   const handleSearch = () => {
-    fetch('http://localhost:8080/mto/search', {
+    fetch('http://localhost:8080/bulkstock/search', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -113,25 +108,18 @@ const ViewMtoApproval = () => {
       .then((res) => res.json())
       .then((result) => {
         if (Array.isArray(result)) {
-          setMto(result);
+          setIncoming(result);
         } else {
           console.error('Received data does not contain an array:', result);
-          setMto([]);
+          setIncoming([]);
         }
       })
       .catch((error) => {
         console.error('Error searching data:', error);
-        setMto([]);
+        setIncoming([]);
       });
   };
 
-  const handleDateChange = (transferDate) => {
-    setformData({
-      ...formData,
-      transferDate: transferDate.format('YYYY-MM-DD'),
-    });
-  };
-  console.log(formData);
   return (
     <>
       <Box>
@@ -151,7 +139,7 @@ const ViewMtoApproval = () => {
               gutterBottom
               style={{ fontFamily: "'EB Garamond'" }}
             >
-              View Mto Approval
+              Incoming Stock
             </Typography>
           </CardContent>
         </Card>
@@ -160,7 +148,7 @@ const ViewMtoApproval = () => {
           label={`Total Incoming Stock: ${totalCount}`}
           variant='outlined'
         />
-        <Grid container spacing={2}>
+        <Grid container spaciing={2}>
           <Grid item xs={12} sm={6}>
             <FormControl fullWidth sx={{ width: '90%' }}>
               <InputLabel id='demo-simple-select-label'>
@@ -186,28 +174,14 @@ const ViewMtoApproval = () => {
               </Select>
             </FormControl>
           </Grid>
-          <Grid item xs={12} sm={6}>
+          <Grid item xs={21} sm={6}>
             <FormControl fullWidth sx={{ width: '90%' }}>
               <InputLabel id='demo-simple-select-label'>Location</InputLabel>
               <Select
                 labelId='demo-simple-select-label'
                 id='demo-simple-select'
-                //value={age}
                 label='location'
-                MenuProps={{
-                  PaperProps: {
-                    style: {
-                      maxHeight: 120, // Adjust the height as needed
-                    },
-                  },
-                }}
-                // onChange={handleLocationChange}
-                onChange={(e) =>
-                  setformData({
-                    ...formData,
-                    locationName: e.target.value,
-                  })
-                }
+                onChange={handleLocationChange}
               >
                 {state.nonPersisted.location.data?.map((item, index) => (
                   <MenuItem key={index} value={item?.locationName}>
@@ -219,16 +193,68 @@ const ViewMtoApproval = () => {
             </FormControl>
           </Grid>
         </Grid>
-        <Grid container spacing={2} sx={{ mt: '23px' }}>
-          <Grid item xs={12} sm={6}>
+        <Grid container spacing={2} sx={{ mt: '33px' }}>
+          <Grid item xs={21} sm={6}>
             <LocalizationProvider dateAdapter={AdapterDayjs}>
               <DatePicker
-                value={formData.transferDate}
+                /* value={
+                formData.purchaseDate ? dayjs(formData.purchaseDate) : null
+              } */
                 onChange={(newDate) => handleDateChange(newDate)}
                 fullWidth
                 sx={{ width: '90%' }}
+                /* format="yyyy-MM-dd" */
               />
             </LocalizationProvider>
+          </Grid>
+          <Grid item xs={21} sm={6}>
+            <TextField
+              id='outlined-basic'
+              label='PO Number'
+              variant='outlined'
+              fullWidth
+              sx={{ width: '90%' }}
+              onChange={(e) =>
+                setformData({
+                  ...formData,
+                  purchaseOrder: e.target.value,
+                })
+              }
+            />
+          </Grid>
+        </Grid>
+        <Grid container spacing={2} sx={{ mt: '33px' }}>
+          <Grid item xs={21} sm={6}>
+            <FormControl fullWidth sx={{ width: '90%' }}>
+              <InputLabel id='demo-simple-select-label'>Entity</InputLabel>
+              <Select
+                labelId='demo-simple-select-label'
+                id='demo-simple-select'
+                label='entity'
+                onChange={(e) =>
+                  setformData({
+                    ...formData,
+                    entityName: e.target.value,
+                  })
+                }
+                MenuProps={{
+                  PaperProps: {
+                    style: {
+                      maxHeight: 120, // Adjust the height as needed
+                    },
+                  },
+                }}
+
+                //onChange={handleChange}
+              >
+                {state.nonPersisted.entity.data?.map((item, index) => (
+                  <MenuItem key={index} value={item?.entityName}>
+                    {' '}
+                    {item?.entityName}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
           </Grid>
         </Grid>
         <Button
@@ -260,59 +286,45 @@ const ViewMtoApproval = () => {
             <TableHead>
               <TableRow>
                 <TableCell align='right' sx={{ fontWeight: 'bold' }}>
+                  Item Description
+                </TableCell>
+                <TableCell align='right' sx={{ fontWeight: 'bold' }}>
                   Location
                 </TableCell>
-
                 <TableCell align='right' sx={{ fontWeight: 'bold' }}>
                   SubLocation
                 </TableCell>
                 <TableCell align='right' sx={{ fontWeight: 'bold' }}>
-                  Consignee
+                  Entity
                 </TableCell>
                 <TableCell align='right' sx={{ fontWeight: 'bold' }}>
-                  Ref Number
+                  Quantity
                 </TableCell>
                 <TableCell align='right' sx={{ fontWeight: 'bold' }}>
-                  Transfer Date
+                  PO Number
+                </TableCell>
+                <TableCell align='right' sx={{ fontWeight: 'bold' }}>
+                  Purchase Date
                 </TableCell>
                 <TableCell align='right' sx={{ fontWeight: 'bold' }}>
                   Status
                 </TableCell>
-                <TableCell align='right' sx={{ fontWeight: 'bold' }}>
-                  Item Description
-                </TableCell>
-
-                <TableCell align='right' sx={{ fontWeight: 'bold' }}>
-                  Print
-                </TableCell>
               </TableRow>
             </TableHead>
-
             <TableBody>
-              {mto.length > 0 ? (
-                mto.map((mto) => (
-                  <TableRow key={mto.id}>
-                    <TableCell align='right'>{mto.locationName}</TableCell>
-                    <TableCell align='right'>{mto.SubLocation}</TableCell>
-                    <TableCell align='right'>{mto.consigneeName}</TableCell>
-                    <TableCell align='right'>{mto.referenceNo}</TableCell>
+              {incoming.length > 0 ? (
+                incoming.map((item) => (
+                  <TableRow key={item.id}>
+                    <TableCell align='right'>{item.description}</TableCell>
+                    <TableCell align='right'>{item.locationName}</TableCell>
+                    <TableCell align='right'>{item.address}</TableCell>
+                    <TableCell align='right'>{item.entityName}</TableCell>
+                    <TableCell align='right'>{item.quantity}</TableCell>
+                    <TableCell align='right'>{item.purchaseOrder}</TableCell>
+                    <TableCell align='right'>{item.date}</TableCell>
+                    <TableCell align='right'>{item.status}</TableCell>
 
-                    <TableCell align='right'>{mto.transferDate}</TableCell>
-                    <TableCell align='right'>{mto.status}</TableCell>
-                    <TableCell align='right'>{mto.description}</TableCell>
-                    <TableCell align='right'>
-                      <Link to={`/mto/createpdf/${mto.id}`}>
-                        <Button
-                          variant='contained'
-                          color='primary'
-                          /*  onClick={() => generatePDF(ciplRow.id, index)} */
-                        >
-                          {<PictureAsPdfIcon />}
-                        </Button>
-                      </Link>
-                    </TableCell>
-
-                    <Link to={`/updateMtoApproval/${mto.id}`}>
+                    <Link to={`/updateIncomingApproval/${item.id}`}>
                       <Button>
                         <BorderColorSharpIcon
                           // onClick={() => handleDeleteClick(index)}
@@ -348,4 +360,4 @@ const ViewMtoApproval = () => {
   );
 };
 
-export default ViewMtoApproval;
+export default ApprovalIncoming;

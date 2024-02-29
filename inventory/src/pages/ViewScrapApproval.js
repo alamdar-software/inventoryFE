@@ -39,6 +39,8 @@ const ViewScrapApproval = () => {
   const [transferDate, settransferDate] = useState();
   const [consumed, setconsumed] = useState([]);
   const [allConsumed, setAllConsumed] = useState([]);
+  const [scrap, setScrap] = useState([]);
+  const [filteredScrap, setFilteredScrap] = useState([]);
   const [filteredConsumed, setFilteredConsumed] = useState([]);
   const { currentUser } = state.persisted.user;
 
@@ -141,20 +143,45 @@ const ViewScrapApproval = () => {
         console.error("Error updating pickup:", error);
       });
     }; */
+
+  // useEffect(() => {
+  //   fetch('http://localhost:8080/scrappeditem/verified', {
+  //     headers: {
+  //       Authorization: `Bearer ${currentUser.accessToken}`,
+  //     },
+  //   })
+  //     .then((res) => res.json())
+  //     .then((result) => {
+  //       console.log(result);
+  //       setAllConsumed(result);
+  //       setFilteredConsumed(result);
+  //     })
+  //     .catch((error) => {
+  //       console.error('Error fetching scrapped item data:', error);
+  //     });
+  // }, []);
+
   useEffect(() => {
-    fetch('http://localhost:8080/scrappeditem/view', {
+    fetch('http://localhost:8080/scrappeditem/verified', {
+      method: 'GET',
       headers: {
         Authorization: `Bearer ${currentUser.accessToken}`,
+        'Content-Type': 'application/json',
       },
     })
-      .then((res) => res.json())
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error(`HTTP error! Status: ${res.status}`);
+        }
+        return res.json();
+      })
       .then((result) => {
         console.log(result);
         setAllConsumed(result);
         setFilteredConsumed(result);
       })
       .catch((error) => {
-        console.error('Error fetching scrapped item data:', error);
+        console.error('Error fetching pickup data:', error);
       });
   }, []);
 
