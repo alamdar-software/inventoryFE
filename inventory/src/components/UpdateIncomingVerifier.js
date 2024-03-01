@@ -22,6 +22,7 @@ const UpdateIncomingVerifier = () => {
     address: '',
     pn: '',
     entityName: '',
+    status:""
   });
   const [incoming, setIncoming] = useState();
   const state = useSelector((state) => state);
@@ -51,29 +52,19 @@ const UpdateIncomingVerifier = () => {
 
   console.log(incoming,"after verify");
   console.log(formData,"formkdata");
-  const handleClick = (e) => {
-    e.preventDefault();
-    const update = {
-      incoming,
-    };
-    console.log(update);
-
-    fetch(`http://localhost:8080/bulkstock/status/${id}`, {
+  const handleClick = async () => {
+    const res = await fetch(`http://localhost:8080/bulkstock/status/${id}`, {
       method: 'PUT',
-      headers: {
-        'Content-type': 'application/json',
-        Authorization: `Bearer ${currentUser.accessToken}`,
+      headers: {Authorization: `Bearer ${currentUser.accessToken}`,
       },
+
       body: JSON.stringify(formData),
-    })
-      .then(() => {
-        console.log('incoming  Updated');
-       
-      })
-      .catch((error) => {
-        console.error('Error updating consignee:', error);
-      });
+    });
+    const data = await res.json();
+    console.log(data);
+   
   };
+
 
 
 // console.log(formData,"formkdata");

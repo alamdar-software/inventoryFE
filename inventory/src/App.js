@@ -417,6 +417,22 @@ function App() {
               {/*   transfer item*/}
 
               <Route element={<VerifierandApprover />}>
+              <Route
+                  path='/updateIncoming/:id'
+                  element={
+                    <Sidebar>
+                      <UpdateIncoming />
+                    </Sidebar>
+                  }
+                />
+                <Route
+                  path='/updateIncoming-verifier/:id'
+                  element={
+                    <Sidebar>
+                      <UpdateIncomingVerifier />
+                    </Sidebar>
+                  }
+                />
                 <Route
                   path='/add-inventory'
                   element={
@@ -999,22 +1015,7 @@ function App() {
                     </Sidebar>
                   }
                 />
-                <Route
-                  path='/updateIncoming/:id'
-                  element={
-                    <Sidebar>
-                      <UpdateIncoming />
-                    </Sidebar>
-                  }
-                />
-                <Route
-                  path='/updateIncoming-verifier/:id'
-                  element={
-                    <Sidebar>
-                      <UpdateIncomingVerifier />
-                    </Sidebar>
-                  }
-                />
+            
                 <Route
                   path='/verified-incoming'
                   element={
