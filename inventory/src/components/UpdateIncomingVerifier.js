@@ -48,30 +48,34 @@ const UpdateIncomingVerifier = () => {
         setIncoming(result);
       });
   }, []);
-  const handleClick = async (e) => {
-   
-   
 
-   await  fetch(`http://localhost:8080/bulkstock/status/${id}`, {
+  console.log(incoming,"after verify");
+  console.log(formData,"formkdata");
+  const handleClick = (e) => {
+    e.preventDefault();
+    const update = {
+      incoming,
+    };
+    console.log(update);
+
+    fetch(`http://localhost:8080/bulkstock/status/${id}`, {
       method: 'PUT',
       headers: {
-        'Content-Type': 'application/json',
+        'Content-type': 'application/json',
         Authorization: `Bearer ${currentUser.accessToken}`,
       },
       body: JSON.stringify(formData),
     })
       .then(() => {
-        console.log('Incoming Updated');
-        // navigate("/incoming-created")
-
+        console.log('incoming  Updated');
        
       })
       .catch((error) => {
-        console.error('Error updating incoming:', error);
+        console.error('Error updating consignee:', error);
       });
   };
-  console.log(incoming,"formkdata");
-const brandName=incoming?.brandName[0]
+
+
 // console.log(formData,"formkdata");
   return (
     <>
@@ -513,17 +517,16 @@ const brandName=incoming?.brandName[0]
               id='demo-simple-select'
               //value={age}
               value={incoming ? incoming.status : ''}
-              InputProps={{ readOnly: true }}
+             
               label='Repair/service'
               //onChange={handleChange}
-           
-              onChange={(e) => {
-                setIncoming({
+              onChange={(e) =>
+                setformData({
                   ...incoming,
                   status: e.target.value,
-                });
-                setformData(e.target.value);
-              }}
+                })
+              }
+           
             >
               <MenuItem value={'verified'}>Verified</MenuItem>
               <MenuItem value={'rejected'}>Rejected</MenuItem>
