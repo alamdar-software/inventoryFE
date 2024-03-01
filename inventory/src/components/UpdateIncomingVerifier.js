@@ -72,6 +72,7 @@ const UpdateIncomingVerifier = () => {
         console.error('Error updating incoming:', error);
       });
   };
+  console.log(incoming?.brandName[0],"skncjncjsnacnasj");
 
   return (
     <>
@@ -380,32 +381,32 @@ const UpdateIncomingVerifier = () => {
           <Grid item xs={12} sm={6}>
             <FormControl fullWidth sx={{ width: '90%' }}>
               <InputLabel id='brandName'>brandName</InputLabel>
-              {state.nonPersisted.brand.data?.map((item, index) => (
               <Select
                 labelId='brandName'
                 id='brandName'
                 label='brandName'
-                value={item?.brandName[0]}
-
+                value={incoming?.brandName[0]}
+                
+                
                 //onChange={(e) => handleBrandChange(index, e.target.value)}
-              >
-                  <MenuItem key={index} value={item?.brandName[0]}>
+                >
+                {state.nonPersisted.brand.data?.map((item, index) => (
+                  <MenuItem key={index} >
                     {' '}
                     {item?.brandName}
                   </MenuItem>
+                  ))}
               </Select>
-                ))}
             </FormControl>
           </Grid>
 
           <Grid item xs={12} sm={6}>
             <FormControl fullWidth sx={{ width: '90%' }}>
               <InputLabel id='demo-simple-select-label'> Currency</InputLabel>
-              {state.nonPersisted.currency.data?.currencyList?.map((item, index) => (
               <Select
                 labelId='demo-simple-select-label'
                 id='demo-simple-select'
-                value={item?.currencyName}
+                
                 //value={age}
                 label='currency'
                 MenuProps={{
@@ -421,13 +422,14 @@ const UpdateIncomingVerifier = () => {
                     currencyName: e.target.value,
                   })
                 }
-              >
+                >
+                {state.nonPersisted.currency.data?.currencyList?.map((item, index) => (
                   <MenuItem key={index} value={item?.currencyName}>
                     {' '}
                     {item?.currencyName}
                   </MenuItem>
-              </Select>
                 ))}
+              </Select>
             </FormControl>
           </Grid>
         </Grid>
