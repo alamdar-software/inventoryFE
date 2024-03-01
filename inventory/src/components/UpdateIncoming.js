@@ -61,7 +61,10 @@ const UpdateIncoming = () => {
 
     fetch(`http://localhost:8080/bulkstock/update/${id}`, {
       method: 'PUT',
-      headers: { 'Content-type': 'application/json' },
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${currentUser.accessToken}`,
+      },
       body: JSON.stringify(incoming),
     })
       .then(() => {
