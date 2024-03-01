@@ -37,17 +37,41 @@ const UpdateIncomingVerifier = () => {
   }, []);
 
   useEffect(() => {
-    fetch(`http://localhost:8080/bulkstock/getBoth/${id}`,{
+    fetch(`http://localhost:8080/bulkstock/getBoth/${id}`, {
       headers: {
         Authorization: `Bearer ${currentUser.accessToken}`,
       },
     })
       .then((res) => res.json())
       .then((result) => {
-        console.log(result,"bulkiiiiiiiii");
+        console.log(result, 'bulkiiiiiiiii');
         setIncoming(result);
       });
   }, []);
+  // const handleClick = (e) => {
+  //   e.preventDefault();
+  //   const update = {
+  //     incoming,
+  //   };
+  //   console.log(update);
+
+  //   fetch(`http://localhost:8080/bulkstock/status/${id}`, {
+  //     method: 'PUT',
+  //     headers: {
+  //       'Content-Type': 'application/json',
+  //       Authorization: `Bearer ${currentUser.accessToken}`,
+  //     },
+  //     body: JSON.stringify(incoming),
+  //   })
+  //     .then(() => {
+  //       console.log('Incoming Updated');
+  //       // navigate("/incoming-created")
+  //     })
+  //     .catch((error) => {
+  //       console.error('Error updating incoming:', error);
+  //     });
+  // };
+
   const handleClick = (e) => {
     e.preventDefault();
     const update = {
@@ -55,26 +79,33 @@ const UpdateIncomingVerifier = () => {
     };
     console.log(update);
 
+    // fetch(`http://localhost:8080/bulkstock/status/${id}`, {
+    //   method: 'PUT',
+    //   headers: {
+    //     'Content-type': 'application/json',
+    //     Authorization: `Bearer ${currentUser.accessToken}`,
+    //   },
+    //   body: JSON.stringify(incoming),
+    // })
     fetch(`http://localhost:8080/bulkstock/status/${id}`, {
       method: 'PUT',
-      headers: { 'Content-type': 'application/json',
-      Authorization: `Bearer ${currentUser.accessToken}`,
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${currentUser.accessToken}`,
+      },
       body: JSON.stringify(incoming),
-    },
     })
       .then(() => {
         console.log('Incoming Updated');
-        // navigate("/incoming-created")
-
-       
+        // navigate('/mto-created');
       })
       .catch((error) => {
-        console.error('Error updating incoming:', error);
+        console.error('Error updating consignee:', error);
       });
   };
-  console.log(incoming,"formkdata");
-const brandName=incoming?.brandName[0]
-// console.log(formData,"formkdata");
+  console.log(incoming, 'formkdata');
+  const brandName = incoming?.brandName[0];
+  // console.log(formData,"formkdata");
   return (
     <>
       <Box>
@@ -387,16 +418,12 @@ const brandName=incoming?.brandName[0]
                 id='brandName'
                 label='brandName'
                 value={incoming?.brandName[0]}
-                
-                
+
                 //onChange={(e) => handleBrandChange(index, e.target.value)}
-                >
+              >
                 {state.nonPersisted.brand.data?.map((item, index) => (
-                  <MenuItem key={index} >
-                    {' '}
-                    {item?.brandName}
-                  </MenuItem>
-                  ))}
+                  <MenuItem key={index}> {item?.brandName}</MenuItem>
+                ))}
               </Select>
             </FormControl>
           </Grid>
@@ -407,7 +434,6 @@ const brandName=incoming?.brandName[0]
               <Select
                 labelId='demo-simple-select-label'
                 id='demo-simple-select'
-                
                 //value={age}
                 label='currency'
                 MenuProps={{
@@ -423,13 +449,15 @@ const brandName=incoming?.brandName[0]
                     currencyName: e.target.value,
                   })
                 }
-                >
-                {state.nonPersisted.currency.data?.currencyList?.map((item, index) => (
-                  <MenuItem key={index} value={item?.currencyName}>
-                    {' '}
-                    {item?.currencyName}
-                  </MenuItem>
-                ))}
+              >
+                {state.nonPersisted.currency.data?.currencyList?.map(
+                  (item, index) => (
+                    <MenuItem key={index} value={item?.currencyName}>
+                      {' '}
+                      {item?.currencyName}
+                    </MenuItem>
+                  )
+                )}
               </Select>
             </FormControl>
           </Grid>
@@ -508,30 +536,30 @@ const brandName=incoming?.brandName[0]
             />
           </Grid>
           <Grid item xs={12} sm={6}>
-          <FormControl fullWidth sx={{ width: '90%' }}>
-            <InputLabel id='demo-simple-select-label'>Status</InputLabel>
-            <Select
-              labelId='demo-simple-select-label'
-              id='demo-simple-select'
-              //value={age}
-              value={incoming ? incoming.status : ''}
-              InputProps={{ readOnly: true }}
-              label='Repair/service'
-              //onChange={handleChange}
-           
-              onChange={(e) => {
-                setIncoming({
-                  ...incoming,
-                  status: e.target.value,
-                });
-                setformData(e.target.value);
-              }}
-            >
-              <MenuItem value={'verified'}>Verified</MenuItem>
-              <MenuItem value={'rejected'}>Rejected</MenuItem>
-            </Select>
-          </FormControl>
-        </Grid>
+            <FormControl fullWidth sx={{ width: '90%' }}>
+              <InputLabel id='demo-simple-select-label'>Status</InputLabel>
+              <Select
+                labelId='demo-simple-select-label'
+                id='demo-simple-select'
+                //value={age}
+                value={incoming ? incoming.status : ''}
+                InputProps={{ readOnly: true }}
+                label='Repair/service'
+                //onChange={handleChange}
+
+                onChange={(e) => {
+                  setIncoming({
+                    ...incoming,
+                    status: e.target.value,
+                  });
+                  setformData(e.target.value);
+                }}
+              >
+                <MenuItem value={'verified'}>Verified</MenuItem>
+                <MenuItem value={'rejected'}>Rejected</MenuItem>
+              </Select>
+            </FormControl>
+          </Grid>
         </Grid>
         <Button
           variant='contained'

@@ -19,6 +19,7 @@ import {
   TableBody,
   TablePagination,
   Box,
+  TableFooter,
 } from '@mui/material';
 import { Link } from 'react-router-dom';
 import { fetchlocation } from '../redux/slice/location';
@@ -391,38 +392,59 @@ const ApprovedConsumed = () => {
             <TableBody>
               {filteredConsumed?.map((consumedRow) =>
                 // Render a row for each sublocation
-                consumedRow.item.map((item, index) => (
-                  <TableRow
-                    key={`${consumedRow.id}-${index}`} // Use a unique key for each row
-                    sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                  >
-                    <TableCell align='right'>
-                      {item.match(/^[^-(]*/)[0].trim()}
-                    </TableCell>
-                    <TableCell align='right'>
-                      {consumedRow.locationName}
-                    </TableCell>
-                    <TableCell align='right'>
-                      {consumedRow.subLocations}
-                    </TableCell>
-                    <TableCell align='right'>{consumedRow.quantity}</TableCell>
-                    <TableCell align='right'>{consumedRow.date}</TableCell>
-                    <TableCell align='right'>{consumedRow.status}</TableCell>
-                  </TableRow>
-                ))
+                consumedRow.item
+                  .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                  .map((item, index) => (
+                    <TableRow
+                      key={`${consumedRow.id}-${index}`} // Use a unique key for each row
+                      sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                    >
+                      <TableCell align='right'>
+                        {item.match(/^[^-(]*/)[0].trim()}
+                      </TableCell>
+                      <TableCell align='right'>
+                        {consumedRow.locationName}
+                      </TableCell>
+                      <TableCell align='right'>
+                        {consumedRow.subLocations}
+                      </TableCell>
+                      <TableCell align='right'>
+                        {consumedRow.quantity}
+                      </TableCell>
+                      <TableCell align='right'>{consumedRow.date}</TableCell>
+                      <TableCell align='right'>{consumedRow.status}</TableCell>
+                    </TableRow>
+                  ))
               )}
             </TableBody>
+            <TableFooter>
+              <TableRow>
+                <TableCell colSpan={7} align='center'>
+                  <hr style={{ width: '100%' }} />
+                  <TablePagination
+                    rowsPerPageOptions={[5, 10, 25]}
+                    component='div'
+                    count={consumed.length}
+                    rowsPerPage={rowsPerPage}
+                    page={page}
+                    onPageChange={handleChangePage}
+                    onRowsPerPageChange={handleChangeRowsPerPage}
+                    style={{ fontWeight: 'bolder' }}
+                    labelRowsPerPage={
+                      <span
+                        style={{
+                          fontWeight: 'bold',
+                        }}
+                      >
+                        Rows per page:
+                      </span>
+                    }
+                  />
+                </TableCell>
+              </TableRow>
+            </TableFooter>
           </Table>
         </TableContainer>
-        <TablePagination
-          rowsPerPageOptions={[5, 10, 25]}
-          component='div'
-          count={consumed.length}
-          rowsPerPage={rowsPerPage}
-          page={page}
-          onPageChange={handleChangePage}
-          onRowsPerPageChange={handleChangeRowsPerPage}
-        />
       </Grid>
     </>
   );
