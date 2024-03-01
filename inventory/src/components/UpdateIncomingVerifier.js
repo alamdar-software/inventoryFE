@@ -48,20 +48,17 @@ const UpdateIncomingVerifier = () => {
         setIncoming(result);
       });
   }, []);
-  const handleClick = (e) => {
-    e.preventDefault();
-    const update = {
-      incoming,
-    };
-    console.log(update);
+  const handleClick = async (e) => {
+   
+   
 
-    fetch(`http://localhost:8080/bulkstock/status/${id}`, {
+   await  fetch(`http://localhost:8080/bulkstock/status/${id}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${currentUser.accessToken}`,
       },
-      body: JSON.stringify(incoming),
+      body: JSON.stringify(formData),
     })
       .then(() => {
         console.log('Incoming Updated');
