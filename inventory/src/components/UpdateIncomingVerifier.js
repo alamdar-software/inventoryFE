@@ -22,6 +22,7 @@ const UpdateIncomingVerifier = () => {
     address: '',
     pn: '',
     entityName: '',
+    status: '',
   });
   const [incoming, setIncoming] = useState();
   const state = useSelector((state) => state);
