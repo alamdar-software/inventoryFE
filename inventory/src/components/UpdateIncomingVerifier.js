@@ -57,9 +57,10 @@ const UpdateIncomingVerifier = () => {
 
     fetch(`http://localhost:8080/bulkstock/status/${id}`, {
       method: 'PUT',
-      headers: { 'Content-type': 'application/json',
-      Authorization: `Bearer ${currentUser.accessToken}`
-    },
+      headers: {
+        'Content-type': 'application/json',
+        Authorization: `Bearer ${currentUser.accessToken}`,
+      },
       body: JSON.stringify(incoming),
     })
       .then(() => {
@@ -72,8 +73,9 @@ const UpdateIncomingVerifier = () => {
         console.error('Error updating incoming:', error);
       });
   };
-  console.log(incoming?.brandName[0],"skncjncjsnacnasj");
-
+  console.log(incoming,"formkdata");
+const brandName=incoming?.brandName[0]
+// console.log(formData,"formkdata");
   return (
     <>
       <Box>
