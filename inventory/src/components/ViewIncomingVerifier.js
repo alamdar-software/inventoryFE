@@ -46,6 +46,7 @@ const ViewIncomingVerifier = () => {
   const dispatch = useDispatch();
   const [totalCount, setTotalCount] = useState(0);
   const [highlightedRows, setHighlightedRows] = useState([]);
+  const [filteredIncoming, setFilteredIncoming] = useState([]);
   const { currentUser } = state.persisted.user;
 
   useEffect(() => {
@@ -65,10 +66,42 @@ const ViewIncomingVerifier = () => {
     setPage(0);
   };
 
+  // useEffect(() => {
+  //   fetch('http://localhost:8080/bulkstock/created', {
+  //     headers: {
+  //       Authorization: `Bearer ${currentUser.accessToken}`,
+  //     },
+  //   })
+  //     .then((res) => {
+  //       if (!res.ok) {
+  //         throw new Error(`HTTP error! Status: ${res.status}`);
+  //       }
+  //       return res.json();
+  //     })
+  //     .then((result) => {
+  //       console.log(result, 'jaiiiii');
+  //       if (result.stockViewList && Array.isArray(result.stockViewList)) {
+  //         setIncoming(result.stockViewList);
+  //         setTotalCount(result.totalCount || 0); // Set the total count
+  //       } else {
+  //         console.error('Invalid data structure:', result);
+  //         // Handle the situation where the expected data is not available
+  //         setIncoming([]);
+  //       }
+  //     })
+  //     .catch((error) => {
+  //       console.error('Error fetching internal transfer data:', error);
+  //       // Handle the error by setting an empty array or showing an error message
+  //       setIncoming([]);
+  //     });
+  // }, []);
+
   useEffect(() => {
     fetch('http://localhost:8080/bulkstock/created', {
+      method: 'GET',
       headers: {
         Authorization: `Bearer ${currentUser.accessToken}`,
+        'Content-Type': 'application/json',
       },
     })
       .then((res) => {
@@ -78,20 +111,12 @@ const ViewIncomingVerifier = () => {
         return res.json();
       })
       .then((result) => {
-        console.log(result,"jaiiiii");
-        if (result.stockViewList && Array.isArray(result.stockViewList)) {
-          setIncoming(result.stockViewList);
-          setTotalCount(result.totalCount||0); // Set the total count
-        } else {
-          console.error('Invalid data structure:', result);
-          // Handle the situation where the expected data is not available
-          setIncoming([]);
-        }
+        console.log(result);
+        setIncoming(result);
+        setFilteredIncoming(result);
       })
       .catch((error) => {
-        console.error('Error fetching internal transfer data:', error);
-        // Handle the error by setting an empty array or showing an error message
-        setIncoming([]);
+        console.error('Error fetching pickup data:', error);
       });
   }, []);
 
