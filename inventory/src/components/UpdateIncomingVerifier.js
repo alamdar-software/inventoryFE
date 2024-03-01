@@ -57,11 +57,10 @@ const UpdateIncomingVerifier = () => {
 
     fetch(`http://localhost:8080/bulkstock/status/${id}`, {
       method: 'PUT',
-      headers: {
-        'Content-type': 'application/json',
-        Authorization: `Bearer ${currentUser.accessToken}`,
-      },
+      headers: { 'Content-type': 'application/json',
+      Authorization: `Bearer ${currentUser.accessToken}`,
       body: JSON.stringify(incoming),
+    },
     })
       .then(() => {
         console.log('Incoming Updated');
