@@ -94,7 +94,7 @@ const UpdateIncomingVerifier = () => {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${currentUser.accessToken}`,
       },
-      body: JSON.stringify(incoming),
+      body: JSON.stringify(formData),
     })
       .then(() => {
         console.log('Incoming Updated');
