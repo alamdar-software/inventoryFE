@@ -18,11 +18,7 @@ import { fetchBrand } from '../redux/slice/BrandSlice';
 
 const UpdateIncomingVerifier = () => {
   const [formData, setformData] = useState({
-    locationName: '',
-    address: '',
-    pn: '',
-    entityName: '',
-    status:""
+   
   });
   const [incoming, setIncoming] = useState();
   const state = useSelector((state) => state);
@@ -45,24 +41,38 @@ const UpdateIncomingVerifier = () => {
     })
       .then((res) => res.json())
       .then((result) => {
+
+        const filteredResult = { ...result };
+    delete filteredResult.dataType;
         console.log(result,"bulkiiiiiiiii");
-        setIncoming(result);
+        setIncoming(filteredResult);
       });
   }, []);
 
   console.log(incoming,"after verify");
   console.log(formData,"formkdata");
-  const handleClick = async () => {
-    const res = await fetch(`http://localhost:8080/bulkstock/status/${id}`, {
-      method: 'PUT',
-      headers: {Authorization: `Bearer ${currentUser.accessToken}`,
-      },
+  const handleClick = (e) => {
+    e.preventDefault();
+    const update = {
+      incoming,
+    };
+    console.log(update);
 
+    fetch(`http://localhost:8080/bulkstock/status/${id}`, {
+      method: 'PUT',
+      headers: {
+        'Content-type': 'application/json',
+        Authorization: `Bearer ${currentUser.accessToken}`,
+      },
       body: JSON.stringify(formData),
-    });
-    const data = await res.json();
-    console.log(data);
-   
+    })
+      .then(() => {
+        console.log('incoming Updated');
+        
+      })
+      .catch((error) => {
+        console.error('Error updating consignee:', error);
+      });
   };
 
 
