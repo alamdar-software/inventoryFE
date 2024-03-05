@@ -74,10 +74,10 @@ const ViewIncomingVerified = () => {
     })
       .then((res) => res.json())
       .then((result) => {
-        console.log(result);
+        console.log(result,"mein jaha rahoooo");
 
-        if (Array.isArray(result)) {
-          setIncoming(result);
+        if (Array.isArray(result.stockViewList)) {
+          setIncoming(result.stockViewList);
           setTotalCount(result.totalCount || 0); // Set the total count
         } else {
           console.error('Received data does not contain an array:', result);
@@ -320,6 +320,9 @@ const ViewIncomingVerified = () => {
                   Purchase Date
                 </TableCell>
                 <TableCell align='right' sx={{ fontWeight: 'bold' }}>
+                  Incoming Stock
+                </TableCell>
+                <TableCell align='right' sx={{ fontWeight: 'bold' }}>
                   Status
                 </TableCell>
               </TableRow>
@@ -335,6 +338,7 @@ const ViewIncomingVerified = () => {
                     <TableCell align='right'>{item.quantity}</TableCell>
                     <TableCell align='right'>{item.purchaseOrder}</TableCell>
                     <TableCell align='right'>{item.date}</TableCell>
+                    <TableCell align='right'>{item.dataType}</TableCell>
                     <TableCell align='right'>{item.status}</TableCell>
 
                     <Link to={`/updateIncoming-verifier/${item.id}`}>
