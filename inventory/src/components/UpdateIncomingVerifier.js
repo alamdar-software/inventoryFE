@@ -62,17 +62,19 @@ const UpdateIncomingVerifier = () => {
         'Content-type': 'application/json',
         Authorization: `Bearer ${currentUser.accessToken}`,
       },
-      body: JSON.stringify(formData),
+      body: JSON.stringify(incoming),
     })
       .then(() => {
+        console.log(formData,"after updating");
         console.log('incoming Updated');
       })
       .catch((error) => {
         console.error('Error updating consignee:', error);
       });
   };
-
-  // console.log(formData,"formkdata");
+  console.log(incoming, 'formkdata');
+  const brandName = incoming?.brandName[0];
+  console.log(formData,"formkdata2");
   return (
     <>
       <Box>
