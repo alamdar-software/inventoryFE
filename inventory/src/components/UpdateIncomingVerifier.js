@@ -65,7 +65,7 @@ const UpdateIncomingVerifier = () => {
       body: JSON.stringify(incoming),
     })
       .then(() => {
-        console.log(formData,"after updating");
+        console.log(formData, 'after updating');
         console.log('incoming Updated');
       })
       .catch((error) => {
@@ -74,7 +74,7 @@ const UpdateIncomingVerifier = () => {
   };
   console.log(incoming, 'formkdata');
   const brandName = incoming?.brandName[0];
-  console.log(formData,"formkdata2");
+  console.log(formData, 'formkdata2');
   return (
     <>
       <Box>
