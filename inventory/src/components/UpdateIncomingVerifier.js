@@ -17,9 +17,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { fetchBrand } from '../redux/slice/BrandSlice';
 
 const UpdateIncomingVerifier = () => {
-  const [formData, setformData] = useState({
-   
-  });
+  const [formData, setformData] = useState({});
   const [incoming, setIncoming] = useState();
   const state = useSelector((state) => state);
   const { currentUser } = state.persisted.user;
@@ -41,22 +39,15 @@ const UpdateIncomingVerifier = () => {
     })
       .then((res) => res.json())
       .then((result) => {
-
         const filteredResult = { ...result };
-    delete filteredResult.dataType;
-        console.log(result,"bulkiiiiiiiii");
+        delete filteredResult.dataType;
+        console.log(result, 'bulkiiiiiiiii');
         setIncoming(filteredResult);
       });
   }, []);
-  // const handleClick = (e) => {
-  //   e.preventDefault();
-  //   const update = {
-  //     incoming,
-  //   };
-  //   console.log(update);
 
-  console.log(incoming,"after verify");
-  console.log(formData,"formkdata");
+  console.log(incoming, 'after verify');
+  console.log(formData, 'formkdata');
   const handleClick = (e) => {
     e.preventDefault();
     const update = {
@@ -75,7 +66,6 @@ const UpdateIncomingVerifier = () => {
       .then(() => {
         console.log(formData,"after updating");
         console.log('incoming Updated');
-        
       })
       .catch((error) => {
         console.error('Error updating consignee:', error);
@@ -521,17 +511,14 @@ const UpdateIncomingVerifier = () => {
                 id='demo-simple-select'
                 //value={age}
                 value={incoming ? incoming.status : ''}
-                InputProps={{ readOnly: true }}
                 label='Repair/service'
                 //onChange={handleChange}
-
-                onChange={(e) => {
-                  setIncoming({
+                onChange={(e) =>
+                  setformData({
                     ...incoming,
                     status: e.target.value,
-                  });
-                  setformData(e.target.value);
-                }}
+                  })
+                }
               >
                 <MenuItem value={'verified'}>Verified</MenuItem>
                 <MenuItem value={'rejected'}>Rejected</MenuItem>
