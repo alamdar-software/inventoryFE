@@ -75,10 +75,8 @@ const ApprovalIncoming = () => {
       .then((result) => {
         console.log(result);
 
-        if (Array.isArray(result.stockViewList
-          )) {
-          setIncoming(result.stockViewList
-            );
+        if (Array.isArray(result.stockViewList)) {
+          setIncoming(result.stockViewList);
           setTotalCount(result.totalCount || 0); // Set the total count
         } else {
           console.error('Received data does not contain an array:', result);
@@ -320,6 +318,9 @@ const ApprovalIncoming = () => {
                   Purchase Date
                 </TableCell>
                 <TableCell align='right' sx={{ fontWeight: 'bold' }}>
+                  Incoming Stock
+                </TableCell>
+                <TableCell align='right' sx={{ fontWeight: 'bold' }}>
                   Status
                 </TableCell>
               </TableRow>
@@ -337,6 +338,7 @@ const ApprovalIncoming = () => {
                       <TableCell align='right'>{item.quantity}</TableCell>
                       <TableCell align='right'>{item.purchaseOrder}</TableCell>
                       <TableCell align='right'>{item.date}</TableCell>
+                      <TableCell align='right'>{item.dataType}</TableCell>
                       <TableCell align='right'>{item.status}</TableCell>
 
                       <Link to={`/updateIncomingApproval/${item.id}`}>
