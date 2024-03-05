@@ -75,8 +75,10 @@ const ApprovalIncoming = () => {
       .then((result) => {
         console.log(result);
 
-        if (Array.isArray(result)) {
-          setIncoming(result);
+        if (Array.isArray(result.stockViewList
+          )) {
+          setIncoming(result.stockViewList
+            );
           setTotalCount(result.totalCount || 0); // Set the total count
         } else {
           console.error('Received data does not contain an array:', result);
