@@ -17,13 +17,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { fetchBrand } from '../redux/slice/BrandSlice';
 
 const UpdateIncomingVerifier = () => {
-  const [formData, setformData] = useState({
-    locationName: '',
-    address: '',
-    pn: '',
-    entityName: '',
-    status: '',
-  });
+  const [formData, setformData] = useState({});
   const [incoming, setIncoming] = useState();
   const state = useSelector((state) => state);
   const { currentUser } = state.persisted.user;
@@ -45,34 +39,15 @@ const UpdateIncomingVerifier = () => {
     })
       .then((res) => res.json())
       .then((result) => {
+        const filteredResult = { ...result };
+        delete filteredResult.dataType;
         console.log(result, 'bulkiiiiiiiii');
-        setIncoming(result);
+        setIncoming(filteredResult);
       });
   }, []);
-  // const handleClick = (e) => {
-  //   e.preventDefault();
-  //   const update = {
-  //     incoming,
-  //   };
-  //   console.log(update);
 
-  //   fetch(`http://localhost:8080/bulkstock/status/${id}`, {
-  //     method: 'PUT',
-  //     headers: {
-  //       'Content-Type': 'application/json',
-  //       Authorization: `Bearer ${currentUser.accessToken}`,
-  //     },
-  //     body: JSON.stringify(incoming),
-  //   })
-  //     .then(() => {
-  //       console.log('Incoming Updated');
-  //       // navigate("/incoming-created")
-  //     })
-  //     .catch((error) => {
-  //       console.error('Error updating incoming:', error);
-  //     });
-  // };
-
+  console.log(incoming, 'after verify');
+  console.log(formData, 'formkdata');
   const handleClick = (e) => {
     e.preventDefault();
     const update = {
@@ -80,32 +55,22 @@ const UpdateIncomingVerifier = () => {
     };
     console.log(update);
 
-    // fetch(`http://localhost:8080/bulkstock/status/${id}`, {
-    //   method: 'PUT',
-    //   headers: {
-    //     'Content-type': 'application/json',
-    //     Authorization: `Bearer ${currentUser.accessToken}`,
-    //   },
-    //   body: JSON.stringify(incoming),
-    // })
     fetch(`http://localhost:8080/bulkstock/status/${id}`, {
       method: 'PUT',
       headers: {
-        'Content-Type': 'application/json',
+        'Content-type': 'application/json',
         Authorization: `Bearer ${currentUser.accessToken}`,
       },
       body: JSON.stringify(formData),
     })
       .then(() => {
-        console.log('Incoming Updated');
-        // navigate('/mto-created');
+        console.log('incoming Updated');
       })
       .catch((error) => {
         console.error('Error updating consignee:', error);
       });
   };
-  console.log(incoming, 'formkdata');
-  const brandName = incoming?.brandName[0];
+
   // console.log(formData,"formkdata");
   return (
     <>
@@ -544,17 +509,14 @@ const UpdateIncomingVerifier = () => {
                 id='demo-simple-select'
                 //value={age}
                 value={incoming ? incoming.status : ''}
-                InputProps={{ readOnly: true }}
                 label='Repair/service'
                 //onChange={handleChange}
-
-                onChange={(e) => {
-                  setIncoming({
+                onChange={(e) =>
+                  setformData({
                     ...incoming,
                     status: e.target.value,
-                  });
-                  setformData(e.target.value);
-                }}
+                  })
+                }
               >
                 <MenuItem value={'verified'}>Verified</MenuItem>
                 <MenuItem value={'rejected'}>Rejected</MenuItem>
