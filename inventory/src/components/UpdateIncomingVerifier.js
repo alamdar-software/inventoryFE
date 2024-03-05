@@ -34,7 +34,7 @@ const UpdateIncomingVerifier = () => {
   }, []);
 
   useEffect(() => {
-    fetch(`http://localhost:8080/bulkstock/getBoth/${id}`,{
+    fetch(`http://localhost:8080/bulkstock/getBoth/${id}`, {
       headers: {
         Authorization: `Bearer ${currentUser.accessToken}`,
       },
@@ -48,6 +48,12 @@ const UpdateIncomingVerifier = () => {
         setIncoming(filteredResult);
       });
   }, []);
+  // const handleClick = (e) => {
+  //   e.preventDefault();
+  //   const update = {
+  //     incoming,
+  //   };
+  //   console.log(update);
 
   console.log(incoming,"after verify");
   console.log(formData,"formkdata");
@@ -74,10 +80,9 @@ const UpdateIncomingVerifier = () => {
         console.error('Error updating consignee:', error);
       });
   };
-
-
-
-// console.log(formData,"formkdata");
+  console.log(incoming, 'formkdata');
+  const brandName = incoming?.brandName[0];
+  // console.log(formData,"formkdata");
   return (
     <>
       <Box>
@@ -390,16 +395,12 @@ const UpdateIncomingVerifier = () => {
                 id='brandName'
                 label='brandName'
                 value={incoming?.brandName[0]}
-                
-                
+
                 //onChange={(e) => handleBrandChange(index, e.target.value)}
-                >
+              >
                 {state.nonPersisted.brand.data?.map((item, index) => (
-                  <MenuItem key={index} >
-                    {' '}
-                    {item?.brandName}
-                  </MenuItem>
-                  ))}
+                  <MenuItem key={index}> {item?.brandName}</MenuItem>
+                ))}
               </Select>
             </FormControl>
           </Grid>
@@ -410,7 +411,6 @@ const UpdateIncomingVerifier = () => {
               <Select
                 labelId='demo-simple-select-label'
                 id='demo-simple-select'
-                
                 //value={age}
                 label='currency'
                 MenuProps={{
@@ -426,13 +426,15 @@ const UpdateIncomingVerifier = () => {
                     currencyName: e.target.value,
                   })
                 }
-                >
-                {state.nonPersisted.currency.data?.currencyList?.map((item, index) => (
-                  <MenuItem key={index} value={item?.currencyName}>
-                    {' '}
-                    {item?.currencyName}
-                  </MenuItem>
-                ))}
+              >
+                {state.nonPersisted.currency.data?.currencyList?.map(
+                  (item, index) => (
+                    <MenuItem key={index} value={item?.currencyName}>
+                      {' '}
+                      {item?.currencyName}
+                    </MenuItem>
+                  )
+                )}
               </Select>
             </FormControl>
           </Grid>
@@ -511,29 +513,30 @@ const UpdateIncomingVerifier = () => {
             />
           </Grid>
           <Grid item xs={12} sm={6}>
-          <FormControl fullWidth sx={{ width: '90%' }}>
-            <InputLabel id='demo-simple-select-label'>Status</InputLabel>
-            <Select
-              labelId='demo-simple-select-label'
-              id='demo-simple-select'
-              //value={age}
-              value={incoming ? incoming.status : ''}
-             
-              label='Repair/service'
-              //onChange={handleChange}
-              onChange={(e) =>
-                setformData({
-                  ...incoming,
-                  status: e.target.value,
-                })
-              }
-           
-            >
-              <MenuItem value={'verified'}>Verified</MenuItem>
-              <MenuItem value={'rejected'}>Rejected</MenuItem>
-            </Select>
-          </FormControl>
-        </Grid>
+            <FormControl fullWidth sx={{ width: '90%' }}>
+              <InputLabel id='demo-simple-select-label'>Status</InputLabel>
+              <Select
+                labelId='demo-simple-select-label'
+                id='demo-simple-select'
+                //value={age}
+                value={incoming ? incoming.status : ''}
+                InputProps={{ readOnly: true }}
+                label='Repair/service'
+                //onChange={handleChange}
+
+                onChange={(e) => {
+                  setIncoming({
+                    ...incoming,
+                    status: e.target.value,
+                  });
+                  setformData(e.target.value);
+                }}
+              >
+                <MenuItem value={'verified'}>Verified</MenuItem>
+                <MenuItem value={'rejected'}>Rejected</MenuItem>
+              </Select>
+            </FormControl>
+          </Grid>
         </Grid>
         <Button
           variant='contained'
