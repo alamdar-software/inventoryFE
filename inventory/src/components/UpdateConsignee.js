@@ -60,7 +60,7 @@ const UpdateConsignee = () => {
       body: JSON.stringify(consignee),
     })
       .then(() => {
-        toast.success('🦄 Category Added Successfully!', {
+        toast.success('🦄 Consignee Updated Successfully!', {
           position: "top-right",
           autoClose: 3000,
           hideProgressBar: false,
@@ -80,7 +80,7 @@ const UpdateConsignee = () => {
         console.error('Error updating consignee:', error);
       });
   };
-
+console.log(consignee,"heyyy");
   return (
     <>
       <Grid>
