@@ -116,12 +116,12 @@ const UpdateConsignee = () => {
               id='outlined-basic'
               label='Name'
               variant='outlined'
-              value={consignee ? consignee.name : ''}
+              value={consignee ? consignee.consigneeName : ''}
               //   onChange={(e) => setPickupAddress(e.target.value)}
               onChange={(e) => {
                 setConsignee({
                   ...consignee,
-                  name: e.target.value,
+                  consigneeName: e.target.value,
                 });
                 setformData(e.target.value);
               }}
