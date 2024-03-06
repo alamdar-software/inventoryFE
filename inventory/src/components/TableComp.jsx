@@ -13,6 +13,7 @@ import ButtonGroup from "@mui/material/ButtonGroup";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { toast } from "react-toastify";
 
 const columns = [
   { id: "Currency", label: "Currency", minWidth: 200 },
@@ -53,7 +54,20 @@ export default function TableComp({ data }) {
       if (response.ok) {
         // Update the state or fetch data again after deletion
         // For simplicity, you can reload the page or fetch data again
-        window.location.reload();
+        toast.warn('🦄 Entity Deleted Successfully!', {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+
+        });
+        setTimeout(() => {
+          window.location.reload();
+        }, 3000);
       } else {
         // Handle the error if deletion fails
         console.error("Delete failed");

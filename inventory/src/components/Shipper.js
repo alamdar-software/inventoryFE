@@ -18,6 +18,7 @@ import {
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import Swal from 'sweetalert2';
 
 const Shipper = () => {
@@ -69,7 +70,20 @@ const Shipper = () => {
       body: JSON.stringify(formData),
     }).then(() => {
       console.log('Shipper Added');
-      window.location.reload();
+      toast.success('🦄 Shipper Added Successfully!', {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+        
+        });
+        setTimeout(() => {
+          window.location.reload();
+      }, 3000);
     });
   };
 
@@ -107,7 +121,20 @@ const Shipper = () => {
     })
       .then(() => {
         console.log('Shipper Updated');
-        window.location.reload();
+        toast.warn('🦄 Shipper Deleted Successfully!', {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+
+        });
+        setTimeout(() => {
+          window.location.reload();
+        }, 3000);
       })
       .catch((error) => {
         console.error('Error updating shipper:', error);

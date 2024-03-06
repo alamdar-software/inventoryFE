@@ -21,6 +21,7 @@ import { Link, useLocation } from 'react-router-dom';
 import ButtonGroup from '@mui/material/ButtonGroup';
 import UomTable from './UomTable';
 import { useSelector } from 'react-redux';
+import { toast } from 'react-toastify';
 export const Uom = () => {
   const location = useLocation();
   const [unit, setunit] = useState({
@@ -64,7 +65,22 @@ export const Uom = () => {
       body: JSON.stringify(unit),
     });
     const data = await res.text();
-    window.location.reload();
+
+    toast.success('🦄 Uom Added Successfully!', {
+      position: "top-right",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "dark",
+      
+      });
+      setTimeout(() => {
+        window.location.reload();
+    }, 3000);
+   
   };
   const handleChange = (e) => {
     setunit({
@@ -84,7 +100,21 @@ export const Uom = () => {
       if (response.ok) {
         // Update the state or fetch data again after deletion
         // For simplicity, you can reload the page or fetch data again
-        window.location.reload();
+
+       toast.warn('🦄 Uom Deleted Successfully!', {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+          
+          });
+          setTimeout(() => {
+            window.location.reload();
+        }, 3000);
       } else {
         // Handle the error if deletion fails
         console.error('Delete failed');

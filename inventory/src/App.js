@@ -147,6 +147,7 @@ import ApprovalIncoming from './components/ApprovalIncoming.js';
 import UpdateIncomingApproval from './components/UpdateIncomingApproval.js';
 import React from 'react';
 import { ToastContainer } from 'react-toastify';
+import { TableContainer } from '@mui/material';
 
 const theme = createTheme({
   palette: {
@@ -286,6 +287,7 @@ theme="light"
                   path='/uom'
                   element={
                     <Sidebar>
+                      <ToastContainer/>
                       <Uom />
                     </Sidebar>
                   }
@@ -343,6 +345,7 @@ theme="light"
                   path='/currency'
                   element={
                     <Sidebar>
+                      <ToastContainer/>
                       <Currency />
                     </Sidebar>
                   }
@@ -351,6 +354,7 @@ theme="light"
                   path='/currency/update/:id'
                   element={
                     <Sidebar>
+                      <ToastContainer/>
                       <UpdateCurrency />
                     </Sidebar>
                   }
@@ -1210,6 +1214,7 @@ theme="light"
                     path='/Uom/update/:id'
                     element={
                       <Sidebar>
+                        <ToastContainer/>
                         <UpdateUom />
                       </Sidebar>
                     }
