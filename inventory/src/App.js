@@ -399,6 +399,7 @@ theme="light"
                   path='/entity'
                   element={
                     <Sidebar>
+                      <ToastContainer/>
                       <Entity />
                     </Sidebar>
                   }

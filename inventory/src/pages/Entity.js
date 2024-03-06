@@ -14,6 +14,7 @@ import { useSelector } from "react-redux";
 // const currency = {
 //   currencyName: "",
 // };
+import {  toast } from 'react-toastify';
 
 export default function Entity() {
   const { currentUser } = useSelector((state) => state.persisted.user);
@@ -51,7 +52,20 @@ export default function Entity() {
     });
     const data = await res.json();
     console.log(data);
-    window.location.reload();
+    toast.success('🦄 Entity Added Successfully!', {
+      position: "top-right",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "dark",
+      
+      });
+      setTimeout(() => {
+        window.location.reload();
+    }, 3000);
 
     // fetch('http://localhost:8080/location/add', {
     //   method: 'POST',
