@@ -37,7 +37,7 @@ export const Location = () => {
       console.log('Location Added');
       setTimeout(() => {
         setMessage(false);
-      }, 4000); // Set timeout to hide message after 4 seconds
+      }, 3000); // Set timeout to hide message after 4 seconds
     });
   };
 
@@ -132,7 +132,10 @@ export const Location = () => {
                   fontWeight: 'bolder',
                   padding: 1.5,
                   marginTop: 3,
-                  backgroundColor: '#74D680',
+                 
+                  backgroundColor: "#118ab2",
+backgroundImage: "linear-gradient(319deg, #118ab2 0%, #06d6a0 37%, #ffd166 100%)",
+
                   width: '400px',
                   textAlign: 'center',
                   borderRadius: '10px',
