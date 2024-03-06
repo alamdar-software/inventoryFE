@@ -26,6 +26,7 @@ import { useDispatch } from 'react-redux';
 import { fetchlocation } from '../redux/slice/location';
 import { Link } from 'react-router-dom';
 import { Box } from '@mui/system';
+import { toast } from 'react-toastify';
 
 const Consignee = () => {
   const state = useSelector((state) => state);
@@ -75,7 +76,22 @@ const Consignee = () => {
       });
       const data = await res.json();
       console.log(data, 'resdata');
-      window.location.reload();
+
+      toast.success('🦄 Consignee Added Successfully!', {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+        
+        });
+        setTimeout(() => {
+          window.location.reload();
+      }, 3000);
+     
     } catch (error) {
       console.error('Error during fetch:', error);
     }
@@ -96,15 +112,32 @@ const Consignee = () => {
 
   const deleteConsignee = async (id) => {
     console.log(id);
-    alert('Deleted Successfully!');
+
     fetch(`http://localhost:8080/consignee/delete/${id}`, {
       method: 'DELETE',
-      headers: { 'Content-type': 'application/json' },
+      headers: { 'Content-type': 'application/json',
+      Authorization: `Bearer ${currentUser.accessToken}`,
+    },
       body: JSON.stringify(consignee),
     })
       .then(() => {
         console.log('Consignee Updated');
-        window.location.reload();
+
+        toast.warn('🦄 Consignee deleted Successfully!', {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+          
+          });
+          setTimeout(() => {
+            window.location.reload();
+        }, 3000);
+    
       })
       .catch((error) => {
         console.error('Error updating consignee:', error);
@@ -297,49 +330,53 @@ const Consignee = () => {
             mt: '33px',
             mb: '17px',
             marginLeft: 'auto',
-            marginRight: 'auto',
+            marginleft: 'auto',
             display: 'block',
+            mr:"650px"
           }}
         >
           Add
         </Button>
       </Card>
 
-      <Grid sx={{ mt: '33px', width: '100%', overflowX: 'scroll' }}>
+      <Grid sx={{ mt: '33px', width: '99%', overflowX: 'scroll' }}>
         <TableContainer
           component={Paper}
           sx={{
             borderRadius: '33px',
             borderBottom: '2px solid yellow',
-            width: '110%',
+            width: '100%',
           }}
         >
-          <Table sx={{ minWidth: 650 }} aria-label='simple table'>
+          <Table sx={{ minWidth: 600 }} aria-label='simple table'>
             <TableHead>
               <TableRow>
-                <TableCell align='right' sx={{ fontWeight: 'bold' }}>
+                <TableCell align='left' sx={{ fontWeight: 'bold' }}>
                   Name
                 </TableCell>
-                <TableCell align='right' sx={{ fontWeight: 'bold' }}>
+                <TableCell align='left' sx={{ fontWeight: 'bold' }}>
                   Address
                 </TableCell>
-                <TableCell align='right' sx={{ fontWeight: 'bold' }}>
+                <TableCell align='left' sx={{ fontWeight: 'bold' }}>
                   Pincode
                 </TableCell>
-                <TableCell align='right' sx={{ fontWeight: 'bold' }}>
+                <TableCell align='left' sx={{ fontWeight: 'bold' }}>
                   Email
                 </TableCell>
-                <TableCell align='right' sx={{ fontWeight: 'bold' }}>
+                <TableCell align='left' sx={{ fontWeight: 'bold' }}>
                   Phone Number
                 </TableCell>
-                <TableCell align='right' sx={{ fontWeight: 'bold' }}>
+                <TableCell align='left' sx={{ fontWeight: 'bold' }}>
                   Delivery Address
                 </TableCell>
-                <TableCell align='right' sx={{ fontWeight: 'bold' }}>
+                <TableCell align='left' sx={{ fontWeight: 'bold' }}>
                   Notify Party
                 </TableCell>
-                <TableCell align='right' sx={{ fontWeight: 'bold' }}>
+                <TableCell align='left' sx={{ fontWeight: 'bold' }}>
                   Location
+                </TableCell>
+                <TableCell align='left' sx={{ fontWeight: 'bold' }}>
+                  Action
                 </TableCell>
               </TableRow>
             </TableHead>
@@ -354,18 +391,18 @@ const Consignee = () => {
                     {/* <TableCell component='th' scope='row'>
                   {attendence.name}
                 </TableCell> */}
-                    <TableCell align='right'>
+                    <TableCell align='left'>
                       {consignee.consigneeName}
                     </TableCell>
-                    <TableCell align='right'>{consignee.address}</TableCell>
-                    <TableCell align='right'>{consignee.pincode}</TableCell>
-                    <TableCell align='right'>{consignee.email}</TableCell>
-                    <TableCell align='right'>{consignee.phoneNumber}</TableCell>
-                    <TableCell align='right'>
+                    <TableCell align='left'>{consignee.address}</TableCell>
+                    <TableCell align='left'>{consignee.pincode}</TableCell>
+                    <TableCell align='left'>{consignee.email}</TableCell>
+                    <TableCell align='left'>{consignee.phoneNumber}</TableCell>
+                    <TableCell align='left'>
                       {consignee.deliveryAddress}
                     </TableCell>
-                    <TableCell align='right'>{consignee.notifyParty}</TableCell>
-                    <TableCell align='right'>
+                    <TableCell align='left'>{consignee.notifyParty}</TableCell>
+                    <TableCell align='left'>
                       {consignee.locationName}
                     </TableCell>
                     <Box>
@@ -374,7 +411,7 @@ const Consignee = () => {
                       </Link>
 
                       <Button
-                        sx={{ marginLeft: '11px' }}
+                        sx={{ marginLeft: '11px',mt:"10px" }}
                         variant='contained'
                         color='secondary'
                         onClick={() => deleteConsignee(consignee.id)}
@@ -388,7 +425,7 @@ const Consignee = () => {
             <TableFooter>
               <TableRow>
                 <TableCell colSpan={7} align='center'>
-                  <hr style={{ width: '100%' }} />
+                  <hr style={{ width: '90%' }} />
                   <TablePagination
                     rowsPerPageOptions={[5, 10, 25]}
                     component='div'

@@ -239,6 +239,7 @@ function App() {
                   path='/item'
                   element={
                     <Sidebar>
+                      <ToastContainer/>
                       <Item />
                     </Sidebar>
                   }
@@ -247,6 +248,7 @@ function App() {
                   path='/updateItem/:id'
                   element={
                     <Sidebar>
+                      <ToastContainer/>
                       <UpdateItem />
                     </Sidebar>
                   }
@@ -314,6 +316,7 @@ theme="light"
                   path='/consignee'
                   element={
                     <Sidebar>
+                      <ToastContainer/>
                       <Consignee />
                     </Sidebar>
                   }
@@ -365,6 +368,7 @@ theme="light"
                   path='/brand'
                   element={
                     <Sidebar>
+                      <ToastContainer/>
                       <Brand />
                     </Sidebar>
                   }
@@ -373,6 +377,7 @@ theme="light"
                   path='/brand/edit/:id'
                   element={
                     <Sidebar>
+                      <ToastContainer/>
                       <UpdateBrand />
                     </Sidebar>
                   }
@@ -381,6 +386,7 @@ theme="light"
                   path='/category'
                   element={
                     <Sidebar>
+                      <ToastContainer/>
                       <Category />
                     </Sidebar>
                   }
@@ -389,6 +395,7 @@ theme="light"
                   path='/category/edit/:id'
                   element={
                     <Sidebar>
+                       <ToastContainer/>
                       <UpdateCategory />
                     </Sidebar>
                   }
@@ -397,6 +404,7 @@ theme="light"
                   path='/Items'
                   element={
                     <Sidebar>
+                      <ToastContainer/>
                       <ViewItem />
                     </Sidebar>
                   }
@@ -422,6 +430,7 @@ theme="light"
                   path='/updateConsignee/:id'
                   element={
                     <Sidebar>
+                      <ToastContainer/>
                       <UpdateConsignee />
                     </Sidebar>
                   }
@@ -468,6 +477,7 @@ theme="light"
                   path='/add-inventory'
                   element={
                     <Sidebar>
+                      <ToastContainer/>
                       <Inventory />
                     </Sidebar>
                   }
@@ -871,6 +881,7 @@ theme="light"
                   path='/updateInventory/:id'
                   element={
                     <Sidebar>
+                      <ToastContainer/>
                       <UpdateInventory />
                     </Sidebar>
                   }

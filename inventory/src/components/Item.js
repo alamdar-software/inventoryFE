@@ -21,6 +21,7 @@ import { useEffect } from 'react';
 import { fetchUom } from '../redux/slice/UomSlice';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 const Item = () => {
   const [formData, setformData] = useState({
@@ -60,7 +61,18 @@ const Item = () => {
         body: JSON.stringify(formData),
       });
       const data = await res.json();
-      console.log(data);
+      toast.success('🦄 Item Added Successfully!', {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+        
+        });
+       
     } catch (error) {}
   };
 
@@ -218,7 +230,7 @@ const Item = () => {
                 mt: '33px',
                 mb: '17px',
                 mx: 'auto', // Center horizontally
-                mr: '70px',
+                mr: '480px',
               }}
             >
               View Item

@@ -9,6 +9,7 @@ import {
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 export const UpdateShipper = () => {
   const [shipperList, setShipperList] = useState();
@@ -55,8 +56,21 @@ export const UpdateShipper = () => {
       body: JSON.stringify(shipperList),
     })
       .then(() => {
-        console.log('Shipper Updated');
-        navigate('/shipper');
+        toast.success('🦄 Shipper Updated Successfully!', {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+          
+          });
+          setTimeout(() => {
+           
+            navigate('/shipper');
+        }, 3000);
       })
       .catch((error) => {
         console.error('Error updating class:', error);

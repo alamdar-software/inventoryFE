@@ -17,6 +17,7 @@ import {
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Link, Navigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 const ViewItem = () => {
   const [formData, setformData] = useState({
@@ -72,7 +73,21 @@ const ViewItem = () => {
     })
       .then(() => {
         console.log('item Deleted');
-        window.location.reload();
+        toast.warn('🦄 Category Added Successfully!', {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+          
+          });
+          setTimeout(() => {
+            window.location.reload();
+        }, 3000);
+       
       })
       .catch((error) => {
         console.error('Error updating location:', error);
