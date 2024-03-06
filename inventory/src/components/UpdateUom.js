@@ -9,6 +9,7 @@ import {
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 const UpdateUom = () => {
   const [formData, setformData] = useState({
@@ -46,8 +47,21 @@ const UpdateUom = () => {
       body: JSON.stringify(formData),
     });
     const data = await res.text();
-    console.log(data);
-    navigate('/uom');
+    toast.success('🦄 Category Added Successfully!', {
+      position: "top-right",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "dark",
+      
+      });
+      setTimeout(() => {
+     
+        navigate('/uom');
+    }, 3000);
   };
   return (
     <>
