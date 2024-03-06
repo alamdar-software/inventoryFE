@@ -19,12 +19,14 @@ import {
   TableBody,
   TablePagination,
   TableFooter,
+  Box,
 } from '@mui/material';
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 const Pickup = () => {
   const [pickupAddress, setPickupAddress] = useState();
   const [pic, setPic] = useState();
+  const [message, setMessage] = useState(false)
   const [companyName, setCompanyName] = useState();
   const [countryCode, setCountryCode] = useState();
   const [contactNumber, setContactNumber] = useState();
@@ -85,9 +87,13 @@ const Pickup = () => {
       },
       body: JSON.stringify(attendence),
     }).then(() => {
+      setMessage(true);
       console.log('Pickup Added');
-      window.location.reload();
+      setTimeout(() => {
+        setMessage(false);
+      }, 6000);
     });
+    window.location.reload();
   };
   useEffect(() => {
     const getPickup = async () => {
@@ -256,6 +262,48 @@ const Pickup = () => {
         >
           Add
         </Button>
+        <div style={{ display: 'flex', justifyContent: 'center', marginTop: '5px' }}>
+            {message && (
+              <Box
+                sx={{
+                  color: 'black',
+                  fontWeight: 'bolder',
+                  padding: 1.5,
+                  marginTop: 3,
+                  marginBottom:2,
+                 
+                  backgroundColor: "#118ab2",
+backgroundImage: "linear-gradient(319deg, #118ab2 0%, #06d6a0 37%, #ffd166 100%)",
+
+                  width: '400px',
+                  textAlign: 'center',
+                  borderRadius: '10px',
+                  transition: 'opacity 0.5s ease-in-out',
+                  opacity: 1, // Set initial opacity to 1
+                }}
+              >
+                <p sx={{ color: 'white', margin: 0 }}>Location Added Successfully</p>
+              </Box>
+            )}
+            {!message && (
+              <Box
+                sx={{
+                  color: 'black',
+                  fontWeight: 'bolder',
+                  padding: 1.5,
+                  marginTop: 3,
+                  backgroundColor: '#74D680',
+                  width: '400px',
+                  textAlign: 'center',
+                  borderRadius: '10px',
+                  transition: 'opacity 0.5s ease-in-out',
+                  opacity: 0, // Set initial opacity to 0
+                }}
+              >
+                <p sx={{ color: 'white', margin: 0 }}>Pickup Added Successfully</p>
+              </Box>
+            )}
+          </div>
       </Card>
       <Grid sx={{ mt: '33px' }}>
         <TableContainer

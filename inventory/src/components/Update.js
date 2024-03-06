@@ -64,8 +64,8 @@ const Update = () => {
       `http://localhost:8080/location/update/${locationId}/addresses/${addressId}`,
       {
         method: 'PUT',
-        headers: { 'Content-type': 'application/json' },
-        Authorization: `Bearer ${currentUser.accessToken}`,
+        headers: { 'Content-type': 'application/json', Authorization: `Bearer ${currentUser.accessToken}`, },
+      
         body: JSON.stringify(locationLists),
       }
     )
