@@ -31,6 +31,7 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
 import { fetchConsumeItem } from '../redux/slice/ConsumeItemSlice';
+import { toast } from 'react-toastify';
 
 const ViewScrapp = () => {
   const dispatch = useDispatch();
@@ -207,15 +208,29 @@ const ViewScrapp = () => {
   }; */
   console.log(state, 'nopppe');
   const deleteConsumed = async (id) => {
-    console.log(id);
+   
     await fetch(`http://localhost:8080/scrappeditem/delete/${id}`, {
       method: 'DELETE',
       headers: { 'Content-type': 'application/json' },
       Authorization: `Bearer ${currentUser.accessToken}`,
     })
       .then(() => {
+        toast.warn('🦄 Scrapped Added Successfully!', {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+          
+          });
+          setTimeout(() => {
+            window.location.reload();
+        }, 3000);
         console.log('item Deleted');
-        window.location.reload();
+       
       })
       .catch((error) => {
         console.error('Error updating location:', error);

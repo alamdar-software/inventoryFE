@@ -39,6 +39,7 @@ import dayjs from 'dayjs';
 import TextareaAutosize from '@mui/material/TextareaAutosize';
 import { fetchIncome } from '../redux/slice/SingleIncomeSlice';
 import { fetchInventory } from '../redux/slice/InventorySlice';
+import { toast } from 'react-toastify';
 const ConsumeItem = () => {
   const [formData, setformData] = useState({
     transferDate: '',
@@ -109,8 +110,18 @@ const ConsumeItem = () => {
         body: JSON.stringify(formData),
       });
       const data = await res.json();
-      console.log(data, 'came from backend');
-      alert('consume Item added successfully');
+      toast.success('🦄 Consumed Added Successfully!', {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+        
+        });
+       
     } catch (error) {
       console.log('something happens while adding cipl');
     }

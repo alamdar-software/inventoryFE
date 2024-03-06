@@ -897,6 +897,7 @@ theme="light"
                   path='/add-consumeditem'
                   element={
                     <Sidebar>
+                      <ToastContainer/>
                       <ConsumeItem />
                     </Sidebar>
                   }
@@ -938,6 +939,7 @@ theme="light"
                   path='/updateConsumed/:id'
                   element={
                     <Sidebar>
+                      <ToastContainer/>
                       <UpdateConsumed />
                     </Sidebar>
                   }
@@ -971,6 +973,7 @@ theme="light"
                   path='/mto'
                   element={
                     <Sidebar>
+                      <ToastContainer/>
                       <Mto />
                     </Sidebar>
                   }
@@ -979,6 +982,7 @@ theme="light"
                   path='/it'
                   element={
                     <Sidebar>
+                      <ToastContainer/>
                       <InternalTransfer />
                     </Sidebar>
                   }
@@ -988,6 +992,7 @@ theme="light"
                   path='/add-scrappeditem'
                   element={
                     <Sidebar>
+                      <ToastContainer/>
                       <ScrappedItem />
                     </Sidebar>
                   }
@@ -1012,6 +1017,7 @@ theme="light"
                   path='/updateScapped/:id'
                   element={
                     <Sidebar>
+                      <ToastContainer/>
                       <UpdateScrapped />
                     </Sidebar>
                   }
@@ -1202,6 +1208,7 @@ theme="light"
                     path='/updateMto/:id'
                     element={
                       <Sidebar>
+                        <ToastContainer/>
                         <UpdateMto />
                       </Sidebar>
                     }

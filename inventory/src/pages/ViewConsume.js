@@ -31,6 +31,7 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
 import { fetchConsumeItem } from '../redux/slice/ConsumeItemSlice';
+import { toast } from 'react-toastify';
 
 const ViewConsume = () => {
   const [item, setitem] = useState();
@@ -216,7 +217,21 @@ const ViewConsume = () => {
     })
       .then(() => {
         console.log('item Deleted');
-        window.location.reload();
+        toast``.success('🦄 Consumed Deleted Successfully!', {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+          
+          });
+          setTimeout(() => {
+            window.location.reload();
+        }, 3000);
+      
       })
       .catch((error) => {
         console.error('Error updating location:', error);

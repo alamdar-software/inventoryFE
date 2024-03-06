@@ -26,6 +26,7 @@ import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { fetchInventory } from '../redux/slice/InventorySlice';
 import { fetchIncome } from '../redux/slice/SingleIncomeSlice';
+import { toast } from 'react-toastify';
 
 const Mto = () => {
   const state = useSelector((state) => state);
@@ -98,6 +99,18 @@ const Mto = () => {
       },
       body: JSON.stringify(formData),
     }).then(() => {
+      toast.success('🦄 Shipper Added Successfully!', {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+        
+        });
+     
       console.log('MTO Added');
       //window.location.reload();
     });

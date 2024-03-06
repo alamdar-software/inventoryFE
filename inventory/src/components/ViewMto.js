@@ -29,6 +29,7 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { Link } from 'react-router-dom';
 import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
 import BorderColorSharpIcon from '@mui/icons-material/BorderColorSharp';
+import { toast } from 'react-toastify';
 
 const ViewMto = () => {
   const [formData, setformData] = useState({
@@ -131,14 +132,27 @@ const ViewMto = () => {
       },
     })
       .then(() => {
-        console.log('Pickup Deleted');
-        window.location.reload();
+        toast.success('🦄 Mto Deleted Successfully!', {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+          
+          });
+          setTimeout(() => {
+            window.location.reload();
+        }, 3000);
+     
       })
       .catch((error) => {
         console.error('Error updating pickup:', error);
       });
   };
-  console.log(formData);
+ 
   return (
     <>
       <Box>
