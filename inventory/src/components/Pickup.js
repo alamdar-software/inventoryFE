@@ -23,6 +23,9 @@ import {
 } from '@mui/material';
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import { ToastContainer, toast } from 'react-toastify';
+
+import 'react-toastify/dist/ReactToastify.css';
 const Pickup = () => {
   const [pickupAddress, setPickupAddress] = useState();
   const [pic, setPic] = useState();
@@ -93,7 +96,9 @@ const Pickup = () => {
         setMessage(false);
       }, 6000);
     });
-    window.location.reload();
+    setTimeout(() => {
+      window.location.reload();
+  }, 2000);
   };
   useEffect(() => {
     const getPickup = async () => {
@@ -129,24 +134,38 @@ const Pickup = () => {
   // }, []);
 
   const deletePickup = async (id) => {
-    alert('Deleted Successfully!');
-    console.log(id);
-    fetch(`http://localhost:8080/pickup/delete/${id}`, {
-      method: 'DELETE',
-      headers: {
-        'Content-type': 'application/json',
-        Authorization: `Bearer ${currentUser.accessToken}`,
-      },
-      body: JSON.stringify(Pickup),
-    })
-      .then(() => {
-        console.log('Pickup Deleted');
-        window.location.reload();
-      })
-      .catch((error) => {
+    try {
+        await fetch(`http://localhost:8080/pickup/delete/${id}`, {
+            method: 'DELETE',
+            headers: {
+                'Content-type': 'application/json',
+                Authorization: `Bearer ${currentUser.accessToken}`,
+            },
+            body: JSON.stringify(Pickup),
+        });
+
+        // Use toast.success() for success messages
+        toast.error('🦄 Pickup Deleted Successfully!', {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+         
+          });
+          setTimeout(() => {
+            window.location.reload();
+        }, 3000);
+    } catch (error) {
         console.error('Error updating pickup:', error);
-      });
-  };
+        // Use toast.error() for error messages
+        toast.error("Failed to delete pickup");
+    }
+};
+
 
   return (
     <>

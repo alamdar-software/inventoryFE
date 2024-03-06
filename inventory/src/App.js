@@ -145,6 +145,9 @@ import ApprovedScrapped from './pages/ApprovedScrapped.js';
 import ApprovedConsumed from './pages/ApprovedConsumed.js';
 import ApprovalIncoming from './components/ApprovalIncoming.js';
 import UpdateIncomingApproval from './components/UpdateIncomingApproval.js';
+import React from 'react';
+import { ToastContainer } from 'react-toastify';
+
 const theme = createTheme({
   palette: {
     background: {
@@ -179,6 +182,12 @@ function App() {
           <CssBaseline />
 
           <Routes>
+               
+          
+  
+                
+
+
             <Route path='/login' element={<Login />} />
             <Route element={<PrivateRoute />}>
               <Route element={<OnlySuperAdmin />}>
@@ -246,7 +255,22 @@ function App() {
                   path='/pick-up'
                   element={
                     <Sidebar>
+                      <ToastContainer
+position="top-right"
+autoClose={5000}
+hideProgressBar={false}
+newestOnTop={false}
+closeOnClick
+rtl={false}
+pauseOnFocusLoss
+draggable
+pauseOnHover
+theme="light"
+
+/>
+{/* Same as */}
                       <Pickup />
+<ToastContainer />
                     </Sidebar>
                   }
                 />
@@ -1261,6 +1285,7 @@ function App() {
                 element={<ViewConsignee />}
               /> */}
             </Route>
+           
           </Routes>
         </ThemeProvider>
       </BrowserRouter>
