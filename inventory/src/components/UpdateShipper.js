@@ -76,6 +76,7 @@ export const UpdateShipper = () => {
         console.error('Error updating class:', error);
       });
   };
+  console.log(shipperList,"shipppppppp");
   return (
     <>
       <Grid>
@@ -112,12 +113,12 @@ export const UpdateShipper = () => {
               id='outlined-basic'
               label='Name'
               variant='outlined'
-              value={shipperList ? shipperList.name : ''}
+              value={shipperList ? shipperList.shipperName : ''}
               //   onChange={(e) => setPickupAddress(e.target.value)}
               onChange={(e) => {
                 setShipperList({
                   ...shipperList,
-                  name: e.target.value,
+                  shipperName: e.target.value,
                 });
                 setShipperName(e.target.value);
               }}
