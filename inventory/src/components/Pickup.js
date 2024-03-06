@@ -91,7 +91,20 @@ const Pickup = () => {
       body: JSON.stringify(attendence),
     }).then(() => {
       setMessage(true);
-      console.log('Pickup Added');
+      toast.success('🦄 Category Added Successfully!', {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+        
+        });
+        setTimeout(() => {
+          window.location.reload();
+      }, 3000);
       setTimeout(() => {
         setMessage(false);
       }, 6000);

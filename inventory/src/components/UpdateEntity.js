@@ -12,6 +12,7 @@ import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import { toast } from 'react-toastify';
 // const currency = {
 //   currencyName: "",
 // };
@@ -59,7 +60,21 @@ export default function UpdateEntity() {
     });
     const data = await res.text();
     console.log(data);
-    navigate('/entity');
+    toast.success('🦄 Category Added Successfully!', {
+      position: "top-right",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "dark",
+      
+      });
+      setTimeout(() => {
+       
+        navigate('/entity');
+    }, 3000);
 
     // fetch('http://localhost:8080/location/add', {
     //   method: 'POST',

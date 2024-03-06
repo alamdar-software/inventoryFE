@@ -281,6 +281,7 @@ theme="light"
                   path='/updatePickup/:id'
                   element={
                     <Sidebar>
+                      <ToastContainer/>
                       <UpdatePickup />
                     </Sidebar>
                   }
@@ -422,6 +423,7 @@ theme="light"
                   path='/entity/update/:id'
                   element={
                     <Sidebar>
+                      <ToastContainer/>
                       <UpdateEntity />
                     </Sidebar>
                   }
@@ -450,6 +452,7 @@ theme="light"
                 path='/pick-up'
                 element={
                   <Sidebar>
+                    <ToastContainer/>
                     <Pickup />
                   </Sidebar>
                 }
@@ -486,6 +489,7 @@ theme="light"
                   path='/cipl'
                   element={
                     <Sidebar>
+                      <ToastContainer/>
                       <Cipl />
                     </Sidebar>
                   }
@@ -494,6 +498,7 @@ theme="light"
                   path='/view-cipl'
                   element={
                     <Sidebar>
+                      <ToastContainer/>
                       <ViewCipl />
                     </Sidebar>
                   }
@@ -502,6 +507,7 @@ theme="light"
                   path='/cipl-created'
                   element={
                     <Sidebar>
+                      <ToastContainer/>
                       <ViewCiplVerification />
                     </Sidebar>
                   }
@@ -1211,6 +1217,7 @@ theme="light"
                     path='/updatePickup/:id'
                     element={
                       <Sidebar>
+                        <ToastContainer/>
                         <UpdatePickup />
                       </Sidebar>
                     }
