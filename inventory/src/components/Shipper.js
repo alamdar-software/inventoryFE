@@ -110,7 +110,7 @@ const Shipper = () => {
 
   const deleteShipper = async (id) => {
     console.log(id);
-    alert('Deleted Successfully!');
+   
     fetch(`http://localhost:8080/shipper/delete/${id}`, {
       method: 'DELETE',
       headers: {
