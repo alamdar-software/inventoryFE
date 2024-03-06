@@ -296,6 +296,7 @@ theme="light"
                   path='/shipper'
                   element={
                     <Sidebar>
+                      <ToastContainer/>
                       <Shipper />
                     </Sidebar>
                   }
@@ -304,6 +305,7 @@ theme="light"
                   path='/updateShipper/:id'
                   element={
                     <Sidebar>
+                      <ToastContainer/>
                       <UpdateShipper />
                     </Sidebar>
                   }
