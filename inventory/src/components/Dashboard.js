@@ -49,6 +49,7 @@ const Dashboard = () => {
   const [invCount, setinvCount] = React.useState(0)
   const [locationCount, setlocationCount] = React.useState(0)
   const [itemCount, setitemCount] = React.useState(0)
+  const [ciplCount, setciplCount] = React.useState(0)
 
 
   useEffect(() => {
@@ -89,6 +90,23 @@ const Dashboard = () => {
         console.log(invCount,"inventorycount");
     }
     getinvCount();
+   
+  }, [])
+  useEffect(() => {
+    const getciplCount=async()=>{
+
+      const res = await fetch("http://localhost:8080/cipl/count",{
+        method:"get",
+        headers: {
+          'content-type': 'application/json',
+          Authorization: `Bearer ${currentUser.accessToken}`,
+        },
+      })
+        const data = await res.json();
+        setciplCount(data?.totalCount)
+        console.log(invCount,"inventorycount");
+    }
+    getciplCount();
    
   }, [])
   useEffect(() => {
@@ -507,22 +525,37 @@ const Dashboard = () => {
                     style={{ color: "#9e9e9e", fontSize: "50px" }}
                   />
 
+<div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                   <Typography
-                    sx={{
-                      mb: 1.5,
-                      textAlign: "center",
-                      fontWeight: "bolder",
-                      fontFamily: "Montserrat",
-                    }}
-                    color="#333"
-                    variant="h5"
-                    component="div"
-                  >
-                    Transfer Items
-                  </Typography>
-                  <Typography sx={{ mb: 1.5 }} color="text.secondary">
-                    Count:
-                  </Typography>
+        sx={{
+          mb: 1.5,
+          ml:10,
+          textAlign: "center",
+          fontWeight: "bolder",
+          fontFamily: "Montserrat",
+          color: 'blue', // Set the text color to blue
+        }}
+        variant="h5"
+        component="div"
+      >
+        Transfer Item
+      </Typography>
+      <Typography
+        sx={{
+          mb: -6,
+        
+          ml:16,
+          fontWeight: 'bold', // Set font weight to bold
+          animation: isBlinking ? 'blinkingText 1s infinite' : 'none', // Apply blinking animation
+          color: 'green',
+          textAlign: 'center' // Set the text color to blue
+        }}
+        variant="h4"
+        color="text.secondary"
+      >
+        {ciplCount}
+      </Typography>
+      </div>
                 </CardContent>
               </Link>
             </Card>
