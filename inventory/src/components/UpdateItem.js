@@ -51,7 +51,7 @@ const UpdateItem = () => {
     })
       .then((res) => res.json())
       .then((result) => {
-        console.log(result);
+        console.log(result,"pappu pass");
         setItem(result);
       })
       .catch((error) => {
@@ -167,7 +167,7 @@ const UpdateItem = () => {
               <Select
                 labelId='Catagory'
                 id='name'
-                value={formData?.name}
+                value={item?.name}
                 //value={age}
                 label='Catagory'
                 onChange={(e) =>
@@ -195,7 +195,7 @@ const UpdateItem = () => {
               <Select
                 labelId='demo-simple-select-label'
                 id='unitName'
-                value={formData.unitName}
+                value={item?.unitName}
                 //value={age}
                 label='UOM'
                 onChange={(e) =>
