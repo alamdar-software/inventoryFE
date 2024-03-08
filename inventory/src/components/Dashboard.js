@@ -419,6 +419,9 @@ const Dashboard = () => {
               </Link>
             </Card>
           </div>
+
+
+
           <div style={{ display: "flex", flexDirection: "row", marginTop: 3 }}>
             <Card
               sx={{
@@ -436,7 +439,7 @@ const Dashboard = () => {
               }}
             >
               <Link
-                to={"/locationDashboard"}
+                to={"/view-location"}
                 style={{ textDecoration: "none" }}
               >
                 <CardContent
