@@ -37,7 +37,7 @@ const UpdateIncoming = () => {
   }, []);
 
   useEffect(() => {
-    fetch(`http://localhost:8080/bulkstock/get/${id}`, {
+    fetch(`http://localhost:8080/bulkstock/getBoth/${id}`, {
       headers: {
         Authorization: `Bearer ${currentUser.accessToken}`,
       },
