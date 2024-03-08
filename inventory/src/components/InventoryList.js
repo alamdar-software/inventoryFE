@@ -251,13 +251,13 @@ const InventoryList = () => {
           </Button>
         </CardContent>
       </Card>
-      <Grid sx={{ mt: '33px', width: '100%', overflowX: 'scroll' }}>
+      <Grid sx={{ mt: '33px' }}>
         <TableContainer
           component={Paper}
           sx={{
             borderRadius: '33px',
             borderBottom: '2px solid yellow',
-            width: '110%',
+            // width: '110%',
           }}
         >
           <Table sx={{ minWidth: 650 }} aria-label='simple table'>

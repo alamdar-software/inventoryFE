@@ -69,25 +69,27 @@ const UpdateInventory = () => {
 
     fetch(`http://localhost:8080/inventory/update/${id}`, {
       method: 'PUT',
-      headers: { 'Content-type': 'application/json' , Authorization: `Bearer ${currentUser.accessToken}`},
+      headers: {
+        'Content-type': 'application/json',
+        Authorization: `Bearer ${currentUser.accessToken}`,
+      },
       body: JSON.stringify(inventory),
     })
       .then(() => {
         console.log('Inventory Updated');
         // navigate('/consignee');
         toast.success('🦄 Inventory Updated Successfully!', {
-          position: "top-right",
+          position: 'top-right',
           autoClose: 3000,
           hideProgressBar: false,
           closeOnClick: true,
           pauseOnHover: true,
           draggable: true,
           progress: undefined,
-          theme: "dark",
-          
-          });
-          setTimeout(() => {
-              navigate('/view-inventory');
+          theme: 'dark',
+        });
+        setTimeout(() => {
+          // navigate('/view-inventory');
         }, 3000);
       })
       .catch((error) => {
