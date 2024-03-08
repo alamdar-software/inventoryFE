@@ -50,6 +50,9 @@ const Dashboard = () => {
   const [locationCount, setlocationCount] = React.useState(0)
   const [itemCount, setitemCount] = React.useState(0)
   const [ciplCount, setciplCount] = React.useState(0)
+  const [consumedCount, setconsumedCount] = React.useState(0)
+  const [scrappedCount, setscrappedCount] = React.useState(0)
+  const [incomingCount, setincomingCount] = React.useState(0)
 
 
   useEffect(() => {
@@ -89,9 +92,55 @@ const Dashboard = () => {
         setinvCount(data?.totalCount)
         console.log(invCount,"inventorycount");
     }
-    getinvCount();
+    const getincomingCount=async()=>{
+
+      const res = await fetch("http://localhost:8080/bulkstock/view",{
+        method:"get",
+        headers: {
+          'content-type': 'application/json',
+          Authorization: `Bearer ${currentUser.accessToken}`,
+        },
+      })
+        const data = await res.json();
+       
+        setincomingCount(data?.totalCount)
+    }
+    getincomingCount();
    
   }, [])
+  useEffect(() => {
+    const getconsumedCount=async()=>{
+
+      const res = await fetch("http://localhost:8080/consumeditem/count",{
+        method:"get",
+        headers: {
+          'content-type': 'application/json',
+          Authorization: `Bearer ${currentUser.accessToken}`,
+        },
+      })
+        const data = await res.json();
+        setconsumedCount(data?.totalCount)
+     
+    }
+    const getScrappedCount=async()=>{
+
+      const res = await fetch("http://localhost:8080/scrappeditem/count",{
+        method:"get",
+        headers: {
+          'content-type': 'application/json',
+          Authorization: `Bearer ${currentUser.accessToken}`,
+        },
+      })
+        const data = await res.json();
+        setscrappedCount(data?.totalCount)
+        
+    }
+    getconsumedCount();
+    getScrappedCount();
+
+   
+  }, [])
+
   useEffect(() => {
     const getciplCount=async()=>{
 
@@ -590,22 +639,37 @@ const Dashboard = () => {
                     style={{ color: "#795548", fontSize: "50px" }}
                   />
 
+<div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                   <Typography
-                    sx={{
-                      mb: 1.5,
-                      textAlign: "center",
-                      fontWeight: "bolder",
-                      fontFamily: "Montserrat",
-                    }}
-                    color="#333"
-                    variant="h6"
-                    component="div"
-                  >
-                    Consumed Items
-                  </Typography>
-                  <Typography sx={{ mb: 1.5 }} color="text.secondary">
-                    Count:
-                  </Typography>
+        sx={{
+          mb: 1.5,
+          ml:10,
+          textAlign: "center",
+          fontWeight: "bolder",
+          fontFamily: "Montserrat",
+          color: 'blue', // Set the text color to blue
+        }}
+        variant="h5"
+        component="div"
+      >
+        Consumed Item
+      </Typography>
+      <Typography
+        sx={{
+          mb: -6,
+        
+          ml:16,
+          fontWeight: 'bold', // Set font weight to bold
+          animation: isBlinking ? 'blinkingText 1s infinite' : 'none', // Apply blinking animation
+          color: 'red',
+          textAlign: 'center' // Set the text color to blue
+        }}
+        variant="h4"
+        color="text.secondary"
+      >
+        {consumedCount}
+      </Typography>
+      </div>
                 </CardContent>
               </Link>
             </Card>
@@ -640,22 +704,37 @@ const Dashboard = () => {
                     style={{ color: "#ff5722", fontSize: "50px" }}
                   />
 
+                  <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                   <Typography
-                    sx={{
-                      mb: 1.5,
-                      textAlign: "center",
-                      fontWeight: "bolder",
-                      fontFamily: "Montserrat",
-                    }}
-                    color="#333"
-                    variant="h5"
-                    component="div"
-                  >
-                    Incomming Stock
-                  </Typography>
-                  <Typography sx={{ mb: 1.5 }} color="text.secondary">
-                    Count:
-                  </Typography>
+        sx={{
+          mb: 1.5,
+          ml:10,
+          textAlign: "center",
+          fontWeight: "bolder",
+          fontFamily: "Montserrat",
+          color: 'blue', // Set the text color to blue
+        }}
+        variant="h5"
+        component="div"
+      >
+        Incomming Stock
+      </Typography>
+      <Typography
+        sx={{
+          mb: -6,
+        
+          ml:16,
+          fontWeight: 'bold', // Set font weight to bold
+          animation: isBlinking ? 'blinkingText 1s infinite' : 'none', // Apply blinking animation
+          color: 'red',
+          textAlign: 'center' // Set the text color to blue
+        }}
+        variant="h4"
+        color="text.secondary"
+      >
+        {incomingCount}
+      </Typography>
+      </div>
                 </CardContent>
               </Link>
             </Card>
@@ -691,22 +770,38 @@ const Dashboard = () => {
                     style={{ color: "#00bcd4", fontSize: "50px" }}
                   />
 
+           <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                   <Typography
-                    sx={{
-                      mb: 1.5,
-                      textAlign: "center",
-                      fontWeight: "bolder",
-                      fontFamily: "Montserrat",
-                    }}
-                    color="#333"
-                    variant="h5"
-                    component="div"
-                  >
-                    Scrapped Items
-                  </Typography>
-                  <Typography sx={{ mb: 1.5 }} color="text.secondary">
-                    Count:
-                  </Typography>
+        sx={{
+          mb: 6,
+          ml:10,
+          textAlign: "center",
+          fontWeight: "bolder",
+          fontFamily: "Montserrat",
+          color: 'blue', // Set the text color to blue
+        }}
+        variant="h5"
+        component="div"
+      >
+        Scrapped Item
+      </Typography>
+      <Typography
+        sx={{
+       
+        mt:-5,
+          ml:16,
+         
+          fontWeight: 'bold', // Set font weight to bold
+          animation: isBlinking ? 'blinkingText 1s infinite' : 'none', // Apply blinking animation
+          color: 'red',
+          textAlign: 'center' // Set the text color to blue
+        }}
+        variant="h4"
+        color="text.secondary"
+      >
+        {scrappedCount}
+      </Typography>
+      </div>
                 </CardContent>
               </Link>
             </Card>
