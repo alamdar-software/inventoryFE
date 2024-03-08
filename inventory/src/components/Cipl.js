@@ -1315,6 +1315,7 @@ export const Cipl = () => {
       <Grid container spacing={2} sx={{ mt: '23px' }}>
         <Grid item xs={12} sm={6}>
           <TextField
+          type='number'
             sx={{ width: '90%' }}
             id='outlined-basic'
             label='Currency Rate'
