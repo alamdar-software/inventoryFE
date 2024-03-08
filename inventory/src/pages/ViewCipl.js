@@ -445,7 +445,7 @@ export const ViewCipl = () => {
                   )
               ) : (
                 <TableRow>
-                  <TableCell colSpan={7} align='center'>
+                  <TableCell colSpan={7} align='center' sx={{ color: 'red' }}>
                     No incoming data available.
                   </TableCell>
                 </TableRow>
