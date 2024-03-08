@@ -73,7 +73,7 @@ const ViewItem = () => {
     })
       .then(() => {
         console.log('item Deleted');
-        toast.warn('🦄 Category Added Successfully!', {
+        toast.warn('🦄 Item Deleted Successfully!', {
           position: "top-right",
           autoClose: 3000,
           hideProgressBar: false,
