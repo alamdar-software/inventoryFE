@@ -56,18 +56,17 @@ export default function EntityTable({ data }) {
         // Update the state or fetch data again after deletion
         // For simplicity, you can reload the page or fetch data again
         toast.warn('🦄 Entity Deleted Successfully!', {
-          position: "top-right",
+          position: 'top-right',
           autoClose: 3000,
           hideProgressBar: false,
           closeOnClick: true,
           pauseOnHover: true,
           draggable: true,
           progress: undefined,
-          theme: "dark",
-          
-          });
-          setTimeout(() => {
-            window.location.reload();
+          theme: 'dark',
+        });
+        setTimeout(() => {
+          window.location.reload();
         }, 3000);
       } else {
         // Handle the error if deletion fails
