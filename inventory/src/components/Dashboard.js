@@ -205,7 +205,7 @@ const Dashboard = () => {
             margin: "-7px",
           }}
         >
-          <div style={{ display: "flex", flexDirection: "row", marginTop: -32 }}>
+          <div style={{ display: "flex", flexDirection: "row", marginTop: -32,paddingBottom:10 }}>
             <Card
               sx={{
                 flex: 1,
@@ -213,6 +213,7 @@ const Dashboard = () => {
                 marginLeft: 3,
                 marginTop: 3,
                 borderRadius: 5,
+                paddingBottom:5,
                 width: "90px !important",
 
                 transition: "transform 0.3s",
@@ -232,6 +233,7 @@ const Dashboard = () => {
                       position: "absolute",
                       top: 0,
                       left: 0,
+                     mb:4,
                       backgroundColor: "white", // Set your desired color
                       color: "white", // Set your desired text color
                       padding: 1,
@@ -255,22 +257,37 @@ const Dashboard = () => {
                     }}
                   />
 
+<div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                   <Typography
-                    sx={{
-                      mb: 1.5,
-                      textAlign: "center",
-                      fontWeight: "bolder",
-                      fontFamily: "Montserrat",
-                    }}
-                    color="#333"
-                    variant="h5"
-                    component="div"
-                  >
-                    MOC
-                  </Typography>
-                  <Typography sx={{ mb: 1 }} color="text.secondary">
-                    Count:
-                  </Typography>
+        sx={{
+          mb: 1.5,
+          ml:3,
+          textAlign: "center",
+          fontWeight: "bolder",
+          fontFamily: "Montserrat",
+          color: 'blue', // Set the text color to blue
+        }}
+        variant="h5"
+        component="div"
+      >
+        Moc
+      </Typography>
+      <Typography
+        sx={{
+          mb: -6,
+        
+          ml:3,
+          fontWeight: 'bold', // Set font weight to bold
+          animation: isBlinking ? 'blinkingText 1s infinite' : 'none', // Apply blinking animation
+          color: 'red',
+          textAlign: 'center' // Set the text color to blue
+        }}
+        variant="h4"
+        color="text.secondary"
+      >
+        {invCount}
+      </Typography>
+      </div>
                 </CardContent>
               </Link>
             </Card>
@@ -309,9 +326,7 @@ const Dashboard = () => {
                   >
                     Daily Data Count
                   </Typography>
-                  <Typography sx={{ mb: 1.5 }} color="text.secondary">
-                    Count:
-                  </Typography>
+                  
                 </CardContent>
               </Link>
             </Card>
@@ -439,10 +454,11 @@ const Dashboard = () => {
 <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                   <Typography
         sx={{
-          mb: 1.5,
+          mb: 1,
           textAlign: "center",
           fontWeight: "bolder",
           fontFamily: "Montserrat",
+          mb:1,
           color: 'blue', // Set the text color to blue
         }}
         variant="h5"
@@ -452,7 +468,7 @@ const Dashboard = () => {
       </Typography>
       <Typography
         sx={{
-          mb: -4,
+          mb: -10,
           mb: 1.5,
           ml:4,
           fontWeight: 'bold', // Set font weight to bold
@@ -921,9 +937,7 @@ const Dashboard = () => {
                   >
                     Daily Data Count
                   </Typography>
-                  <Typography sx={{ mb: 1.5 }} color="text.secondary">
-                    Count:
-                  </Typography>
+                  
                 </CardContent>
               </Link>
             </Card>
