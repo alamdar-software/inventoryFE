@@ -13,12 +13,13 @@ import AssessmentIcon from "@mui/icons-material/Assessment";
 import DescriptionIcon from "@mui/icons-material/Description";
 import ThumbDownAltIcon from "@mui/icons-material/ThumbDownAlt";
 import DownloadDoneIcon from "@mui/icons-material/DownloadDone";
+import LocationOnIcon from '@mui/icons-material/LocationOn';
 import { createTheme } from "@mui/material/styles";
 import { purple } from "@mui/material/colors";
 import { red } from "@mui/material/colors";
 import { Link } from "react-router-dom";
 import inventory from "../assects/inventory.jpg";
-import { Grid } from "@mui/material";
+import { Badge, Grid } from "@mui/material";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { fetchItem } from "../redux/slice/ItemSlice";
@@ -43,6 +44,23 @@ const theme = createTheme({
 });
 
 const Dashboard = () => {
+ 
+  const [isBlinking, setIsBlinking] = React.useState(true);
+  const [invCount, setinvCount] = React.useState(0)
+  const [locationCount, setlocationCount] = React.useState(0)
+  const [itemCount, setitemCount] = React.useState(0)
+
+
+  useEffect(() => {
+    // Toggle blinking every 1 second
+    const interval = setInterval(() => {
+      setIsBlinking((prevIsBlinking) => !prevIsBlinking);
+    }, 700);
+
+    // Clear interval on component unmount
+    return () => clearInterval(interval);
+  }, []);
+
   const state = useSelector((state) => state);
   const { currentUser } = state.persisted.user;
   const roleSuperAdmin =
@@ -56,6 +74,58 @@ const Dashboard = () => {
   useEffect(() => {
     dispatch(fetchItem(currentUser.accessToken));
   }, []);
+  useEffect(() => {
+    const getinvCount=async()=>{
+
+      const res = await fetch("http://localhost:8080/inventory/count",{
+        method:"get",
+        headers: {
+          'content-type': 'application/json',
+          Authorization: `Bearer ${currentUser.accessToken}`,
+        },
+      })
+        const data = await res.json();
+        setinvCount(data?.totalCount)
+        console.log(invCount,"inventorycount");
+    }
+    getinvCount();
+   
+  }, [])
+  useEffect(() => {
+    const getlocationCount=async()=>{
+
+      const res = await fetch("http://localhost:8080/location/count",{
+        method:"get",
+        headers: {
+          'content-type': 'application/json',
+          Authorization: `Bearer ${currentUser.accessToken}`,
+        },
+      })
+        const data = await res.json();
+        setlocationCount(data?.totalCount)
+        
+    }
+    getlocationCount();
+   
+  }, [])
+  useEffect(() => {
+    const getitemCount=async()=>{
+
+      const res = await fetch("http://localhost:8080/item/count",{
+        method:"get",
+        headers: {
+          'content-type': 'application/json',
+          Authorization: `Bearer ${currentUser.accessToken}`,
+        },
+      })
+        const data = await res.json();
+        setitemCount(data?.totalCount)
+    
+    }
+    getitemCount();
+   
+  }, [])
+  
 
   if (currentUser && currentUser.roles) {
     if (roleSuperAdmin) {
@@ -65,7 +135,7 @@ const Dashboard = () => {
           sx={{
             // backgroundImage: `url(${inventory})`, // Use the imported image as the background
             // backgroundSize: 'cover',
-            margin: "-4px",
+            margin: "-7px",
           }}
         >
           <div style={{ display: "flex", flexDirection: "row", marginTop: -32 }}>
@@ -76,7 +146,7 @@ const Dashboard = () => {
                 marginLeft: 3,
                 marginTop: 3,
                 borderRadius: 5,
-                width: "100px !important",
+                width: "90px !important",
 
                 transition: "transform 0.3s",
                 "&:hover": {
@@ -97,7 +167,7 @@ const Dashboard = () => {
                       left: 0,
                       backgroundColor: "white", // Set your desired color
                       color: "white", // Set your desired text color
-                      padding: 2,
+                      padding: 1,
                     }}
                   >
                     {/* <CountertopsIcon
@@ -131,7 +201,7 @@ const Dashboard = () => {
                   >
                     MOC
                   </Typography>
-                  <Typography sx={{ mb: 1.5 }} color="text.secondary">
+                  <Typography sx={{ mb: 1 }} color="text.secondary">
                     Count:
                   </Typography>
                 </CardContent>
@@ -231,22 +301,38 @@ const Dashboard = () => {
               <Link to={"/Items"} style={{ textDecoration: "none" }}>
                 <CardContent>
                   <DescriptionIcon
-                    fontSize="large"
+                    fontSize="50px"
                     sx={{ fontSize: "50px", color: "#c6ff00" }}
                   />
+                   <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                   <Typography
-                    variant="h5"
-                    component="div"
-                    color="#333"
-                    sx={{
-                      mb: 1.5,
-                      textAlign: "center",
-                      fontWeight: "bolder",
-                      fontFamily: "Montserrat",
-                    }}
-                  >
-                    Items
-                  </Typography>
+        sx={{
+          mb: 1.5,
+          textAlign: "center",
+          fontWeight: "bolder",
+          fontFamily: "Montserrat",
+          color: 'blue', // Set the text color to blue
+        }}
+        variant="h5"
+        component="div"
+      >
+        Items
+      </Typography>
+      <Typography
+        sx={{
+          mb: -4,
+          ml:4,
+          fontWeight: 'bold', // Set font weight to bold
+          animation: isBlinking ? 'blinkingText 1s infinite' : 'none', // Apply blinking animation
+          color: 'green',
+          textAlign: 'center' // Set the text color to blue
+        }}
+        variant="h4"
+        color="text.secondary"
+      >
+        {itemCount}
+      </Typography>
+      </div>
                 </CardContent>
               </Link>
             </Card>
@@ -278,27 +364,41 @@ const Dashboard = () => {
                 //   alignItems: 'start',
                 // }}
                 >
-                  <CountertopsIcon
+                  <LocationOnIcon
                     fontSize="large"
-                    sx={{ fontSize: "50px", color: "#c6ff00" }}
+                    sx={{ fontSize: "50px", color: "black" }}
                   />
 
+<div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                   <Typography
-                    sx={{
-                      mb: 1.5,
-                      textAlign: "center",
-                      fontWeight: "bolder",
-                      fontFamily: "Montserrat",
-                    }}
-                    color="#333"
-                    variant="h5"
-                    component="div"
-                  >
-                    Location/Vessel
-                  </Typography>
-                  <Typography sx={{ mb: 1.5 }} color="text.secondary">
-                    Count:
-                  </Typography>
+        sx={{
+          mb: 1.5,
+          textAlign: "center",
+          fontWeight: "bolder",
+          fontFamily: "Montserrat",
+          color: 'blue', // Set the text color to blue
+        }}
+        variant="h5"
+        component="div"
+      >
+        Location/Vessel
+      </Typography>
+      <Typography
+        sx={{
+          mb: -4,
+          mb: 1.5,
+          ml:4,
+          fontWeight: 'bold', // Set font weight to bold
+          animation: isBlinking ? 'blinkingText 1s infinite' : 'none', // Apply blinking animation
+          color: 'green',
+          textAlign: 'center' // Set the text color to blue
+        }}
+        variant="h4"
+        color="text.secondary"
+      >
+        {locationCount}
+      </Typography>
+      </div>
                 </CardContent>
               </Link>
             </Card>
@@ -330,7 +430,7 @@ const Dashboard = () => {
                     sx={{ fontSize: "50px", color: "#64dd17" }}
                   />
 
-                  <Typography
+                  {/* <Typography
                     sx={{
                       mb: 1.5,
                       textAlign: "center",
@@ -342,10 +442,40 @@ const Dashboard = () => {
                     component="div"
                   >
                     Inventory
-                  </Typography>
-                  <Typography sx={{ mb: 1.5 }} color="text.secondary">
-                    Count:
-                  </Typography>
+                  </Typography> */}
+          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                  <Typography
+        sx={{
+          mb: 1.5,
+          ml:10,
+          textAlign: "center",
+          fontWeight: "bolder",
+          fontFamily: "Montserrat",
+          color: 'blue', // Set the text color to blue
+        }}
+        variant="h5"
+        component="div"
+      >
+        Inventory
+      </Typography>
+      <Typography
+        sx={{
+          mb: -6,
+        
+          ml:16,
+          fontWeight: 'bold', // Set font weight to bold
+          animation: isBlinking ? 'blinkingText 1s infinite' : 'none', // Apply blinking animation
+          color: 'red',
+          textAlign: 'center' // Set the text color to blue
+        }}
+        variant="h4"
+        color="text.secondary"
+      >
+        {invCount}
+      </Typography>
+      </div>
+
+
                 </CardContent>
               </Link>
             </Card>
