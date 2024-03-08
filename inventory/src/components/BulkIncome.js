@@ -21,6 +21,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { fetchUom } from '../redux/slice/UomSlice';
+import { toast } from 'react-toastify';
 
 const BulkIncome = () => {
   useEffect(() => {
@@ -159,6 +160,18 @@ const BulkIncome = () => {
       body: JSON.stringify(formData),
     }).then(() => {
       console.log('Bulk Added');
+      toast.success('🦄 Scrapped Added Successfully!', {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+        
+        });
+      
       //window.location.reload();
     });
   };

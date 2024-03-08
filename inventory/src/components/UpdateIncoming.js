@@ -44,7 +44,7 @@ const UpdateIncoming = () => {
     })
       .then((res) => res.json())
       .then((result) => {
-        console.log(result);
+        console.log(result,"rashmiideso");
         setIncoming(result);
       })
       .catch((error) => {
@@ -259,6 +259,9 @@ const UpdateIncoming = () => {
                 });
                 setformData(e.target.value);
               }}
+              InputProps={{
+                readOnly: true,
+              }}
               fullWidth
               sx={{ width: '90%' }}
             />
@@ -292,11 +295,15 @@ const UpdateIncoming = () => {
               label='Standard Price'
               variant='outlined'
               value={incoming ? incoming.standardPrice : ''}
+              InputProps={{
+                readOnly: true,
+              }}
               onChange={(e) => {
                 setIncoming({
                   ...incoming,
                   standardPrice: e.target.value,
                 });
+                
                 setformData(e.target.value);
               }}
               fullWidth
@@ -328,6 +335,9 @@ const UpdateIncoming = () => {
 
           <Grid item xs={12} sm={6}>
             <TextField
+            InputProps={{
+              readOnly: true,
+            }}
               id='outlined-basic'
               label='Purchase Order'
               variant='outlined'
@@ -347,6 +357,9 @@ const UpdateIncoming = () => {
         <Grid container spacing={2} sx={{ mt: '23px' }}>
           <Grid item xs={12} sm={6}>
             <TextField
+            InputProps={{
+              readOnly: true,
+            }}
               id='outlined-basic'
               label='P/N'
               variant='outlined'
@@ -365,6 +378,9 @@ const UpdateIncoming = () => {
 
           <Grid item xs={12} sm={6}>
             <TextField
+            InputProps={{
+              readOnly: true,
+            }}
               id='outlined-basic'
               label='S/N'
               variant='outlined'
@@ -386,6 +402,9 @@ const UpdateIncoming = () => {
             <FormControl fullWidth sx={{ width: '90%' }}>
               <InputLabel id='brandName'>brandName</InputLabel>
               <Select
+              InputProps={{
+                readOnly: true,
+              }}
                 labelId='brandName'
                 id='brandName'
                 label='brandName'
@@ -406,6 +425,9 @@ const UpdateIncoming = () => {
             <FormControl fullWidth sx={{ width: '90%' }}>
               <InputLabel id='demo-simple-select-label'> Currency</InputLabel>
               <Select
+              InputProps={{
+                readOnly: true,
+              }}
                 labelId='demo-simple-select-label'
                 id='demo-simple-select'
                 //value={age}
@@ -439,6 +461,9 @@ const UpdateIncoming = () => {
         <Grid container spacing={2} sx={{ mt: '23px' }}>
           <Grid item xs={12} sm={6}>
             <TextField
+            InputProps={{
+              readOnly: true,
+            }}
               id='outlined-basic'
               label='Remarks'
               variant='outlined'
@@ -457,6 +482,9 @@ const UpdateIncoming = () => {
 
           <Grid item xs={12} sm={6}>
             <TextField
+            InputProps={{
+              readOnly: true,
+            }}
               id='outlined-basic'
               label='Entity'
               variant='outlined'
@@ -476,6 +504,9 @@ const UpdateIncoming = () => {
         <Grid container spacing={2} sx={{ mt: '23px' }}>
           <Grid item xs={12} sm={6}>
             <TextField
+            InputProps={{
+              readOnly: true,
+            }}
               id='outlined-basic'
               label='IMPA Code'
               variant='outlined'
@@ -494,6 +525,9 @@ const UpdateIncoming = () => {
 
           <Grid item xs={12} sm={6}>
             <TextField
+            InputProps={{
+              readOnly: true,
+            }}
               id='outlined-basic'
               label='Store Number'
               variant='outlined'
@@ -515,6 +549,7 @@ const UpdateIncoming = () => {
           color='secondary'
           size='large'
           onClick={handleClick}
+          hidden
           sx={{
             mt: '33px',
             mb: '17px',

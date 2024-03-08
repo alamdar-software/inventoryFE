@@ -1058,6 +1058,7 @@ theme="light"
                   path='/view-incoming'
                   element={
                     <Sidebar>
+                      <ToastContainer/>
                       <ViewIncoming />
                     </Sidebar>
                   }
@@ -1091,6 +1092,7 @@ theme="light"
                   path='/singleIncome'
                   element={
                     <Sidebar>
+                      <ToastContainer/>
                       <SingleIncome />
                     </Sidebar>
                   }
@@ -1099,6 +1101,7 @@ theme="light"
                   path='/bulkIncome'
                   element={
                     <Sidebar>
+                      <ToastContainer/>
                       <BulkIncome />
                     </Sidebar>
                   }

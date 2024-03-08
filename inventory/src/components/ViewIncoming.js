@@ -33,6 +33,8 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import DeleteIcon from '@mui/icons-material/Delete';
 import BorderColorSharpIcon from '@mui/icons-material/BorderColorSharp';
 import { Link } from 'react-router-dom';
+import { toast } from 'react-toastify';
+
 
 const ViewIncoming = () => {
   const [formData, setformData] = useState({
@@ -137,9 +139,20 @@ const ViewIncoming = () => {
       },
     })
       .then(() => {
-        alert('deleted');
-        console.log('incoming Deleted');
-        window.location.reload();
+        toast.warn('🦄 Incoming Deleted Successfully!', {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+          
+          });
+          setTimeout(() => {
+            window.location.reload();
+        }, 3000);
       })
       .catch((error) => {
         console.error('Error updating pickup:', error);
@@ -299,43 +312,43 @@ const ViewIncoming = () => {
           Search
         </Button>
       </Box>
-      <Grid sx={{ mt: '33px', width: '100%' }}>
+      <Grid sx={{ mt: '33px', width: '104%' }}>
         <TableContainer
           component={Paper}
           sx={{
             borderRadius: '33px',
             borderBottom: '2px solid yellow',
-            // width: '110%',
+            
           }}
         >
-          <Table sx={{ minWidth: 650 }} aria-label='simple table'>
+          <Table sx={{ minWidth: 500 }} aria-label='simple table'>
             <TableHead>
               <TableRow>
-                <TableCell align='right' sx={{ fontWeight: 'bold' }}>
+                <TableCell align='left' sx={{ fontWeight: 'bold' }}>
                   Item Description
                 </TableCell>
-                <TableCell align='right' sx={{ fontWeight: 'bold' }}>
+                <TableCell align='left' sx={{ fontWeight: 'bold' }}>
                   Location
                 </TableCell>
-                <TableCell align='right' sx={{ fontWeight: 'bold' }}>
+                <TableCell align='left' sx={{ fontWeight: 'bold' }}>
                   SubLocation
                 </TableCell>
-                <TableCell align='right' sx={{ fontWeight: 'bold' }}>
+                <TableCell align='left' sx={{ fontWeight: 'bold' }}>
                   Entity
                 </TableCell>
-                <TableCell align='right' sx={{ fontWeight: 'bold' }}>
+                <TableCell align='left' sx={{ fontWeight: 'bold' }}>
                   Quantity
                 </TableCell>
-                <TableCell align='right' sx={{ fontWeight: 'bold' }}>
+                <TableCell align='left' sx={{ fontWeight: 'bold' }}>
                   PO Number
                 </TableCell>
-                <TableCell align='right' sx={{ fontWeight: 'bold' }}>
+                <TableCell align='left' sx={{ fontWeight: 'bold' }}>
                   Purchase Date
                 </TableCell>
-                <TableCell align='right' sx={{ fontWeight: 'bold' }}>
+                <TableCell align='left' sx={{ fontWeight: 'bold' }}>
                   Incoming Stock
                 </TableCell>
-                <TableCell align='right' sx={{ fontWeight: 'bold' }}>
+                <TableCell align='left' sx={{ fontWeight: 'bold' }} className='flex flex-row'>
                   Action
                 </TableCell>
               </TableRow>
@@ -346,16 +359,16 @@ const ViewIncoming = () => {
                   .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                   .map((item) => (
                     <TableRow key={item.id}>
-                      <TableCell align='right'>{item.description}</TableCell>
-                      <TableCell align='right'>{item.locationName}</TableCell>
-                      <TableCell align='right'>{item.address}</TableCell>
-                      <TableCell align='right'>{item.entityName}</TableCell>
-                      <TableCell align='right'>{item.quantity}</TableCell>
-                      <TableCell align='right'>{item.purchaseOrder}</TableCell>
-                      <TableCell align='right'>{item.date}</TableCell>
-                      <TableCell align='right'>{item.dataType}</TableCell>
-                      <TableCell align='right'>
-                        <Link to={`/updateIncoming/${item.id}`}>
+                      <TableCell align='left'>{item.description}</TableCell>
+                      <TableCell align='left'>{item.locationName}</TableCell>
+                      <TableCell align='left'>{item.address}</TableCell>
+                      <TableCell align='left'>{item.entityName}</TableCell>
+                      <TableCell align='left'>{item.quantity}</TableCell>
+                      <TableCell align='left'>{item.purchaseOrder}</TableCell>
+                      <TableCell align='left'>{item.date}</TableCell>
+                      <TableCell align='left'>{item.dataType}</TableCell>
+                      <TableCell align='left' className='flex flex-row'>
+                        <Link to={`/updateIncoming/${item.id}`} className='flex flex-row'>
                           <Button>
                             <BorderColorSharpIcon
                               // onClick={() => handleDeleteClick(index)}
@@ -364,12 +377,11 @@ const ViewIncoming = () => {
                           </Button>
                         </Link>
                         <Button
-                          sx={{ marginLeft: '11px' }}
-                          variant='contained'
-                          color='secondary'
+                     
                           onClick={() => handledeleteincome(item.id)}
                         >
-                          Delete
+                          <DeleteIcon/>
+                        
                         </Button>
                       </TableCell>
 

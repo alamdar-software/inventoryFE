@@ -28,6 +28,7 @@ import { fetchCurrency } from '../redux/slice/CurrencySlice';
 import { fetchentity } from '../redux/slice/entitySlice';
 import { fetchInventory } from '../redux/slice/InventorySlice';
 import { useLocation } from 'react-router-dom';
+import { toast } from 'react-toastify';
 const SingleIncome = () => {
 
   const location = useLocation()
@@ -189,9 +190,20 @@ const SingleIncome = () => {
         body: JSON.stringify(formData),
       });
       const data = await res.json();
-      console.log(data, 'came from backend');
-      alert('income added successfully');
-      window.location.reload();
+      toast.success('🦄 Incomming Added Successfully!', {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+        
+        });
+        setTimeout(() => {
+          window.location.reload();
+      }, 3000);
     } catch (error) {
       console.log(error, 'something happens while adding income');
     }
