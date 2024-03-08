@@ -61,7 +61,7 @@ const ViewItem = () => {
   }, []); // Make sure to include an empty dependency array if you only want this effect to run once on component mount
 
   const deleteItem = async (id) => {
-    alert('Deleted Successfully!');
+ 
     console.log(id);
     fetch(`http://localhost:8080/item/delete/${id}`, {
       method: 'DELETE',
