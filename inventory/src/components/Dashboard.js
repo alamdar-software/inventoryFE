@@ -209,6 +209,8 @@ const Dashboard = () => {
           <div style={{ display: "flex", flexDirection: "row", marginTop: -32,paddingBottom:10 }}>
             <Card
               sx={{
+                boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.5)',
+                
                 flex: 1,
                 marginRight: 3,
                 marginLeft: 3,
@@ -295,6 +297,7 @@ const Dashboard = () => {
 
             <Card
               sx={{
+                boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.5)',
                 //border: '2px solid yellow',
                 minWidth: 40,
                 flex: 1,
@@ -333,6 +336,7 @@ const Dashboard = () => {
             </Card>
             <Card
               sx={{
+                boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.5)',
                 //border: '2px solid yellow',
                 minWidth: 20,
                 flex: 1,
@@ -369,6 +373,7 @@ const Dashboard = () => {
             </Card>
             <Card
               sx={{
+                boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.5)',
                 //border: '2px solid yellow',
                 minWidth: 20,
                 flex: 1,
@@ -426,6 +431,7 @@ const Dashboard = () => {
           <div style={{ display: "flex", flexDirection: "row", marginTop: 3,marginRight:-20 }}>
             <Card
               sx={{
+                boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.5)',
                 //border: '2px solid yellow',
                 width: "90px !important",
                 minWidth: 20,
@@ -456,10 +462,10 @@ const Dashboard = () => {
                     sx={{ fontSize: "50px", color: "black" }}
                   />
 
-<div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+<div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center',marginBottom:"-20px" }}>
                   <Typography
         sx={{
-          mb: 1,
+          mb: 0,
           textAlign: "center",
           fontWeight: "bolder",
           fontFamily: "Montserrat",
@@ -473,7 +479,7 @@ const Dashboard = () => {
       </Typography>
       <Typography
         sx={{
-          mb: -10,
+          mb: -20,
           mb: 1.5,
           ml:4,
           fontWeight: 'bold', // Set font weight to bold
@@ -492,6 +498,7 @@ const Dashboard = () => {
             </Card>
             <Card
               sx={{
+                boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.5)',
                 //border: '2px solid yellow',
                 minWidth: 20,
                 flex: 1,
@@ -569,6 +576,7 @@ const Dashboard = () => {
             </Card>
             <Card
               sx={{
+                boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.5)',
                 //border: '2px solid yellow',
                 minWidth: 20,
                 flex: 1,
@@ -631,6 +639,7 @@ const Dashboard = () => {
             </Card>
             <Card
               sx={{
+                boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.5)',
                 //border: '2px solid yellow',
                 minWidth: 20,
                 flex: 1,
@@ -698,12 +707,13 @@ const Dashboard = () => {
               </Link>
             </Card>
           </div>
-          <div style={{ display: "flex", flexDirection: "row", marginTop: 3 }}>
+          <div style={{ display: "flex", flexDirection: "row", marginTop: 3,paddingBottom:"-5px" }}>
             <Card
               sx={{
+                boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.5)',
                 //border: '2px solid yellow',
                 minWidth: 20,
-
+                paddingBottom:"-15px" ,
                 marginRight: 3,
                 marginLeft: 3,
                 marginTop: 3,
@@ -728,7 +738,7 @@ const Dashboard = () => {
                     style={{ color: "#ff5722", fontSize: "50px" }}
                   />
 
-                  <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                  <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center',paddingBottom:"-20px" }}>
                   <Typography
         sx={{
           mb: 1.5,
@@ -764,9 +774,10 @@ const Dashboard = () => {
             </Card>
             <Card
               sx={{
+                boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.5)',
                 //border: '2px solid yellow',
                 minWidth: 20,
-
+                paddingBottom:"-20px",
                 marginRight: 3,
                 marginLeft: 3,
                 marginTop: 3,
@@ -794,7 +805,7 @@ const Dashboard = () => {
                     style={{ color: "#00bcd4", fontSize: "50px" }}
                   />
 
-           <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+           <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center',paddingBottom:"-45px" }}>
                   <Typography
         sx={{
           mb: 6,
@@ -844,6 +855,7 @@ const Dashboard = () => {
           <div style={{ display: "flex", flexDirection: "row", marginTop: 3 }}>
             <Card
               sx={{
+                boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.5)',
                 flex: 1,
                 marginRight: 3,
                 marginLeft: 3,
@@ -913,6 +925,7 @@ const Dashboard = () => {
 
             <Card
               sx={{
+                boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.5)',
                 //border: '2px solid yellow',
                 minWidth: 40,
                 flex: 1,
@@ -951,6 +964,7 @@ const Dashboard = () => {
             </Card>
             <Card
               sx={{
+                boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.5)',
                 //border: '2px solid yellow',
                 minWidth: 20,
                 flex: 1,
@@ -987,6 +1001,7 @@ const Dashboard = () => {
             </Card>
             <Card
               sx={{
+                boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.5)',
                 //border: '2px solid yellow',
                 minWidth: 20,
                 flex: 1,
@@ -1025,6 +1040,7 @@ const Dashboard = () => {
           <div style={{ display: "flex", flexDirection: "row", marginTop: 3 }}>
             <Card
               sx={{
+                boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.5)',
                 //border: '2px solid yellow',
                 minWidth: 20,
                 flex: 1,
@@ -1075,6 +1091,7 @@ const Dashboard = () => {
             </Card>
             <Card
               sx={{
+                boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.5)',
                 //border: '2px solid yellow',
                 minWidth: 20,
                 flex: 1,
@@ -1122,6 +1139,7 @@ const Dashboard = () => {
             </Card>
             <Card
               sx={{
+                boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.5)',
                 //border: '2px solid yellow',
                 minWidth: 20,
                 flex: 1,
@@ -1169,6 +1187,7 @@ const Dashboard = () => {
             </Card>
             <Card
               sx={{
+                boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.5)',
                 //border: '2px solid yellow',
                 minWidth: 20,
                 flex: 1,
@@ -1221,6 +1240,7 @@ const Dashboard = () => {
           <div style={{ display: "flex", flexDirection: "row", marginTop: 3 }}>
             <Card
               sx={{
+                boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.5)',
                 //border: '2px solid yellow',
                 minWidth: 20,
 
@@ -1269,6 +1289,7 @@ const Dashboard = () => {
             </Card>
             <Card
               sx={{
+                boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.5)',
                 //border: '2px solid yellow',
                 minWidth: 20,
 
@@ -1334,6 +1355,7 @@ const Dashboard = () => {
           <div style={{ display: "flex", flexDirection: "row", marginTop: 3 }}>
             <Card
               sx={{
+                boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.5)',
                 //border: '2px solid yellow',
                 minWidth: 40,
                 flex: 1,
@@ -1374,6 +1396,7 @@ const Dashboard = () => {
             </Card>
             <Card
               sx={{
+                boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.5)',
                 //border: '2px solid yellow',
                 minWidth: 20,
                 flex: 1,
@@ -1410,6 +1433,7 @@ const Dashboard = () => {
             </Card>
             <Card
               sx={{
+                boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.5)',
                 //border: '2px solid yellow',
                 minWidth: 20,
                 flex: 1,
@@ -1457,6 +1481,7 @@ const Dashboard = () => {
             </Card>
             <Card
               sx={{
+                boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.5)',
                 flex: 1,
                 marginRight: 3,
                 marginLeft: 3,
@@ -1527,6 +1552,7 @@ const Dashboard = () => {
           <div style={{ display: "flex", flexDirection: "row", marginTop: 3 }}>
             <Card
               sx={{
+                boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.5)',
                 //border: '2px solid yellow',
                 minWidth: 20,
                 flex: 1,
@@ -1574,6 +1600,7 @@ const Dashboard = () => {
             </Card>
             <Card
               sx={{
+                boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.5)',
                 //border: '2px solid yellow',
                 minWidth: 20,
                 flex: 1,
@@ -1625,6 +1652,7 @@ const Dashboard = () => {
 
             <Card
               sx={{
+                boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.5)',
                 //border: '2px solid yellow',
                 minWidth: 20,
                 flex: 1,
@@ -1672,6 +1700,7 @@ const Dashboard = () => {
             </Card>
             <Card
               sx={{
+                boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.5)',
                 //border: '2px solid yellow',
                 minWidth: 20,
                 flex: 1,
@@ -1733,6 +1762,7 @@ const Dashboard = () => {
           <div style={{ display: "flex", flexDirection: "row", marginTop: 15 }}>
             <Card
               sx={{
+                boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.5)',
                 //border: '2px solid yellow',
                 minWidth: 40,
                 flex: 1,
@@ -1773,6 +1803,7 @@ const Dashboard = () => {
             </Card>
             <Card
               sx={{
+                boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.5)',
                 //border: '2px solid yellow',
                 minWidth: 20,
                 flex: 1,
@@ -1809,6 +1840,7 @@ const Dashboard = () => {
             </Card>
             <Card
               sx={{
+                boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.5)',
                 //border: '2px solid yellow',
                 minWidth: 20,
                 flex: 1,
@@ -1856,6 +1888,7 @@ const Dashboard = () => {
             </Card>
             <Card
               sx={{
+                boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.5)',
                 flex: 1,
                 marginRight: 3,
                 marginLeft: 3,
@@ -1932,6 +1965,7 @@ const Dashboard = () => {
           >
             <Card
               sx={{
+                boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.5)',
                 //border: '2px solid yellow',
                 minWidth: 20,
                 flex: 1,
@@ -1976,6 +2010,7 @@ const Dashboard = () => {
             </Card>
             <Card
               sx={{
+                boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.5)',
                 //border: '2px solid yellow',
                 minWidth: 20,
                 flex: 1,
@@ -2024,6 +2059,7 @@ const Dashboard = () => {
 
             <Card
               sx={{
+                boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.5)',
                 //border: '2px solid yellow',
                 minWidth: 20,
                 flex: 1,
@@ -2085,6 +2121,7 @@ const Dashboard = () => {
           <div style={{ display: "flex", flexDirection: "row", marginTop: 3 }}>
             <Card
               sx={{
+                boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.5)',
                 flex: 1,
                 marginRight: 3,
                 marginLeft: 3,
@@ -2154,6 +2191,7 @@ const Dashboard = () => {
 
             <Card
               sx={{
+                boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.5)',
                 //border: '2px solid yellow',
                 minWidth: 40,
                 flex: 1,
@@ -2194,6 +2232,7 @@ const Dashboard = () => {
             </Card>
             <Card
               sx={{
+                boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.5)',
                 //border: '2px solid yellow',
                 minWidth: 20,
                 flex: 1,
@@ -2230,6 +2269,7 @@ const Dashboard = () => {
             </Card>
             <Card
               sx={{
+                boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.5)',
                 //border: '2px solid yellow',
                 minWidth: 20,
                 flex: 1,
@@ -2268,6 +2308,7 @@ const Dashboard = () => {
           <div style={{ display: "flex", flexDirection: "row", marginTop: 3 }}>
             <Card
               sx={{
+                boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.5)',
                 //border: '2px solid yellow',
                 minWidth: 20,
                 flex: 1,
@@ -2318,6 +2359,7 @@ const Dashboard = () => {
             </Card>
             <Card
               sx={{
+                boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.5)',
                 //border: '2px solid yellow',
                 minWidth: 20,
                 flex: 1,
@@ -2365,6 +2407,7 @@ const Dashboard = () => {
             </Card>
             <Card
               sx={{
+                boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.5)',
                 //border: '2px solid yellow',
                 minWidth: 20,
                 flex: 1,
@@ -2412,6 +2455,7 @@ const Dashboard = () => {
             </Card>
             <Card
               sx={{
+                boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.5)',
                 //border: '2px solid yellow',
                 minWidth: 20,
                 flex: 1,
@@ -2464,6 +2508,7 @@ const Dashboard = () => {
           <div style={{ display: "flex", flexDirection: "row", marginTop: 3 }}>
             <Card
               sx={{
+                boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.5)',
                 //border: '2px solid yellow',
                 minWidth: 20,
 
@@ -2512,6 +2557,7 @@ const Dashboard = () => {
             </Card>
             <Card
               sx={{
+                boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.5)',
                 //border: '2px solid yellow',
                 minWidth: 20,
 
