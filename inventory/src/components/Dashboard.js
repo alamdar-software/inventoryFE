@@ -422,10 +422,11 @@ const Dashboard = () => {
 
 
 
-          <div style={{ display: "flex", flexDirection: "row", marginTop: 3 }}>
+          <div style={{ display: "flex", flexDirection: "row", marginTop: 3,marginRight:-20 }}>
             <Card
               sx={{
                 //border: '2px solid yellow',
+                width: "90px !important",
                 minWidth: 20,
                 flex: 1,
                 marginRight: 3,
@@ -443,7 +444,7 @@ const Dashboard = () => {
                 style={{ textDecoration: "none" }}
               >
                 <CardContent
-                // sx={{
+                // sx={{,
                 //   display: 'flex',
                 //   flexDirection: 'column',
                 //   alignItems: 'start',
@@ -597,7 +598,7 @@ const Dashboard = () => {
                   <Typography
         sx={{
           mb: 1.5,
-          ml:10,
+          ml:6,
           textAlign: "center",
           fontWeight: "bolder",
           fontFamily: "Montserrat",
@@ -612,7 +613,7 @@ const Dashboard = () => {
         sx={{
           mb: -6,
         
-          ml:16,
+          ml:10,
           fontWeight: 'bold', // Set font weight to bold
           animation: isBlinking ? 'blinkingText 1s infinite' : 'none', // Apply blinking animation
           color: 'green',
@@ -642,6 +643,9 @@ const Dashboard = () => {
                 },
               }}
             >
+
+
+
               <Link
                 to={"/view-consumeditem"}
                 style={{ textDecoration: "none" }}
@@ -662,7 +666,7 @@ const Dashboard = () => {
                   <Typography
         sx={{
           mb: 1.5,
-          ml:10,
+          ml:5,
           textAlign: "center",
           fontWeight: "bolder",
           fontFamily: "Montserrat",
@@ -677,7 +681,7 @@ const Dashboard = () => {
         sx={{
           mb: -6,
         
-          ml:16,
+          ml:10,
           fontWeight: 'bold', // Set font weight to bold
           animation: isBlinking ? 'blinkingText 1s infinite' : 'none', // Apply blinking animation
           color: 'green',
@@ -727,7 +731,7 @@ const Dashboard = () => {
                   <Typography
         sx={{
           mb: 1.5,
-          ml:10,
+          ml:5,
           textAlign: "center",
           fontWeight: "bolder",
           fontFamily: "Montserrat",
@@ -742,7 +746,7 @@ const Dashboard = () => {
         sx={{
           mb: -6,
         
-          ml:16,
+          ml:7,
           fontWeight: 'bold', // Set font weight to bold
           animation: isBlinking ? 'blinkingText 1s infinite' : 'none', // Apply blinking animation
           color: 'green',
@@ -793,7 +797,7 @@ const Dashboard = () => {
                   <Typography
         sx={{
           mb: 6,
-          ml:10,
+          ml:7,
           textAlign: "center",
           fontWeight: "bolder",
           fontFamily: "Montserrat",
@@ -808,7 +812,7 @@ const Dashboard = () => {
         sx={{
        
         mt:-5,
-          ml:16,
+          ml:7,
          
           fontWeight: 'bold', // Set font weight to bold
           animation: isBlinking ? 'blinkingText 1s infinite' : 'none', // Apply blinking animation
