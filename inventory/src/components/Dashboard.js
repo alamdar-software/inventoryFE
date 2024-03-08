@@ -65,10 +65,10 @@ const Dashboard = () => {
           sx={{
             // backgroundImage: `url(${inventory})`, // Use the imported image as the background
             // backgroundSize: 'cover',
-            margin: "-30px",
+            margin: "-4px",
           }}
         >
-          <div style={{ display: "flex", flexDirection: "row", marginTop: 3 }}>
+          <div style={{ display: "flex", flexDirection: "row", marginTop: -32 }}>
             <Card
               sx={{
                 flex: 1,
