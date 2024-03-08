@@ -89,9 +89,10 @@ const Dashboard = () => {
         },
       })
         const data = await res.json();
+        console.log(data.totalCount,"inventorycount");
         setinvCount(data?.totalCount)
-        console.log(invCount,"inventorycount");
     }
+    getinvCount();
     const getincomingCount=async()=>{
 
       const res = await fetch("http://localhost:8080/bulkstock/view",{
