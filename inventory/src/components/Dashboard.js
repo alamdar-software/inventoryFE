@@ -279,7 +279,7 @@ const Dashboard = () => {
           ml:3,
           fontWeight: 'bold', // Set font weight to bold
           animation: isBlinking ? 'blinkingText 1s infinite' : 'none', // Apply blinking animation
-          color: 'red',
+          color: 'green',
           textAlign: 'center' // Set the text color to blue
         }}
         variant="h4"
@@ -548,7 +548,7 @@ const Dashboard = () => {
           ml:16,
           fontWeight: 'bold', // Set font weight to bold
           animation: isBlinking ? 'blinkingText 1s infinite' : 'none', // Apply blinking animation
-          color: 'red',
+          color: 'green',
           textAlign: 'center' // Set the text color to blue
         }}
         variant="h4"
@@ -677,7 +677,7 @@ const Dashboard = () => {
           ml:16,
           fontWeight: 'bold', // Set font weight to bold
           animation: isBlinking ? 'blinkingText 1s infinite' : 'none', // Apply blinking animation
-          color: 'red',
+          color: 'green',
           textAlign: 'center' // Set the text color to blue
         }}
         variant="h4"
@@ -742,7 +742,7 @@ const Dashboard = () => {
           ml:16,
           fontWeight: 'bold', // Set font weight to bold
           animation: isBlinking ? 'blinkingText 1s infinite' : 'none', // Apply blinking animation
-          color: 'red',
+          color: 'green',
           textAlign: 'center' // Set the text color to blue
         }}
         variant="h4"
@@ -809,7 +809,7 @@ const Dashboard = () => {
          
           fontWeight: 'bold', // Set font weight to bold
           animation: isBlinking ? 'blinkingText 1s infinite' : 'none', // Apply blinking animation
-          color: 'red',
+          color: 'green',
           textAlign: 'center' // Set the text color to blue
         }}
         variant="h4"
