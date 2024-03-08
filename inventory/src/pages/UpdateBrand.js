@@ -12,6 +12,7 @@ import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import { toast } from 'react-toastify';
 // const currency = {
 //   currencyName: "",
 // };
@@ -57,8 +58,21 @@ export default function UpdateBrand() {
       body: JSON.stringify(brand),
     });
     const data = await res.text();
-    console.log(data);
-    navigate('/brand');
+    toast.success('🦄 Brand Updated Successfully!', {
+      position: "top-right",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "dark",
+      
+      });
+      setTimeout(() => {
+     
+        navigate('/brand');
+    }, 3000);
 
     // fetch('http://localhost:8080/location/add', {
     //   method: 'POST',

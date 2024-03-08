@@ -39,6 +39,7 @@ import dayjs from 'dayjs';
 import TextareaAutosize from '@mui/material/TextareaAutosize';
 import { fetchIncome } from '../redux/slice/SingleIncomeSlice';
 import { fetchInventory } from '../redux/slice/InventorySlice';
+import { toast } from 'react-toastify';
 const ScrappedItem = () => {
   const state = useSelector((state) => state);
 
@@ -109,7 +110,18 @@ const ScrappedItem = () => {
         body: JSON.stringify(formData),
       });
       const data = await res.json();
-      console.log(data, 'came from backend');
+      toast.success('🦄 Scrapped Added Successfully!', {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+        
+        });
+      
       alert('Scrapped Item added successfully');
     } catch (error) {
       console.log('something happens while adding cipl');

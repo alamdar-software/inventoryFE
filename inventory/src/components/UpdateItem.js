@@ -16,6 +16,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 import { fetchCategory } from '../redux/slice/CategorySlice';
 import { fetchUom } from '../redux/slice/UomSlice';
+import { toast } from 'react-toastify';
 
 const UpdateItem = () => {
   const [item, setItem] = useState();
@@ -74,8 +75,21 @@ const UpdateItem = () => {
       body: JSON.stringify(item),
     })
       .then(() => {
-        console.log('Class Updated');
-        navigate('/Items');
+        toast.success('🦄 Item Updated Successfully!', {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+          
+          });
+          setTimeout(() => {
+            
+            navigate('/Items');
+        }, 3000);
       })
       .catch((error) => {
         console.error('Error updating class:', error);

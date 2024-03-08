@@ -11,6 +11,7 @@ import {
 import { useEffect } from 'react';
 import CategoryTable from '../components/CategoryTable';
 import { useSelector } from 'react-redux';
+import { toast } from 'react-toastify';
 
 // const currency = {
 //   currencyName: "",
@@ -54,7 +55,22 @@ export default function Category() {
     });
     const data = await res.text();
     console.log(data, 'add data');
-    window.location.reload();
+
+    toast.success('🦄 Category Added Successfully!', {
+      position: "top-right",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "dark",
+      
+      });
+      setTimeout(() => {
+        window.location.reload();
+    }, 3000);
+    
 
     // fetch('http://localhost:8080/location/add', {
     //   method: 'POST',

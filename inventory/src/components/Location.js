@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Card,
   CardContent,
@@ -8,21 +8,22 @@ import {
   Typography,
   Box,
 } from '@mui/material';
+
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
 export const Location = () => {
   const { currentUser } = useSelector((state) => state.persisted.user);
-  const [locationName, setLocation] = useState();
-  const [address, setSubLocation] = useState();
+  const [message, setMessage] = useState(false);
+  const [locationName, setLocation] = useState('');
+  const [address, setSubLocation] = useState('');
 
   const handleClick = (e) => {
     e.preventDefault();
-    const attendence = {
+    const attendance = {
       locationName,
       address,
     };
-    console.log(attendence);
 
     fetch('http://localhost:8080/location/add', {
       method: 'POST',
@@ -30,12 +31,16 @@ export const Location = () => {
         'Content-type': 'application/json',
         Authorization: `Bearer ${currentUser.accessToken}`,
       },
-      body: JSON.stringify(attendence),
+      body: JSON.stringify(attendance),
     }).then(() => {
-      alert('location added');
+      setMessage(true);
       console.log('Location Added');
+      setTimeout(() => {
+        setMessage(false);
+      }, 3000); // Set timeout to hide message after 4 seconds
     });
   };
+
   return (
     <>
       <Grid>
@@ -103,12 +108,6 @@ export const Location = () => {
               color='secondary'
               size='large'
               onClick={handleClick}
-              // sx={{
-              //   mt: '33px',
-              //   mb: '17px',
-              //   marginLeft: '25rem',
-              //   marginRight: 'auto',
-              // }}
             >
               Add
             </Button>
@@ -125,6 +124,47 @@ export const Location = () => {
               </Button>
             </Link>
           </Box>
+          <div style={{ display: 'flex', justifyContent: 'center', marginTop: '5px' }}>
+            {message && (
+              <Box
+                sx={{
+                  color: 'black',
+                  fontWeight: 'bolder',
+                  padding: 1.5,
+                  marginTop: 3,
+                 
+                  backgroundColor: "#118ab2",
+backgroundImage: "linear-gradient(319deg, #118ab2 0%, #06d6a0 37%, #ffd166 100%)",
+
+                  width: '400px',
+                  textAlign: 'center',
+                  borderRadius: '10px',
+                  transition: 'opacity 0.5s ease-in-out',
+                  opacity: 1, // Set initial opacity to 1
+                }}
+              >
+                <p sx={{ color: 'white', margin: 0 }}>Location Added Successfully</p>
+              </Box>
+            )}
+            {!message && (
+              <Box
+                sx={{
+                  color: 'black',
+                  fontWeight: 'bolder',
+                  padding: 1.5,
+                  marginTop: 3,
+                  backgroundColor: '#74D680',
+                  width: '400px',
+                  textAlign: 'center',
+                  borderRadius: '10px',
+                  transition: 'opacity 0.5s ease-in-out',
+                  opacity: 0, // Set initial opacity to 0
+                }}
+              >
+                <p sx={{ color: 'white', margin: 0 }}>Location Added Successfully</p>
+              </Box>
+            )}
+          </div>
         </CardContent>
       </Card>
     </>

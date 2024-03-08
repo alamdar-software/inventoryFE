@@ -24,6 +24,7 @@ import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { fetchInventory } from '../redux/slice/InventorySlice';
 import { fetchIncome } from '../redux/slice/SingleIncomeSlice';
+import { toast } from 'react-toastify';
 const InternalTransfer = () => {
   const [formData, setformData] = useState({
     locationName: '',
@@ -82,6 +83,20 @@ const InternalTransfer = () => {
       },
       body: JSON.stringify(formData),
     }).then(() => {
+      toast.success('🦄 IT Added Successfully!', {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+        
+        });
+        setTimeout(() => {
+          window.location.reload();
+      }, 3000);
       console.log('Internal Transfer Added');
       //window.location.reload();
     });

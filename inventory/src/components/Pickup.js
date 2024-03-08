@@ -19,12 +19,17 @@ import {
   TableBody,
   TablePagination,
   TableFooter,
+  Box,
 } from '@mui/material';
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import { ToastContainer, toast } from 'react-toastify';
+
+import 'react-toastify/dist/ReactToastify.css';
 const Pickup = () => {
   const [pickupAddress, setPickupAddress] = useState();
   const [pic, setPic] = useState();
+  const [message, setMessage] = useState(false)
   const [companyName, setCompanyName] = useState();
   const [countryCode, setCountryCode] = useState();
   const [contactNumber, setContactNumber] = useState();
@@ -85,9 +90,28 @@ const Pickup = () => {
       },
       body: JSON.stringify(attendence),
     }).then(() => {
-      console.log('Pickup Added');
-      window.location.reload();
+      setMessage(true);
+      toast.success('🦄 Category Added Successfully!', {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+        
+        });
+        setTimeout(() => {
+          window.location.reload();
+      }, 3000);
+      setTimeout(() => {
+        setMessage(false);
+      }, 6000);
     });
+    setTimeout(() => {
+      window.location.reload();
+  }, 2000);
   };
   useEffect(() => {
     const getPickup = async () => {
@@ -123,24 +147,38 @@ const Pickup = () => {
   // }, []);
 
   const deletePickup = async (id) => {
-    alert('Deleted Successfully!');
-    console.log(id);
-    fetch(`http://localhost:8080/pickup/delete/${id}`, {
-      method: 'DELETE',
-      headers: {
-        'Content-type': 'application/json',
-        Authorization: `Bearer ${currentUser.accessToken}`,
-      },
-      body: JSON.stringify(Pickup),
-    })
-      .then(() => {
-        console.log('Pickup Deleted');
-        window.location.reload();
-      })
-      .catch((error) => {
+    try {
+        await fetch(`http://localhost:8080/pickup/delete/${id}`, {
+            method: 'DELETE',
+            headers: {
+                'Content-type': 'application/json',
+                Authorization: `Bearer ${currentUser.accessToken}`,
+            },
+            body: JSON.stringify(Pickup),
+        });
+
+        // Use toast.success() for success messages
+        toast.error('🦄 Pickup Deleted Successfully!', {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+         
+          });
+          setTimeout(() => {
+            window.location.reload();
+        }, 3000);
+    } catch (error) {
         console.error('Error updating pickup:', error);
-      });
-  };
+        // Use toast.error() for error messages
+        toast.error("Failed to delete pickup");
+    }
+};
+
 
   return (
     <>
@@ -256,6 +294,48 @@ const Pickup = () => {
         >
           Add
         </Button>
+        <div style={{ display: 'flex', justifyContent: 'center', marginTop: '5px' }}>
+            {message && (
+              <Box
+                sx={{
+                  color: 'black',
+                  fontWeight: 'bolder',
+                  padding: 1.5,
+                  marginTop: 3,
+                  marginBottom:2,
+                 
+                  backgroundColor: "#118ab2",
+backgroundImage: "linear-gradient(319deg, #118ab2 0%, #06d6a0 37%, #ffd166 100%)",
+
+                  width: '400px',
+                  textAlign: 'center',
+                  borderRadius: '10px',
+                  transition: 'opacity 0.5s ease-in-out',
+                  opacity: 1, // Set initial opacity to 1
+                }}
+              >
+                <p sx={{ color: 'white', margin: 0 }}>Location Added Successfully</p>
+              </Box>
+            )}
+            {!message && (
+              <Box
+                sx={{
+                  color: 'black',
+                  fontWeight: 'bolder',
+                  padding: 1.5,
+                  marginTop: 3,
+                  backgroundColor: '#74D680',
+                  width: '400px',
+                  textAlign: 'center',
+                  borderRadius: '10px',
+                  transition: 'opacity 0.5s ease-in-out',
+                  opacity: 0, // Set initial opacity to 0
+                }}
+              >
+                <p sx={{ color: 'white', margin: 0 }}>Pickup Added Successfully</p>
+              </Box>
+            )}
+          </div>
       </Card>
       <Grid sx={{ mt: '33px' }}>
         <TableContainer

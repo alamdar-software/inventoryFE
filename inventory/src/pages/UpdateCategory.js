@@ -12,6 +12,7 @@ import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import { toast } from 'react-toastify';
 // const currency = {
 //   currencyName: "",
 // };
@@ -57,8 +58,21 @@ export default function UpdateCategory() {
       body: JSON.stringify(category),
     });
     const data = await res.text();
-    console.log(data);
-    navigate('/category');
+    toast.success('🦄 Category Updated Successfully!', {
+      position: "top-right",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "dark",
+      
+      });
+      setTimeout(() => {
+       
+        navigate('/category');
+    }, 3000);
 
     // fetch('http://localhost:8080/location/add', {
     //   method: 'POST',

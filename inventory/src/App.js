@@ -145,6 +145,10 @@ import ApprovedScrapped from './pages/ApprovedScrapped.js';
 import ApprovedConsumed from './pages/ApprovedConsumed.js';
 import ApprovalIncoming from './components/ApprovalIncoming.js';
 import UpdateIncomingApproval from './components/UpdateIncomingApproval.js';
+import React from 'react';
+import { ToastContainer } from 'react-toastify';
+import { TableContainer } from '@mui/material';
+
 const theme = createTheme({
   palette: {
     background: {
@@ -179,6 +183,12 @@ function App() {
           <CssBaseline />
 
           <Routes>
+               
+          
+  
+                
+
+
             <Route path='/login' element={<Login />} />
             <Route element={<PrivateRoute />}>
               <Route element={<OnlySuperAdmin />}>
@@ -229,6 +239,7 @@ function App() {
                   path='/item'
                   element={
                     <Sidebar>
+                      <ToastContainer/>
                       <Item />
                     </Sidebar>
                   }
@@ -237,6 +248,7 @@ function App() {
                   path='/updateItem/:id'
                   element={
                     <Sidebar>
+                      <ToastContainer/>
                       <UpdateItem />
                     </Sidebar>
                   }
@@ -246,7 +258,22 @@ function App() {
                   path='/pick-up'
                   element={
                     <Sidebar>
+                      <ToastContainer
+position="top-right"
+autoClose={5000}
+hideProgressBar={false}
+newestOnTop={false}
+closeOnClick
+rtl={false}
+pauseOnFocusLoss
+draggable
+pauseOnHover
+theme="light"
+
+/>
+{/* Same as */}
                       <Pickup />
+<ToastContainer />
                     </Sidebar>
                   }
                 />
@@ -254,6 +281,7 @@ function App() {
                   path='/updatePickup/:id'
                   element={
                     <Sidebar>
+                      <ToastContainer/>
                       <UpdatePickup />
                     </Sidebar>
                   }
@@ -262,6 +290,7 @@ function App() {
                   path='/uom'
                   element={
                     <Sidebar>
+                      <ToastContainer/>
                       <Uom />
                     </Sidebar>
                   }
@@ -270,6 +299,7 @@ function App() {
                   path='/shipper'
                   element={
                     <Sidebar>
+                      <ToastContainer/>
                       <Shipper />
                     </Sidebar>
                   }
@@ -278,6 +308,7 @@ function App() {
                   path='/updateShipper/:id'
                   element={
                     <Sidebar>
+                      <ToastContainer/>
                       <UpdateShipper />
                     </Sidebar>
                   }
@@ -286,6 +317,7 @@ function App() {
                   path='/consignee'
                   element={
                     <Sidebar>
+                      <ToastContainer/>
                       <Consignee />
                     </Sidebar>
                   }
@@ -319,6 +351,7 @@ function App() {
                   path='/currency'
                   element={
                     <Sidebar>
+                      <ToastContainer/>
                       <Currency />
                     </Sidebar>
                   }
@@ -327,6 +360,7 @@ function App() {
                   path='/currency/update/:id'
                   element={
                     <Sidebar>
+                      <ToastContainer/>
                       <UpdateCurrency />
                     </Sidebar>
                   }
@@ -335,6 +369,7 @@ function App() {
                   path='/brand'
                   element={
                     <Sidebar>
+                      <ToastContainer/>
                       <Brand />
                     </Sidebar>
                   }
@@ -343,6 +378,7 @@ function App() {
                   path='/brand/edit/:id'
                   element={
                     <Sidebar>
+                      <ToastContainer/>
                       <UpdateBrand />
                     </Sidebar>
                   }
@@ -351,6 +387,7 @@ function App() {
                   path='/category'
                   element={
                     <Sidebar>
+                      <ToastContainer/>
                       <Category />
                     </Sidebar>
                   }
@@ -359,6 +396,7 @@ function App() {
                   path='/category/edit/:id'
                   element={
                     <Sidebar>
+                       <ToastContainer/>
                       <UpdateCategory />
                     </Sidebar>
                   }
@@ -367,6 +405,7 @@ function App() {
                   path='/Items'
                   element={
                     <Sidebar>
+                      <ToastContainer/>
                       <ViewItem />
                     </Sidebar>
                   }
@@ -375,6 +414,7 @@ function App() {
                   path='/entity'
                   element={
                     <Sidebar>
+                      <ToastContainer/>
                       <Entity />
                     </Sidebar>
                   }
@@ -383,6 +423,7 @@ function App() {
                   path='/entity/update/:id'
                   element={
                     <Sidebar>
+                      <ToastContainer/>
                       <UpdateEntity />
                     </Sidebar>
                   }
@@ -391,6 +432,7 @@ function App() {
                   path='/updateConsignee/:id'
                   element={
                     <Sidebar>
+                      <ToastContainer/>
                       <UpdateConsignee />
                     </Sidebar>
                   }
@@ -410,6 +452,7 @@ function App() {
                 path='/pick-up'
                 element={
                   <Sidebar>
+                    <ToastContainer/>
                     <Pickup />
                   </Sidebar>
                 }
@@ -437,6 +480,7 @@ function App() {
                   path='/add-inventory'
                   element={
                     <Sidebar>
+                      <ToastContainer/>
                       <Inventory />
                     </Sidebar>
                   }
@@ -445,6 +489,7 @@ function App() {
                   path='/cipl'
                   element={
                     <Sidebar>
+                      <ToastContainer/>
                       <Cipl />
                     </Sidebar>
                   }
@@ -453,6 +498,7 @@ function App() {
                   path='/view-cipl'
                   element={
                     <Sidebar>
+                      <ToastContainer/>
                       <ViewCipl />
                     </Sidebar>
                   }
@@ -461,6 +507,7 @@ function App() {
                   path='/cipl-created'
                   element={
                     <Sidebar>
+                      <ToastContainer/>
                       <ViewCiplVerification />
                     </Sidebar>
                   }
@@ -469,6 +516,7 @@ function App() {
                   path='/viewCiplApproval'
                   element={
                     <Sidebar>
+                      <ToastContainer/>
                       <ViewCiplApproval />
                     </Sidebar>
                   }
@@ -840,6 +888,7 @@ function App() {
                   path='/updateInventory/:id'
                   element={
                     <Sidebar>
+                      <ToastContainer/>
                       <UpdateInventory />
                     </Sidebar>
                   }
@@ -848,6 +897,7 @@ function App() {
                   path='/add-consumeditem'
                   element={
                     <Sidebar>
+                      <ToastContainer/>
                       <ConsumeItem />
                     </Sidebar>
                   }
@@ -889,6 +939,7 @@ function App() {
                   path='/updateConsumed/:id'
                   element={
                     <Sidebar>
+                      <ToastContainer/>
                       <UpdateConsumed />
                     </Sidebar>
                   }
@@ -922,6 +973,7 @@ function App() {
                   path='/mto'
                   element={
                     <Sidebar>
+                      <ToastContainer/>
                       <Mto />
                     </Sidebar>
                   }
@@ -930,6 +982,7 @@ function App() {
                   path='/it'
                   element={
                     <Sidebar>
+                      <ToastContainer/>
                       <InternalTransfer />
                     </Sidebar>
                   }
@@ -939,6 +992,7 @@ function App() {
                   path='/add-scrappeditem'
                   element={
                     <Sidebar>
+                      <ToastContainer/>
                       <ScrappedItem />
                     </Sidebar>
                   }
@@ -963,6 +1017,7 @@ function App() {
                   path='/updateScapped/:id'
                   element={
                     <Sidebar>
+                      <ToastContainer/>
                       <UpdateScrapped />
                     </Sidebar>
                   }
@@ -1153,6 +1208,7 @@ function App() {
                     path='/updateMto/:id'
                     element={
                       <Sidebar>
+                        <ToastContainer/>
                         <UpdateMto />
                       </Sidebar>
                     }
@@ -1169,6 +1225,7 @@ function App() {
                     path='/updatePickup/:id'
                     element={
                       <Sidebar>
+                        <ToastContainer/>
                         <UpdatePickup />
                       </Sidebar>
                     }
@@ -1185,6 +1242,7 @@ function App() {
                     path='/Uom/update/:id'
                     element={
                       <Sidebar>
+                        <ToastContainer/>
                         <UpdateUom />
                       </Sidebar>
                     }
@@ -1261,6 +1319,7 @@ function App() {
                 element={<ViewConsignee />}
               /> */}
             </Route>
+           
           </Routes>
         </ThemeProvider>
       </BrowserRouter>

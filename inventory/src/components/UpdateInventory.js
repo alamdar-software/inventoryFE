@@ -16,6 +16,7 @@ import { fetchItem } from '../redux/slice/ItemSlice';
 import { fetchlocation } from '../redux/slice/location';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
+import { toast } from 'react-toastify';
 
 const UpdateInventory = () => {
   const [formData, setformData] = useState({
@@ -74,6 +75,20 @@ const UpdateInventory = () => {
       .then(() => {
         console.log('Inventory Updated');
         // navigate('/consignee');
+        toast.success('🦄 Inventory Updated Successfully!', {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+          
+          });
+          setTimeout(() => {
+              navigate('/view-inventory');
+        }, 3000);
       })
       .catch((error) => {
         console.error('Error updating consignee:', error);

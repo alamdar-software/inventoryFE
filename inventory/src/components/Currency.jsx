@@ -11,6 +11,7 @@ import TableComp from "./TableComp.jsx";
 import { useEffect } from "react";
 import Swal from "sweetalert2";
 import { useSelector } from "react-redux";
+import { toast } from "react-toastify";
 // const currency = {
 //   currencyName: "",
 // };
@@ -62,8 +63,20 @@ export const Currency = () => {
       body: JSON.stringify(currency),
     });
     const data = await res.json();
-    console.log(data);
-    window.location.reload();
+    toast.success('🦄 Currency Added Successfully!', {
+      position: "top-right",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "dark",
+
+    });
+    setTimeout(() => {
+      window.location.reload();
+    }, 3000);
 
     // fetch('http://localhost:8080/location/add', {
     //   method: 'POST',

@@ -17,6 +17,7 @@ import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { fetchItem } from "../redux/slice/ItemSlice";
 import { fetchlocation } from "../redux/slice/location";
+import { toast } from "react-toastify";
 
 const Inventory = () => {
   const [formData, setformData] = useState({
@@ -63,6 +64,18 @@ const Inventory = () => {
         body: JSON.stringify(formData),
       });
       const data = await res.json();
+      toast.success('🦄 Inventory Added Successfully!', {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+        
+        });
+       
       console.log(data);
     } catch (error) {
       console.log("something happens while adding inventory");

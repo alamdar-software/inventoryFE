@@ -25,6 +25,7 @@ import { fetchlocation } from '../redux/slice/location';
 import { fetchItem } from '../redux/slice/ItemSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { PoList } from '../components/PoList';
+import { toast } from 'react-toastify';
 
 const InventoryList = () => {
   const state = useSelector((state) => state);
@@ -96,8 +97,21 @@ const InventoryList = () => {
       body: JSON.stringify(InventoryList),
     })
       .then(() => {
-        console.log('Location Updated');
-        window.location.reload();
+        toast.warn('🦄 Category Added Successfully!', {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+          
+          });
+          setTimeout(() => {
+            window.location.reload();
+        }, 3000);
+      
       })
       .catch((error) => {
         console.error('Error updating location:', error);

@@ -40,6 +40,7 @@ import TextareaAutosize from '@mui/material/TextareaAutosize';
 import { fetchIncome } from '../redux/slice/SingleIncomeSlice';
 import { fetchInventory } from '../redux/slice/InventorySlice';
 import { useLocation } from 'react-router-dom';
+import { toast } from 'react-toastify';
 export const Cipl = () => {
   const location = useLocation();
   const state = useSelector((state) => state);
@@ -126,7 +127,20 @@ export const Cipl = () => {
       });
       const data = await res.json();
       console.log(data, 'came from backend');
-      alert('cipl added successfully');
+      toast.success('🦄 Cipl Added Successfully!', {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+        
+        });
+        setTimeout(() => {
+          window.location.reload();
+      }, 3000);
       window.location.reload();
     } catch (error) {
       console.log('something happens while adding cipl');
