@@ -42,23 +42,56 @@ const ViewItem = () => {
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [item, setItem] = useState([]);
   const { currentUser } = useSelector((state) => state.persisted.user);
+  // useEffect(() => {
+  //   console.log(currentUser.accessToken, 'heyyyy');
+  //   fetch('http://localhost:8080/item/view', {
+  //     headers: {
+  //       Authorization: `Bearer ${currentUser.accessToken}`,
+  //     },
+  //   })
+  //     .then((res) => res.json())
+  //     .then((result) => {
+  //       if (result) {
+  //         const itemArray = Object.values(result);
+  //         setItem(itemArray);
+  //       } else {
+  //         console.error('Empty or invalid JSON response');
+  //       }
+  //     });
+  // }, []); // Make sure to include an empty dependency array if you only want this effect to run once on component mount
+
   useEffect(() => {
-    console.log(currentUser.accessToken, 'heyyyy');
     fetch('http://localhost:8080/item/view', {
       headers: {
         Authorization: `Bearer ${currentUser.accessToken}`,
       },
     })
-      .then((res) => res.json())
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return res.json();
+      })
       .then((result) => {
-        if (result) {
+        if (result && Object.keys(result).length > 0) {
           const itemArray = Object.values(result);
           setItem(itemArray);
         } else {
-          console.error('Empty or invalid JSON response');
+          console.error('Empty response from the server');
+          // Set item to an empty array to clear existing data
+          setItem([]);
+          // Optionally, display a message to the user
+          // You can use state to control the visibility of the message
+          // setMessage('No incoming data available');
         }
+      })
+      .catch((error) => {
+        console.error('Error fetching data:', error);
+        // Handle fetch error here, e.g., display an error message to the user
+        // You can use state to control the visibility of the error message
+        // setError('Error fetching data. Please try again later.');
       });
-  }, []); // Make sure to include an empty dependency array if you only want this effect to run once on component mount
+  }, []);
 
   const deleteItem = async (id) => {
     console.log(id);
