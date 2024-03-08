@@ -59,7 +59,7 @@ const Dashboard = () => {
     // Toggle blinking every 1 second
     const interval = setInterval(() => {
       setIsBlinking((prevIsBlinking) => !prevIsBlinking);
-    }, 700);
+    }, 900);
 
     // Clear interval on component unmount
     return () => clearInterval(interval);
