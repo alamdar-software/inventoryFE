@@ -98,20 +98,18 @@ const InventoryList = () => {
     })
       .then(() => {
         toast.warn('🦄 Category Added Successfully!', {
-          position: "top-right",
+          position: 'top-right',
           autoClose: 3000,
           hideProgressBar: false,
           closeOnClick: true,
           pauseOnHover: true,
           draggable: true,
           progress: undefined,
-          theme: "dark",
-          
-          });
-          setTimeout(() => {
-            window.location.reload();
+          theme: 'dark',
+        });
+        setTimeout(() => {
+          window.location.reload();
         }, 3000);
-      
       })
       .catch((error) => {
         console.error('Error updating location:', error);
@@ -286,150 +284,158 @@ const InventoryList = () => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {inventoryData
-                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                .map((inventory) => (
-                  <TableRow
-                    key={inventory.id}
-                    sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                  >
-                    {/* <TableCell component='th' scope='row'>
+              {inventoryData.length > 0 ? (
+                inventoryData
+                  .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                  .map((inventory) => (
+                    <TableRow
+                      key={inventory.id}
+                      sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                    >
+                      {/* <TableCell component='th' scope='row'>
                   {attendence.name}
                 </TableCell> */}
 
-                    <TableCell align='right'>
-                      {inventory.locationName}
-                    </TableCell>
-                    <TableCell align='right'>
-                      {inventory?.address?.address || ''}
-                    </TableCell>
-                    <TableCell align='right'>
-                      {inventory.description.match(/^[^-(]*/)[0].trim()}
-                    </TableCell>
-                    <TableCell align='right'>{inventory.quantity}</TableCell>
-                    <TableCell align='right'>
-                      {inventory.consumedItem}
-                    </TableCell>
-                    <TableCell align='right'>
-                      {inventory.scrappedItem}
-                    </TableCell>
-                    <Box>
-                      <Button
-                        variant='outlined'
-                        onClick={handleButtonClick}
-                        sx={{ mr: '11px' }}
-                      >
-                        {' '}
-                        View Po List
-                      </Button>
-                      {isCardVisible && (
-                        <div
-                          style={{
-                            position: 'fixed',
-                            top: '50%',
-                            left: '50%',
-                            transform: 'translate(-50%, -50%)',
-                            backgroundColor: '#fff',
-                            border: '1px solid #ccc',
-                            padding: '10px',
-                            boxShadow: '0 2px 4px rgba(0, 0, 0, 0.2)',
-                            color: 'black',
-                          }}
+                      <TableCell align='right'>
+                        {inventory.locationName}
+                      </TableCell>
+                      <TableCell align='right'>
+                        {inventory?.address?.address || ''}
+                      </TableCell>
+                      <TableCell align='right'>
+                        {inventory.description.match(/^[^-(]*/)[0].trim()}
+                      </TableCell>
+                      <TableCell align='right'>{inventory.quantity}</TableCell>
+                      <TableCell align='right'>
+                        {inventory.consumedItem}
+                      </TableCell>
+                      <TableCell align='right'>
+                        {inventory.scrappedItem}
+                      </TableCell>
+                      <Box>
+                        <Button
+                          variant='outlined'
+                          onClick={handleButtonClick}
+                          sx={{ mr: '11px' }}
                         >
-                          <Grid>
-                            <Card sx={{ backgroundColor: '#E5EAE7' }}>
-                              <CardContent>
-                                <Typography
-                                  variant='h4'
-                                  color='secondary'
-                                  gutterBottom
-                                  style={{ fontFamily: "'EB Garamond'" }}
-                                >
-                                  Purchase Order List
-                                </Typography>
-                              </CardContent>
-                            </Card>
+                          {' '}
+                          View Po List
+                        </Button>
+                        {isCardVisible && (
+                          <div
+                            style={{
+                              position: 'fixed',
+                              top: '50%',
+                              left: '50%',
+                              transform: 'translate(-50%, -50%)',
+                              backgroundColor: '#fff',
+                              border: '1px solid #ccc',
+                              padding: '10px',
+                              boxShadow: '0 2px 4px rgba(0, 0, 0, 0.2)',
+                              color: 'black',
+                            }}
+                          >
+                            <Grid>
+                              <Card sx={{ backgroundColor: '#E5EAE7' }}>
+                                <CardContent>
+                                  <Typography
+                                    variant='h4'
+                                    color='secondary'
+                                    gutterBottom
+                                    style={{ fontFamily: "'EB Garamond'" }}
+                                  >
+                                    Purchase Order List
+                                  </Typography>
+                                </CardContent>
+                              </Card>
 
-                            <Grid
-                              sx={{
-                                mt: '33px',
-                                width: '100%',
-                                overflowX: 'scroll',
-                              }}
-                            >
-                              <TableContainer
-                                component={Paper}
+                              <Grid
                                 sx={{
-                                  borderRadius: '33px',
-                                  borderBottom: '2px solid yellow',
-                                  width: '110%',
+                                  mt: '33px',
+                                  width: '100%',
+                                  overflowX: 'scroll',
                                 }}
                               >
-                                <Table
-                                  sx={{ minWidth: 650 }}
-                                  aria-label='simple table'
+                                <TableContainer
+                                  component={Paper}
+                                  sx={{
+                                    borderRadius: '33px',
+                                    borderBottom: '2px solid yellow',
+                                    width: '110%',
+                                  }}
                                 >
-                                  <TableHead>
-                                    <TableRow>
-                                      <TableCell
-                                        align='right'
-                                        sx={{ fontWeight: 'bold' }}
-                                      >
-                                        Purchase Order
-                                      </TableCell>
-                                      <TableCell
-                                        align='right'
-                                        sx={{ fontWeight: 'bold' }}
-                                      >
-                                        Date
-                                      </TableCell>
-                                      <TableCell
-                                        align='right'
-                                        sx={{ fontWeight: 'bold' }}
-                                      >
-                                        Unit Cost
-                                      </TableCell>
-                                      <TableCell
-                                        align='right'
-                                        sx={{ fontWeight: 'bold' }}
-                                      >
-                                        Currency
-                                      </TableCell>
-                                      <TableCell
-                                        align='right'
-                                        sx={{ fontWeight: 'bold' }}
-                                      >
-                                        Quantity
-                                      </TableCell>
-                                      <TableCell
-                                        align='right'
-                                        sx={{ fontWeight: 'bold' }}
-                                      >
-                                        Remaining Quantity
-                                      </TableCell>
-                                    </TableRow>
-                                  </TableHead>
-                                </Table>
-                              </TableContainer>
+                                  <Table
+                                    sx={{ minWidth: 650 }}
+                                    aria-label='simple table'
+                                  >
+                                    <TableHead>
+                                      <TableRow>
+                                        <TableCell
+                                          align='right'
+                                          sx={{ fontWeight: 'bold' }}
+                                        >
+                                          Purchase Order
+                                        </TableCell>
+                                        <TableCell
+                                          align='right'
+                                          sx={{ fontWeight: 'bold' }}
+                                        >
+                                          Date
+                                        </TableCell>
+                                        <TableCell
+                                          align='right'
+                                          sx={{ fontWeight: 'bold' }}
+                                        >
+                                          Unit Cost
+                                        </TableCell>
+                                        <TableCell
+                                          align='right'
+                                          sx={{ fontWeight: 'bold' }}
+                                        >
+                                          Currency
+                                        </TableCell>
+                                        <TableCell
+                                          align='right'
+                                          sx={{ fontWeight: 'bold' }}
+                                        >
+                                          Quantity
+                                        </TableCell>
+                                        <TableCell
+                                          align='right'
+                                          sx={{ fontWeight: 'bold' }}
+                                        >
+                                          Remaining Quantity
+                                        </TableCell>
+                                      </TableRow>
+                                    </TableHead>
+                                  </Table>
+                                </TableContainer>
+                              </Grid>
                             </Grid>
-                          </Grid>
-                        </div>
-                      )}
+                          </div>
+                        )}
 
-                      <Link to={`/updateInventory/${inventory?.id}`}>
-                        <Button variant='contained'>Update</Button>
-                      </Link>
-                      <Button
-                        sx={{ marginLeft: '11px' }}
-                        variant='contained'
-                        color='secondary'
-                        onClick={() => deleteInventory(inventory.id)}
-                      >
-                        Delete
-                      </Button>
-                    </Box>
-                  </TableRow>
-                ))}
+                        <Link to={`/updateInventory/${inventory?.id}`}>
+                          <Button variant='contained'>Update</Button>
+                        </Link>
+                        <Button
+                          sx={{ marginLeft: '11px' }}
+                          variant='contained'
+                          color='secondary'
+                          onClick={() => deleteInventory(inventory.id)}
+                        >
+                          Delete
+                        </Button>
+                      </Box>
+                    </TableRow>
+                  ))
+              ) : (
+                <TableRow>
+                  <TableCell colSpan={7} align='center'>
+                    No incoming data available.
+                  </TableCell>
+                </TableRow>
+              )}
             </TableBody>
             <TableFooter>
               <TableRow>

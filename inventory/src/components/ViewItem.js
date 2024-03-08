@@ -61,7 +61,6 @@ const ViewItem = () => {
   }, []); // Make sure to include an empty dependency array if you only want this effect to run once on component mount
 
   const deleteItem = async (id) => {
- 
     console.log(id);
     fetch(`http://localhost:8080/item/delete/${id}`, {
       method: 'DELETE',
@@ -74,20 +73,18 @@ const ViewItem = () => {
       .then(() => {
         console.log('item Deleted');
         toast.warn('🦄 Item Deleted Successfully!', {
-          position: "top-right",
+          position: 'top-right',
           autoClose: 3000,
           hideProgressBar: false,
           closeOnClick: true,
           pauseOnHover: true,
           draggable: true,
           progress: undefined,
-          theme: "dark",
-          
-          });
-          setTimeout(() => {
-            window.location.reload();
+          theme: 'dark',
+        });
+        setTimeout(() => {
+          window.location.reload();
         }, 3000);
-       
       })
       .catch((error) => {
         console.error('Error updating location:', error);
@@ -138,40 +135,51 @@ const ViewItem = () => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {item
-                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                .map((item) => (
-                  <TableRow
-                    key={item.name}
-                    sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                  >
-                    <TableCell align='right'>{item.itemName}</TableCell>
-                    <TableCell align='right'>{item.description}</TableCell>
-                    <TableCell align='right'>{item.name}</TableCell>
-                    <TableCell align='left'>{item.unitName}</TableCell>
-                    <TableCell align='left'>{item.minimumStock}</TableCell>
-                    <Link to={`/updateItem/${item.id}`}>
-                      <Button sx={{ marginRight: '11px' }} variant='contained'>
-                        View Inventory
-                      </Button>
-                    </Link>
+              {item.length > 0 ? (
+                item
+                  .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                  .map((item) => (
+                    <TableRow
+                      key={item.name}
+                      sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                    >
+                      <TableCell align='right'>{item.itemName}</TableCell>
+                      <TableCell align='right'>{item.description}</TableCell>
+                      <TableCell align='right'>{item.name}</TableCell>
+                      <TableCell align='left'>{item.unitName}</TableCell>
+                      <TableCell align='left'>{item.minimumStock}</TableCell>
+                      <Link to={`/updateItem/${item.id}`}>
+                        <Button
+                          sx={{ marginRight: '11px' }}
+                          variant='contained'
+                        >
+                          View Inventory
+                        </Button>
+                      </Link>
 
-                    <Link
-                      sx={{ marginLeft: '11px' }}
-                      to={`/updateItem/${item.id}`}
-                    >
-                      <Button variant='contained'>Update</Button>
-                    </Link>
-                    <Button
-                      sx={{ marginLeft: '11px' }}
-                      variant='contained'
-                      color='secondary'
-                      onClick={() => deleteItem(item.id)}
-                    >
-                      Delete
-                    </Button>
-                  </TableRow>
-                ))}
+                      <Link
+                        sx={{ marginLeft: '11px' }}
+                        to={`/updateItem/${item.id}`}
+                      >
+                        <Button variant='contained'>Update</Button>
+                      </Link>
+                      <Button
+                        sx={{ marginLeft: '11px' }}
+                        variant='contained'
+                        color='secondary'
+                        onClick={() => deleteItem(item.id)}
+                      >
+                        Delete
+                      </Button>
+                    </TableRow>
+                  ))
+              ) : (
+                <TableRow>
+                  <TableCell colSpan={7} align='center'>
+                    No incoming data available.
+                  </TableCell>
+                </TableRow>
+              )}
             </TableBody>
             <TableFooter>
               <TableRow>

@@ -71,18 +71,17 @@ const Shipper = () => {
     }).then(() => {
       console.log('Shipper Added');
       toast.success('🦄 Shipper Added Successfully!', {
-        position: "top-right",
+        position: 'top-right',
         autoClose: 3000,
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: true,
         draggable: true,
         progress: undefined,
-        theme: "dark",
-        
-        });
-        setTimeout(() => {
-          window.location.reload();
+        theme: 'dark',
+      });
+      setTimeout(() => {
+        window.location.reload();
       }, 3000);
     });
   };
@@ -110,7 +109,7 @@ const Shipper = () => {
 
   const deleteShipper = async (id) => {
     console.log(id);
-   
+
     fetch(`http://localhost:8080/shipper/delete/${id}`, {
       method: 'DELETE',
       headers: {
@@ -122,15 +121,14 @@ const Shipper = () => {
       .then(() => {
         console.log('Shipper Updated');
         toast.warn('🦄 Shipper Deleted Successfully!', {
-          position: "top-right",
+          position: 'top-right',
           autoClose: 3000,
           hideProgressBar: false,
           closeOnClick: true,
           pauseOnHover: true,
           draggable: true,
           progress: undefined,
-          theme: "dark",
-
+          theme: 'dark',
         });
         setTimeout(() => {
           window.location.reload();
@@ -282,40 +280,48 @@ const Shipper = () => {
             </TableHead>
 
             <TableBody>
-              {shipperList
-                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                .map((shipperList) => (
-                  <TableRow
-                    key={shipperList.name}
-                    sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                  >
-                    <TableCell align='right'>
-                      {shipperList.shipperName}
-                    </TableCell>
-
-                    <TableCell align='right'>{shipperList.address}</TableCell>
-                    <TableCell align='right'>
-                      {shipperList.postalCode}
-                    </TableCell>
-                    <TableCell align='right'>
-                      {shipperList.contactNumber}
-                    </TableCell>
-                    <TableCell align='right'>{shipperList.email}</TableCell>
-
-                    {/* Include your update and delete buttons here */}
-                    <Link to={`/updateShipper/${shipperList.id}`}>
-                      <Button variant='contained'>Update</Button>
-                    </Link>
-                    <Button
-                      sx={{ marginLeft: '11px' }}
-                      variant='contained'
-                      color='secondary'
-                      onClick={() => deleteShipper(shipperList.id)}
+              {shipperList.length > 0 ? (
+                shipperList
+                  .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                  .map((shipperList) => (
+                    <TableRow
+                      key={shipperList.name}
+                      sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                     >
-                      Delete
-                    </Button>
-                  </TableRow>
-                ))}
+                      <TableCell align='right'>
+                        {shipperList.shipperName}
+                      </TableCell>
+
+                      <TableCell align='right'>{shipperList.address}</TableCell>
+                      <TableCell align='right'>
+                        {shipperList.postalCode}
+                      </TableCell>
+                      <TableCell align='right'>
+                        {shipperList.contactNumber}
+                      </TableCell>
+                      <TableCell align='right'>{shipperList.email}</TableCell>
+
+                      {/* Include your update and delete buttons here */}
+                      <Link to={`/updateShipper/${shipperList.id}`}>
+                        <Button variant='contained'>Update</Button>
+                      </Link>
+                      <Button
+                        sx={{ marginLeft: '11px' }}
+                        variant='contained'
+                        color='secondary'
+                        onClick={() => deleteShipper(shipperList.id)}
+                      >
+                        Delete
+                      </Button>
+                    </TableRow>
+                  ))
+              ) : (
+                <TableRow>
+                  <TableCell colSpan={7} align='center'>
+                    No incoming data available.
+                  </TableCell>
+                </TableRow>
+              )}
             </TableBody>
             <TableFooter>
               <TableRow>

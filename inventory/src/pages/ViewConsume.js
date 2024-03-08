@@ -218,20 +218,18 @@ const ViewConsume = () => {
       .then(() => {
         console.log('item Deleted');
         toast``.success('🦄 Consumed Deleted Successfully!', {
-          position: "top-right",
+          position: 'top-right',
           autoClose: 3000,
           hideProgressBar: false,
           closeOnClick: true,
           pauseOnHover: true,
           draggable: true,
           progress: undefined,
-          theme: "dark",
-          
-          });
-          setTimeout(() => {
-            window.location.reload();
+          theme: 'dark',
+        });
+        setTimeout(() => {
+          window.location.reload();
         }, 3000);
-      
       })
       .catch((error) => {
         console.error('Error updating location:', error);
@@ -406,47 +404,57 @@ const ViewConsume = () => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {filteredConsumed?.map((consumedRow) =>
-                // Render a row for each sublocation
-                consumedRow.item.map((item, index) => (
-                  <TableRow
-                    key={`${consumedRow.id}-${index}`} // Use a unique key for each row
-                    sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                  >
-                    <TableCell align='right'>
-                      {item.match(/^[^-(]*/)[0].trim()}
-                    </TableCell>
-                    <TableCell align='right'>
-                      {consumedRow.locationName}
-                    </TableCell>
-                    <TableCell align='right'>
-                      {consumedRow.subLocations}
-                    </TableCell>
-                    <TableCell align='right'>{consumedRow.quantity}</TableCell>
-                    <TableCell align='right'>{consumedRow.date}</TableCell>
-                    <TableCell align='right'>
-                      <Box>
-                        <Link to={`/updateConsumed/${consumedRow.id}`}>
+              {filteredConsumed.length > 0 ? (
+                filteredConsumed?.map((consumedRow) =>
+                  // Render a row for each sublocation
+                  consumedRow.item.map((item, index) => (
+                    <TableRow
+                      key={`${consumedRow.id}-${index}`} // Use a unique key for each row
+                      sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                    >
+                      <TableCell align='right'>
+                        {item.match(/^[^-(]*/)[0].trim()}
+                      </TableCell>
+                      <TableCell align='right'>
+                        {consumedRow.locationName}
+                      </TableCell>
+                      <TableCell align='right'>
+                        {consumedRow.subLocations}
+                      </TableCell>
+                      <TableCell align='right'>
+                        {consumedRow.quantity}
+                      </TableCell>
+                      <TableCell align='right'>{consumedRow.date}</TableCell>
+                      <TableCell align='right'>
+                        <Box>
+                          <Link to={`/updateConsumed/${consumedRow.id}`}>
+                            <Button
+                              sx={{ marginLeft: '11px', marginTop: '15px' }}
+                              variant='contained'
+                            >
+                              Update
+                            </Button>
+                          </Link>
+
                           <Button
                             sx={{ marginLeft: '11px', marginTop: '15px' }}
                             variant='contained'
+                            color='secondary'
+                            onClick={() => deleteConsumed(consumedRow.id)}
                           >
-                            Update
+                            Delete
                           </Button>
-                        </Link>
-
-                        <Button
-                          sx={{ marginLeft: '11px', marginTop: '15px' }}
-                          variant='contained'
-                          color='secondary'
-                          onClick={() => deleteConsumed(consumedRow.id)}
-                        >
-                          Delete
-                        </Button>
-                      </Box>
-                    </TableCell>
-                  </TableRow>
-                ))
+                        </Box>
+                      </TableCell>
+                    </TableRow>
+                  ))
+                )
+              ) : (
+                <TableRow>
+                  <TableCell colSpan={7} align='center'>
+                    No incoming data available.
+                  </TableCell>
+                </TableRow>
               )}
             </TableBody>
             <TableFooter>

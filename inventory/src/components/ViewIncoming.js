@@ -35,7 +35,6 @@ import BorderColorSharpIcon from '@mui/icons-material/BorderColorSharp';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
-
 const ViewIncoming = () => {
   const [formData, setformData] = useState({
     description: '',
@@ -140,18 +139,17 @@ const ViewIncoming = () => {
     })
       .then(() => {
         toast.warn('🦄 Incoming Deleted Successfully!', {
-          position: "top-right",
+          position: 'top-right',
           autoClose: 3000,
           hideProgressBar: false,
           closeOnClick: true,
           pauseOnHover: true,
           draggable: true,
           progress: undefined,
-          theme: "dark",
-          
-          });
-          setTimeout(() => {
-            window.location.reload();
+          theme: 'dark',
+        });
+        setTimeout(() => {
+          window.location.reload();
         }, 3000);
       })
       .catch((error) => {
@@ -318,7 +316,6 @@ const ViewIncoming = () => {
           sx={{
             borderRadius: '33px',
             borderBottom: '2px solid yellow',
-            
           }}
         >
           <Table sx={{ minWidth: 500 }} aria-label='simple table'>
@@ -348,7 +345,11 @@ const ViewIncoming = () => {
                 <TableCell align='left' sx={{ fontWeight: 'bold' }}>
                   Incoming Stock
                 </TableCell>
-                <TableCell align='left' sx={{ fontWeight: 'bold' }} className='flex flex-row'>
+                <TableCell
+                  align='left'
+                  sx={{ fontWeight: 'bold' }}
+                  className='flex flex-row'
+                >
                   Action
                 </TableCell>
               </TableRow>
@@ -368,7 +369,10 @@ const ViewIncoming = () => {
                       <TableCell align='left'>{item.date}</TableCell>
                       <TableCell align='left'>{item.dataType}</TableCell>
                       <TableCell align='left' className='flex flex-row'>
-                        <Link to={`/updateIncoming/${item.id}`} className='flex flex-row'>
+                        <Link
+                          to={`/updateIncoming/${item.id}`}
+                          className='flex flex-row'
+                        >
                           <Button>
                             <BorderColorSharpIcon
                               // onClick={() => handleDeleteClick(index)}
@@ -376,12 +380,8 @@ const ViewIncoming = () => {
                             />
                           </Button>
                         </Link>
-                        <Button
-                     
-                          onClick={() => handledeleteincome(item.id)}
-                        >
-                          <DeleteIcon/>
-                        
+                        <Button onClick={() => handledeleteincome(item.id)}>
+                          <DeleteIcon />
                         </Button>
                       </TableCell>
 

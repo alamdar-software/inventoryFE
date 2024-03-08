@@ -20,6 +20,7 @@ import {
   TablePagination,
   Box,
   TableFooter,
+  IconButton,
 } from '@mui/material';
 import { Link } from 'react-router-dom';
 import { fetchlocation } from '../redux/slice/location';
@@ -388,63 +389,69 @@ export const ViewCipl = () => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {filteredCipl
-                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                .map((ciplRow) =>
-                  // Render a row for each sublocation
-                  ciplRow.SubLocations.map((subLocation, index) => (
-                    <TableRow
-                      key={`${ciplRow.id}-${index}`} // Use a unique key for each row
-                      sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                    >
-                      <TableCell align='right'>
-                        {ciplRow.locationName}
-                      </TableCell>
-                      <TableCell align='right'>{subLocation}</TableCell>
-                      <TableCell align='right'>{ciplRow.shipperName}</TableCell>
-                      <TableCell align='right'>
-                        {ciplRow.consigneeName}
-                      </TableCell>
-                      <TableCell align='right'>
-                        {ciplRow.consigneeName}
-                      </TableCell>
-                      <TableCell align='right'>
-                        {ciplRow.transferDate}
-                      </TableCell>
-                      <TableCell align='right'>
-                        {ciplRow.status}
-                      </TableCell>
-                      <TableCell align='right'>
-                        <Link to={`/cipl/createpdf/${ciplRow.id}`}>
+              {filteredCipl.length > 0 ? (
+                filteredCipl
+                  .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                  .map((ciplRow) =>
+                    // Render a row for each sublocation
+                    ciplRow.SubLocations.map((subLocation, index) => (
+                      <TableRow
+                        key={`${ciplRow.id}-${index}`} // Use a unique key for each row
+                        sx={{
+                          '&:last-child td, &:last-child th': { border: 0 },
+                        }}
+                      >
+                        <TableCell align='right'>
+                          {ciplRow.locationName}
+                        </TableCell>
+                        <TableCell align='right'>{subLocation}</TableCell>
+                        <TableCell align='right'>
+                          {ciplRow.shipperName}
+                        </TableCell>
+                        <TableCell align='right'>
+                          {ciplRow.consigneeName}
+                        </TableCell>
+                        {/* Replace one of the TableCell components if needed */}
+                        <TableCell align='right'>
+                          {ciplRow.transferDate}
+                        </TableCell>
+                        <TableCell align='right'>{ciplRow.status}</TableCell>
+                        <TableCell align='right'>
+                          <Link to={`/cipl/createpdf/${ciplRow.id}`}>
+                            <Button
+                              variant='contained'
+                              color='primary'
+                              onClick={() => generatePDF(ciplRow.id, index)}
+                            >
+                              <PictureAsPdfIcon />
+                            </Button>
+                          </Link>
+                          <Link to={`/updateCipl/${ciplRow.id}`}>
+                            <IconButton>
+                              <EditIcon />
+                            </IconButton>
+                          </Link>
                           <Button
+                            sx={{ marginLeft: '11px' }}
                             variant='contained'
-                            color='primary'
-                            onClick={() => generatePDF(ciplRow.id, index)}
+                            color='secondary'
+                            onClick={() => handledeleteCipl(ciplRow.id)}
                           >
-                            {<PictureAsPdfIcon />}
+                            Delete
                           </Button>
-                        </Link>
-                      </TableCell>
-
-                      <Box>
-                        <Link to={`/updateCipl/${ciplRow.id}`}>
-                          <EditIcon/>
-                          
-                        </Link>
-
-                        <Button
-                          sx={{ marginLeft: '11px' }}
-                          variant='contained'
-                          color='secondary'
-                          onClick={() => handledeleteCipl(ciplRow.id)}
-                        >
-                          Delete
-                        </Button>
-                      </Box>
-                    </TableRow>
-                  ))
-                )}
+                        </TableCell>
+                      </TableRow>
+                    ))
+                  )
+              ) : (
+                <TableRow>
+                  <TableCell colSpan={7} align='center'>
+                    No incoming data available.
+                  </TableCell>
+                </TableRow>
+              )}
             </TableBody>
+
             <TableFooter>
               <TableRow>
                 <TableCell colSpan={7} align='center'>

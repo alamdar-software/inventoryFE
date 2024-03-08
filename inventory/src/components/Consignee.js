@@ -78,20 +78,18 @@ const Consignee = () => {
       console.log(data, 'resdata');
 
       toast.success('🦄 Consignee Added Successfully!', {
-        position: "top-right",
+        position: 'top-right',
         autoClose: 3000,
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: true,
         draggable: true,
         progress: undefined,
-        theme: "dark",
-        
-        });
-        setTimeout(() => {
-          window.location.reload();
+        theme: 'dark',
+      });
+      setTimeout(() => {
+        window.location.reload();
       }, 3000);
-     
     } catch (error) {
       console.error('Error during fetch:', error);
     }
@@ -115,29 +113,28 @@ const Consignee = () => {
 
     fetch(`http://localhost:8080/consignee/delete/${id}`, {
       method: 'DELETE',
-      headers: { 'Content-type': 'application/json',
-      Authorization: `Bearer ${currentUser.accessToken}`,
-    },
+      headers: {
+        'Content-type': 'application/json',
+        Authorization: `Bearer ${currentUser.accessToken}`,
+      },
       body: JSON.stringify(consignee),
     })
       .then(() => {
         console.log('Consignee Updated');
 
         toast.warn('🦄 Consignee deleted Successfully!', {
-          position: "top-right",
+          position: 'top-right',
           autoClose: 3000,
           hideProgressBar: false,
           closeOnClick: true,
           pauseOnHover: true,
           draggable: true,
           progress: undefined,
-          theme: "dark",
-          
-          });
-          setTimeout(() => {
-            window.location.reload();
+          theme: 'dark',
+        });
+        setTimeout(() => {
+          window.location.reload();
         }, 3000);
-    
       })
       .catch((error) => {
         console.error('Error updating consignee:', error);
@@ -332,7 +329,7 @@ const Consignee = () => {
             marginLeft: 'auto',
             marginleft: 'auto',
             display: 'block',
-            mr:"650px"
+            mr: '650px',
           }}
         >
           Add
@@ -381,46 +378,58 @@ const Consignee = () => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {consignee
-                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                .map((consignee) => (
-                  <TableRow
-                    key={consignee.consigneeName}
-                    sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                  >
-                    {/* <TableCell component='th' scope='row'>
+              {consignee.length > 0 ? (
+                consignee
+                  .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                  .map((consignee) => (
+                    <TableRow
+                      key={consignee.consigneeName}
+                      sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                    >
+                      {/* <TableCell component='th' scope='row'>
                   {attendence.name}
                 </TableCell> */}
-                    <TableCell align='left'>
-                      {consignee.consigneeName}
-                    </TableCell>
-                    <TableCell align='left'>{consignee.address}</TableCell>
-                    <TableCell align='left'>{consignee.pincode}</TableCell>
-                    <TableCell align='left'>{consignee.email}</TableCell>
-                    <TableCell align='left'>{consignee.phoneNumber}</TableCell>
-                    <TableCell align='left'>
-                      {consignee.deliveryAddress}
-                    </TableCell>
-                    <TableCell align='left'>{consignee.notifyParty}</TableCell>
-                    <TableCell align='left'>
-                      {consignee.locationName}
-                    </TableCell>
-                    <Box>
-                      <Link to={`/updateConsignee/${consignee.id}`}>
-                        <Button variant='contained'>Update</Button>
-                      </Link>
+                      <TableCell align='left'>
+                        {consignee.consigneeName}
+                      </TableCell>
+                      <TableCell align='left'>{consignee.address}</TableCell>
+                      <TableCell align='left'>{consignee.pincode}</TableCell>
+                      <TableCell align='left'>{consignee.email}</TableCell>
+                      <TableCell align='left'>
+                        {consignee.phoneNumber}
+                      </TableCell>
+                      <TableCell align='left'>
+                        {consignee.deliveryAddress}
+                      </TableCell>
+                      <TableCell align='left'>
+                        {consignee.notifyParty}
+                      </TableCell>
+                      <TableCell align='left'>
+                        {consignee.locationName}
+                      </TableCell>
+                      <Box>
+                        <Link to={`/updateConsignee/${consignee.id}`}>
+                          <Button variant='contained'>Update</Button>
+                        </Link>
 
-                      <Button
-                        sx={{ marginLeft: '11px',mt:"10px" }}
-                        variant='contained'
-                        color='secondary'
-                        onClick={() => deleteConsignee(consignee.id)}
-                      >
-                        Delete
-                      </Button>
-                    </Box>
-                  </TableRow>
-                ))}
+                        <Button
+                          sx={{ marginLeft: '11px', mt: '10px' }}
+                          variant='contained'
+                          color='secondary'
+                          onClick={() => deleteConsignee(consignee.id)}
+                        >
+                          Delete
+                        </Button>
+                      </Box>
+                    </TableRow>
+                  ))
+              ) : (
+                <TableRow>
+                  <TableCell colSpan={7} align='center'>
+                    No incoming data available.
+                  </TableCell>
+                </TableRow>
+              )}
             </TableBody>
             <TableFooter>
               <TableRow>
