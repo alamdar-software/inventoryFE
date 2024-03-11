@@ -357,30 +357,30 @@ export const ViewCipl = () => {
           <Table sx={{ minWidth: 650 }} aria-label='simple table'>
             <TableHead>
               <TableRow>
-                <TableCell align='right' sx={{ fontWeight: 'bold' }}>
+                <TableCell align='left' sx={{ fontWeight: 'bold' }}>
                   Source Location
                 </TableCell>
-                <TableCell align='right' sx={{ fontWeight: 'bold' }}>
+                <TableCell align='left' sx={{ fontWeight: 'bold' }}>
                   SubLocations
                 </TableCell>
-                <TableCell align='right' sx={{ fontWeight: 'bold' }}>
+                <TableCell align='left' sx={{ fontWeight: 'bold' }}>
                   Shipper
                 </TableCell>
-                <TableCell align='right' sx={{ fontWeight: 'bold' }}>
+                <TableCell align='left' sx={{ fontWeight: 'bold' }}>
                   Consignee
                 </TableCell>
-                <TableCell align='right' sx={{ fontWeight: 'bold' }}>
+                <TableCell align='left' sx={{ fontWeight: 'bold' }}>
                   Ref Number
                 </TableCell>
 
-                <TableCell align='right' sx={{ fontWeight: 'bold' }}>
+                <TableCell align='left' sx={{ fontWeight: 'bold' }}>
                   Transfer Date
                 </TableCell>
-                <TableCell align='right' sx={{ fontWeight: 'bold' }}>
+                <TableCell align='left' sx={{ fontWeight: 'bold' }}>
                   Status
                 </TableCell>
 
-                <TableCell align='right' sx={{ fontWeight: 'bold' }}>
+                <TableCell align='left' sx={{ fontWeight: 'bold' }}>
                   Print
                 </TableCell>
                 <TableCell align='left' sx={{ fontWeight: 'bold' }}>
@@ -401,22 +401,27 @@ export const ViewCipl = () => {
                           '&:last-child td, &:last-child th': { border: 0 },
                         }}
                       >
-                        <TableCell align='right'>
+                        <TableCell align='left'>
                           {ciplRow.locationName}
                         </TableCell>
-                        <TableCell align='right'>{subLocation}</TableCell>
-                        <TableCell align='right'>
+                        <TableCell align='left'>{subLocation}</TableCell>
+                        <TableCell align='left'>
                           {ciplRow.shipperName}
                         </TableCell>
-                        <TableCell align='right'>
+                        <TableCell align='left'>
                           {ciplRow.consigneeName}
                         </TableCell>
+                        <TableCell align='left'>
+                          {ciplRow.referenceNo}
+                        </TableCell>
                         {/* Replace one of the TableCell components if needed */}
-                        <TableCell align='right'>
+                        <TableCell align='left'>
                           {ciplRow.transferDate}
                         </TableCell>
-                        <TableCell align='right'>{ciplRow.status}</TableCell>
-                        <TableCell align='right'>
+                        <TableCell align='left'>{ciplRow.status}</TableCell>
+
+
+                        <TableCell align='left'>
                           <Link to={`/cipl/createpdf/${ciplRow.id}`}>
                             <Button
                               variant='contained'
@@ -426,6 +431,8 @@ export const ViewCipl = () => {
                               <PictureAsPdfIcon />
                             </Button>
                           </Link>
+                          </TableCell>
+                          <TableCell>
                           <Link to={`/updateCipl/${ciplRow.id}`}>
                             <IconButton>
                               <EditIcon />

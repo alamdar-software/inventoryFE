@@ -956,6 +956,7 @@ const Dashboard = () => {
 
             <Card
               sx={{
+                height:"200px",
                 boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.5)',
                 //border: '2px solid yellow',
                 minWidth: 40,
@@ -1401,6 +1402,7 @@ const Dashboard = () => {
           <div style={{ display: "flex", flexDirection: "row", marginTop: 3 }}>
             <Card
               sx={{
+                height:"200px",
                 boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.5)',
                 //border: '2px solid yellow',
                 minWidth: 40,
@@ -1434,9 +1436,7 @@ const Dashboard = () => {
                   >
                     Daily Data Count
                   </Typography>
-                  <Typography sx={{ mb: 1.5 }} color="text.secondary">
-                    Count:
-                  </Typography>
+                  
                 </CardContent>
               </Link>
             </Card>
@@ -1839,6 +1839,7 @@ const Dashboard = () => {
             <Card
               sx={{
                 boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.5)',
+                height:"200px",
                 //border: '2px solid yellow',
                 minWidth: 40,
                 flex: 1,
@@ -1871,9 +1872,7 @@ const Dashboard = () => {
                   >
                     Daily Data Count
                   </Typography>
-                  <Typography sx={{ mb: 1.5 }} color="text.secondary">
-                    Count:
-                  </Typography>
+               
                 </CardContent>
               </Link>
             </Card>
@@ -2068,12 +2067,14 @@ const Dashboard = () => {
               flexDirection: "row",
               marginTop: 2,
               marginRight: 300,
+              marginLeft: 380,
               height: 250,
               paddingBottom: 50,
             }}
           >
             <Card
               sx={{
+                height:"200px",
                 boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.5)',
                 //border: '2px solid yellow',
                 minWidth: 20,
@@ -2120,6 +2121,7 @@ const Dashboard = () => {
             <Card
               sx={{
                 boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.5)',
+                height:"200px",
                 //border: '2px solid yellow',
                 minWidth: 20,
                 flex: 1,
@@ -2166,54 +2168,7 @@ const Dashboard = () => {
               </Link>
             </Card>
 
-            <Card
-              sx={{
-                boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.5)',
-                //border: '2px solid yellow',
-                minWidth: 20,
-                flex: 1,
-                marginRight: 3,
-                marginLeft: 3,
-                marginTop: 3,
-                borderRadius: 8,
-                transition: "transform 0.3s",
-                "&:hover": {
-                  transform: "scale(1.1)",
-                },
-              }}
-            >
-              <Link
-                to={"/view-consumeditem"}
-                style={{ textDecoration: "none" }}
-              >
-                <CardContent
-                  sx={{
-                    display: "flex",
-                    flexDirection: "column",
-                    alignItems: "start",
-                  }}
-                >
-                  <DownloadDoneIcon
-                    fontSize="large"
-                    style={{ color: "#795548", fontSize: "50px" }}
-                  />
-
-                  <Typography
-                    sx={{
-                      mb: 1.5,
-                      textAlign: "center",
-                      fontWeight: "bolder",
-                      fontFamily: "Montserrat",
-                    }}
-                    color="#333"
-                    variant="h6"
-                    component="div"
-                  >
-                    Bulk Approval/Reject Purchase
-                  </Typography>
-                </CardContent>
-              </Link>
-            </Card>
+           
           </div>
         </Grid>
         // Render grid for ROLE_APPROVER
@@ -2315,6 +2270,7 @@ const Dashboard = () => {
 
             <Card
               sx={{
+                height:"200px",
                 boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.5)',
                 //border: '2px solid yellow',
                 minWidth: 40,
@@ -2348,9 +2304,7 @@ const Dashboard = () => {
                   >
                     Daily Data Count
                   </Typography>
-                  <Typography sx={{ mb: 1.5 }} color="text.secondary">
-                    Count:
-                  </Typography>
+                 
                 </CardContent>
               </Link>
             </Card>

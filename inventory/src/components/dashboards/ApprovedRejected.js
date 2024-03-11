@@ -181,6 +181,7 @@ const ApprovedRejected = () => {
               <Card
                 sx={{
                   flex: 1,
+                  height:"200px",
                   marginRight: 3,
                   marginLeft: 3,
                   marginTop: 3,
@@ -445,6 +446,7 @@ const ApprovedRejected = () => {
             >
               <Card
                 sx={{
+                  height:"200px",
                   //border: '2px solid yellow',
                   minWidth: 10,
                   flex: 1,
