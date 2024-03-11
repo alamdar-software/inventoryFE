@@ -60,9 +60,9 @@ function UpdateScrapped() {
   }, []);
   console.log(consumed, "rupali");
   useEffect(() => {
-    dispatch(fetchlocation());
-    dispatch(fetchItem());
-    dispatch(fetchConsumeItem());
+    dispatch(fetchlocation(currentUser.accessToken));
+    dispatch(fetchItem(currentUser.accessToken));
+    dispatch(fetchConsumeItem(currentUser.accessToken));
   }, []);
   /*   console.log("consumed.SubLocations:", consumed?.SubLocations[0]); */
 

@@ -52,7 +52,7 @@ const UpdateInventory = () => {
     })
       .then((res) => res.json())
       .then((result) => {
-        console.log(result);
+        console.log(result,"mein kya karu");
         setInventory(result);
       })
       .catch((error) => {
@@ -99,13 +99,11 @@ const UpdateInventory = () => {
 
   const handleLocationChange = (e) => {
     const selectedLocation = e.target.value;
-    console.log('Selected Location:', selectedLocation);
-
-    setformData({
-      ...formData,
-      locationName: selectedLocation,
-      address: '', // Reset sublocation when location changes
-    });
+  setformData({
+    ...formData,
+    locationName: selectedLocation,
+    address: '', // Reset sublocation when location changes
+  });
 
     const selectedLocationObj = state.nonPersisted.location.data.find(
       (location) => location.locationName === selectedLocation
@@ -161,33 +159,28 @@ const UpdateInventory = () => {
           <FormControl fullWidth sx={{ width: '90%' }}>
             <InputLabel id='demo-simple-select-label'>Location</InputLabel>
             <Select
-              labelId='demo-simple-select-label'
-              id='demo-simple-select'
-              value={inventory ? inventory.locationName : ''}
-              label='location'
-              /* onChange={(e) =>
-                setformData({
-                  ...formData,
-                  locationName: e.target.value,
-                })
-              } */
-              onChange={handleLocationChange}
-              MenuProps={{
-                PaperProps: {
-                  style: {
-                    maxHeight: 120, // Adjust the height as needed
-                  },
-                },
-              }}
-              //onChange={handleChange}
-            >
-              {state.nonPersisted.location.data?.map((item, index) => (
-                <MenuItem key={index} value={item?.locationName}>
-                  {' '}
-                  {item?.locationName}
-                </MenuItem>
-              ))}
-            </Select>
+  labelId='demo-simple-select-label'
+  id='demo-simple-select'
+  value={inventory ? inventory.locationName : ''}
+  // Set the value to formData.locationName
+  label='location'
+  onChange={handleLocationChange}
+  MenuProps={{
+    PaperProps: {
+      style: {
+        maxHeight: 120, // Adjust the height as needed
+      },
+    },
+  }}
+>
+  {state.nonPersisted.location.data?.map((item, index) => (
+    <MenuItem key={index} value={item?.locationName}>
+      {' '}
+      {item?.locationName}
+    </MenuItem>
+  ))}
+</Select>
+
           </FormControl>
         </Grid>
         <Grid item xs={12} sm={6}>
@@ -197,7 +190,7 @@ const UpdateInventory = () => {
             <Select
               labelId='demo-simple-select-label'
               id='demo-simple-select'
-              value={inventory ? inventory.address : ''}
+              value={inventory ? inventory.address?.address : ''}
               label='sublocation'
               onChange={(e) => {
                 setInventory({

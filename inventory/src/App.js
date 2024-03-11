@@ -464,6 +464,7 @@ theme="light"
                   path='/updateIncoming/:id'
                   element={
                     <Sidebar>
+                         <ToastContainer/>
                       <UpdateIncoming />
                     </Sidebar>
                   }
@@ -472,6 +473,7 @@ theme="light"
                   path='/updateIncoming-verifier/:id'
                   element={
                     <Sidebar>
+                         <ToastContainer/>
                       <UpdateIncomingVerifier />
                     </Sidebar>
                   }
@@ -631,6 +633,7 @@ theme="light"
                   path='/updateMtoVerified/:id'
                   element={
                     <Sidebar>
+                      <ToastContainer/>
                       <UpdateMtoVerifier />
                     </Sidebar>
                   }
@@ -655,6 +658,7 @@ theme="light"
                   path='/updateCiplverifier/:id'
                   element={
                     <Sidebar>
+                      <ToastContainer/>
                       <UpdateCiplVerifier />
                     </Sidebar>
                   }
@@ -759,6 +763,7 @@ theme="light"
                   path='/updateIt/:id'
                   element={
                     <Sidebar>
+                      <ToastContainer/>
                       <UpdateIt />
                     </Sidebar>
                   }
@@ -767,6 +772,7 @@ theme="light"
                   path='/updateItVerifier/:id'
                   element={
                     <Sidebar>
+                         <ToastContainer/>
                       <UpdateItVerifier />
                     </Sidebar>
                   }
@@ -775,6 +781,7 @@ theme="light"
                   path='/updateItApproval/:id'
                   element={
                     <Sidebar>
+                         <ToastContainer/>
                       <UpdateItApproval />
                     </Sidebar>
                   }
@@ -783,6 +790,7 @@ theme="light"
                   path='/updateScrappedApproval/:id'
                   element={
                     <Sidebar>
+                         <ToastContainer/>
                       <UpdateScrappedApproval />
                     </Sidebar>
                   }
@@ -948,6 +956,7 @@ theme="light"
                   path='/updateConsumed-Verifier/:id'
                   element={
                     <Sidebar>
+                         <ToastContainer/>
                       <UpdateConsumedVerifier />
                     </Sidebar>
                   }
@@ -1034,6 +1043,7 @@ theme="light"
                   path='/rejected-scrapped'
                   element={
                     <Sidebar>
+                         <ToastContainer/>
                       <ViewScrappRejected />
                     </Sidebar>
                   }
@@ -1042,6 +1052,7 @@ theme="light"
                   path='/updateScapped-verifier/:id'
                   element={
                     <Sidebar>
+                         <ToastContainer/>
                       <UpdateScrappedVerifier />
                     </Sidebar>
                   }

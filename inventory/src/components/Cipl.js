@@ -141,7 +141,7 @@ export const Cipl = () => {
         setTimeout(() => {
           window.location.reload();
       }, 3000);
-      window.location.reload();
+   
     } catch (error) {
       console.log('something happens while adding cipl');
     }

@@ -32,6 +32,7 @@ import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
 import { fetchConsumeItem } from '../redux/slice/ConsumeItemSlice';
 import { useParams } from 'react-router-dom';
 import dayjs from 'dayjs';
+import { toast } from 'react-toastify';
 
 function UpdateConsumedApproval() {
   const navigate = useNavigate();
@@ -177,6 +178,21 @@ function UpdateConsumedApproval() {
     })
       .then(() => {
         console.log('Consumed Updated');
+        toast.success('🦄 Incoming Approved Successfully!', {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+          
+          });
+          setTimeout(() => {
+            
+            window.location.reload();
+        }, 3000);
         // navigate('/consumed-created');
       })
       .catch((error) => {

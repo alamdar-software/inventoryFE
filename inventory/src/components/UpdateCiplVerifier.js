@@ -23,6 +23,7 @@ import { fetchlocation } from '../redux/slice/location';
 import { fetchShipper } from '../redux/slice/ShipperSlice';
 import { fetchCurrency } from '../redux/slice/CurrencySlice';
 import { fetchPickup } from '../redux/slice/PickUpSlice';
+import { toast } from 'react-toastify';
 
 const UpdateCiplVerifier = () => {
   const [formData, setformData] = useState({
@@ -115,8 +116,21 @@ const UpdateCiplVerifier = () => {
       body: JSON.stringify(formData),
     })
       .then(() => {
-        console.log('Cipl Updated');
-        navigate('/cipl-created');
+        toast.success('🦄 Cipl Verified Successfully!', {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+          
+          });
+          setTimeout(() => {
+            
+            navigate('/cipl-created');
+        }, 3000);
       })
       .catch((error) => {
         console.error('Error updating consignee:', error);

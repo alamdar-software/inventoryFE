@@ -28,6 +28,7 @@ import { fetchInventory } from '../redux/slice/InventorySlice';
 import { fetchIncome } from '../redux/slice/SingleIncomeSlice';
 import dayjs from 'dayjs';
 import { useNavigate, useParams } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 const UpdateMtoApproval = () => {
   const [formData, setformData] = useState({
@@ -110,7 +111,21 @@ const UpdateMtoApproval = () => {
       body: JSON.stringify(formData),
     })
       .then(() => {
-        console.log('Cipl Updated');
+        toast.success('🦄 Mto Approved Successfully!', {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+          
+          });
+          setTimeout(() => {
+            
+           
+        }, 3000);
         // navigate('/consignee');
       })
       .catch((error) => {

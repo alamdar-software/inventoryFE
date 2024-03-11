@@ -15,6 +15,7 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 import { fetchBrand } from '../redux/slice/BrandSlice';
+import { toast } from 'react-toastify';
 
 const UpdateIncomingApproval = () => {
   const [formData, setformData] = useState({
@@ -64,8 +65,22 @@ const UpdateIncomingApproval = () => {
       body: JSON.stringify(incoming),
     })
       .then(() => {
-        console.log('Incoming Updated');
-        navigate('incoming-created');
+        toast.success('🦄 Incoming Approved Successfully!', {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+          
+          });
+          setTimeout(() => {
+            
+           
+            window.location.reload();
+        }, 3000);
       })
       .catch((error) => {
         console.error('Error updating incoming:', error);

@@ -26,6 +26,7 @@ import { fetchInventory } from '../redux/slice/InventorySlice';
 import { fetchIncome } from '../redux/slice/SingleIncomeSlice';
 import dayjs from 'dayjs';
 import { useNavigate, useParams } from 'react-router-dom';
+import { toast } from 'react-toastify';
 const UpdateItVerifier = () => {
   const [formData, setformData] = useState({
     locationName: '',
@@ -80,7 +81,21 @@ const UpdateItVerifier = () => {
       body: JSON.stringify(formData),
     })
       .then(() => {
-        console.log('Internal Transfer Updated');
+        toast.success('🦄 It Verified Successfully!', {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+          
+          });
+          setTimeout(() => {
+            
+            navigate('/cipl-created');
+        }, 3000);
         navigate('/it-created');
       })
       .catch((error) => {

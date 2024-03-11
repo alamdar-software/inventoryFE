@@ -32,6 +32,7 @@ import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
 import { fetchConsumeItem } from '../redux/slice/ConsumeItemSlice';
 import { useParams } from 'react-router-dom';
 import dayjs from 'dayjs';
+import { toast } from 'react-toastify';
 
 function UpdateScrappedApproval() {
   const { id } = useParams();
@@ -174,7 +175,21 @@ function UpdateScrappedApproval() {
       body: JSON.stringify(formData),
     })
       .then(() => {
-        console.log('Scrapped Updated');
+        toast.success('🦄 Scrapped Approved Successfully!', {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+          
+          });
+          setTimeout(() => {
+            
+            window.location.reload();
+        }, 3000);
         // navigate('/consignee');
       })
       .catch((error) => {

@@ -32,6 +32,7 @@ import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
 import { fetchConsumeItem } from '../redux/slice/ConsumeItemSlice';
 import { useParams } from 'react-router-dom';
 import dayjs from 'dayjs';
+import { toast } from 'react-toastify';
 
 function UpdateConsumedVerifier() {
   const navigate = useNavigate()
@@ -177,8 +178,23 @@ function UpdateConsumedVerifier() {
       body: JSON.stringify(formData),
     })
       .then(() => {
-        console.log('Cipl Updated');
-        navigate('/consumed-created');
+        toast.success('🦄 Consumed Verified Successfully!', {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+          
+          });
+          setTimeout(() => {
+            
+            window.location.reload();
+            // navigate('/consumed-created');
+        }, 3000);
+
       })
       .catch((error) => {
         console.error('Error updating scrapped:', error);

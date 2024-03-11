@@ -15,6 +15,7 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 import { fetchBrand } from '../redux/slice/BrandSlice';
+import { toast } from 'react-toastify';
 
 const UpdateIncomingVerifier = () => {
   const [formData, setformData] = useState({});
@@ -65,8 +66,21 @@ const UpdateIncomingVerifier = () => {
       body: JSON.stringify(formData),
     })
       .then(() => {
-        console.log(formData, 'after updating');
-        console.log('incoming Updated');
+        toast.success('🦄 Incoming Verified Successfully!', {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+          
+          });
+          setTimeout(() => {
+            
+            window.location.reload();
+        }, 3000);
       })
       .catch((error) => {
         console.error('Error updating consignee:', error);

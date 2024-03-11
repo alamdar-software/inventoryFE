@@ -28,6 +28,7 @@ import { fetchInventory } from '../redux/slice/InventorySlice';
 import { fetchIncome } from '../redux/slice/SingleIncomeSlice';
 import dayjs from 'dayjs';
 import { useNavigate, useParams } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 const UpdateMtoVerifier = () => {
   const [formData, setformData] = useState({
@@ -110,8 +111,22 @@ const UpdateMtoVerifier = () => {
       body: JSON.stringify(formData),
     })
       .then(() => {
-        console.log('Cipl Updated');
-        navigate('/mto-created');
+        toast.success('🦄 Mto Verified Successfully!', {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+          
+          });
+          setTimeout(() => {
+            
+       
+            navigate('/mto-created');
+        }, 3000);
       })
       .catch((error) => {
         console.error('Error updating consignee:', error);
