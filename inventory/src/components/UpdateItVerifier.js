@@ -119,9 +119,10 @@ const UpdateItVerifier = () => {
     return formControls.map((control, index) => (
       <div key={control.key} style={{ display: 'flex', marginBottom: '10px' }}>
         <Grid item xs={12} sm={6}>
+          <InputLabel id='demo-simple-select-label'>SubLocation</InputLabel>
           <TextField
             id='outlined-basic'
-            label='SubLocation'
+            // label='SubLocation'
             variant='outlined'
             value={internal ? internal.SubLocation : ''}
             sx={{ width: '100px', marginRight: '23px' }}
@@ -137,9 +138,12 @@ const UpdateItVerifier = () => {
           />
         </Grid>
         <Grid item xs={12} sm={6}>
+          <InputLabel id='demo-simple-select-label'>
+            Item Description
+          </InputLabel>
           <TextField
             id='outlined-basic'
-            label='Item Description'
+            // label='Item Description'
             variant='outlined'
             value={internal ? internal.description : ''}
             sx={{ width: '100px', marginRight: '23px' }}
@@ -155,9 +159,10 @@ const UpdateItVerifier = () => {
           />
         </Grid>
         <Grid item xs={12} sm={6}>
+          <InputLabel id='demo-simple-select-label'>Part No</InputLabel>
           <TextField
             id='outlined-basic'
-            label='Part No'
+            // label='Part No'
             variant='outlined'
             value={internal ? internal.partNumber : ''}
             sx={{ width: '100px', marginRight: '23px' }}
@@ -172,96 +177,97 @@ const UpdateItVerifier = () => {
             width={'100%'}
           />
         </Grid>
-        <FormControl fullWidth sx={{ width: '30%', marginRight: '10px' }}>
-          <Grid item xs={12} sm={6}>
-            <TextField
-              sx={{ width: '90%' }}
-              id='outlined-basic'
-              label='S/N'
-              variant='outlined'
-              //   value={partNumbersData[index]?.sn || ''}
-              InputProps={{ readOnly: true }}
-              value={internal ? internal.sn : ''}
-              onChange={(e) => {
-                setInternal({
-                  ...internal,
-                  sn: e.target.value,
-                });
-                setformData(e.target.value);
-              }}
-              //   onChange={(e) => handleSnChange(index, e.target.value)}
-              fullWidth
-            />
-          </Grid>
-        </FormControl>
-        <FormControl fullWidth sx={{ width: '90%', marginRight: '10px' }}>
-          <Grid item xs={12} sm={6}>
-            <TextField
-              sx={{ width: '90%' }}
-              id='outlined-basic'
-              label='Purchase Order(D.O.P)'
-              variant='outlined'
-              //   value={partNumbersData[index]?.date || ''}
-              // onChange={(e) => setLocation(e.target.value)}
-              //   onChange={(e) => handlePurchaseChange(index, e.target.value)}
-              value={internal ? internal.purchase : ''}
-              InputProps={{ readOnly: true }}
-              onChange={(e) => {
-                setInternal({
-                  ...internal,
-                  purchase: e.target.value,
-                });
-                setformData(e.target.value);
-              }}
-              fullWidth
-            />
-          </Grid>
-        </FormControl>
-        <FormControl fullWidth sx={{ width: '50%', marginRight: '10px' }}>
-          <Grid item xs={12} sm={6}>
-            <TextField
-              sx={{ width: '90%' }}
-              id='outlined-basic'
-              label='Quantity'
-              variant='outlined'
-              // value={locationName}
-              // onChange={(e) => setLocation(e.target.value)}
-              //   onChange={(e) => handleQuantityChange(index, e.target.value)}
-              value={internal ? internal.quantity : ''}
-              InputProps={{ readOnly: true }}
-              onChange={(e) => {
-                setInternal({
-                  ...internal,
-                  quantity: e.target.value,
-                });
-                setformData(e.target.value);
-              }}
-              fullWidth
-            />
-          </Grid>
-        </FormControl>
-        <FormControl fullWidth sx={{ width: '50%', marginRight: '10px' }}>
-          <Grid item xs={12} sm={6}>
-            <TextareaAutosize
-              sx={{ width: '90%' }}
-              aria-label='Brand'
-              placeholder='Enter Remarks'
-              // value={brandValue} // You can set the value and handle changes as needed
-              // onChange={(e) => handleBrandChange(e.target.value)}
-              //   onChange={(e) => handleRemarksChange(index, e.target.value)}
-              minRows={4} // You can adjust the number of rows as needed
-              value={internal ? internal.remarks : ''}
-              InputProps={{ readOnly: true }}
-              onChange={(e) => {
-                setInternal({
-                  ...internal,
-                  remarks: e.target.value,
-                });
-                setformData(e.target.value);
-              }}
-            />
-          </Grid>
-        </FormControl>
+
+        <Grid item xs={12} sm={6}>
+          <InputLabel id='demo-simple-select-label'>S/N</InputLabel>
+          <TextField
+            sx={{ width: '90%' }}
+            id='outlined-basic'
+            // label='S/N'
+            variant='outlined'
+            //   value={partNumbersData[index]?.sn || ''}
+            InputProps={{ readOnly: true }}
+            value={internal ? internal.sn : ''}
+            onChange={(e) => {
+              setInternal({
+                ...internal,
+                sn: e.target.value,
+              });
+              setformData(e.target.value);
+            }}
+            //   onChange={(e) => handleSnChange(index, e.target.value)}
+            fullWidth
+          />
+        </Grid>
+
+        <Grid item xs={12} sm={6}>
+          <InputLabel id='demo-simple-select-label'>
+            Purchase Order(D.O.P)
+          </InputLabel>
+          <TextField
+            sx={{ width: '90%' }}
+            id='outlined-basic'
+            // label='Purchase Order(D.O.P)'
+            variant='outlined'
+            //   value={partNumbersData[index]?.date || ''}
+            // onChange={(e) => setLocation(e.target.value)}
+            //   onChange={(e) => handlePurchaseChange(index, e.target.value)}
+            value={internal ? internal.purchase : ''}
+            InputProps={{ readOnly: true }}
+            onChange={(e) => {
+              setInternal({
+                ...internal,
+                purchase: e.target.value,
+              });
+              setformData(e.target.value);
+            }}
+            fullWidth
+          />
+        </Grid>
+
+        <Grid item xs={12} sm={6}>
+          <InputLabel id='demo-simple-select-label'>Quantity</InputLabel>
+          <TextField
+            sx={{ width: '90%' }}
+            id='outlined-basic'
+            // label='Quantity'
+            variant='outlined'
+            // value={locationName}
+            // onChange={(e) => setLocation(e.target.value)}
+            //   onChange={(e) => handleQuantityChange(index, e.target.value)}
+            value={internal ? internal.quantity : ''}
+            InputProps={{ readOnly: true }}
+            onChange={(e) => {
+              setInternal({
+                ...internal,
+                quantity: e.target.value,
+              });
+              setformData(e.target.value);
+            }}
+            fullWidth
+          />
+        </Grid>
+
+        <Grid item xs={12} sm={6}>
+          <TextareaAutosize
+            sx={{ width: '90%' }}
+            aria-label='Brand'
+            placeholder='Enter Remarks'
+            // value={brandValue} // You can set the value and handle changes as needed
+            // onChange={(e) => handleBrandChange(e.target.value)}
+            //   onChange={(e) => handleRemarksChange(index, e.target.value)}
+            minRows={4} // You can adjust the number of rows as needed
+            value={internal ? internal.remarks : ''}
+            InputProps={{ readOnly: true }}
+            onChange={(e) => {
+              setInternal({
+                ...internal,
+                remarks: e.target.value,
+              });
+              setformData(e.target.value);
+            }}
+          />
+        </Grid>
       </div>
     ));
   };
@@ -351,7 +357,6 @@ const UpdateItVerifier = () => {
               id='demo-simple-select'
               //value={age}
               value={internal ? internal.status : ''}
-              
               label='Repair/service'
               //onChange={handleChange}
               onChange={(e) =>
