@@ -249,7 +249,7 @@ const NeedVerificationDashboard = () => {
           ml:3,
           fontWeight: 'bold', // Set font weight to bold
           animation: isBlinking ? 'blinkingText 1s infinite' : 'none', // Apply blinking animation
-          color: 'green',
+          color: 'red',
           textAlign: 'center' // Set the text color to blue
         }}
         variant="h4"
@@ -306,7 +306,7 @@ const NeedVerificationDashboard = () => {
           ml:3,
           fontWeight: 'bold', // Set font weight to bold
           animation: isBlinking ? 'blinkingText 1s infinite' : 'none', // Apply blinking animation
-          color: 'green',
+          color: 'red',
           textAlign: 'center' // Set the text color to blue
         }}
         variant="h4"
@@ -360,7 +360,7 @@ const NeedVerificationDashboard = () => {
           ml:3,
           fontWeight: 'bold', // Set font weight to bold
           animation: isBlinking ? 'blinkingText 1s infinite' : 'none', // Apply blinking animation
-          color: 'green',
+          color: 'red',
           textAlign: 'center' // Set the text color to blue
         }}
         variant="h4"
@@ -414,7 +414,7 @@ const NeedVerificationDashboard = () => {
           ml:3,
           fontWeight: 'bold', // Set font weight to bold
           animation: isBlinking ? 'blinkingText 1s infinite' : 'none', // Apply blinking animation
-          color: 'green',
+          color: 'red',
           textAlign: 'center' // Set the text color to blue
         }}
         variant="h4"
@@ -489,7 +489,7 @@ const NeedVerificationDashboard = () => {
           ml:3,
           fontWeight: 'bold', // Set font weight to bold
           animation: isBlinking ? 'blinkingText 1s infinite' : 'none', // Apply blinking animation
-          color: 'green',
+          color: 'red',
           textAlign: 'center' // Set the text color to blue
         }}
         variant="h4"
@@ -551,7 +551,7 @@ const NeedVerificationDashboard = () => {
           ml:3,
           fontWeight: 'bold', // Set font weight to bold
           animation: isBlinking ? 'blinkingText 1s infinite' : 'none', // Apply blinking animation
-          color: 'green',
+          color: 'red',
           textAlign: 'center' // Set the text color to blue
         }}
         variant="h4"
