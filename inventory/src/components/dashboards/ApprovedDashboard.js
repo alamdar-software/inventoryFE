@@ -178,6 +178,7 @@ const ApprovedDashboard = () => {
             >
               <Card
                 sx={{
+                  height:"200px",
                   flex: 1,
                   marginRight: 3,
                   marginLeft: 3,
@@ -225,22 +226,37 @@ const ApprovedDashboard = () => {
                       }}
                     />
 
-                    <Typography
-                      sx={{
-                        mb: 1.5,
-                        textAlign: 'center',
-                        fontWeight: 'bolder',
-                        fontFamily: 'Montserrat',
-                      }}
-                      color='#333'
-                      variant='h5'
-                      component='div'
-                    >
-                      Approved Cipl
-                    </Typography>
-                    <Typography sx={{ mb: 1.5 }} color='text.secondary'>
-                      Count:
-                    </Typography>
+<div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                  <Typography
+        sx={{
+          mb: 1.5,
+          ml:3,
+          textAlign: "center",
+          fontWeight: "bolder",
+          fontFamily: "Montserrat",
+          color: 'blue', // Set the text color to blue
+        }}
+        variant="h5"
+        component="div"
+      >
+        Approved Cipl
+      </Typography>
+      <Typography
+        sx={{
+          mb: -6,
+        
+          ml:3,
+          fontWeight: 'bold', // Set font weight to bold
+          animation: isBlinking ? 'blinkingText 1s infinite' : 'none', // Apply blinking animation
+          color: 'green',
+          textAlign: 'center' // Set the text color to blue
+        }}
+        variant="h4"
+        color="text.secondary"
+      >
+        {ciplCount}
+      </Typography>
+      </div>
                   </CardContent>
                 </Link>
               </Card>
@@ -266,22 +282,37 @@ const ApprovedDashboard = () => {
                       color='secondary'
                       sx={{ fontSize: '50px' }}
                     />
-                    <Typography
-                      variant='h5'
-                      color='#333'
-                      component='div'
-                      sx={{
-                        mb: 1.5,
-                        textAlign: 'center',
-                        fontWeight: 'bolder',
-                        fontFamily: 'Montserrat',
-                      }}
-                    >
-                      Approved Mto
-                    </Typography>
-                    <Typography sx={{ mb: 1.5 }} color='text.secondary'>
-                      Count:
-                    </Typography>
+                  <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                  <Typography
+        sx={{
+          mb: 1.5,
+          ml:3,
+          textAlign: "center",
+          fontWeight: "bolder",
+          fontFamily: "Montserrat",
+          color: 'blue', // Set the text color to blue
+        }}
+        variant="h5"
+        component="div"
+      >
+        Approved Mto
+      </Typography>
+      <Typography
+        sx={{
+          mb: -6,
+        
+          ml:3,
+          fontWeight: 'bold', // Set font weight to bold
+          animation: isBlinking ? 'blinkingText 1s infinite' : 'none', // Apply blinking animation
+          color: 'green',
+          textAlign: 'center' // Set the text color to blue
+        }}
+        variant="h4"
+        color="text.secondary"
+      >
+        {mto}
+      </Typography>
+      </div>
                   </CardContent>
                 </Link>
               </Card>
@@ -308,19 +339,37 @@ const ApprovedDashboard = () => {
                       fontSize='large'
                       sx={{ fontSize: '50px', color: '#ff0000' }}
                     />
-                    <Typography
-                      variant='h5'
-                      component='div'
-                      color='#333'
-                      sx={{
-                        mb: 1.5,
-                        textAlign: 'center',
-                        fontWeight: 'bolder',
-                        fontFamily: 'Montserrat',
-                      }}
-                    >
-                      Approved It
-                    </Typography>
+                          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                  <Typography
+        sx={{
+          mb: 1.5,
+          ml:3,
+          textAlign: "center",
+          fontWeight: "bolder",
+          fontFamily: "Montserrat",
+          color: 'blue', // Set the text color to blue
+        }}
+        variant="h5"
+        component="div"
+      >
+        Approved It
+      </Typography>
+      <Typography
+        sx={{
+          mb: -6,
+        
+          ml:3,
+          fontWeight: 'bold', // Set font weight to bold
+          animation: isBlinking ? 'blinkingText 1s infinite' : 'none', // Apply blinking animation
+          color: 'green',
+          textAlign: 'center' // Set the text color to blue
+        }}
+        variant="h4"
+        color="text.secondary"
+      >
+        {itcount}
+      </Typography>
+      </div>
                   </CardContent>
                 </Link>
               </Card>
@@ -347,19 +396,37 @@ const ApprovedDashboard = () => {
                       fontSize='large'
                       sx={{ fontSize: '50px', color: '#c6ff00' }}
                     />
-                    <Typography
-                      variant='h5'
-                      component='div'
-                      color='#333'
-                      sx={{
-                        mb: 1.5,
-                        textAlign: 'center',
-                        fontWeight: 'bolder',
-                        fontFamily: 'Montserrat',
-                      }}
-                    >
-                      Approved Incoming Stock
-                    </Typography>
+                        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                  <Typography
+        sx={{
+          mb: 1.5,
+          ml:3,
+          textAlign: "center",
+          fontWeight: "bolder",
+          fontFamily: "Montserrat",
+          color: 'blue', // Set the text color to blue
+        }}
+        variant="h5"
+        component="div"
+      >
+        Approved Incoming Stock
+      </Typography>
+      <Typography
+        sx={{
+          mb: -6,
+        
+          ml:3,
+          fontWeight: 'bold', // Set font weight to bold
+          animation: isBlinking ? 'blinkingText 1s infinite' : 'none', // Apply blinking animation
+          color: 'green',
+          textAlign: 'center' // Set the text color to blue
+        }}
+        variant="h4"
+        color="text.secondary"
+      >
+        {incomingcount}
+      </Typography>
+      </div>
                   </CardContent>
                 </Link>
               </Card>
@@ -375,6 +442,7 @@ const ApprovedDashboard = () => {
               <Card
                 sx={{
                   //border: '2px solid yellow',
+                  height:"200px",
                   minWidth: 10,
                   flex: 1,
                   marginRight: 3,
@@ -399,23 +467,37 @@ const ApprovedDashboard = () => {
                       fontSize='large'
                       sx={{ fontSize: '50px', color: '#c6ff00' }}
                     />
-
-                    <Typography
-                      sx={{
-                        mb: 1.5,
-                        textAlign: 'center',
-                        fontWeight: 'bolder',
-                        fontFamily: 'Montserrat',
-                      }}
-                      color='#333'
-                      variant='h5'
-                      component='div'
-                    >
-                      Approved Scrapped Stock
-                    </Typography>
-                    <Typography sx={{ mb: 1.5 }} color='text.secondary'>
-                      Count:
-                    </Typography>
+       <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                  <Typography
+        sx={{
+          mb: 1.5,
+          ml:3,
+          textAlign: "center",
+          fontWeight: "bolder",
+          fontFamily: "Montserrat",
+          color: 'blue', // Set the text color to blue
+        }}
+        variant="h5"
+        component="div"
+      >
+        Approved Scrapped Item
+      </Typography>
+      <Typography
+        sx={{
+          mb: -6,
+        
+          ml:3,
+          fontWeight: 'bold', // Set font weight to bold
+          animation: isBlinking ? 'blinkingText 1s infinite' : 'none', // Apply blinking animation
+          color: 'green',
+          textAlign: 'center' // Set the text color to blue
+        }}
+        variant="h4"
+        color="text.secondary"
+      >
+        {scrappedcount}
+      </Typography>
+      </div>
                   </CardContent>
                 </Link>
               </Card>
@@ -450,22 +532,37 @@ const ApprovedDashboard = () => {
                       sx={{ fontSize: '50px', color: '#64dd17' }}
                     />
 
-                    <Typography
-                      sx={{
-                        mb: 1.5,
-                        textAlign: 'center',
-                        fontWeight: 'bolder',
-                        fontFamily: 'Montserrat',
-                      }}
-                      color='#333'
-                      variant='h5'
-                      component='div'
-                    >
-                      Approved Consumed Stock
-                    </Typography>
-                    <Typography sx={{ mb: 1.5 }} color='text.secondary'>
-                      Count:
-                    </Typography>
+<div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                  <Typography
+        sx={{
+          mb: 1.5,
+          ml:3,
+          textAlign: "center",
+          fontWeight: "bolder",
+          fontFamily: "Montserrat",
+          color: 'blue', // Set the text color to blue
+        }}
+        variant="h5"
+        component="div"
+      >
+        Approved Consumed Item
+      </Typography>
+      <Typography
+        sx={{
+          mb: -6,
+        
+          ml:3,
+          fontWeight: 'bold', // Set font weight to bold
+          animation: isBlinking ? 'blinkingText 1s infinite' : 'none', // Apply blinking animation
+          color: 'green',
+          textAlign: 'center' // Set the text color to blue
+        }}
+        variant="h4"
+        color="text.secondary"
+      >
+        {consumedCount}
+      </Typography>
+      </div>
                   </CardContent>
                 </Link>
               </Card>
