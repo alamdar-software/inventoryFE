@@ -343,7 +343,10 @@ const ViewIncoming = () => {
                   Purchase Date
                 </TableCell>
                 <TableCell align='left' sx={{ fontWeight: 'bold' }}>
-                  Incoming Stock
+                  Incoming Type
+                </TableCell>
+                <TableCell align='left' sx={{ fontWeight: 'bold' }}>
+                  Status
                 </TableCell>
                 <TableCell
                   align='left'
@@ -368,6 +371,7 @@ const ViewIncoming = () => {
                       <TableCell align='left'>{item.purchaseOrder}</TableCell>
                       <TableCell align='left'>{item.date}</TableCell>
                       <TableCell align='left'>{item.dataType}</TableCell>
+                      <TableCell align='left'>{item.status}</TableCell>
                       <TableCell align='left' className='flex flex-row'>
                         <Link
                           to={`/updateIncoming/${item.id}`}
