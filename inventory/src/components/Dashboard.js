@@ -590,7 +590,7 @@ const Dashboard = () => {
                 },
               }}
             >
-              <Link to={"/transfer-item"} style={{ textDecoration: "none" }}>
+              <Link to={"/view-transfer"} style={{ textDecoration: "none" }}>
                 <CardContent
                   sx={{
                     display: "flex",

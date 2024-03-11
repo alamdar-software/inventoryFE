@@ -68,7 +68,7 @@ const ViewIncoming = () => {
   }, []);
 
   useEffect(() => {
-    fetch('http://localhost:8080/bulkstock/view', {
+    fetch('http://localhost:8080/bulkstock/approved', {
       headers: {
         Authorization: `Bearer ${currentUser.accessToken}`,
       },
