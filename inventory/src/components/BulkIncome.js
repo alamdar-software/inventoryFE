@@ -155,23 +155,24 @@ const BulkIncome = () => {
 
     fetch('http://localhost:8080/bulkstock/add', {
       method: 'POST',
-      headers: { 'Content-type': 'application/json',
-      Authorization: `Bearer ${currentUser.accessToken}` },
+      headers: {
+        'Content-type': 'application/json',
+        Authorization: `Bearer ${currentUser.accessToken}`,
+      },
       body: JSON.stringify(formData),
     }).then(() => {
       console.log('Bulk Added');
       toast.success('🦄 Scrapped Added Successfully!', {
-        position: "top-right",
+        position: 'top-right',
         autoClose: 3000,
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: true,
         draggable: true,
         progress: undefined,
-        theme: "dark",
-        
-        });
-      
+        theme: 'dark',
+      });
+
       //window.location.reload();
     });
   };
@@ -796,6 +797,7 @@ const BulkIncome = () => {
             />
           </Grid>
         </FormControl>
+
         <FormControl fullWidth sx={{ width: '70%', marginRight: '10px' }}>
           <Grid item xs={12} sm={6}>
             <TextField
@@ -809,6 +811,7 @@ const BulkIncome = () => {
             />
           </Grid>
         </FormControl>
+
         <FormControl fullWidth sx={{ width: '90%', marginRight: '10px' }}>
           <Grid item xs={12} sm={6}>
             <TextField
@@ -1039,21 +1042,7 @@ const BulkIncome = () => {
           </LocalizationProvider>
         </Grid>
       </Grid>
-      <Button
-        variant='contained'
-        color='secondary'
-        size='large'
-        onClick={handleClick}
-        sx={{
-          mt: '33px',
-          mb: '17px',
-          marginLeft: 'auto',
-          marginRight: 'auto',
-          display: 'block',
-        }}
-      >
-        Add
-      </Button>
+
       <div
         sx={{
           marginTop: '5px',
@@ -1088,6 +1077,21 @@ const BulkIncome = () => {
           </>
         )}
       </div>
+      <Button
+        variant='contained'
+        color='secondary'
+        size='large'
+        onClick={handleClick}
+        sx={{
+          mt: '33px',
+          mb: '17px',
+          marginLeft: 'auto',
+          marginRight: 'auto',
+          display: 'block',
+        }}
+      >
+        Add
+      </Button>
     </>
   );
 };
