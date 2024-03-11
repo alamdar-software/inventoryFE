@@ -256,7 +256,7 @@ const InternalTransfer = () => {
     });
     // Find the corresponding data in state.singleincome for the selected item
     const selectedIncomeData = state.nonPersisted.singleIncome?.data.filter(
-      (incomeItem) => incomeItem.description === description
+      (incomeItem) => incomeItem.description.match(/^[^-(]*/)[0].trim() === description.match(/^[^-(]*/)[0].trim()
     );
     console.log(selectedIncomeData, 'selectttttt');
     console.log(description, 'selected item');
