@@ -41,6 +41,23 @@ const theme = createTheme({
 });
 
 const ApprovedDashboard = () => {
+
+  const [isBlinking, setIsBlinking] = React.useState(true);
+  useEffect(() => {
+    // Toggle blinking every 1 second
+    const interval = setInterval(() => {
+      setIsBlinking((prevIsBlinking) => !prevIsBlinking);
+    }, 900);
+
+    // Clear interval on component unmount
+    return () => clearInterval(interval);
+  }, []);
+  const [ciplCount, setciplCount] = React.useState(0)
+  const [mto, setmto] = React.useState(0)
+  const [scrappedcount, setscrappedcount] = React.useState(0)
+  const [consumedCount, setconsumedCount] = React.useState(0)
+  const [incomingcount, setincomingcount] = React.useState(0)
+  const [itcount, setitcount] = React.useState(0)
   const state = useSelector((state) => state);
   const { currentUser } = state.persisted.user;
 
@@ -51,6 +68,94 @@ const ApprovedDashboard = () => {
   useEffect(() => {
     dispatch(fetchItem(currentUser.accessToken));
   }, []);
+
+  useEffect(() => {
+    const getciplCount=async()=>{
+
+      const res = await fetch("http://localhost:8080/cipl/approvedCount",{
+        method:"get",
+        headers: {
+          'content-type': 'application/json',
+          Authorization: `Bearer ${currentUser.accessToken}`,
+        },
+      })
+        const data = await res.json();
+        console.log(data,"inventorycount");
+        setciplCount(data?.totalCount||0)
+    }
+    getciplCount();
+    const getitCount=async()=>{
+
+      const res = await fetch("http://localhost:8080/internaltransfer/approvedCount",{
+        method:"get",
+        headers: {
+          'content-type': 'application/json',
+          Authorization: `Bearer ${currentUser.accessToken}`,
+        },
+      })
+        const data = await res.json();
+        console.log(data,"inventorycount");
+        setitcount(data?.totalCount||0)
+    }
+    getitCount();
+    const getincomingCount=async()=>{
+
+      const res = await fetch("http://localhost:8080/bulkstock/approvedCount",{
+        method:"get",
+        headers: {
+          'content-type': 'application/json',
+          Authorization: `Bearer ${currentUser.accessToken}`,
+        },
+      })
+        const data = await res.json();
+        console.log(data,"inventorycount");
+        setincomingcount(data?.totalCount||0)
+    }
+    getincomingCount();
+    const getscrappedCount=async()=>{
+
+      const res = await fetch("http://localhost:8080/scrappeditem/approvedCount",{
+        method:"get",
+        headers: {
+          'content-type': 'application/json',
+          Authorization: `Bearer ${currentUser.accessToken}`,
+        },
+      })
+        const data = await res.json();
+        console.log(data,"inventorycount");
+        setscrappedcount(data?.totalCount||0)
+    }
+    getscrappedCount();
+    const getconsumedCount=async()=>{
+
+      const res = await fetch("http://localhost:8080/consumeditem/approvedCount",{
+        method:"get",
+        headers: {
+          'content-type': 'application/json',
+          Authorization: `Bearer ${currentUser.accessToken}`,
+        },
+      })
+        const data = await res.json();
+        console.log(data,"inventorycount");
+        setconsumedCount(data?.totalCount||0)
+    }
+    getconsumedCount();
+    const getmtoCount=async()=>{
+
+      const res = await fetch("http://localhost:8080/mto/approvedCount",{
+        method:"get",
+        headers: {
+          'content-type': 'application/json',
+          Authorization: `Bearer ${currentUser.accessToken}`,
+        },
+      })
+        const data = await res.json();
+        console.log(data.totalCount,"inventorycounttt");
+        setmto(data?.totalCount||0)
+    }
+    getmtoCount();
+   
+  }, [])
   if (currentUser && currentUser.roles) {
     if (roleApprover) {
       return (
