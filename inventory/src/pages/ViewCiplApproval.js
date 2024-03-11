@@ -335,7 +335,8 @@ export const ViewCiplApproval = () => {
             mt: '33px',
             mb: '17px',
             marginLeft: 'auto',
-            marginleft: 'auto',
+            marginRight: 'auto',
+            
             display: 'block',
           }}
           onClick={handleClick}
