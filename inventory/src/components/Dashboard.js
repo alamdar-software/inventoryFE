@@ -120,7 +120,7 @@ const Dashboard = () => {
       })
         const data = await res.json();
         console.log(data.totalCount,"inventorycount");
-        setapprovalTotalCount(data?.totalCount)
+        setverifierTotalCount(data?.totalCount)
     }
     getverifierTotalCount();
 
