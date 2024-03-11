@@ -53,6 +53,8 @@ const Dashboard = () => {
   const [consumedCount, setconsumedCount] = React.useState(0)
   const [scrappedCount, setscrappedCount] = React.useState(0)
   const [incomingCount, setincomingCount] = React.useState(0)
+  const [approvalTotalCount, setapprovalTotalCount] = React.useState(0)
+  const [verifierTotalCount, setverifierTotalCount] = React.useState(0)
 
 
   useEffect(() => {
@@ -93,6 +95,35 @@ const Dashboard = () => {
         setinvCount(data?.totalCount)
     }
     getinvCount();
+    const getapprovalTotalCount=async()=>{
+
+      const res = await fetch("http://localhost:8080/incomingstock/approvedTotalCount",{
+        method:"get",
+        headers: {
+          'content-type': 'application/json',
+          Authorization: `Bearer ${currentUser.accessToken}`,
+        },
+      })
+        const data = await res.json();
+        console.log(data.totalCount,"inventorycount");
+        setapprovalTotalCount(data?.totalCount)
+    }
+    getapprovalTotalCount();
+    const getverifierTotalCount=async()=>{
+
+      const res = await fetch("http://localhost:8080/incomingstock/totalCount",{
+        method:"get",
+        headers: {
+          'content-type': 'application/json',
+          Authorization: `Bearer ${currentUser.accessToken}`,
+        },
+      })
+        const data = await res.json();
+        console.log(data.totalCount,"inventorycount");
+        setapprovalTotalCount(data?.totalCount)
+    }
+    getverifierTotalCount();
+
     const getincomingCount=async()=>{
 
       const res = await fetch("http://localhost:8080/bulkstock/view",{
@@ -1529,22 +1560,37 @@ const Dashboard = () => {
                     }}
                   />
 
+<div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                   <Typography
-                    sx={{
-                      mb: 1.5,
-                      textAlign: "center",
-                      fontWeight: "bolder",
-                      fontFamily: "Montserrat",
-                    }}
-                    color="#333"
-                    variant="h5"
-                    component="div"
-                  >
-                    Need Verification
-                  </Typography>
-                  <Typography sx={{ mb: 1.5 }} color="text.secondary">
-                    Count:
-                  </Typography>
+        sx={{
+          mb: 1.5,
+          ml:3,
+          textAlign: "center",
+          fontWeight: "bolder",
+          fontFamily: "Montserrat",
+          color: 'blue', // Set the text color to blue
+        }}
+        variant="h5"
+        component="div"
+      >
+       Need Verification
+      </Typography>
+      <Typography
+        sx={{
+          mb: -6,
+        
+          ml:3,
+          fontWeight: 'bold', // Set font weight to bold
+          animation: isBlinking ? 'blinkingText 1s infinite' : 'none', // Apply blinking animation
+          color: 'green',
+          textAlign: 'center' // Set the text color to blue
+        }}
+        variant="h4"
+        color="text.secondary"
+      >
+        {verifierTotalCount}
+      </Typography>
+      </div>
                 </CardContent>
               </Link>
             </Card>
@@ -1936,19 +1982,37 @@ const Dashboard = () => {
                     }}
                   />
 
+<div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                   <Typography
-                    sx={{
-                      mb: 1.5,
-                      textAlign: "center",
-                      fontWeight: "bolder",
-                      fontFamily: "Montserrat",
-                    }}
-                    color="#333"
-                    variant="h5"
-                    component="div"
-                  >
-                    Need Approval
-                  </Typography>
+        sx={{
+          mb: 1.5,
+          ml:3,
+          textAlign: "center",
+          fontWeight: "bolder",
+          fontFamily: "Montserrat",
+          color: 'blue', // Set the text color to blue
+        }}
+        variant="h5"
+        component="div"
+      >
+        Need Approval
+      </Typography>
+      <Typography
+        sx={{
+          mb: -6,
+        
+          ml:3,
+          fontWeight: 'bold', // Set font weight to bold
+          animation: isBlinking ? 'blinkingText 1s infinite' : 'none', // Apply blinking animation
+          color: 'red',
+          textAlign: 'center' // Set the text color to blue
+        }}
+        variant="h4"
+        color="text.secondary"
+      >
+        {approvalTotalCount}
+      </Typography>
+      </div>
                 </CardContent>
               </Link>
             </Card>

@@ -286,22 +286,37 @@ const ApprovedRejected = () => {
                       color='secondary'
                       sx={{ fontSize: '50px' }}
                     />
-                    <Typography
-                      variant='h5'
-                      color='#333'
-                      component='div'
-                      sx={{
-                        mb: 1.5,
-                        textAlign: 'center',
-                        fontWeight: 'bolder',
-                        fontFamily: 'Montserrat',
-                      }}
-                    >
-                      Approver Rejected Mto
-                    </Typography>
-                    <Typography sx={{ mb: 1.5 }} color='text.secondary'>
-                      Count:
-                    </Typography>
+                 <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                  <Typography
+        sx={{
+          mb: 1.5,
+          ml:3,
+          textAlign: "center",
+          fontWeight: "bolder",
+          fontFamily: "Montserrat",
+          color: 'blue', // Set the text color to blue
+        }}
+        variant="h5"
+        component="div"
+      >
+        Approver Rejected Mto
+      </Typography>
+      <Typography
+        sx={{
+          mb: -6,
+        
+          ml:3,
+          fontWeight: 'bold', // Set font weight to bold
+          animation: isBlinking ? 'blinkingText 1s infinite' : 'none', // Apply blinking animation
+          color: 'green',
+          textAlign: 'center' // Set the text color to blue
+        }}
+        variant="h4"
+        color="text.secondary"
+      >
+        {mto}
+      </Typography>
+      </div>
                   </CardContent>
                 </Link>
               </Card>
@@ -328,19 +343,37 @@ const ApprovedRejected = () => {
                       fontSize='large'
                       sx={{ fontSize: '50px', color: '#ff0000' }}
                     />
-                    <Typography
-                      variant='h5'
-                      component='div'
-                      color='#333'
-                      sx={{
-                        mb: 1.5,
-                        textAlign: 'center',
-                        fontWeight: 'bolder',
-                        fontFamily: 'Montserrat',
-                      }}
-                    >
-                      Approver Rejected It
-                    </Typography>
+                   <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                  <Typography
+        sx={{
+          mb: 1.5,
+          ml:3,
+          textAlign: "center",
+          fontWeight: "bolder",
+          fontFamily: "Montserrat",
+          color: 'blue', // Set the text color to blue
+        }}
+        variant="h5"
+        component="div"
+      >
+        Approver Rejected It
+      </Typography>
+      <Typography
+        sx={{
+          mb: -6,
+        
+          ml:3,
+          fontWeight: 'bold', // Set font weight to bold
+          animation: isBlinking ? 'blinkingText 1s infinite' : 'none', // Apply blinking animation
+          color: 'green',
+          textAlign: 'center' // Set the text color to blue
+        }}
+        variant="h4"
+        color="text.secondary"
+      >
+        {itcount}
+      </Typography>
+      </div>
                   </CardContent>
                 </Link>
               </Card>
@@ -367,19 +400,37 @@ const ApprovedRejected = () => {
                       fontSize='large'
                       sx={{ fontSize: '50px', color: '#c6ff00' }}
                     />
-                    <Typography
-                      variant='h5'
-                      component='div'
-                      color='#333'
-                      sx={{
-                        mb: 1.5,
-                        textAlign: 'center',
-                        fontWeight: 'bolder',
-                        fontFamily: 'Montserrat',
-                      }}
-                    >
-                      Approver Rejected Incoming Stock
-                    </Typography>
+                   <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                  <Typography
+        sx={{
+          mb: 1.5,
+          ml:3,
+          textAlign: "center",
+          fontWeight: "bolder",
+          fontFamily: "Montserrat",
+          color: 'blue', // Set the text color to blue
+        }}
+        variant="h5"
+        component="div"
+      >
+        Approver Rejected Incoming Stock
+      </Typography>
+      <Typography
+        sx={{
+          mb: -6,
+        
+          ml:3,
+          fontWeight: 'bold', // Set font weight to bold
+          animation: isBlinking ? 'blinkingText 1s infinite' : 'none', // Apply blinking animation
+          color: 'green',
+          textAlign: 'center' // Set the text color to blue
+        }}
+        variant="h4"
+        color="text.secondary"
+      >
+        {incomingcount}
+      </Typography>
+      </div>
                   </CardContent>
                 </Link>
               </Card>
@@ -423,22 +474,37 @@ const ApprovedRejected = () => {
                       sx={{ fontSize: '50px', color: '#c6ff00' }}
                     />
 
-                    <Typography
-                      sx={{
-                        mb: 1.5,
-                        textAlign: 'center',
-                        fontWeight: 'bolder',
-                        fontFamily: 'Montserrat',
-                      }}
-                      color='#333'
-                      variant='h5'
-                      component='div'
-                    >
-                      Approver Rejected Scrapped Stock
-                    </Typography>
-                    <Typography sx={{ mb: 1.5 }} color='text.secondary'>
-                      Count:
-                    </Typography>
+<div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                  <Typography
+        sx={{
+          mb: 1.5,
+          ml:3,
+          textAlign: "center",
+          fontWeight: "bolder",
+          fontFamily: "Montserrat",
+          color: 'blue', // Set the text color to blue
+        }}
+        variant="h5"
+        component="div"
+      >
+        Approver Rejected Scrapped Item
+      </Typography>
+      <Typography
+        sx={{
+          mb: -6,
+        
+          ml:3,
+          fontWeight: 'bold', // Set font weight to bold
+          animation: isBlinking ? 'blinkingText 1s infinite' : 'none', // Apply blinking animation
+          color: 'green',
+          textAlign: 'center' // Set the text color to blue
+        }}
+        variant="h4"
+        color="text.secondary"
+      >
+        {scrappedcount}
+      </Typography>
+      </div>
                   </CardContent>
                 </Link>
               </Card>
@@ -473,22 +539,37 @@ const ApprovedRejected = () => {
                       sx={{ fontSize: '50px', color: '#64dd17' }}
                     />
 
-                    <Typography
-                      sx={{
-                        mb: 1.5,
-                        textAlign: 'center',
-                        fontWeight: 'bolder',
-                        fontFamily: 'Montserrat',
-                      }}
-                      color='#333'
-                      variant='h5'
-                      component='div'
-                    >
-                      Approver Rejected Consumed Stock
-                    </Typography>
-                    <Typography sx={{ mb: 1.5 }} color='text.secondary'>
-                      Count:
-                    </Typography>
+<div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                  <Typography
+        sx={{
+          mb: 1.5,
+          ml:3,
+          textAlign: "center",
+          fontWeight: "bolder",
+          fontFamily: "Montserrat",
+          color: 'blue', // Set the text color to blue
+        }}
+        variant="h5"
+        component="div"
+      >
+        Approver Rejected Consumed Item
+      </Typography>
+      <Typography
+        sx={{
+          mb: -6,
+        
+          ml:3,
+          fontWeight: 'bold', // Set font weight to bold
+          animation: isBlinking ? 'blinkingText 1s infinite' : 'none', // Apply blinking animation
+          color: 'green',
+          textAlign: 'center' // Set the text color to blue
+        }}
+        variant="h4"
+        color="text.secondary"
+      >
+        {consumedCount}
+      </Typography>
+      </div>
                   </CardContent>
                 </Link>
               </Card>
