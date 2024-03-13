@@ -679,7 +679,7 @@ const Dashboard = () => {
                 //border: '2px solid yellow',
                 minWidth: 20,
                 flex: 1,
-                marginRight: 1,
+                marginRight: 2.5,
                 marginLeft: 3,
                 paddingLeft:3,
                 marginTop: 3,
