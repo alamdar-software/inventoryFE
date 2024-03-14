@@ -178,7 +178,7 @@ function UpdateConsumedVerifier() {
       body: JSON.stringify(formData),
     })
       .then(() => {
-        toast.success('🦄 Consumed Verified Successfully!', {
+        toast.success(`🦄 Consumed{} Verified Successfully!`, {
           position: "top-right",
           autoClose: 3000,
           hideProgressBar: false,
@@ -200,6 +200,7 @@ function UpdateConsumedVerifier() {
         console.error('Error updating scrapped:', error);
       });
   };
+  console.log(formData,"formmm");
   return (
     <div>
       <Grid>

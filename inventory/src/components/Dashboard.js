@@ -231,6 +231,7 @@ const Dashboard = () => {
       return (
         // Render grid for ROLE_SUPERADMIN
         <Grid
+        item xs={12}
           sx={{
             // backgroundImage: `url(${inventory})`, // Use the imported image as the background
             // backgroundSize: 'cover',
@@ -240,13 +241,13 @@ const Dashboard = () => {
           <div style={{ display: "flex", flexDirection: "row", marginTop: -32,paddingBottom:10 }}>
             <Card
               sx={{
-                boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.5)',
-                
+                boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.3)',
+                height:"160px",
                 flex: 1,
                 marginRight: 3,
                 marginLeft: 3,
-                marginTop: 3,
-                borderRadius: 5,
+                marginTop: 4,
+                borderRadius: 1,
                 paddingBottom:5,
                 width: "90px !important",
 
@@ -267,7 +268,7 @@ const Dashboard = () => {
                       position: "absolute",
                       top: 0,
                       left: 0,
-                     mb:4,
+                     mb:1,
                       backgroundColor: "white", // Set your desired color
                       color: "white", // Set your desired text color
                       padding: 1,
@@ -299,7 +300,7 @@ const Dashboard = () => {
           textAlign: "center",
           fontWeight: "bolder",
           fontFamily: "Montserrat",
-          color: 'blue', // Set the text color to blue
+          color: 'black', // Set the text color to blue
         }}
         variant="h5"
         component="div"
@@ -328,13 +329,13 @@ const Dashboard = () => {
 
             <Card
               sx={{
-                boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.5)',
+                boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.3)',
                 //border: '2px solid yellow',
                 minWidth: 40,
                 flex: 1,
-                marginTop: 3,
+                marginTop: 4,
                 marginLeft: 3,
-                borderRadius: 8,
+                borderRadius: 1,
                 transition: "transform 0.3s",
                 "&:hover": {
                   transform: "scale(1.1)", // Adjust the scaling factor as needed
@@ -367,13 +368,13 @@ const Dashboard = () => {
             </Card>
             <Card
               sx={{
-                boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.5)',
+                boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.3)',
                 //border: '2px solid yellow',
                 minWidth: 20,
                 flex: 1,
                 marginLeft: 3,
-                borderRadius: 8,
-                marginTop: 3,
+                borderRadius: 1,
+                marginTop: 4,
                 transition: "transform 0.3s",
                 "&:hover": {
                   transform: "scale(1.1)", // Adjust the scaling factor as needed
@@ -404,13 +405,13 @@ const Dashboard = () => {
             </Card>
             <Card
               sx={{
-                boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.5)',
+                boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.3)',
                 //border: '2px solid yellow',
                 minWidth: 20,
                 flex: 1,
                 marginLeft: 3,
-                borderRadius: 8,
-                marginTop: 3,
+                borderRadius: 1,
+                marginTop: 4,
                 transition: "transform 0.3s",
                 "&:hover": {
                   transform: "scale(1.1)", // Adjust the scaling factor as needed
@@ -430,7 +431,7 @@ const Dashboard = () => {
           textAlign: "center",
           fontWeight: "bolder",
           fontFamily: "Montserrat",
-          color: 'blue', // Set the text color to blue
+          color: 'black', // Set the text color to blue
         }}
         variant="h5"
         component="div"
@@ -462,15 +463,17 @@ const Dashboard = () => {
           <div style={{ display: "flex", flexDirection: "row", marginTop: 3,marginRight:-20 }}>
             <Card
               sx={{
-                boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.5)',
+                boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.3)',
                 //border: '2px solid yellow',
-                width: "90px !important",
-                minWidth: 20,
+                width: "100px !important",
+                width: "23%",
+                minWidth: 35,
                 flex: 1,
                 marginRight: 3,
+                paddingRight:3,
                 marginLeft: 3,
                 marginTop: 3,
-                borderRadius: 8,
+                borderRadius: 1,
                 transition: "transform 0.3s",
                 "&:hover": {
                   transform: "scale(1.1)", // Adjust the scaling factor as needed
@@ -501,7 +504,7 @@ const Dashboard = () => {
           fontWeight: "bolder",
           fontFamily: "Montserrat",
           mb:1,
-          color: 'blue', // Set the text color to blue
+          color: 'black', // Set the text color to blue
         }}
         variant="h5"
         component="div"
@@ -529,14 +532,15 @@ const Dashboard = () => {
             </Card>
             <Card
               sx={{
-                boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.5)',
+                boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.3)',
                 //border: '2px solid yellow',
                 minWidth: 20,
                 flex: 1,
-                marginRight: 3,
+                marginRight: 0.8,
+                paddingRight:4,
                 marginLeft: 3,
                 marginTop: 3,
-                borderRadius: 8,
+                borderRadius: 1,
                 transition: "transform 0.3s",
                 "&:hover": {
                   transform: "scale(1.1)", // Adjust the scaling factor as needed
@@ -577,7 +581,7 @@ const Dashboard = () => {
           textAlign: "center",
           fontWeight: "bolder",
           fontFamily: "Montserrat",
-          color: 'blue', // Set the text color to blue
+          color: 'black', // Set the text color to blue
         }}
         variant="h5"
         component="div"
@@ -607,14 +611,15 @@ const Dashboard = () => {
             </Card>
             <Card
               sx={{
-                boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.5)',
+                boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.3)',
                 //border: '2px solid yellow',
                 minWidth: 20,
                 flex: 1,
-                marginRight: 3,
+                marginRight: 0.5,
                 marginLeft: 3,
+                paddingLeft:2,
                 marginTop: 3,
-                borderRadius: 8,
+                borderRadius: 1,
                 transition: "transform 0.3s",
                 "&:hover": {
                   transform: "scale(1.1)", // Adjust the scaling factor as needed
@@ -642,7 +647,7 @@ const Dashboard = () => {
           textAlign: "center",
           fontWeight: "bolder",
           fontFamily: "Montserrat",
-          color: 'blue', // Set the text color to blue
+          color: 'black', // Set the text color to blue
         }}
         variant="h5"
         component="div"
@@ -670,14 +675,15 @@ const Dashboard = () => {
             </Card>
             <Card
               sx={{
-                boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.5)',
+                boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.3)',
                 //border: '2px solid yellow',
                 minWidth: 20,
                 flex: 1,
-                marginRight: 3,
+                marginRight: 2.5,
                 marginLeft: 3,
+                paddingLeft:3,
                 marginTop: 3,
-                borderRadius: 8,
+                borderRadius: 1,
                 transition: "transform 0.3s",
                 "&:hover": {
                   transform: "scale(1.1)",
@@ -711,7 +717,7 @@ const Dashboard = () => {
           textAlign: "center",
           fontWeight: "bolder",
           fontFamily: "Montserrat",
-          color: 'blue', // Set the text color to blue
+          color: 'black', // Set the text color to blue
         }}
         variant="h5"
         component="div"
@@ -741,14 +747,15 @@ const Dashboard = () => {
           <div style={{ display: "flex", flexDirection: "row", marginTop: 3,paddingBottom:"-5px" }}>
             <Card
               sx={{
-                boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.5)',
+                boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.3)',
+                height:"160px",
                 //border: '2px solid yellow',
                 minWidth: 20,
                 paddingBottom:"-15px" ,
-                marginRight: 3,
+                marginRight: 2,
                 marginLeft: 3,
                 marginTop: 3,
-                borderRadius: 8,
+                borderRadius: 1,
                 width: "23%",
                 transition: "transform 0.3s",
                 "&:hover": {
@@ -777,7 +784,7 @@ const Dashboard = () => {
           textAlign: "center",
           fontWeight: "bolder",
           fontFamily: "Montserrat",
-          color: 'blue', // Set the text color to blue
+          color: 'black', // Set the text color to blue
         }}
         variant="h5"
         component="div"
@@ -805,14 +812,15 @@ const Dashboard = () => {
             </Card>
             <Card
               sx={{
-                boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.5)',
+                boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.3)',
                 //border: '2px solid yellow',
+                height:"160px",
                 minWidth: 20,
                 paddingBottom:"-20px",
                 marginRight: 3,
                 marginLeft: 3,
                 marginTop: 3,
-                borderRadius: 8,
+                borderRadius: 1,
                 width: "23%",
                 transition: "transform 0.3s",
                 "&:hover": {
@@ -844,7 +852,7 @@ const Dashboard = () => {
           textAlign: "center",
           fontWeight: "bolder",
           fontFamily: "Montserrat",
-          color: 'blue', // Set the text color to blue
+          color: 'black', // Set the text color to blue
         }}
         variant="h5"
         component="div"
@@ -886,12 +894,12 @@ const Dashboard = () => {
           <div style={{ display: "flex", flexDirection: "row", marginTop: 3 }}>
             <Card
               sx={{
-                boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.5)',
+                boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.3)',
                 flex: 1,
                 marginRight: 3,
                 marginLeft: 3,
                 marginTop: 3,
-                borderRadius: 5,
+                borderRadius: 1,
                 width: "100px !important",
 
                 transition: "transform 0.3s",
@@ -957,13 +965,13 @@ const Dashboard = () => {
             <Card
               sx={{
                 height:"200px",
-                boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.5)',
+                boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.3)',
                 //border: '2px solid yellow',
                 minWidth: 40,
                 flex: 1,
-                marginTop: 3,
+                marginTop: 5,
                 marginLeft: 3,
-                borderRadius: 8,
+                borderRadius: 1,
                 transition: "transform 0.3s",
                 "&:hover": {
                   transform: "scale(1.1)", // Adjust the scaling factor as needed
@@ -996,12 +1004,12 @@ const Dashboard = () => {
             </Card>
             <Card
               sx={{
-                boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.5)',
+                boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.3)',
                 //border: '2px solid yellow',
                 minWidth: 20,
                 flex: 1,
                 marginLeft: 3,
-                borderRadius: 8,
+                borderRadius: 1,
                 marginTop: 3,
                 transition: "transform 0.3s",
                 "&:hover": {
@@ -1033,12 +1041,12 @@ const Dashboard = () => {
             </Card>
             <Card
               sx={{
-                boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.5)',
+                boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.3)',
                 //border: '2px solid yellow',
                 minWidth: 20,
                 flex: 1,
                 marginLeft: 3,
-                borderRadius: 8,
+                borderRadius: 1,
                 marginTop: 3,
                 transition: "transform 0.3s",
                 "&:hover": {
@@ -1072,14 +1080,14 @@ const Dashboard = () => {
           <div style={{ display: "flex", flexDirection: "row", marginTop: 3 }}>
             <Card
               sx={{
-                boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.5)',
+                boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.3)',
                 //border: '2px solid yellow',
                 minWidth: 20,
                 flex: 1,
                 marginRight: 3,
                 marginLeft: 3,
                 marginTop: 3,
-                borderRadius: 8,
+                borderRadius: 1,
                 transition: "transform 0.3s",
                 "&:hover": {
                   transform: "scale(1.1)", // Adjust the scaling factor as needed
@@ -1123,14 +1131,14 @@ const Dashboard = () => {
             </Card>
             <Card
               sx={{
-                boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.5)',
+                boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.3)',
                 //border: '2px solid yellow',
                 minWidth: 20,
                 flex: 1,
                 marginRight: 3,
                 marginLeft: 3,
                 marginTop: 3,
-                borderRadius: 8,
+                borderRadius: 1,
                 transition: "transform 0.3s",
                 "&:hover": {
                   transform: "scale(1.1)", // Adjust the scaling factor as needed
@@ -1158,7 +1166,7 @@ const Dashboard = () => {
           textAlign: "center",
           fontWeight: "bolder",
           fontFamily: "Montserrat",
-          color: 'blue', // Set the text color to blue
+          color: 'black', // Set the text color to blue
         }}
         variant="h5"
         component="div"
@@ -1186,14 +1194,14 @@ const Dashboard = () => {
             </Card>
             <Card
               sx={{
-                boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.5)',
+                boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.3)',
                 //border: '2px solid yellow',
                 minWidth: 20,
                 flex: 1,
                 marginRight: 3,
                 marginLeft: 3,
                 marginTop: 3,
-                borderRadius: 8,
+                borderRadius: 1,
                 transition: "transform 0.3s",
                 "&:hover": {
                   transform: "scale(1.1)", // Adjust the scaling factor as needed
@@ -1234,14 +1242,14 @@ const Dashboard = () => {
             </Card>
             <Card
               sx={{
-                boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.5)',
+                boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.3)',
                 //border: '2px solid yellow',
                 minWidth: 20,
                 flex: 1,
                 marginRight: 3,
                 marginLeft: 3,
                 marginTop: 3,
-                borderRadius: 8,
+                borderRadius: 1,
                 transition: "transform 0.3s",
                 "&:hover": {
                   transform: "scale(1.1)",
@@ -1287,14 +1295,14 @@ const Dashboard = () => {
           <div style={{ display: "flex", flexDirection: "row", marginTop: 3 }}>
             <Card
               sx={{
-                boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.5)',
+                boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.3)',
                 //border: '2px solid yellow',
                 minWidth: 20,
 
                 marginRight: 3,
                 marginLeft: 3,
                 marginTop: 3,
-                borderRadius: 8,
+                borderRadius: 1,
                 width: "23%",
                 transition: "transform 0.3s",
                 "&:hover": {
@@ -1336,14 +1344,14 @@ const Dashboard = () => {
             </Card>
             <Card
               sx={{
-                boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.5)',
+                boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.3)',
                 //border: '2px solid yellow',
                 minWidth: 20,
 
                 marginRight: 3,
                 marginLeft: 3,
                 marginTop: 3,
-                borderRadius: 8,
+                borderRadius: 1,
                 width: "23%",
                 transition: "transform 0.3s",
                 "&:hover": {
@@ -1403,13 +1411,13 @@ const Dashboard = () => {
             <Card
               sx={{
                 height:"200px",
-                boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.5)',
+                boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.3)',
                 //border: '2px solid yellow',
                 minWidth: 40,
                 flex: 1,
                 marginTop: 3,
                 marginLeft: 3,
-                borderRadius: 8,
+                borderRadius: 1,
                 transition: "transform 0.3s",
                 "&:hover": {
                   transform: "scale(1.1)", // Adjust the scaling factor as needed
@@ -1442,12 +1450,12 @@ const Dashboard = () => {
             </Card>
             <Card
               sx={{
-                boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.5)',
+                boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.3)',
                 //border: '2px solid yellow',
                 minWidth: 20,
                 flex: 1,
                 marginLeft: 3,
-                borderRadius: 8,
+                borderRadius: 1,
                 marginTop: 3,
                 transition: "transform 0.3s",
                 "&:hover": {
@@ -1479,14 +1487,14 @@ const Dashboard = () => {
             </Card>
             <Card
               sx={{
-                boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.5)',
+                boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.3)',
                 //border: '2px solid yellow',
                 minWidth: 20,
                 flex: 1,
                 marginRight: 3,
                 marginLeft: 3,
                 marginTop: 3,
-                borderRadius: 8,
+                borderRadius: 1,
                 transition: "transform 0.3s",
                 "&:hover": {
                   transform: "scale(1.1)", // Adjust the scaling factor as needed
@@ -1514,7 +1522,7 @@ const Dashboard = () => {
           textAlign: "center",
           fontWeight: "bolder",
           fontFamily: "Montserrat",
-          color: 'blue', // Set the text color to blue
+          color: 'black', // Set the text color to blue
         }}
         variant="h5"
         component="div"
@@ -1542,12 +1550,12 @@ const Dashboard = () => {
             </Card>
             <Card
               sx={{
-                boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.5)',
+                boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.3)',
                 flex: 1,
                 marginRight: 3,
                 marginLeft: 3,
                 marginTop: 3,
-                borderRadius: 5,
+                borderRadius: 1,
                 width: "100px !important",
 
                 transition: "transform 0.3s",
@@ -1598,7 +1606,7 @@ const Dashboard = () => {
           textAlign: "center",
           fontWeight: "bolder",
           fontFamily: "Montserrat",
-          color: 'blue', // Set the text color to blue
+          color: 'black', // Set the text color to blue
         }}
         variant="h5"
         component="div"
@@ -1628,14 +1636,14 @@ const Dashboard = () => {
           <div style={{ display: "flex", flexDirection: "row", marginTop: 3 }}>
             <Card
               sx={{
-                boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.5)',
+                boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.3)',
                 //border: '2px solid yellow',
                 minWidth: 20,
                 flex: 1,
                 marginRight: 3,
                 marginLeft: 3,
                 marginTop: 3,
-                borderRadius: 8,
+                borderRadius: 1,
                 transition: "transform 0.3s",
                 "&:hover": {
                   transform: "scale(1.1)", // Adjust the scaling factor as needed
@@ -1676,14 +1684,14 @@ const Dashboard = () => {
             </Card>
             <Card
               sx={{
-                boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.5)',
+                boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.3)',
                 //border: '2px solid yellow',
                 minWidth: 20,
                 flex: 1,
                 marginRight: 3,
                 marginLeft: 3,
                 marginTop: 3,
-                borderRadius: 8,
+                borderRadius: 1,
                 transition: "transform 0.3s",
                 "&:hover": {
                   transform: "scale(1.1)", // Adjust the scaling factor as needed
@@ -1728,14 +1736,14 @@ const Dashboard = () => {
 
             <Card
               sx={{
-                boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.5)',
+                boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.3)',
                 //border: '2px solid yellow',
                 minWidth: 20,
                 flex: 1,
                 marginRight: 3,
                 marginLeft: 3,
                 marginTop: 3,
-                borderRadius: 8,
+                borderRadius: 1,
                 transition: "transform 0.3s",
                 "&:hover": {
                   transform: "scale(1.1)", // Adjust the scaling factor as needed
@@ -1776,14 +1784,14 @@ const Dashboard = () => {
             </Card>
             <Card
               sx={{
-                boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.5)',
+                boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.3)',
                 //border: '2px solid yellow',
                 minWidth: 20,
                 flex: 1,
                 marginRight: 3,
                 marginLeft: 3,
                 marginTop: 3,
-                borderRadius: 8,
+                borderRadius: 1,
                 transition: "transform 0.3s",
                 "&:hover": {
                   transform: "scale(1.1)",
@@ -1838,14 +1846,14 @@ const Dashboard = () => {
           <div style={{ display: "flex", flexDirection: "row", marginTop: 15 }}>
             <Card
               sx={{
-                boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.5)',
+                boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.3)',
                 height:"200px",
                 //border: '2px solid yellow',
                 minWidth: 40,
                 flex: 1,
                 marginTop: 3,
                 marginLeft: 3,
-                borderRadius: 8,
+                borderRadius: 1,
                 transition: "transform 0.3s",
                 "&:hover": {
                   transform: "scale(1.1)", // Adjust the scaling factor as needed
@@ -1878,12 +1886,12 @@ const Dashboard = () => {
             </Card>
             <Card
               sx={{
-                boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.5)',
+                boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.3)',
                 //border: '2px solid yellow',
                 minWidth: 20,
                 flex: 1,
                 marginLeft: 3,
-                borderRadius: 8,
+                borderRadius: 1,
                 marginTop: 3,
                 transition: "transform 0.3s",
                 "&:hover": {
@@ -1915,14 +1923,14 @@ const Dashboard = () => {
             </Card>
             <Card
               sx={{
-                boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.5)',
+                boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.3)',
                 //border: '2px solid yellow',
                 minWidth: 20,
                 flex: 1,
                 marginRight: 3,
                 marginLeft: 3,
                 marginTop: 3,
-                borderRadius: 8,
+                borderRadius: 1,
                 transition: "transform 0.3s",
                 "&:hover": {
                   transform: "scale(1.1)", // Adjust the scaling factor as needed
@@ -1950,7 +1958,7 @@ const Dashboard = () => {
           textAlign: "center",
           fontWeight: "bolder",
           fontFamily: "Montserrat",
-          color: 'blue', // Set the text color to blue
+          color: 'black', // Set the text color to blue
         }}
         variant="h5"
         component="div"
@@ -1978,12 +1986,12 @@ const Dashboard = () => {
             </Card>
             <Card
               sx={{
-                boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.5)',
+                boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.3)',
                 flex: 1,
                 marginRight: 3,
                 marginLeft: 3,
                 marginTop: 3,
-                borderRadius: 5,
+                borderRadius: 1,
                 width: "100px !important",
 
                 transition: "transform 0.3s",
@@ -2034,7 +2042,7 @@ const Dashboard = () => {
           textAlign: "center",
           fontWeight: "bolder",
           fontFamily: "Montserrat",
-          color: 'blue', // Set the text color to blue
+          color: 'black', // Set the text color to blue
         }}
         variant="h5"
         component="div"
@@ -2075,14 +2083,14 @@ const Dashboard = () => {
             <Card
               sx={{
                 height:"200px",
-                boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.5)',
+                boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.3)',
                 //border: '2px solid yellow',
                 minWidth: 20,
                 flex: 1,
                 marginRight: 3,
                 marginLeft: 3,
                 marginTop: 3,
-                borderRadius: 8,
+                borderRadius: 1,
                 transition: "transform 0.3s",
                 "&:hover": {
                   transform: "scale(1.1)", // Adjust the scaling factor as needed
@@ -2120,7 +2128,7 @@ const Dashboard = () => {
             </Card>
             <Card
               sx={{
-                boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.5)',
+                boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.3)',
                 height:"200px",
                 //border: '2px solid yellow',
                 minWidth: 20,
@@ -2128,7 +2136,7 @@ const Dashboard = () => {
                 marginRight: 3,
                 marginLeft: 3,
                 marginTop: 3,
-                borderRadius: 8,
+                borderRadius: 1,
                 transition: "transform 0.3s",
                 "&:hover": {
                   transform: "scale(1.1)", // Adjust the scaling factor as needed
@@ -2185,12 +2193,12 @@ const Dashboard = () => {
           <div style={{ display: "flex", flexDirection: "row", marginTop: 3 }}>
             <Card
               sx={{
-                boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.5)',
+                boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.3)',
                 flex: 1,
                 marginRight: 3,
                 marginLeft: 3,
                 marginTop: 3,
-                borderRadius: 5,
+                borderRadius: 1,
                 width: "100px !important",
 
                 transition: "transform 0.3s",
@@ -2241,7 +2249,7 @@ const Dashboard = () => {
           textAlign: "center",
           fontWeight: "bolder",
           fontFamily: "Montserrat",
-          color: 'blue', // Set the text color to blue
+          color: 'black', // Set the text color to blue
         }}
         variant="h5"
         component="div"
@@ -2271,13 +2279,13 @@ const Dashboard = () => {
             <Card
               sx={{
                 height:"200px",
-                boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.5)',
+                boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.3)',
                 //border: '2px solid yellow',
                 minWidth: 40,
                 flex: 1,
                 marginTop: 3,
                 marginLeft: 3,
-                borderRadius: 8,
+                borderRadius: 1,
                 transition: "transform 0.3s",
                 "&:hover": {
                   transform: "scale(1.1)", // Adjust the scaling factor as needed
@@ -2310,12 +2318,12 @@ const Dashboard = () => {
             </Card>
             <Card
               sx={{
-                boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.5)',
+                boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.3)',
                 //border: '2px solid yellow',
                 minWidth: 20,
                 flex: 1,
                 marginLeft: 3,
-                borderRadius: 8,
+                borderRadius: 1,
                 marginTop: 3,
                 transition: "transform 0.3s",
                 "&:hover": {
@@ -2347,12 +2355,12 @@ const Dashboard = () => {
             </Card>
             <Card
               sx={{
-                boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.5)',
+                boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.3)',
                 //border: '2px solid yellow',
                 minWidth: 20,
                 flex: 1,
                 marginLeft: 3,
-                borderRadius: 8,
+                borderRadius: 1,
                 marginTop: 3,
                 transition: "transform 0.3s",
                 "&:hover": {
@@ -2386,14 +2394,14 @@ const Dashboard = () => {
           <div style={{ display: "flex", flexDirection: "row", marginTop: 3 }}>
             <Card
               sx={{
-                boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.5)',
+                boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.3)',
                 //border: '2px solid yellow',
                 minWidth: 20,
                 flex: 1,
                 marginRight: 3,
                 marginLeft: 3,
                 marginTop: 3,
-                borderRadius: 8,
+                borderRadius: 1,
                 transition: "transform 0.3s",
                 "&:hover": {
                   transform: "scale(1.1)", // Adjust the scaling factor as needed
@@ -2437,14 +2445,14 @@ const Dashboard = () => {
             </Card>
             <Card
               sx={{
-                boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.5)',
+                boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.3)',
                 //border: '2px solid yellow',
                 minWidth: 20,
                 flex: 1,
                 marginRight: 3,
                 marginLeft: 3,
                 marginTop: 3,
-                borderRadius: 8,
+                borderRadius: 1,
                 transition: "transform 0.3s",
                 "&:hover": {
                   transform: "scale(1.1)", // Adjust the scaling factor as needed
@@ -2472,7 +2480,7 @@ const Dashboard = () => {
           textAlign: "center",
           fontWeight: "bolder",
           fontFamily: "Montserrat",
-          color: 'blue', // Set the text color to blue
+          color: 'black', // Set the text color to blue
         }}
         variant="h5"
         component="div"
@@ -2500,14 +2508,14 @@ const Dashboard = () => {
             </Card>
             <Card
               sx={{
-                boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.5)',
+                boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.3)',
                 //border: '2px solid yellow',
                 minWidth: 20,
                 flex: 1,
                 marginRight: 3,
                 marginLeft: 3,
                 marginTop: 3,
-                borderRadius: 8,
+                borderRadius: 1,
                 transition: "transform 0.3s",
                 "&:hover": {
                   transform: "scale(1.1)", // Adjust the scaling factor as needed
@@ -2548,14 +2556,14 @@ const Dashboard = () => {
             </Card>
             <Card
               sx={{
-                boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.5)',
+                boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.3)',
                 //border: '2px solid yellow',
                 minWidth: 20,
                 flex: 1,
                 marginRight: 3,
                 marginLeft: 3,
                 marginTop: 3,
-                borderRadius: 8,
+                borderRadius: 1,
                 transition: "transform 0.3s",
                 "&:hover": {
                   transform: "scale(1.1)",
@@ -2601,14 +2609,14 @@ const Dashboard = () => {
           <div style={{ display: "flex", flexDirection: "row", marginTop: 3 }}>
             <Card
               sx={{
-                boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.5)',
+                boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.3)',
                 //border: '2px solid yellow',
                 minWidth: 20,
 
                 marginRight: 3,
                 marginLeft: 3,
                 marginTop: 3,
-                borderRadius: 8,
+                borderRadius: 1,
                 width: "23%",
                 transition: "transform 0.3s",
                 "&:hover": {
@@ -2650,14 +2658,14 @@ const Dashboard = () => {
             </Card>
             <Card
               sx={{
-                boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.5)',
+                boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.3)',
                 //border: '2px solid yellow',
                 minWidth: 20,
 
                 marginRight: 3,
                 marginLeft: 3,
                 marginTop: 3,
-                borderRadius: 8,
+                borderRadius: 1,
                 width: "23%",
                 transition: "transform 0.3s",
                 "&:hover": {

@@ -99,7 +99,7 @@ const Mto = () => {
       },
       body: JSON.stringify(formData),
     }).then(() => {
-      toast.success('🦄 Shipper Added Successfully!', {
+      toast.success('🦄 Mto  Added Successfully!', {
         position: "top-right",
         autoClose: 3000,
         hideProgressBar: false,
