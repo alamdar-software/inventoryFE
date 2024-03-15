@@ -616,7 +616,7 @@ const Dashboard = () => {
                 minWidth: 20,
                 flex: 1,
                 marginRight: 0.5,
-                marginLeft: 3,
+                marginLeft: 2,
                 paddingLeft:2,
                 marginTop: 3,
                 borderRadius: 1,
@@ -643,7 +643,7 @@ const Dashboard = () => {
                   <Typography
         sx={{
           mb: 1.5,
-          ml:6,
+          ml:2,
           textAlign: "center",
           fontWeight: "bolder",
           fontFamily: "Montserrat",
@@ -658,7 +658,7 @@ const Dashboard = () => {
         sx={{
           mb: -6,
         
-          ml:10,
+          ml:5,
           fontWeight: 'bold', // Set font weight to bold
           animation: isBlinking ? 'blinkingText 1s infinite' : 'none', // Apply blinking animation
           color: 'green',
@@ -713,7 +713,7 @@ const Dashboard = () => {
                   <Typography
         sx={{
           mb: 1.5,
-          ml:5,
+          ml:2,
           textAlign: "center",
           fontWeight: "bolder",
           fontFamily: "Montserrat",
@@ -728,7 +728,7 @@ const Dashboard = () => {
         sx={{
           mb: -6,
         
-          ml:10,
+          ml:3,
           fontWeight: 'bold', // Set font weight to bold
           animation: isBlinking ? 'blinkingText 1s infinite' : 'none', // Apply blinking animation
           color: 'green',
@@ -780,7 +780,7 @@ const Dashboard = () => {
                   <Typography
         sx={{
           mb: 1.5,
-          ml:5,
+          ml:2,
           textAlign: "center",
           fontWeight: "bolder",
           fontFamily: "Montserrat",
