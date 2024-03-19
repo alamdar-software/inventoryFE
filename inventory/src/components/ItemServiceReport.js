@@ -37,9 +37,9 @@ const ItemServiceReport = () => {
     entityName: '',
   });
   const [itemService, setItemService] = useState([]);
-
   const dispatch = useDispatch();
   const state = useSelector((state) => state);
+  const { currentUser } = state.persisted.user;
 
   useEffect(() => {
     dispatch(fetchlocation(currentUser.accessToken));
@@ -195,7 +195,7 @@ const ItemServiceReport = () => {
       pdf.save('Item Service Report.pdf');
     });
   };
-  const { currentUser } = state.persisted.user;
+
   return (
     <>
       <Card
