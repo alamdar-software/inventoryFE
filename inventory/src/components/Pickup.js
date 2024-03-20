@@ -91,7 +91,7 @@ const Pickup = () => {
       body: JSON.stringify(attendence),
     }).then(() => {
       setMessage(true);
-      toast.success('🦄 Category Added Successfully!', {
+      toast.success('🦄 Pickup Added Successfully!', {
         position: 'top-right',
         autoClose: 3000,
         hideProgressBar: false,
