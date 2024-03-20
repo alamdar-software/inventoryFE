@@ -26,7 +26,8 @@ import { fetchItem } from '../redux/slice/ItemSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { PoList } from '../components/PoList';
 import { toast } from 'react-toastify';
-
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from '@mui/icons-material/Delete';
 const InventoryList = () => {
   const state = useSelector((state) => state);
   const { currentUser } = state.persisted.user;
@@ -149,7 +150,7 @@ const InventoryList = () => {
         <Card
           color='secondary'
           sx={{
-            width: '100%',
+            width: '90%',
             // background:
             //   'linear-gradient(217deg, rgba(255,0,0,.8), rgba(255,0,0,0) 70.71%)',
 
@@ -174,7 +175,7 @@ const InventoryList = () => {
           <Grid>
             <Grid container spacing={2}>
               <Grid item xs={12} sm={6}>
-                <FormControl fullWidth sx={{ width: '90%' }}>
+                <FormControl fullWidth sx={{ width: '100%' }}>
                   <InputLabel id='demo-simple-select-label'>
                     Location
                   </InputLabel>
@@ -257,29 +258,32 @@ const InventoryList = () => {
           sx={{
             borderRadius: '33px',
             borderBottom: '2px solid yellow',
-            // width: '110%',
+            width: '102%',
           }}
         >
           <Table sx={{ minWidth: 650 }} aria-label='simple table'>
             <TableHead>
               <TableRow>
-                <TableCell align='right' sx={{ fontWeight: 'bold' }}>
+                <TableCell align='left' sx={{ fontWeight: 'bold' }}>
                   Location
                 </TableCell>
-                <TableCell align='right' sx={{ fontWeight: 'bold' }}>
+                <TableCell align='left' sx={{ fontWeight: 'bold' }}>
                   SubLocation
                 </TableCell>
-                <TableCell align='right' sx={{ fontWeight: 'bold' }}>
+                <TableCell align='left' sx={{ fontWeight: 'bold' }}>
                   Item Description
                 </TableCell>
-                <TableCell align='right' sx={{ fontWeight: 'bold' }}>
+                <TableCell align='left' sx={{ fontWeight: 'bold' }}>
                   Quantity
                 </TableCell>
-                <TableCell align='right' sx={{ fontWeight: 'bold' }}>
+                <TableCell align='left' sx={{ fontWeight: 'bold' }}>
                   Consumed Quantity
                 </TableCell>
-                <TableCell align='right' sx={{ fontWeight: 'bold' }}>
+                <TableCell align='left' sx={{ fontWeight: 'bold' }}>
                   Scrapped Quantity
+                </TableCell>
+                <TableCell align='left' sx={{ fontWeight: 'bold' }}>
+                  Actions
                 </TableCell>
               </TableRow>
             </TableHead>
@@ -296,30 +300,31 @@ const InventoryList = () => {
                   {attendence.name}
                 </TableCell> */}
 
-                      <TableCell align='right'>
+                      <TableCell align='left'>
                         {inventory.locationName}
                       </TableCell>
-                      <TableCell align='right'>
+                      <TableCell align='left'>
                         {inventory?.address?.address || ''}
                       </TableCell>
-                      <TableCell align='right'>
+                      <TableCell align='left'>
                         {inventory.description.match(/^[^-(]*/)[0].trim()}
                       </TableCell>
-                      <TableCell align='right'>{inventory.quantity}</TableCell>
-                      <TableCell align='right'>
+                      <TableCell align='left'>{inventory.quantity}</TableCell>
+                      <TableCell align='left'>
                         {inventory.consumedItem}
                       </TableCell>
-                      <TableCell align='right'>
+                      <TableCell align='left'>
                         {inventory.scrappedItem}
                       </TableCell>
-                      <Box>
+                      <Box classname="flex">
                         <Button
                           variant='outlined'
+                          width="15px"
                           onClick={handleButtonClick}
-                          sx={{ mr: '11px' }}
+                          sx={{ mr: '1px', }}
                         >
                           {' '}
-                          View Po List
+                          View PO
                         </Button>
                         {isCardVisible && (
                           <div
@@ -371,37 +376,37 @@ const InventoryList = () => {
                                     <TableHead>
                                       <TableRow>
                                         <TableCell
-                                          align='right'
+                                          align='left'
                                           sx={{ fontWeight: 'bold' }}
                                         >
                                           Purchase Order
                                         </TableCell>
                                         <TableCell
-                                          align='right'
+                                          align='left'
                                           sx={{ fontWeight: 'bold' }}
                                         >
                                           Date
                                         </TableCell>
                                         <TableCell
-                                          align='right'
+                                          align='left'
                                           sx={{ fontWeight: 'bold' }}
                                         >
                                           Unit Cost
                                         </TableCell>
                                         <TableCell
-                                          align='right'
+                                          align='left'
                                           sx={{ fontWeight: 'bold' }}
                                         >
                                           Currency
                                         </TableCell>
                                         <TableCell
-                                          align='right'
+                                          align='left'
                                           sx={{ fontWeight: 'bold' }}
                                         >
                                           Quantity
                                         </TableCell>
                                         <TableCell
-                                          align='right'
+                                          align='left'
                                           sx={{ fontWeight: 'bold' }}
                                         >
                                           Remaining Quantity
@@ -416,15 +421,15 @@ const InventoryList = () => {
                         )}
 
                         <Link to={`/updateInventory/${inventory?.id}`}>
-                          <Button variant='contained'>Update</Button>
+                          <Button variant='contained'><EditIcon/></Button>
                         </Link>
                         <Button
-                          sx={{ marginLeft: '11px' }}
+                          sx={{ marginLeft: '1px' }}
                           variant='contained'
                           color='secondary'
                           onClick={() => deleteInventory(inventory.id)}
                         >
-                          Delete
+                          <DeleteIcon/>
                         </Button>
                       </Box>
                     </TableRow>

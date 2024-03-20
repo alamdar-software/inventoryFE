@@ -152,11 +152,13 @@ const SingleIncome = () => {
     });
   };
   const handleItemChange = (e) => {
-    console.log(e.target.value);
+   
     const selectedDescription = e.target.value.match(/^[^(]*/)[0].trim();
-    const selectedItem = state.nonPersisted.item?.data.find(
+    console.log(selectedDescription,"pioooo");
+    const selectedItem =  state.nonPersisted.item.data.find(
       (item) => item.description === selectedDescription
-    );
+      );
+      console.log(state.nonPersisted.item?.data[0].description,"itemmms");
 
     if (selectedItem) {
       console.log(selectedItem, 'i have selected');
@@ -178,6 +180,7 @@ const SingleIncome = () => {
   };
   console.log(state, 'heystate');
   console.log(formData, 'formmmm');
+  console.log(state,"states");
   const handleClick = async (e) => {
     e.preventDefault();
     try {
