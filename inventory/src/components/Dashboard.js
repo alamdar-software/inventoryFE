@@ -643,7 +643,7 @@ const Dashboard = () => {
                   <Typography
         sx={{
           mb: 1.5,
-          ml:2,
+          ml:1,
           textAlign: "center",
           fontWeight: "bolder",
           fontFamily: "Montserrat",
