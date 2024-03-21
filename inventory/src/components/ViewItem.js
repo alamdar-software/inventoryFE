@@ -181,12 +181,12 @@ const ViewItem = () => {
                       <TableCell align='right'>{item.name}</TableCell>
                       <TableCell align='left'>{item.unitName}</TableCell>
                       <TableCell align='left'>{item.minimumStock}</TableCell>
-                      <Link to={`/updateItem/${item.id}`}>
+                      <Link to={`/item/viewInventories/${item.id}`}>
                         <Button
                           sx={{ marginRight: '11px' }}
                           variant='contained'
                         >
-                          View Inventory
+                          View Inventories
                         </Button>
                       </Link>
 

@@ -148,6 +148,7 @@ import UpdateIncomingApproval from './components/UpdateIncomingApproval.js';
 import React from 'react';
 import { ToastContainer } from 'react-toastify';
 import { TableContainer } from '@mui/material';
+import ItemInventory from './components/ItemInventory.js';
 
 const theme = createTheme({
   palette: {
@@ -241,6 +242,15 @@ function App() {
                     <Sidebar>
                       <ToastContainer/>
                       <Item />
+                    </Sidebar>
+                  }
+                />
+                  <Route
+                  path='item/viewInventories/:id'
+                  element={
+                    <Sidebar>
+                      <ToastContainer/>
+                      <ItemInventory />
                     </Sidebar>
                   }
                 />
