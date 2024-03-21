@@ -207,23 +207,32 @@ const Dashboard = () => {
     getlocationCount();
    
   }, [])
-  useEffect(() => {
-    const getitemCount=async()=>{
-
-      const res = await fetch("http://localhost:8080/item/count",{
-        method:"get",
+ useEffect(() => {
+  const getItemCount = async () => {
+    try {
+      const res = await fetch("http://localhost:8080/item/count", {
+        method: "GET",
         headers: {
-          'content-type': 'application/json',
+          'Content-Type': 'application/json',
           Authorization: `Bearer ${currentUser.accessToken}`,
         },
-      })
-        const data = await res.json();
-        setitemCount(data?.totalCount)
-    
+      });
+
+      if (!res.ok) {
+        throw new Error('Failed to fetch item count');
+      }
+
+      const data = await res.json();
+      setitemCount(data?.totalCount);
+    } catch (error) {
+      console.error('Error fetching item count:', error);
+      // Handle error, e.g., setItemCount(0) to clear previous count or show an error message
     }
-    getitemCount();
-   
-  }, [])
+  };
+
+  getItemCount();
+}, []);
+
   
 
   if (currentUser && currentUser.roles) {

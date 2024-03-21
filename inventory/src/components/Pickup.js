@@ -114,20 +114,29 @@ const Pickup = () => {
   };
   useEffect(() => {
     const getPickup = async () => {
-      console.log(currentUser.accessToken, 'heyyyy');
-      const res = await fetch('http://localhost:8080/pickup/view', {
-        headers: {
-          Authorization: `Bearer ${currentUser.accessToken}`,
-        },
-      });
-
-      const data = await res.json();
-
-      console.log(data, 'backdata');
-      setPickUp(data);
+      try {
+        const res = await fetch('http://localhost:8080/pickup/view', {
+          headers: {
+            'Content-type': 'application/json',
+            Authorization: `Bearer ${currentUser.accessToken}`,
+          },
+        });
+  
+        if (!res.ok) {
+          throw new Error('Failed to fetch pickup data');
+        }
+  
+        const data = await res.json();
+        setPickUp(data);
+      } catch (error) {
+        console.error('Error fetching pickup data:', error);
+        // Handle error, e.g., setPickUp([]) to clear previous data or show an error message
+      }
     };
+  
     getPickup();
   }, []);
+  
   // useEffect(() => {
   //   fetch('http://localhost:8080/pickup/view')
   //     .then((res) => {
@@ -370,53 +379,54 @@ const Pickup = () => {
                 </TableCell>
               </TableRow>
             </TableHead>
-            <TableBody>
-              {pickup.length > 0 ? (
-                pickup
-                  .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                  .map((pickup) => (
-                    <TableRow
-                      key={pickup.name}
-                      sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                    >
-                      {/* <TableCell component='th' scope='row'>
-                  {attendence.name}
-                  </TableCell> */}
-                      <TableCell align='right'>
-                        {pickup.pickupAddress}
-                      </TableCell>
-                      <TableCell align='right'>{pickup.pic}</TableCell>
-                      <TableCell align='right'>{pickup.companyName}</TableCell>
-                      <TableCell align='right'>{pickup.countryCode}</TableCell>
-                      <TableCell align='right'>
-                        {pickup.contactNumber}
-                      </TableCell>
+           <TableBody>
+  {pickup.length > 0 ? (
+    pickup
+      .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+      .map((pickup) => (
+        <TableRow
+          key={pickup.name}
+          sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+        >
+          {/* <TableCell component='th' scope='row'>
+            {attendence.name}
+          </TableCell> */}
+          <TableCell align='right'>
+            {pickup.pickupAddress}
+          </TableCell>
+          <TableCell align='right'>{pickup.pic}</TableCell>
+          <TableCell align='right'>{pickup.companyName}</TableCell>
+          <TableCell align='right'>{pickup.countryCode}</TableCell>
+          <TableCell align='right'>
+            {pickup.contactNumber}
+          </TableCell>
 
-                      <Link to={`/updatePickup/${pickup.id}`}>
-                        <Button variant='contained'>Update</Button>
-                      </Link>
-                      <Button
-                        sx={{ marginLeft: '11px' }}
-                        variant='contained'
-                        color='secondary'
-                        onClick={() => deletePickup(pickup.id)}
-                      >
-                        Delete
-                      </Button>
-                    </TableRow>
-                  ))
-              ) : (
-                <TableRow>
-                  <TableCell colSpan={7} align='center'>
-                    No incoming data available.
-                  </TableCell>
-                </TableRow>
-              )}
-            </TableBody>
+          <Link to={`/updatePickup/${pickup.id}`}>
+            <Button variant='contained'>Update</Button>
+          </Link>
+          <Button
+            sx={{ marginLeft: '11px' }}
+            variant='contained'
+            color='secondary'
+            onClick={() => deletePickup(pickup.id)}
+          >
+            Delete
+          </Button>
+        </TableRow>
+      ))
+  ) : (
+    <TableRow>
+      <TableCell colSpan={7} align='center'>
+        No incoming data available.
+      </TableCell>
+    </TableRow>
+  )}
+</TableBody>
+
             <TableFooter>
               <TableRow>
                 <TableCell colSpan={7} align='center'>
-                  <hr style={{ width: '100%' }} />
+                  {/* <hr style={{ width: '100%' }} /> */}
                   <TablePagination
                     rowsPerPageOptions={[5, 10, 25]}
                     component='div'
