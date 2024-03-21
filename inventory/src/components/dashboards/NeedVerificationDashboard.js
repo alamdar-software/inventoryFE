@@ -165,7 +165,7 @@ const NeedVerificationDashboard = () => {
             sx={{
               // backgroundImage: `url(${inventory})`, // Use the imported image as the background
               // backgroundSize: 'cover',
-              margin: "-30px",
+              margin: "-20px",
             }}
           >
             <div
@@ -173,13 +173,13 @@ const NeedVerificationDashboard = () => {
                 display: "flex",
                 flexDirection: "row",
                 marginTop: 15,
-                marginRight: 25,
+                marginRight: 120,
               }}
             >
               <Card
                 sx={{
                   flex: 1,
-                  marginRight: 3,
+                  marginRight: 2,
                   marginLeft: 3,
                   marginTop: 3,
                   borderRadius: 5,
@@ -396,7 +396,7 @@ const NeedVerificationDashboard = () => {
                   <Typography
         sx={{
           mb: 1.5,
-          ml:3,
+          ml:1,
           textAlign: "center",
           fontWeight: "bolder",
           fontFamily: "Montserrat",
@@ -467,11 +467,11 @@ const NeedVerificationDashboard = () => {
                       sx={{ fontSize: "50px", color: "#c6ff00" }}
                     />
 
-<div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+<div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center',paddingRight:"3" }}>
                   <Typography
         sx={{
           mb: 1.5,
-          ml:3,
+          ml:1,
           textAlign: "center",
           fontWeight: "bolder",
           fontFamily: "Montserrat",
