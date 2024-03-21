@@ -780,7 +780,7 @@ const Dashboard = () => {
                   <Typography
         sx={{
           mb: 1.5,
-          ml:4,
+          ml:1,
           textAlign: "center",
           fontWeight: "bolder",
           fontFamily: "Montserrat",
