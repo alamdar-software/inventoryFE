@@ -340,8 +340,8 @@ const InventoryList = () => {
                               color: 'black',
                             }}
                           >
-                            <Grid>
-                              <Card sx={{ backgroundColor: '#E5EAE7' }}>
+                            <Grid container style={{ width: '100%', overflowX: 'auto' }}>
+                              <Card sx={{ backgroundColor: '#E5EAE7',width:"100%" }}>
                                 <CardContent>
                                   <Typography
                                     variant='h4'
@@ -357,8 +357,8 @@ const InventoryList = () => {
                               <Grid
                                 sx={{
                                   mt: '33px',
-                                  width: '100%',
-                                  overflowX: 'scroll',
+                                  width: '120%',
+                                 
                                 }}
                               >
                                 <TableContainer
@@ -366,11 +366,11 @@ const InventoryList = () => {
                                   sx={{
                                     borderRadius: '33px',
                                     borderBottom: '2px solid yellow',
-                                    width: '110%',
+                                    width: '130%',
                                   }}
                                 >
                                   <Table
-                                    sx={{ minWidth: 650 }}
+                                    sx={{ minWidth: 800 }}
                                     aria-label='simple table'
                                   >
                                     <TableHead>
