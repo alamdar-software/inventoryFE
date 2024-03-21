@@ -221,21 +221,7 @@ const Item = () => {
           >
             Add
           </Button>
-          <Link to='/Items' style={{ textDecoration: 'none' }}>
-            <Button
-              variant='contained'
-              color='secondary'
-              size='large'
-              sx={{
-                mt: '33px',
-                mb: '17px',
-                mx: 'auto', // Center horizontally
-                mr: '480px',
-              }}
-            >
-              View Item
-            </Button>
-          </Link>
+        
         </Box>
       </Card>
     </>
