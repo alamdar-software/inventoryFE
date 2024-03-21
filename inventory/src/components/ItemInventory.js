@@ -75,17 +75,10 @@ import {
           return res.json();
         })
         .then((result) => {
-          if (result && Object.keys(result).length > 0) {
-            const itemArray = Object.values(result);
-            setItem(itemArray);
-          } else {
-            console.error('Empty response from the server');
-            // Set item to an empty array to clear existing data
-            setItem([]);
-            // Optionally, display a message to the user
-            // You can use state to control the visibility of the message
-            // setMessage('No incoming data available');
-          }
+            console.log(result,"mjheresult");
+       
+            setItem(result.inventories);
+         
         })
         .catch((error) => {
           console.error('Error fetching data:', error);
@@ -178,17 +171,18 @@ import {
                         key={item.name}
                         sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                       >
-                        <TableCell align='right'>{item.itemName}</TableCell>
-                        <TableCell align='right'>{item.description}</TableCell>
-                        <TableCell align='right'>{item.name}</TableCell>
-                        <TableCell align='left'>{item.unitName}</TableCell>
+                        <TableCell align='left'>{item.locationName}</TableCell>
+                        <TableCell align='left'>{item.address}</TableCell>
+                        <TableCell align='left'>{item.quantity.toString()}</TableCell>
                         <TableCell align='left'>{item.minimumStock}</TableCell>
+                        <TableCell align='left'>{item.consumedItem!="null"?0:item.consumedItem}</TableCell>
+                        <TableCell align='left'>{item.scrappedItem!="null"?0:item.scrappedItem}</TableCell>
                         <Link to={`/updateItem/${item.id}`}>
                           <Button
                             sx={{ marginRight: '11px' }}
                             variant='contained'
                           >
-                            View Inventory
+                            View PO LIST
                           </Button>
                         </Link>
   
@@ -196,16 +190,9 @@ import {
                           sx={{ marginLeft: '11px' }}
                           to={`/updateItem/${item.id}`}
                         >
-                          <Button variant='contained'>Update</Button>
+                          <Button variant='contained'>View RECIEVED LIST</Button>
                         </Link>
-                        <Button
-                          sx={{ marginLeft: '11px' }}
-                          variant='contained'
-                          color='secondary'
-                          onClick={() => deleteItem(item.id)}
-                        >
-                          Delete
-                        </Button>
+                       
                       </TableRow>
                     ))
                 ) : (
