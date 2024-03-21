@@ -237,7 +237,7 @@ function App() {
                   }
                 />
                 <Route
-                  path='/item'
+                  path='/add-item'
                   element={
                     <Sidebar>
                       <ToastContainer/>
@@ -412,7 +412,7 @@ theme="light"
                   }
                 />
                 <Route
-                  path='/Items'
+                  path='/view-item'
                   element={
                     <Sidebar>
                       <ToastContainer/>

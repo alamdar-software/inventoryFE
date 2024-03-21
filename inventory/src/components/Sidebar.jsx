@@ -153,7 +153,9 @@ export default function Sidebar({ children }) {
         { text: "Consignee", icon: <AddCardIcon /> },
         { text: "Category", icon: <CategoryIcon /> },
         { text: "Brand", icon: <BrandingWatermarkIcon /> },
-        { text: "Item", icon: <Inventory2Icon /> },
+        { text: "Item", icon: <Inventory2Icon />,
+        submenu: [{ text: "Add Item" }, { text: "View Item" }],
+         },
         {
           text: "Inventory",
           icon: <TransferWithinAStationIcon />,
