@@ -179,7 +179,7 @@ import {
                         <TableCell align='left'>{item.scrappedItem!="null"?0:item.scrappedItem}</TableCell>
                         <Link to={`/updateItem/${item.id}`}>
                           <Button
-                            sx={{ marginRight: '11px' }}
+                            sx={{ marginRight: '2px' ,fontSize: '10px'}}
                             variant='contained'
                           >
                             View PO LIST
@@ -187,10 +187,12 @@ import {
                         </Link>
   
                         <Link
-                          sx={{ marginLeft: '11px' }}
+                          sx={{ marginLeft: '2px' }}
                           to={`/updateItem/${item.id}`}
                         >
-                          <Button variant='contained'>View RECIEVED LIST</Button>
+                          <Button variant='contained'
+                          sx={{fontSize: '10px'}}
+                          >View RECIEVED LIST</Button>
                         </Link>
                        
                       </TableRow>
