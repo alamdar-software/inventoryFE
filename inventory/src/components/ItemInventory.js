@@ -20,6 +20,7 @@ import {
   import { toast } from 'react-toastify';
   
   const ItemInventory = () => {
+    const [allCounts, setallCounts] = useState([])
 
     const {id}= useParams();
     const [formData, setformData] = useState({
@@ -29,6 +30,22 @@ import {
       unitName: '',
       minimumStock: '',
     });
+    useEffect(() => {
+     const cardData= async()=>{
+const res = await fetch("http://localhost:8080/prtItem/totalQuantity",{
+  method:"get",
+  headers: {
+    'Content-type': 'application/json',
+    Authorization: `Bearer ${currentUser.accessToken}`,
+  },
+})
+const data = await res.json();
+setallCounts(data)
+
+     }
+    }, [])
+    console.log(allCounts,"heyyzoon");
+    
     //   const [itemName, setItemName] = useState();
     //   const [minimumStock, setMinmumStock] = useState();
     //   const [description, setDescription] = useState();

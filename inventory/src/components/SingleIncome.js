@@ -205,7 +205,7 @@ const SingleIncome = () => {
         
         });
         setTimeout(() => {
-          window.location.reload();
+          // window.location.reload();
       }, 3000);
     } catch (error) {
       console.log(error, 'something happens while adding income');
