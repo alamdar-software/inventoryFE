@@ -427,7 +427,7 @@ const Dashboard = () => {
                 },
               }}
             >
-              <Link to={"/Items"} style={{ textDecoration: "none" }}>
+              <Link to={"/view-item"} style={{ textDecoration: "none" }}>
                 <CardContent>
                   <DescriptionIcon
                     fontSize="50px"
