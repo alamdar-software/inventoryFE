@@ -110,17 +110,34 @@ const ConsumeItem = () => {
         body: JSON.stringify(formData),
       });
       const data = await res.json();
-      toast.success('🦄 Consumed Added Successfully!', {
-        position: "top-right",
-        autoClose: 3000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "dark",
-        
-        });
+      console.log(res,"resssssss");
+      if(res.ok){
+
+        toast.success('🦄 Consumed Added Successfully!', {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+          
+          });
+      }
+      else{
+        toast.warn('🦄 Something happens while consuming!', {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+          
+          });
+      }
        
     } catch (error) {
       console.log('something happens while adding cipl');

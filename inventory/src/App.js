@@ -184,10 +184,6 @@ function App() {
           <CssBaseline />
 
           <Routes>
-               
-          
-  
-                
 
 
             <Route path='/login' element={<Login />} />
