@@ -110,17 +110,33 @@ const ScrappedItem = () => {
         body: JSON.stringify(formData),
       });
       const data = await res.json();
-      toast.success('🦄 Scrapped Added Successfully!', {
-        position: "top-right",
-        autoClose: 3000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "dark",
-        
-        });
+      if(res.ok){
+
+        toast.success('🦄 Scrapped Added Successfully!', {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+          
+          });
+      }
+      else{
+        toast.warn('🦄Something happened while Scrapping!', {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+          
+          });
+      }
       
       alert('Scrapped Item added successfully');
     } catch (error) {
