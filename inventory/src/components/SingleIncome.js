@@ -165,14 +165,14 @@ const SingleIncome = () => {
       console.log(selectedItem.category, 'select');
       setformData({
         ...formData,
-        description: e.target.value,
+        description: e.target.value.match(/^[^(]*/)[0].trim(),
         name: selectedItem.name,
         unitName: selectedItem.unitName,
       });
     } else {
       setformData({
         ...formData,
-        description: e.target.value,
+        description: e.target.value.match(/^[^(]*/)[0].trim(),
         name: '',
         unitName: '',
       });
@@ -204,6 +204,7 @@ const SingleIncome = () => {
         theme: "dark",
         
         });
+        console.log(data);
         setTimeout(() => {
           // window.location.reload();
       }, 3000);
@@ -211,6 +212,7 @@ const SingleIncome = () => {
       console.log(error, 'something happens while adding income');
     }
   };
+  console.log(formData,"heyy");
   return (
     <>
       <Grid>
