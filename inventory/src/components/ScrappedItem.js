@@ -294,7 +294,7 @@ const ScrappedItem = () => {
   const handleItemChange = (index, selectedSubLocation, selectedItem) => {
     // Update formData with the selected item
     updateFormDataItem(index, selectedItem.match(/^[^(]*/)[0].trim());
- console.log(selectedItem,"ressshui");
+  
 
     // Ensure a default value if undefined
     setSelectedItem((prevSelectedItems) => {
