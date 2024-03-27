@@ -294,7 +294,7 @@ const ScrappedItem = () => {
   const handleItemChange = (index, selectedSubLocation, selectedItem) => {
     // Update formData with the selected item
     updateFormDataItem(index, selectedItem.match(/^[^(]*/)[0].trim());
-    console.log(selectedItem.match(/^[^(]*/)[0].trim(), 'meingoonselected');
+ console.log(selectedItem,"ressshui");
 
     // Ensure a default value if undefined
     setSelectedItem((prevSelectedItems) => {
@@ -306,7 +306,7 @@ const ScrappedItem = () => {
     // Find the corresponding data in state.singleincome for the selected item
     const selectedIncomeData = state.nonPersisted.singleIncome?.data.filter(
       (incomeItem) =>
-        incomeItem.description.match(/^[^(]*/)[0].trim() === selectedItem.match(/^[^(]*/)[0].trim()
+        incomeItem.description === selectedItem.match(/^[^(]*/)[0].trim()
     );
     console.log(selectedIncomeData, 'selectttttt');
     console.log(selectedItem, 'selected item');
