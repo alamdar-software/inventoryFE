@@ -50,7 +50,6 @@ const ViewItem = () => {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
-
   const [item, setItem] = useState([]);
   const { currentUser } = useSelector((state) => state.persisted.user);
   // useEffect(() => {
@@ -71,7 +70,7 @@ const ViewItem = () => {
   //     });
   // }, []); // Make sure to include an empty dependency array if you only want this effect to run once on component mount
 
-  useEffect(() => {
+  const fetchData = () => {
     fetch('http://localhost:8080/item/view', {
       headers: {
         Authorization: `Bearer ${currentUser.accessToken}`,
@@ -87,9 +86,11 @@ const ViewItem = () => {
         if (result && Object.keys(result).length > 0) {
           const itemArray = Object.values(result);
           setItem(itemArray);
+          setTotalRows(itemArray.length);
         } else {
           console.error('Empty response from the server');
-          setItem([]); // Set item to an empty array to clear existing data
+          setItem([]);
+          setTotalRows(0);
           // Optionally, display a message to the user
           // You can use state to control the visibility of the message
           // setMessage('No incoming data available');
@@ -101,8 +102,12 @@ const ViewItem = () => {
         // You can use state to control the visibility of the error message
         // setError('Error fetching data. Please try again later.');
       });
+  };
+
+  useEffect(() => {
+    fetchData();
   }, []);
-  
+
   useEffect(() => {
     setTotalRows(item.length);
   }, [item]);
@@ -240,7 +245,7 @@ const ViewItem = () => {
                             rowsPerPageOptions={[5, 10, 25, { label: 'All', value: -1 }]}
                             colSpan={3}
                             count={totalRows}
-                            rowsPerPage={rowsPerPage}
+                            rowsPerPage={5}
                             page={page}
                             slotProps={{
                               select: {

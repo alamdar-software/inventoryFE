@@ -231,8 +231,8 @@ setallCounts(data)
                           <TableCell align='left'>{item.address}</TableCell>
                           <TableCell align='left'>{item.quantity.toString()}</TableCell>
                           <TableCell align='left'>{item.minimumStock}</TableCell>
-                          <TableCell align='left'>{item.consumedItem!="null"?0:item.consumedItem}</TableCell>
-                          <TableCell align='left'>{item.scrappedItem!="null"?0:item.scrappedItem}</TableCell>
+                          <TableCell align='left'>{item.consumedItem}</TableCell>
+                          <TableCell align='left'>{item.scrappedItem}</TableCell>
                         
                           <Button
                             onClick={handleButtonClick}
