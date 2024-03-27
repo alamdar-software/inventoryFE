@@ -29,6 +29,7 @@ import { Link, Navigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
 const ViewItem = () => {
+  const [totalRows, setTotalRows] = useState(0);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [formData, setformData] = useState({
@@ -88,8 +89,7 @@ const ViewItem = () => {
           setItem(itemArray);
         } else {
           console.error('Empty response from the server');
-          // Set item to an empty array to clear existing data
-          setItem([]);
+          setItem([]); // Set item to an empty array to clear existing data
           // Optionally, display a message to the user
           // You can use state to control the visibility of the message
           // setMessage('No incoming data available');
@@ -102,6 +102,15 @@ const ViewItem = () => {
         // setError('Error fetching data. Please try again later.');
       });
   }, []);
+  
+  useEffect(() => {
+    setTotalRows(item.length);
+  }, [item]);
+  
+  
+  useEffect(() => {
+    setTotalRows(item.length);
+  }, [item]);
 
   const deleteItem = async (id) => {
     console.log(id);
@@ -230,7 +239,7 @@ const ViewItem = () => {
                         <CustomTablePagination
                             rowsPerPageOptions={[5, 10, 25, { label: 'All', value: -1 }]}
                             colSpan={3}
-                            count={item.length}
+                            count={totalRows}
                             rowsPerPage={rowsPerPage}
                             page={page}
                             slotProps={{

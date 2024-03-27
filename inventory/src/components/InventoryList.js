@@ -38,11 +38,14 @@ import { toast } from 'react-toastify';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 const InventoryList = () => {
+  const [totalRows, setTotalRows] = useState(0);
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(5);
+
+
   const state = useSelector((state) => state);
   const { currentUser } = state.persisted.user;
   const [inventoryData, setInventoryData] = useState([]);
-  const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(5);
   const [selectedInventory, setSelectedInventory] = useState('');
 
   const dispatch = useDispatch();
@@ -73,7 +76,7 @@ const InventoryList = () => {
     consumedItem: '',
     scrappedItem: '',
   });
-  console.log(inventoryData, 'datesssss');
+
   useEffect(() => {
     console.log(currentUser.accessToken, 'heyyyy');
     fetch('http://localhost:8080/inventory/view', {
@@ -95,6 +98,9 @@ const InventoryList = () => {
         console.error('Error fetching inventory data:', error);
       });
   }, []);
+  useEffect(() => {
+    setTotalRows(inventoryData.length);
+  }, [inventoryData]);
 
   const deleteInventory = async (id) => {
     console.log(id);
@@ -454,30 +460,30 @@ const InventoryList = () => {
             <TableFooter>
               <TableRow>
               <TableCell colSpan={7} align='center'>
-                        <CustomTablePagination
-                            rowsPerPageOptions={[5, 10, 25, { label: 'All', value: -1 }]}
-                            colSpan={3}
-                            count={13}
-                            rowsPerPage={rowsPerPage}
-                            page={page}
-                            slotProps={{
-                              select: {
-                                'aria-label': 'Rows per page',
-                              },
-                              actions: {
-                                showFirstButton: true,
-                                showLastButton: true,
-                                slots: {
-                                  firstPageIcon: FirstPageRoundedIcon,
-                                  lastPageIcon: LastPageRoundedIcon,
-                                  nextPageIcon: ChevronRightRoundedIcon,
-                                  backPageIcon: ChevronLeftRoundedIcon,
-                                },
-                              },
-                            }}
-                            onPageChange={handleChangePage}
-                            onRowsPerPageChange={handleChangeRowsPerPage}
-                          />
+              <CustomTablePagination
+  rowsPerPageOptions={[5, 10, 25, { label: 'All', value: -1 }]}
+  colSpan={3}
+  count={inventoryData.length}
+  rowsPerPage={rowsPerPage}
+  page={page}
+  slotProps={{
+    select: {
+      'aria-label': 'Rows per page',
+    },
+    actions: {
+      showFirstButton: true,
+      showLastButton: true,
+      slots: {
+        firstPageIcon: FirstPageRoundedIcon,
+        lastPageIcon: LastPageRoundedIcon,
+        nextPageIcon: ChevronRightRoundedIcon,
+        backPageIcon: ChevronLeftRoundedIcon,
+      },
+    },
+  }}
+  onPageChange={handleChangePage}
+  onRowsPerPageChange={handleChangeRowsPerPage}
+/>
                           
                     </TableCell>
               </TableRow>
