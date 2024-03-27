@@ -157,13 +157,13 @@ const ViewItem = () => {
           <Table sx={{ minWidth: 650 }} aria-label='simple table'>
             <TableHead>
               <TableRow>
-                <TableCell align='right' sx={{ fontWeight: 'bold' }}>
+                <TableCell align='left' sx={{ fontWeight: 'bold' }}>
                   Item Name
                 </TableCell>
-                <TableCell align='right' sx={{ fontWeight: 'bold' }}>
+                <TableCell align='left' sx={{ fontWeight: 'bold' }}>
                   Item Description
                 </TableCell>
-                <TableCell align='right' sx={{ fontWeight: 'bold' }}>
+                <TableCell align='left' sx={{ fontWeight: 'bold' }}>
                   Catagory
                 </TableCell>
                 <TableCell align='left' sx={{ fontWeight: 'bold' }}>
@@ -186,9 +186,9 @@ const ViewItem = () => {
                       key={item.name}
                       sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                     >
-                      <TableCell align='right'>{item.itemName}</TableCell>
-                      <TableCell align='right'>{item.description}</TableCell>
-                      <TableCell align='right'>{item.name}</TableCell>
+                      <TableCell align='left'>{item.itemName}</TableCell>
+                      <TableCell align='left'>{item.description}</TableCell>
+                      <TableCell align='left'>{item.name}</TableCell>
                       <TableCell align='left'>{item.unitName}</TableCell>
                       <TableCell align='left'>{item.minimumStock}</TableCell>
                       <Link to={`/item/viewInventories/${item.id}`}>
@@ -230,7 +230,7 @@ const ViewItem = () => {
                         <CustomTablePagination
                             rowsPerPageOptions={[5, 10, 25, { label: 'All', value: -1 }]}
                             colSpan={3}
-                            count={13}
+                            count={item.length}
                             rowsPerPage={rowsPerPage}
                             page={page}
                             slotProps={{
