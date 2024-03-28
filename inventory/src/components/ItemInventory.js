@@ -466,7 +466,7 @@ setallCounts(data)
                         <CustomTablePagination
                             rowsPerPageOptions={[5, 10, 25, { label: 'All', value: -1 }]}
                             colSpan={3}
-                            count={13}
+                            count={item.length}
                             rowsPerPage={rowsPerPage}
                             page={page}
                             slotProps={{
