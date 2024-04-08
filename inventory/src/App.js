@@ -1176,6 +1176,14 @@ theme="light"
                       </Sidebar>
                     }
                   ></Route>
+                    <Route
+                    path='/'
+                    element={
+                      <Sidebar>
+                        <Dashboard />
+                      </Sidebar>
+                    }
+                  ></Route>
                   <Route
                     path='/stockReport'
                     element={

@@ -175,7 +175,7 @@ const Mto = () => {
       transferDate: transferDate.format('YYYY-MM-DD'),
     });
   };
-  console.log(formData);
+  console.log(formData,"heyyyy");
 
   // const updateFormDataSubLocation = (index, value) => {
   //   setformData((prevFormData) => {
@@ -715,7 +715,8 @@ const Mto = () => {
               }}
               //onChange={handleChange}
             >
-              {state.nonPersisted.location.data?.map(
+
+              {/* {state.nonPersisted.location.data?.map(
                 (item, index) => (
                   console.log(item, 'meinhun'),
                   item.addresses.map((addressItem, addressIndex) => (
@@ -724,7 +725,14 @@ const Mto = () => {
                     </MenuItem>
                   ))
                 )
-              )}
+              )} */}
+              {subLocations.map((address, index) => (
+              <MenuItem key={index} value={address?.address}>
+                {address?.address}
+              </MenuItem>
+            ))}
+
+
             </Select>
           </FormControl>
         </Grid>
