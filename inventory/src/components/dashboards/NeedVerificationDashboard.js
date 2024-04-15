@@ -458,10 +458,10 @@ const NeedVerificationDashboard = () => {
                   marginRight:2,
                   borderRadius: 8,
                   marginTop: 3,
-                  width:"180px",
-                  position: "relative",
+                width:"180px",
+                
                   // Add z-index to ensure the card appears above other content
-                  zIndex: 1,
+                  
                   // Add transition for smooth animation
                   transition: "transform 0.3s",
                   // On hover, scale the card to make it slightly larger
@@ -508,7 +508,7 @@ const NeedVerificationDashboard = () => {
         sx={{
           mb: -6,
         
-          ml:3,
+          ml:1,
           fontWeight: 'bold', // Set font weight to bold
           animation: isBlinking ? 'blinkingText 1s infinite' : 'none', // Apply blinking animation
           color: 'red',
