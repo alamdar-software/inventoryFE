@@ -88,7 +88,7 @@ setallCounts(data)
 
   
     
-  
+  const [polist, setpolist] = useState([])
     const [item, setItem] = useState([]);
     const { currentUser } = useSelector((state) => state.persisted.user);
     // useEffect(() => {
@@ -108,6 +108,25 @@ setallCounts(data)
     //       }
     //     });
     // }, []); // Make sure to include an empty dependency array if you only want this effect to run once on component mount
+  useEffect(() => {
+    const getPoList=async()=>{
+const res = await fetch(`http://localhost:8080/prtItem/viewPo/${id}`,{
+  method:"GET",
+  headers: {
+    Authorization: `Bearer ${currentUser.accessToken}`,
+  },
+},
+)
+const data = await res.json();
+setpolist(data)
+
+
+
+    }
+    getPoList()
+
+  }, [])
+  console.log(polist,"pooooooooooooo");
   
     useEffect(() => {
       fetch(`http://localhost:8080/item/viewInventories/${id}`, {
@@ -336,6 +355,42 @@ setallCounts(data)
                                             </TableCell>
                                           </TableRow>
                                         </TableHead>
+
+                                        <TableBody>
+  {polist.length > 0 ? (
+    polist
+      .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+      .map((pickup) => (
+        <TableRow
+          key={pickup.id}
+          sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+        >
+          {/* <TableCell component='th' scope='row'>
+            {attendence.name}
+          </TableCell> */}
+          <TableCell align='right'>
+            {pickup.purchaseOrder
+}
+          </TableCell>
+          <TableCell align='right'>{pickup.date}</TableCell>
+          <TableCell align='right'>{pickup.quantity}</TableCell>
+          <TableCell align='right'>{pickup.RemainingQty
+}</TableCell>
+          <TableCell align='right'>
+            {pickup.TransferedQty}
+          </TableCell>
+
+         
+        </TableRow>
+      ))
+  ) : (
+    <TableRow>
+      <TableCell colSpan={7} align='center'>
+        No incoming data available.
+      </TableCell>
+    </TableRow>
+  )}
+</TableBody>
                                       </Table>
                                     </TableContainer>
                                   </Grid>
