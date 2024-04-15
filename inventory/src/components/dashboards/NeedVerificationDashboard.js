@@ -163,28 +163,31 @@ const NeedVerificationDashboard = () => {
           {/* <img src={inv}></img> */}
           <Grid
             sx={{
-              // backgroundImage: `url(${inventory})`, // Use the imported image as the background
-              // backgroundSize: 'cover',
-              margin: "-20px",
+              // Set a max width for the sidebar to prevent it from extending beyond the page
+              maxWidth: "100%",
+              // Apply overflow-x to allow horizontal scrolling if the sidebar exceeds the page width
+              
+              // Add padding to the sides of the sidebar to create some space between the sidebar and the page edges
+              px: 1,
             }}
           >
             <div
               style={{
                 display: "flex",
                 flexDirection: "row",
-                marginTop: 15,
-                marginRight: 120,
+                marginTop: 1,
+                marginRight: 180,
               }}
             >
               <Card
                 sx={{
                   flex: 1,
-                  marginRight: 2,
+                  marginRight: 1,
                   marginLeft: 3,
                   marginTop: 3,
                   borderRadius: 5,
-                  width: "80px !important",
-                  height:"200px",
+                  width: "90px !important",
+                  height:"210px",
 
                   transition: "transform 0.3s",
                   "&:hover": {
@@ -266,7 +269,7 @@ const NeedVerificationDashboard = () => {
                 sx={{
                   //border: '2px solid yellow',
                   minWidth: 40,
-                  height:"200px",
+                  height:"210px",
                   flex: 1,
                   marginTop: 3,
                   marginLeft: 3,
@@ -322,6 +325,7 @@ const NeedVerificationDashboard = () => {
                 sx={{
                   //border: '2px solid yellow',
                   minWidth: 20,
+                  height:"210px",
                   flex: 1,
                   marginLeft: 3,
                   borderRadius: 8,
@@ -356,6 +360,7 @@ const NeedVerificationDashboard = () => {
       <Typography
         sx={{
           mb: -6,
+          mt:3,
         
           ml:3,
           fontWeight: 'bold', // Set font weight to bold
@@ -376,14 +381,22 @@ const NeedVerificationDashboard = () => {
                 sx={{
                   //border: '2px solid yellow',
                   minWidth: 20,
+                  height:"210px",
                   flex: 1,
                   marginLeft: 3,
                   borderRadius: 8,
                   marginTop: 3,
+                  position: "relative",
+                  // Add z-index to ensure the card appears above other content
+                  zIndex: 1,
+                  // Add transition for smooth animation
                   transition: "transform 0.3s",
+                  // On hover, scale the card to make it slightly larger
                   "&:hover": {
-                    transform: "scale(1.1)", // Adjust the scaling factor as needed
+                    transform: "scale(1.05)",
                   },
+                  // Add margin to create space between the card and other elements
+                  mb: 2,
                 }}
               >
                 <Link to={"/incoming-created"} style={{ textDecoration: "none" }}>
@@ -438,17 +451,25 @@ const NeedVerificationDashboard = () => {
               <Card
                 sx={{
                   //border: '2px solid yellow',
-                  minWidth: 10,
-                  height:"200px",
+                  minWidth: 30,
+                  height:"210px",
                   flex: 1,
-                  marginRight: 3,
                   marginLeft: 3,
-                  marginTop: 3,
+                  marginRight:2,
                   borderRadius: 8,
+                  marginTop: 3,
+                  width:"180px",
+                  position: "relative",
+                  // Add z-index to ensure the card appears above other content
+                  zIndex: 1,
+                  // Add transition for smooth animation
                   transition: "transform 0.3s",
+                  // On hover, scale the card to make it slightly larger
                   "&:hover": {
-                    transform: "scale(1.1)", // Adjust the scaling factor as needed
+                    transform: "scale(1.05)",
                   },
+                  // Add margin to create space between the card and other elements
+               
                 }}
               >
                 <Link
@@ -467,11 +488,12 @@ const NeedVerificationDashboard = () => {
                       sx={{ fontSize: "50px", color: "#c6ff00" }}
                     />
 
-<div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center',paddingRight:"3" }}>
+<div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center',paddingRight:"5" }}>
                   <Typography
         sx={{
           mb: 1.5,
           ml:1,
+          
           textAlign: "center",
           fontWeight: "bolder",
           fontFamily: "Montserrat",
