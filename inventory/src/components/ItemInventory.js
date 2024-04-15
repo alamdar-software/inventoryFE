@@ -39,6 +39,10 @@ import LastPageIcon from '@mui/icons-material/LastPage';
     const [allCounts, setallCounts] = useState([])
 
     const {id}= useParams();
+    useEffect(() => {
+      getPoList();
+      // other data fetches can go here too
+  }, []);
     const [formData, setformData] = useState({
       itemName: '',
       description: '',
@@ -108,24 +112,24 @@ setallCounts(data)
     //       }
     //     });
     // }, []); // Make sure to include an empty dependency array if you only want this effect to run once on component mount
-  useEffect(() => {
-    const getPoList=async()=>{
-const res = await fetch(`http://localhost:8080/prtItem/viewPo/${id}`,{
-  method:"GET",
-  headers: {
-    Authorization: `Bearer ${currentUser.accessToken}`,
-  },
-},
-)
-const data = await res.json();
-setpolist(data)
+    const getPoList = async (page, rowsPerPage) => {
+      try {
+        const url = `http://localhost:8080/prtItem/viewPo/${id}`;
+        const res = await fetch(url, {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${currentUser.accessToken}`,
+          },
+        });
+        const data = await res.json();
+        setpolist(data);
+      } catch (error) {
+        console.error("Failed to fetch PO list:", error);
+      }
+    };
+    
+  
 
-
-
-    }
-    getPoList()
-
-  }, [])
   console.log(polist,"pooooooooooooo");
   
     useEffect(() => {
@@ -184,6 +188,7 @@ setpolist(data)
           console.error('Error updating location:', error);
         });
     };
+   
     const handleChangePage = (event, newPage) => {
       setPage(newPage);
     };
@@ -359,7 +364,7 @@ setpolist(data)
                                         <TableBody>
   {polist.length > 0 ? (
     polist
-      .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+    
       .map((pickup) => (
         <TableRow
           key={pickup.id}
@@ -369,13 +374,11 @@ setpolist(data)
             {attendence.name}
           </TableCell> */}
           <TableCell align='right'>
-            {pickup.purchaseOrder
-}
+            {pickup.purchaseOrder}
           </TableCell>
           <TableCell align='right'>{pickup.date}</TableCell>
           <TableCell align='right'>{pickup.quantity}</TableCell>
-          <TableCell align='right'>{pickup.RemainingQty
-}</TableCell>
+          <TableCell align='right'>{pickup.RemainingQty}</TableCell>
           <TableCell align='right'>
             {pickup.TransferedQty}
           </TableCell>
