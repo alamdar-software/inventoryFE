@@ -34,6 +34,7 @@ import LastPageIcon from '@mui/icons-material/LastPage';
 
   
   const ItemInventory = () => {
+    const [remainingQuantity, setremainingQuantity] = useState(0)
     const [page, setPage] = React.useState(0);
     const [rowsPerPage, setRowsPerPage] = React.useState(5);
     const [allCounts, setallCounts] = useState([])
@@ -373,14 +374,14 @@ setallCounts(data)
           {/* <TableCell component='th' scope='row'>
             {attendence.name}
           </TableCell> */}
-          <TableCell align='right'>
+          <TableCell align='left'>
             {pickup.purchaseOrder}
           </TableCell>
-          <TableCell align='right'>{pickup.date}</TableCell>
-          <TableCell align='right'>{pickup.quantity}</TableCell>
-          <TableCell align='right'>{pickup.RemainingQty}</TableCell>
-          <TableCell align='right'>
-            {pickup.TransferedQty}
+          <TableCell align='left'>{pickup.date}</TableCell>
+          <TableCell align='left'>{pickup.quantity}</TableCell>
+          <TableCell align='left'> {pickup.quantity - parseFloat(pickup.TransferedQty.replace(/\[|\]/g, ''))}</TableCell>
+          <TableCell align='left'>
+            {pickup.TransferedQty.replace(/\[|\]/g, '')}
           </TableCell>
 
          
