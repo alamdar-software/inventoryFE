@@ -220,6 +220,7 @@ function App() {
                   path='/add-location'
                   element={
                     <Sidebar>
+                      <ToastContainer/>
                       <Location />
                     </Sidebar>
                   }

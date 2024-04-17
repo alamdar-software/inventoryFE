@@ -11,6 +11,7 @@ import {
 
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import { toast } from 'react-toastify';
 
 export const Location = () => {
   const { currentUser } = useSelector((state) => state.persisted.user);
@@ -33,11 +34,19 @@ export const Location = () => {
       },
       body: JSON.stringify(attendance),
     }).then(() => {
-      setMessage(true);
-      console.log('Location Added');
-      setTimeout(() => {
-        setMessage(false);
-      }, 3000); // Set timeout to hide message after 4 seconds
+      console.log("locc");
+      toast.success('🦄 Location Added Successfully!', {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+        
+        });
+     // Set timeout to hide message after 4 seconds
     });
   };
 

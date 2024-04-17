@@ -661,7 +661,7 @@ const Dashboard = () => {
         variant="h5"
         component="div"
       >
-        Transfer Item
+        TransferItem
       </Typography>
       <Typography
         sx={{
@@ -731,7 +731,7 @@ const Dashboard = () => {
         variant="h5"
         component="div"
       >
-        Consumed Item
+        ConsumedItem
       </Typography>
       <Typography
         sx={{
@@ -798,7 +798,7 @@ const Dashboard = () => {
         variant="h5"
         component="div"
       >
-        Incomming Stock
+        IncommingStock
       </Typography>
       <Typography
         sx={{
