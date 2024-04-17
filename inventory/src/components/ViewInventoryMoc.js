@@ -1,41 +1,39 @@
 import {
-  Box,
   Button,
   Card,
   CardContent,
-  FormControl,
   Grid,
-  InputLabel,
-  MenuItem,
   Paper,
-  Select,
   Table,
   TableBody,
   TableCell,
   TableContainer,
   TableFooter,
   TableHead,
-  TablePagination,
+
   TableRow,
   Typography,
 } from '@mui/material';
-import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
-import { fetchlocation } from '../redux/slice/location';
-import { fetchItem } from '../redux/slice/ItemSlice';
-import { useDispatch, useSelector } from 'react-redux';
+import {
+  TablePagination,
+  tablePaginationClasses as classes,
+} from '@mui/base/TablePagination';
+import { styled } from '@mui/system';
 import FirstPageRoundedIcon from '@mui/icons-material/FirstPageRounded';
 import LastPageRoundedIcon from '@mui/icons-material/LastPageRounded';
 import ChevronLeftRoundedIcon from '@mui/icons-material/ChevronLeftRounded';
 import ChevronRightRoundedIcon from '@mui/icons-material/ChevronRightRounded';
-import {
-  
-  tablePaginationClasses as classes,
-} from '@mui/base/TablePagination';
-import { styled } from '@mui/system';
-import { PoList } from '../components/PoList';
+import React, { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
+import { Link, Navigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import { fetchItem } from '../redux/slice/ItemSlice';
+import { fetchlocation } from '../redux/slice/location';
+
 
 const ViewInventoryMoc = () => {
+  
   const [inventoryData, setInventoryData] = useState([]);
   const [totalRows, setTotalRows] = useState(0);
   const [page, setPage] = useState(0);
@@ -46,24 +44,18 @@ const ViewInventoryMoc = () => {
   const [isCardOpen, setIsCardOpen] = useState(false);
   const [isCardVisible, setIsCardVisible] = useState(false);
   const { currentUser } = state.persisted.user;
-  
-
-  const handleButtonClick = () => {
-    setIsCardVisible(!isCardVisible);
-  };
-  const handleCloseCard = () => {
-    setIsCardOpen(false);
-  };
-
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
-
+  
   const handleChangeRowsPerPage = (event) => {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
-  console.log(selectedInventory, 'heyyy');
+  // Define the handleChangePage and handleChangeRowsPerPage functions here
+
+  // Fetch the data and set the totalRows state variable here
+
   const [formData, setformData] = useState({
     description: '',
     locationName: '',
@@ -73,10 +65,6 @@ const ViewInventoryMoc = () => {
     scrappedItem: '',
   });
   console.log(inventoryData, 'datesssss');
-  // useEffect(() => {
-  //   setTotalRows(inventoryData.length);
-  // }, [inventoryData]);
-
   useEffect(() => {
     console.log(currentUser.accessToken, 'heyyyy');
     fetch('http://localhost:8080/inventory/view', {
@@ -99,21 +87,6 @@ const ViewInventoryMoc = () => {
       });
   }, []);
 
-  //   const deleteInventory = async (id) => {
-  //     console.log(id);
-  //     fetch(`http://localhost:8080/inventory/delete/${id}`, {
-  //       method: 'DELETE',
-  //       headers: { 'Content-type': 'application/json' },
-  //       body: JSON.stringify(InventoryList),
-  //     })
-  //       .then(() => {
-  //         console.log('Location Updated');
-  //         window.location.reload();
-  //       })
-  //       .catch((error) => {
-  //         console.error('Error updating location:', error);
-  //       });
-  //   };
   useEffect(() => {
     dispatch(fetchlocation(currentUser.accessToken));
     dispatch(fetchItem(currentUser.accessToken));
@@ -143,42 +116,29 @@ const ViewInventoryMoc = () => {
   };
   console.log(formData, 'yess');
   return (
-    <>
-      <Grid>
+    <Grid container spacing={2}>
+      <Grid item xs={12}>
         <Card
-          color='secondary'
+          color="secondary"
           sx={{
             width: '100%',
-            // background:
-            //   'linear-gradient(217deg, rgba(255,0,0,.8), rgba(255,0,0,0) 70.71%)',
-
             borderBottom: '2px solid #ab47bc',
           }}
         >
           <CardContent>
-            <Typography
-              variant='h4'
-              color='secondary'
-              gutterBottom
-              style={{ fontFamily: "'EB Garamond'" }}
-            >
-              View Inventory
+            <Typography variant="h4" color="secondary" gutterBottom>
+              List Of Inventories
             </Typography>
           </CardContent>
         </Card>
       </Grid>
-
-      <Grid sx={{ mt: '33px', width: '100%', overflowX: 'scroll' }}>
+      <Grid item xs={12}>
         <TableContainer
           component={Paper}
-          sx={{
-            borderRadius: '33px',
-            borderBottom: '2px solid yellow',
-            width: '110%',
-          }}
+          sx={{ borderRadius: '33px', borderBottom: '2px solid yellow' }}
         >
-          <Table sx={{ minWidth: 650 }} aria-label='simple table'>
-            <TableHead>
+          <Table sx={{ minWidth: 650 }} aria-label="simple table">
+           <TableHead>
               <TableRow>
                 <TableCell align='right' sx={{ fontWeight: 'bold' }}>
                   Location
@@ -201,6 +161,8 @@ const ViewInventoryMoc = () => {
               </TableRow>
             </TableHead>
             <TableBody>
+              {/* Render the table body here */}
+                           
               {inventoryData
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((inventory) => (
@@ -337,77 +299,47 @@ const ViewInventoryMoc = () => {
                     </Box> */}
                   </TableRow>
                 ))}
+
+                           
+              
             </TableBody>
             <TableFooter>
               <TableRow>
-              <TableCell colSpan={7} align='center'>
-                        <CustomTablePagination
-                            rowsPerPageOptions={[5, 10, 25, { label: 'All', value: -1 }]}
-                            colSpan={3}
-                            count={totalRows}
-                            rowsPerPage={5}
-                            page={page}
-                            slotProps={{
-                              select: {
-                                'aria-label': 'Rows per page',
-                              },
-                              actions: {
-                                showFirstButton: true,
-                                showLastButton: true,
-                                slots: {
-                                  firstPageIcon: FirstPageRoundedIcon,
-                                  lastPageIcon: LastPageRoundedIcon,
-                                  nextPageIcon: ChevronRightRoundedIcon,
-                                  backPageIcon: ChevronLeftRoundedIcon,
-                                },
-                              },
-                            }}
-                            onPageChange={handleChangePage}
-                            onRowsPerPageChange={handleChangeRowsPerPage}
-                          />
-                          
-                    </TableCell>
+                <TableCell colSpan={5} align="center">
+                  <CustomTablePagination
+                    rowsPerPageOptions={[5, 10, 25, { label: 'All', value: -1 }]}
+                    colSpan={3}
+                    count={totalRows}
+                    rowsPerPage={5}
+                    page={page}
+                    slotProps={{
+                      select: {
+                        'aria-label': 'Rows per page',
+                      },
+                      actions: {
+                        showFirstButton: true,
+                        showLastButton: true,
+                        slots: {
+                          firstPageIcon: FirstPageRoundedIcon,
+                          lastPageIcon: LastPageRoundedIcon,
+                          nextPageIcon: ChevronRightRoundedIcon,
+                          backPageIcon: ChevronLeftRoundedIcon,
+                        },
+                      },
+                    }}
+                    onPageChange={handleChangePage}
+                    onRowsPerPageChange={handleChangeRowsPerPage}
+                  />
+                </TableCell>
               </TableRow>
             </TableFooter>
           </Table>
-          {/* <TablePagination
-            rowsPerPageOptions={[5, 10, 25]}
-            component='div'
-            count={inventoryData.length}
-            rowsPerPage={rowsPerPage}
-            page={page}
-            onPageChange={handleChangePage}
-            onRowsPerPageChange={handleChangeRowsPerPage}
-          /> */}
-            {/* <CustomTablePagination
-                            rowsPerPageOptions={[5, 10, 25, { label: 'All', value: -1 }]}
-                            colSpan={3}
-                            count={totalRows}
-                            rowsPerPage={5}
-                            page={page}
-                            slotProps={{
-                              select: {
-                                'aria-label': 'Rows per page',
-                              },
-                              actions: {
-                                showFirstButton: true,
-                                showLastButton: true,
-                                slots: {
-                                  firstPageIcon: FirstPageRoundedIcon,
-                                  lastPageIcon: LastPageRoundedIcon,
-                                  nextPageIcon: ChevronRightRoundedIcon,
-                                  backPageIcon: ChevronLeftRoundedIcon,
-                                },
-                              },
-                            }}
-                            onPageChange={handleChangePage}
-                            onRowsPerPageChange={handleChangeRowsPerPage}
-                          /> */}
         </TableContainer>
       </Grid>
-    </>
+    </Grid>
   );
 };
+
 
 const blue = {
   200: '#A5D8FF',
@@ -426,7 +358,6 @@ const grey = {
   800: '#303740',
   900: '#1C2025',
 };
-
 
 const Root = styled('div')(
   ({ theme }) => `
@@ -453,8 +384,6 @@ const Root = styled('div')(
   }
   `,
 );
-
-
 
 const CustomTablePagination = styled(TablePagination)(
   ({ theme }) => `
