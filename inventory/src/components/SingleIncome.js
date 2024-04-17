@@ -247,6 +247,13 @@ const SingleIncome = () => {
               //value={age}
               label='location'
               onChange={handleLocationChange}
+              MenuProps={{
+                PaperProps: {
+                  style: {
+                    maxHeight: 120, // Adjust the height as needed
+                  },
+                },
+              }}
 
               //onChange={handleChange}
             >
