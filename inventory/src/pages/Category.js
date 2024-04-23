@@ -28,22 +28,22 @@ export default function Category() {
 
   console.log(category);
 
-  useEffect(() => {
-    const getCategory = async () => {
-      console.log(currentUser.accessToken, 'heyyyy');
-      const res = await fetch('http://localhost:8080/category/view', {
-        headers: {
-          Authorization: `Bearer ${currentUser.accessToken}`,
-        },
-      });
+  // useEffect(() => {
+  //   const getCategory = async () => {
+  //     console.log(currentUser.accessToken, 'heyyyy');
+  //     const res = await fetch('http://localhost:8080/category/view', {
+  //       headers: {
+  //         Authorization: `Bearer ${currentUser.accessToken}`,
+  //       },
+  //     });
 
-      const data = await res.json();
+  //     const data = await res.json();
 
-      console.log(data, 'backdata');
-      setdata(data);
-    };
-    getCategory();
-  }, []);
+  //     console.log(data, 'backdata');
+  //     setdata(data);
+  //   };
+  //   getCategory();
+  // }, []);
   const handleClick = async () => {
     const res = await fetch('http://localhost:8080/category/add', {
       method: 'POST',
