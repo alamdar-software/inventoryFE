@@ -44,16 +44,16 @@ export default function CategoryTable() {
     setPage(newPage);
   };
 
-  // const handleChangeRowsPerPage = (event) => {
-  //   setRowsPerPage(5);
-  //   setPage(0);
-  // };
-
   const handleChangeRowsPerPage = (event) => {
-    const newRowsPerPage = parseInt(event.target.value, 10); // Parse the selected value to an integer
-    setRowsPerPage(newRowsPerPage);
-    setPage(0); // Reset the page to the first page when changing the number of rows per page
+    setRowsPerPage(parseInt(event.target.value, 10));
+    setPage(0);
   };
+  // const handleChangeRowsPerPage = (event) => {
+  //   const newRowsPerPage = event.target.value === 'All' ? totalRows : parseInt(event.target.value, 10);
+  //   setRowsPerPage(newRowsPerPage);
+  //   setPage(0); // Reset the page to the first page when changing the number of rows per page
+  // };
+  
   const state = useSelector((state) => state);
   const { currentUser } = state.persisted.user;
 
@@ -109,7 +109,7 @@ export default function CategoryTable() {
         }
         const data = await res.json();
         setdata(data);
-        setTotalRows(data.totalElements);// Set total rows based on fetched data
+        setTotalRows(data.numberOfElements); 
       } catch (error) {
         console.error('Error fetching category data:', error);
       }
