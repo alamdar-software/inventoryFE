@@ -56,7 +56,7 @@ const UpdateIncomingVerifier = () => {
       incoming,
     };
     console.log(update);
-
+console.log(incoming.status,"status dekho");
     fetch(`http://localhost:8080/bulkstock/status/${id}`, {
       method: 'PUT',
       headers: {

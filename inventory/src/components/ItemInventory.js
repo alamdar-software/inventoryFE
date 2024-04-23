@@ -379,9 +379,9 @@ setallCounts(data)
           </TableCell>
           <TableCell align='left'>{pickup.date}</TableCell>
           <TableCell align='left'>{pickup.quantity}</TableCell>
-          <TableCell align='left'> {pickup.quantity - parseFloat(pickup.TransferedQty.replace(/\[|\]/g, ''))}</TableCell>
+          <TableCell align='left'> {pickup.RemainingQty }</TableCell>
           <TableCell align='left'>
-            {pickup.TransferedQty.replace(/\[|\]/g, '')}
+            {pickup.TransferedQty}
           </TableCell>
 
          

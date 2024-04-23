@@ -182,6 +182,8 @@ export const ApprovedCipl = () => {
 
       const data = await res.json();
       setFilteredCipl(data);
+
+      
       console.log(data, 'came from backend');
     } catch (error) {
       console.error('Error while adding inventory:', error.message);
