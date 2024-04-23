@@ -109,7 +109,7 @@ export default function CategoryTable() {
         }
         const data = await res.json();
         setdata(data);
-        setTotalRows(data.numberOfElements); 
+        setTotalRows(data.length); 
       } catch (error) {
         console.error('Error fetching category data:', error);
       }
@@ -145,7 +145,7 @@ export default function CategoryTable() {
             </TableRow>
           </TableHead>
           <TableBody>
-            {data.content
+            {data
               ?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
               .map((row, index) => (
                 <TableRow hover role='checkbox' tabIndex={-1} key={index}>
