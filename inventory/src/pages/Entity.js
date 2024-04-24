@@ -26,21 +26,21 @@ export default function Entity() {
   const [data, setdata] = useState([]);
   console.log(entity);
 
-  useEffect(() => {
-    const getCurrency = async () => {
-      const res = await fetch("http://localhost:8080/entity/view", {
-        headers: {
-          Authorization: `Bearer ${currentUser.accessToken}`,
-        },
-      });
+  // useEffect(() => {
+  //   const getCurrency = async () => {
+  //     const res = await fetch("http://localhost:8080/entity/view", {
+  //       headers: {
+  //         Authorization: `Bearer ${currentUser.accessToken}`,
+  //       },
+  //     });
 
-      const data = await res.json();
+  //     const data = await res.json();
 
-      console.log(data, "backdata");
-      setdata(data);
-    };
-    getCurrency();
-  }, []);
+  //     console.log(data, "backdata");
+  //     setdata(data);
+  //   };
+  //   getCurrency();
+  // }, []);
   const handleClick = async () => {
     const res = await fetch("http://localhost:8080/entity/add", {
       method: "POST",

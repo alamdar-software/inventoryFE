@@ -44,8 +44,8 @@ export const Uom = () => {
         });
 
         const response = await res.json();
-        console.log(response, 'uom');
-        setUom(response);
+        console.log(response.content, 'uom');
+        setUom(response.content);
       } catch (error) {
         console.log(error);
       }

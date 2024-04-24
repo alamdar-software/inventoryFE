@@ -26,22 +26,22 @@ export const Currency = () => {
   const { currentUser } = useSelector((state) => state.persisted.user);
   console.log(currency);
 
-  useEffect(() => {
-    const getCurrency = async () => {
-      console.log(currentUser.accessToken);
-      const res = await fetch("http://localhost:8080/currency/view", {
-        headers: {
-          Authorization: `Bearer ${currentUser.accessToken}`,
-        },
-      })
+  // useEffect(() => {
+  //   const getCurrency = async () => {
+  //     console.log(currentUser.accessToken);
+  //     const res = await fetch("http://localhost:8080/currency/view", {
+  //       headers: {
+  //         Authorization: `Bearer ${currentUser.accessToken}`,
+  //       },
+  //     })
 
-      const data = await res.json();
+  //     const data = await res.json();
 
-      console.log(data, "backdata");
-      setdata(data);
-    };
-    getCurrency();
-  }, []);
+  //     console.log(data, "backdata");
+  //     setdata(data);
+  //   };
+  //   getCurrency();
+  // }, []);
 
   const handleClick = async () => {
     const { currencyName } = currency;
