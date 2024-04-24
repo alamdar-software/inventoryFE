@@ -114,6 +114,7 @@ export default function CategoryTable() {
         console.error('Error fetching category data:', error);
       }
     };
+    console.log(data,"fixxxx");
     getCategory();
   }, []);
   
