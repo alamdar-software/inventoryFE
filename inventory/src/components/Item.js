@@ -40,7 +40,7 @@ const Item = () => {
     dispatch(fetchCategory(currentUser.accessToken));
     dispatch(fetchUom(currentUser.accessToken));
   }, []);
-
+console.log(state,"statteeeeeeeeee");
   const handleInputChange = (e) => {
     setformData({
       ...formData,
@@ -154,7 +154,7 @@ const Item = () => {
                 }
                 //onChange={handleChange}
               >
-                {state.nonPersisted.category.data?.content.map(
+                {state?.nonPersisted?.category?.data?.content?.map(
                   (item, index) => (
                     <MenuItem key={index} value={item?.name}>
                       {' '}
