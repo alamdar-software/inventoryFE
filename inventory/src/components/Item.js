@@ -182,7 +182,7 @@ console.log(state,"statteeeeeeeeee");
                 }
                 //onChange={handleChange}
               >
-                {state.nonPersisted.Uom.data?.content.map((item, index) => (
+                {state.nonPersisted.Uom.data?.map((item, index) => (
                   <MenuItem key={index} value={item?.unitName}>
                     {' '}
                     {item?.unitName}

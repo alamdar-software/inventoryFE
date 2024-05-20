@@ -154,7 +154,7 @@ export default function TableComp({  }) {
                 </TableCell>
               </TableRow>
             ) : (
-              data.currencyList
+              data
                 ?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((row, index) => (
                   <TableRow hover role="checkbox" tabIndex={-1} key={index}>

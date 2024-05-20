@@ -349,6 +349,7 @@ export const Cipl = () => {
     );
     console.log(selectedIncomeData, 'selectttttt');
     console.log(selectedItem, 'selected item');
+    console.log(state,"state cipl");
 
     // Extract part numbers from the selected income data
     const partNumbers = selectedIncomeData.map(
@@ -1300,7 +1301,7 @@ export const Cipl = () => {
               }
               //onChange={handleChange}
             >
-              {state.nonPersisted.currency.data?.currencyList.map(
+              {state.nonPersisted.currency.data?.map(
                 (item, index) => (
                   <MenuItem key={index} value={item?.currencyName}>
                     {' '}
