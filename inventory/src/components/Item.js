@@ -154,7 +154,7 @@ console.log(state,"statteeeeeeeeee");
                 }
                 //onChange={handleChange}
               >
-                {state?.nonPersisted?.category?.data?.content?.map(
+                {state?.nonPersisted?.category?.data?.map(
                   (item, index) => (
                     <MenuItem key={index} value={item?.name}>
                       {' '}
