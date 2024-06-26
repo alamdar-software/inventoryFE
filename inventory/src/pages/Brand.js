@@ -28,22 +28,22 @@ export default function Brand() {
   console.log(Brand);
   const { currentUser } = useSelector((state) => state.persisted.user);
 
-  useEffect(() => {
-    const getBrand = async () => {
-      console.log(currentUser.accessToken, 'heyyyy');
-      const res = await fetch('http://localhost:8080/brand/view', {
-        headers: {
-          Authorization: `Bearer ${currentUser.accessToken}`,
-        },
-      });
+  // useEffect(() => {
+  //   const getBrand = async () => {
+  //     console.log(currentUser.accessToken, 'heyyyy');
+  //     const res = await fetch('http://localhost:8080/brand/view', {
+  //       headers: {
+  //         Authorization: `Bearer ${currentUser.accessToken}`,
+  //       },
+  //     });
 
-      const data = await res.json();
+  //     const data = await res.json();
 
-      console.log(data, 'backdata');
-      setdata(data);
-    };
-    getBrand();
-  }, []);
+  //     console.log(data, 'backdata');
+  //     setdata(data);
+  //   };
+  //   getBrand();
+  // }, []);
   const handleClick = async () => {
     const { brandName } = Brand;
 
