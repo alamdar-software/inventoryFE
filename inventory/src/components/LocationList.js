@@ -82,7 +82,7 @@ const LocationList = () => {
       });
 
       const response = await res.json();
-      console.log(response,"uuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuz");
+    
       setLocationName(response);
     } catch (error) {
       console.log(error);
@@ -237,8 +237,7 @@ const LocationList = () => {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {location
-                  .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                {location?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                   .map((location, index) => (
                     <React.Fragment key={location.id}>
                       <TableRow
