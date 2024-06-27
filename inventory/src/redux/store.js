@@ -4,7 +4,10 @@ import { persistReducer, persistStore } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 import userReducer from './slice/UserSlice';
 import CategoryReducer from './slice/CategorySlice';
+
+
 import locationReducer from './slice/location';
+import locationSearch from './slice/fetchLocationSearch';
 import UomReducer from './slice/UomSlice';
 import ConsigneeReducer from './slice/ConsigneeSlice';
 import ShipperSlice from './slice/ShipperSlice';
@@ -34,6 +37,7 @@ const rootReducer = combineReducers({
   // Non-persisted store reducers
   nonPersisted: combineReducers({
     location: locationReducer,
+    locationSearch:locationSearch,
     category: CategoryReducer,
     consignee: ConsigneeReducer,
     Uom: UomReducer,

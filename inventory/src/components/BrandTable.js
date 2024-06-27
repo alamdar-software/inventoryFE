@@ -20,6 +20,9 @@ const columns = [
 ];
 
 export default function BrandTable({ data }) {
+
+
+  console.log(data,"loooooooooooooooooooooot");
   const navigate = useNavigate();
   const [page, setPage] = React.useState(0);
   /*  const [datas, setdatas] = useState([]); */

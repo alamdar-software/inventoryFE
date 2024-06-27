@@ -30,6 +30,7 @@ export default function Brand() {
 
   useEffect(() => {
     const getBrand = async () => {
+      console.log(currentUser.accessToken,"ruuuunnnnnn");
       console.log(currentUser.accessToken, 'heyyyy');
       const res = await fetch('http://localhost:8080/brand/view', {
         headers: {
@@ -44,6 +45,9 @@ export default function Brand() {
     };
     getBrand();
   }, []);
+
+
+  
   const handleClick = async () => {
     const { brandName } = Brand;
 

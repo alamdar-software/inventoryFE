@@ -39,7 +39,7 @@ const Update = () => {
   // }, []);
   useEffect(() => {
     fetch(
-      `http://localhost:8080/location/getLocation/${locationId}/${addressId}`,
+      `http://localhost:8080/location/get/${locationId}`,
       {
         headers: {
           Authorization: `Bearer ${currentUser.accessToken}`,
@@ -48,35 +48,44 @@ const Update = () => {
     )
       .then((res) => res.json())
       .then((result) => {
-        console.log(result);
+        console.log(result,"loyuuuuuuuuuuuuuuuuuuu");
         setLocationLists(result);
       });
   }, []);
+console.log(locationLists,"updatttttttttttttttttttttttttttttttttttttttttttttttttt");
+const handleClick = async (e) => {
+  e.preventDefault();
+  const update = {
+    locationLists,
+  };
+  console.log(update, "mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm");
 
-  const handleClick = (e) => {
-    e.preventDefault();
-    const update = {
-      locationLists,
-    };
-    console.log(update);
-
-    fetch(
-      `http://localhost:8080/location/update/${locationId}/addresses/${addressId}`,
+  try {
+    const res = await fetch(
+      `http://localhost:8080/location/update/${locationId}`,
       {
         method: 'PUT',
-        headers: { 'Content-type': 'application/json', Authorization: `Bearer ${currentUser.accessToken}`, },
-      
+        headers: {
+          'Content-type': 'application/json',
+          Authorization: `Bearer ${currentUser.accessToken}`,
+        },
         body: JSON.stringify(locationLists),
       }
-    )
-      .then(() => {
-        console.log('Class Updated');
-        navigate('/view-location');
-      })
-      .catch((error) => {
-        console.error('Error updating class:', error);
-      });
-  };
+    );
+
+    // Log the entire response object
+    console.log(res, "lllllllllllllllllllllllllllllllllllllllllllllllll");
+
+    // To see the response body
+    const data = await res.json();
+    console.log(data,"aaaaaaaaaaaaaaaaaaaaaaaaaaqqq");
+
+    console.log('Class Updated');
+  } catch (error) {
+    console.error('Error updating class:', error);
+  }
+};
+
 
   return (
     <>
@@ -123,7 +132,7 @@ const Update = () => {
               id='outlined-basic'
               label='SubLocation'
               variant='outlined'
-              value={locationLists ? locationLists.address.address : ''}
+              value={locationLists ? locationLists.address : ''}
               onChange={(e) => {
                 setLocationLists({
                   ...locationLists,
