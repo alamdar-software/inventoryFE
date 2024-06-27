@@ -19,9 +19,10 @@ import {
   TableBody,
   TableFooter,
   Box,
+  Chip,
 } from '@mui/material';
 import { Link } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { ToastContainer, toast } from 'react-toastify';
 import FirstPageRoundedIcon from '@mui/icons-material/FirstPageRounded';
 import LastPageRoundedIcon from '@mui/icons-material/LastPageRounded';
@@ -34,7 +35,17 @@ import {
 } from '@mui/base/TablePagination';
 
 import 'react-toastify/dist/ReactToastify.css';
+import { fetchPickup } from '../redux/slice/PickUpSlice';
 const Pickup = () => {
+  const state = useSelector((state) => state);
+  const dispatch= useDispatch()
+
+
+
+  useEffect(() => {
+    dispatch(fetchPickup(currentUser.accessToken));
+  
+  }, []);
   const [pickupAddress, setPickupAddress] = useState();
   const [pic, setPic] = useState();
   const [message, setMessage] = useState(false);
@@ -48,6 +59,13 @@ const Pickup = () => {
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const { currentUser } = useSelector((state) => state.persisted.user);
 
+
+
+
+  const [formData, setformData] = useState({
+    companyName: '',
+    
+  });
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
@@ -56,6 +74,7 @@ const Pickup = () => {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
+  console.log(state,"kiki");
 
   // const handleClick = () => {
   //   try {
@@ -197,6 +216,29 @@ const Pickup = () => {
     }
   };
 console.log(pickup)
+const handleSearch = () => {
+  fetch('http://localhost:8080/pickup/search', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${currentUser.accessToken}`,
+    },
+    body: JSON.stringify(formData),
+  })
+    .then((res) => res.json())
+    .then((result) => {
+      if (Array.isArray(result)) {
+        setPickUp(result);
+      } else {
+        console.error('Received data does not contain an array:', result);
+        setPickUp([]);
+      }
+    })
+    .catch((error) => {
+      console.error('Error searching data:', error);
+      setPickUp([]);
+    });
+};
   return (
     <>
       <Grid>
@@ -311,6 +353,18 @@ console.log(pickup)
         >
           Add
         </Button>
+        {/* <Link to={'/view-pickup'}>
+              <Button
+                variant='contained'
+                color='success'
+                size='large'
+                sx={{
+                  marginLeft: '11px',
+                }}
+              >
+                View
+              </Button>
+            </Link> */}
         <div
           style={{
             display: 'flex',
@@ -365,6 +419,80 @@ console.log(pickup)
           )}
         </div>
       </Card>
+
+      <Box>
+        <Card 
+          color='secondary'
+          sx={{
+            width: '100%',
+            backgroundColor: 'secondary',
+            borderBottom: '2px solid yellow',
+            mb: '31px',
+            mt:'31px'
+          }}
+        >
+          <CardContent >
+            <Typography
+              variant='h4'
+              color='secondary'
+              gutterBottom
+              style={{ fontFamily: "'EB Garamond'" }}
+            >
+              View Pickup
+            </Typography>
+          </CardContent>
+        </Card>
+        {/* <Chip
+          sx={{ mb: '11px', fontWeight: 'bolder' }}
+          //label={`Total Incoming Stock: ${totalCount}`}
+          variant='outlined'
+        /> */}
+        <Grid container spacing={2}>
+          <Grid item xs={12} sm={6}>
+            <FormControl fullWidth sx={{ width: '90%' }}>
+              <InputLabel id='demo-simple-select-label'>
+                Company Name
+              </InputLabel>
+              <Select
+                labelId='demo-simple-select-label'
+                id='demo-simple-select'
+                label='companyName'
+                onChange={(e) =>
+                  setformData({
+                    ...formData,
+                    companyName: e.target.value,
+                  })
+                }
+              >
+                {state.nonPersisted.pickup.data?.map((item, index) => (
+                  <MenuItem key={index} value={item?.companyName}>
+                    {' '}
+                    {item?.companyName}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+          </Grid>
+         
+        </Grid>
+       
+        <Button
+          variant='contained'
+          color='secondary'
+          size='large'
+          onClick={handleSearch}
+          sx={{
+            mt: '33px',
+            mb: '17px',
+            marginLeft: 'auto',
+            marginRight: 'auto',
+            display: 'block',
+          }}
+        >
+          Search
+        </Button>
+      </Box>
+
       <Grid sx={{ mt: '33px' }}>
         <TableContainer
           component={Paper}

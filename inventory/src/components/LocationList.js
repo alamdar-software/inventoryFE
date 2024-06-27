@@ -18,7 +18,7 @@ import {
   FormControl,
 } from "@mui/material";
 import React, { useState, useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import FirstPageRoundedIcon from '@mui/icons-material/FirstPageRounded';
 import LastPageRoundedIcon from '@mui/icons-material/LastPageRounded';
@@ -29,8 +29,12 @@ import {
   TablePagination,
   tablePaginationClasses as classes,
 } from '@mui/base/TablePagination';
+import {  fetchlocationsearch } from "../redux/slice/location";
 
 const LocationList = () => {
+
+  const dispatch = useDispatch();
+  const state = useSelector((state) => state);
   const { currentUser } = useSelector((state) => state.persisted.user);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5); // Adjust as needed
@@ -42,24 +46,31 @@ const LocationList = () => {
   const [totalRows, setTotalRows] = useState(0);
  
   useEffect(() => {
-    fetch("http://localhost:8080/location/getAll", {
+    dispatch(fetchlocationsearch(currentUser.accessToken));
+
+  }, []);
+  useEffect(() => {
+    fetch("http://localhost:8080/location/search", {
+      method:"POST",
       headers: {
         Authorization: `Bearer ${currentUser.accessToken}`,
+    
       },
     })
       .then((res) => res.json())
       .then((result) => {
         console.log(result);
         setLocationName(result);
+        console.log(result,"jumajiiiiiiiiiiiiii");
        
-        /*  if (result.length > 0 && result[0].addresses.length > 0) {
-          setselectedLocation(result[0].addresses[0].address);
-          setselectedLocationId(result[0].addresses[0].id);
-        } */
-        if (result.length > 0 && result[0].addresses.length > 0) {
-          setselectedLocationId(result[0].addresses[0].id);
-          setTotalRows(result.length); 
-        }
+          if (result.length > 0 ) {
+          setselectedLocation(result.address);
+          // setselectedLocationId(result[0].addresses[0].id);
+        } 
+      //   if (result.length > 0 && result[0].addresses.length > 0) {
+      //    setselectedLocationId(result[0].addresses[0].id);
+      //    setTotalRows(result.length); 
+      // }
       });
   }, []);
 
@@ -89,18 +100,19 @@ const LocationList = () => {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
-  console.log(selectedLocation, "heyyy");
+  // console.log(selectedLocation, "heyyy");
   const handleUpdateClick = (locationId) => {
-    if (!selectedLocation) {
+    if (!locationId) {
+      console.log("error happens");
       setShowError(true);
     } else {
       // Reset the error if a sublocation is selected
       setShowError(false);
       // Redirect to the update page
-      window.location.href = `/updateLocation/${locationId}/addresses/${selectedLocationId}`;
+      window.location.href = `/updateLocation/${locationId}`;
     }
   };
-
+console.log(state,"heyyyy");
   return (
     <>
       <Grid>
@@ -128,6 +140,66 @@ const LocationList = () => {
             component={Paper}
             sx={{ borderRadius: "33px", borderBottom: "2px solid yellow" }}
           >
+          <div sx={{backgroundColor:blue}}>
+
+         
+        <div  style={{ display: 'flex',  margin:"40px",gap:"30px" }}>
+        <FormControl fullWidth sx={{ width: '70%' }}>
+            <InputLabel id='demo-simple-select-label'>Location</InputLabel>
+            <Select
+              labelId='demo-simple-select-label'
+              id='demo-simple-select'
+              //value={age}
+              // value={formData.locationName || ''}
+              label='location'
+              MenuProps={{
+                PaperProps: {
+                  style: {
+                    maxHeight: 120, // Adjust the height as needed
+                  },
+                },
+              }}
+              // onChange={handleLocationChange}
+              //onChange={handleChange}
+            >
+              {state?.nonPersisted?.location?.data?.map((item, index) => (
+                
+                <MenuItem key={index} >
+                  {' '}
+                  {item?.locationName}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+          <FormControl fullWidth sx={{ width: '70%' }}>
+            <InputLabel id='demo-simple-select-label'>Sub Location</InputLabel>
+            <Select
+              labelId='demo-simple-select-label'
+              id='demo-simple-select'
+              //value={age}
+              // value={formData.locationName || ''}
+              label='location'
+              MenuProps={{
+                PaperProps: {
+                  style: {
+                    maxHeight: 120, // Adjust the height as needed
+                  },
+                },
+              }}
+              // onChange={handleLocationChange}
+              //onChange={handleChange}
+            >
+              {state?.nonPersisted?.location?.data?.map((item, index) => (
+                
+                <MenuItem key={index}>
+                  {' '}
+                  {item?.address}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+        </div>
+        </div>
             <Table sx={{ minWidth: 500 }} aria-label="simple table">
               <TableHead>
                 <TableRow>
@@ -154,50 +226,16 @@ const LocationList = () => {
                         }} */
                       >
                         <TableCell align="left">
-                          {location.locationName}
+                          {location?.locationName}
                         </TableCell>
-
                         <TableCell align="left">
-                          <FormControl fullWidth sx={{ width: "20rem" }}>
-                            <InputLabel id="subLocation">
-                              View Sub Location
-                            </InputLabel>
-                            <Select
-                              labelId="subLocation"
-                              id="subLocation"
-                              label="Sub Location"
-                              defaultValue={selectedLocation || ""}
-                              /* value={formData?.name} */
-                              //value={age}
-                              value={selectedLocation}
-                              onChange={(e) => {
-                                setselectedLocation(e.target.value);
-                                // Assuming each address has a unique ID, use it here
-                                const selectedAddress =
-                                  location?.addresses.find(
-                                    (address) =>
-                                      address?.address === e.target.value
-                                  );
-                                setselectedLocationId(
-                                  selectedAddress ? selectedAddress.id : null
-                                );
-                              }}
-                              style={{ width: "60%" }}
-
-                              //onChange={handleChange}
-                            >
-                              {location?.addresses.map((adress) => (
-                                <MenuItem key={index} value={adress?.address}>
-                                  {" "}
-                                  {adress?.address}
-                                </MenuItem>
-                              ))}
-                            </Select>
-                          </FormControl>
+                          {location?.address}
                         </TableCell>
+
+                   
                         <TableCell>
                           <Link
-                            to={`/updateLocation/${location.id}/addresses/${selectedLocationId}`}
+                            to={`/updateLocation/${location.id}`}
                           >
                             <Button
                               variant="contained"
@@ -205,6 +243,7 @@ const LocationList = () => {
                               onClick={(e) => {
                                 e.preventDefault();
                                 handleUpdateClick(location.id);
+                              
                               }}
                             >
                               Update
@@ -223,13 +262,7 @@ const LocationList = () => {
                     </React.Fragment>
                   ))}
               </TableBody>
-              {showError && (
-                <TableRow>
-                  <TableCell colSpan={3} align="center" sx={{ color: "red" }}>
-                    Please select a sublocation
-                  </TableCell>
-                </TableRow>
-              )}
+            
             </Table>
             {/* <TablePagination
               rowsPerPageOptions={[5, 10, 25]}

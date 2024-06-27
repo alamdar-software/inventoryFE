@@ -2,37 +2,35 @@ import {
   Button,
   Card,
   CardContent,
+  FormControl,
   Grid,
+  InputLabel,
+  MenuItem,
+  Select,
   TextField,
   Typography,
 } from '@mui/material';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import * as React from 'react';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
-import { useEffect } from 'react';
-import { Link, useLocation } from 'react-router-dom';
-import ButtonGroup from '@mui/material/ButtonGroup';
-import UomTable from './UomTable';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { toast } from 'react-toastify';
-export const Uom = () => {
-  const location = useLocation();
-  const [unit, setunit] = useState({
+import { fetchUom } from '../redux/slice/UomSlice';
+import UomTable from './UomTable';
+
+const Uom = () => {
+  const [unit, setUnit] = useState({
     unitName: '',
   });
   const [Uom, setUom] = useState([]);
+  const [searchUnit, setSearchUnit] = useState('');
   const { currentUser } = useSelector((state) => state.persisted.user);
-  console.log(unit);
-  function createData(name, calories, fat, carbs, protein) {
-    return { name, calories, fat, carbs, protein };
-  }
+  const state = useSelector((state) => state);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fetchUom(currentUser.accessToken));
+  }, [dispatch, currentUser.accessToken]);
 
   useEffect(() => {
     const getUom = async () => {
@@ -44,7 +42,6 @@ export const Uom = () => {
         });
 
         const response = await res.json();
-        console.log(response, 'uom');
         setUom(response);
       } catch (error) {
         console.log(error);
@@ -52,44 +49,60 @@ export const Uom = () => {
     };
 
     getUom();
-  }, []);
-  console.log(Uom, 'uuuuuuuuuuuu');
+  }, [currentUser.accessToken]);
+
+  const handleSearch = async () => {
+    try {
+      const res = await fetch('http://localhost:8080/unit/search', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${currentUser.accessToken}`,
+        },
+        body: JSON.stringify({ unitName: searchUnit }),
+      });
+
+      const response = await res.json();
+      setUom(response);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const handleClick = async () => {
     const res = await fetch('http://localhost:8080/unit/add', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${currentUser.accessToken}`
+        Authorization: `Bearer ${currentUser.accessToken}`,
       },
       body: JSON.stringify(unit),
     });
     const data = await res.text();
 
     toast.success('🦄 Uom Added Successfully!', {
-      position: "top-right",
+      position: 'top-right',
       autoClose: 3000,
       hideProgressBar: false,
       closeOnClick: true,
       pauseOnHover: true,
       draggable: true,
       progress: undefined,
-      theme: "dark",
-      
-      });
-      setTimeout(() => {
-        window.location.reload();
+      theme: 'dark',
+    });
+    setTimeout(() => {
+      window.location.reload();
     }, 3000);
-   
   };
+
   const handleChange = (e) => {
-    setunit({
+    setUnit({
       [e.target.id]: e.target.value,
     });
   };
+
   const handleDelete = async (id) => {
     try {
-      // Perform the delete operation
       const response = await fetch(`http://localhost:8080/Uom/delete/${id}`, {
         method: 'DELETE',
         headers: {
@@ -98,25 +111,20 @@ export const Uom = () => {
       });
 
       if (response.ok) {
-        // Update the state or fetch data again after deletion
-        // For simplicity, you can reload the page or fetch data again
-
-       toast.warn('🦄 Uom Deleted Successfully!', {
-          position: "top-right",
+        toast.warn('🦄 Uom Deleted Successfully!', {
+          position: 'top-right',
           autoClose: 3000,
           hideProgressBar: false,
           closeOnClick: true,
           pauseOnHover: true,
           draggable: true,
           progress: undefined,
-          theme: "dark",
-          
-          });
-          setTimeout(() => {
-            window.location.reload();
+          theme: 'dark',
+        });
+        setTimeout(() => {
+          window.location.reload();
         }, 3000);
       } else {
-        // Handle the error if deletion fails
         console.error('Delete failed');
       }
     } catch (error) {
@@ -140,7 +148,7 @@ export const Uom = () => {
               variant='h4'
               color='secondary'
               gutterBottom
-              style={{ fontFamily: "'EB Garamond'" }}
+              style={{ fontFamily: "'EB Garamond'",textAlign: 'center' }}
             >
               Add UOM
             </Typography>
@@ -155,17 +163,16 @@ export const Uom = () => {
           pt: '33px',
           borderBottom: '2px solid yellow',
           borderRadius: '33px',
+      
         }}
       >
-        <Grid container spacing={2} sx={{ ml: '13px' }}>
+        <Grid container spacing={2} sx={{ marginLeft:"200px"}}>
           <Grid item xs={12} sm={6}>
             <TextField
               id='unitName'
               label='Unit Name'
               variant='outlined'
               onChange={handleChange}
-              //   value={location}
-              //   onChange={(e) => setLocation(e.target.value)}
               fullWidth
             />
           </Grid>
@@ -175,7 +182,6 @@ export const Uom = () => {
           variant='contained'
           color='secondary'
           size='large'
-          //onClick={handleClick}
           sx={{
             mt: '33px',
             mb: '17px',
@@ -187,10 +193,72 @@ export const Uom = () => {
         >
           Add
         </Button>
-        <div sx={{ margin: '20px' }}>
-          <UomTable data={Uom} />
-        </div>
       </Card>
+
+      <Grid>
+        <Card
+          color='secondary'
+          sx={{
+            width: '100%',
+            backgroundColor: 'secondary',
+            borderBottom: '2px solid yellow',
+            marginTop: '60px',
+            paddingBottom:"40px"
+          }}
+        >
+          <CardContent>
+            <div  sx={{ marginBottom:"80px" }}>
+
+            <Typography
+              variant='h4'
+              color='secondary'
+              gutterBottom
+              style={{ fontFamily: "'EB Garamond'", textAlign: 'center',marginBottom:"60px" }}
+            >
+              View UOM
+            </Typography>
+            </div>
+            <div sx={{ marginTop:"80px" }}>
+              <Grid item xs={12} sm={6}>
+                <FormControl fullWidth sx={{ width: '50%',display:"flex",margin:"auto"  }}>
+                  <InputLabel id='demo-simple-select-label'>UOM</InputLabel>
+                  <Select
+                    labelId='demo-simple-select-label'
+                    id='unitName'
+                    label='UOM'
+                    onChange={(e) => setSearchUnit(e.target.value)}
+                  >
+                    {state.nonPersisted.Uom.data?.map((item, index) => (
+                      <MenuItem key={index} value={item?.unitName}>
+                        {item?.unitName}
+                      </MenuItem>
+                    ))}
+                  </Select>
+
+                  <Button
+                    variant='contained'
+                    color='secondary'
+                    size='large'
+                    sx={{
+                      mt: '33px',
+                      mb: '17px',
+                      marginLeft: 'auto',
+                      marginRight: 'auto',
+                      display: 'block',
+                    }}
+                    onClick={handleSearch}
+                  >
+                    Search
+                  </Button>
+                </FormControl>
+              </Grid>
+            </div>
+          </CardContent>
+          <div sx={{ margin: '80px' }}>
+            <UomTable data={Uom} />
+          </div>
+        </Card>
+      </Grid>
     </>
   );
 };
