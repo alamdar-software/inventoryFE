@@ -5,11 +5,10 @@ import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
-
 import TableRow from '@mui/material/TableRow';
-import { Button } from '@mui/material';
+import { Button, CardContent, FormControl, Grid, InputLabel, Select, Typography, MenuItem } from '@mui/material';
 import ButtonGroup from '@mui/material/ButtonGroup';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import FirstPageRoundedIcon from '@mui/icons-material/FirstPageRounded';
 import LastPageRoundedIcon from '@mui/icons-material/LastPageRounded';
 import ChevronLeftRoundedIcon from '@mui/icons-material/ChevronLeftRounded';
@@ -21,24 +20,30 @@ import {
   tablePaginationClasses as classes,
 } from '@mui/base/TablePagination';
 import { toast } from 'react-toastify';
+import { fetchCategory } from '../redux/slice/CategorySlice';
 import { styled } from '@mui/system';
+
 const columns = [
   { id: 'Category', label: 'Category', minWidth: 200 },
   { id: 'Actions', label: 'Actions', minWidth: 100 },
 ];
 
 export default function CategoryTable() {
-  const navigate = useNavigate();
-  const [page, setPage] = React.useState(0);
-  const [totalRows, setTotalRows] = useState(0);
-  const [data, setdata] = useState([]);
-  
-  /*  const [datas, setdatas] = useState([]); */
-  /*   setdatas(data); */
+  const [formData, setFormData] = useState({ name: "" });
+  const { currentUser } = useSelector((state) => state.persisted.user);
+  const state = useSelector((state) => state);
+  const dispatch = useDispatch();
 
-  const [rowsPerPage, setRowsPerPage] = React.useState(5);
-  console.log(Array.isArray(data), 'yesss');
-  console.log(data, 'brandtable');
+  useEffect(() => {
+    dispatch(fetchCategory(currentUser.accessToken));
+  }, [dispatch, currentUser.accessToken]);
+
+  const navigate = useNavigate();
+  const [page, setPage] = useState(0);
+  const [totalRows, setTotalRows] = useState(0);
+  const [data, setData] = useState([]);
+
+  const [rowsPerPage, setRowsPerPage] = useState(5);
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -48,14 +53,6 @@ export default function CategoryTable() {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
-  // const handleChangeRowsPerPage = (event) => {
-  //   const newRowsPerPage = event.target.value === 'All' ? totalRows : parseInt(event.target.value, 10);
-  //   setRowsPerPage(newRowsPerPage);
-  //   setPage(0); // Reset the page to the first page when changing the number of rows per page
-  // };
-  
-  const state = useSelector((state) => state);
-  const { currentUser } = state.persisted.user;
 
   const handleDelete = async (id) => {
     try {
@@ -71,8 +68,6 @@ export default function CategoryTable() {
       );
 
       if (response.ok) {
-        // Update the state or fetch data again after deletion
-        // For simplicity, you can reload the page or fetch data again
         toast.warn('🦄 Category Deleted Successfully!', {
           position: "top-right",
           autoClose: 3000,
@@ -82,13 +77,11 @@ export default function CategoryTable() {
           draggable: true,
           progress: undefined,
           theme: "dark",
-
         });
         setTimeout(() => {
           window.location.reload();
         }, 3000);
       } else {
-        // Handle the error if deletion fails
         console.error('Delete failed');
       }
     } catch (error) {
@@ -108,18 +101,84 @@ export default function CategoryTable() {
           throw new Error('Failed to fetch category data');
         }
         const data = await res.json();
-        setdata(data);
-        setTotalRows(data.length); 
+        setData(data);
+        setTotalRows(data.length);
       } catch (error) {
         console.error('Error fetching category data:', error);
       }
     };
-    console.log(data,"fixxxx");
     getCategory();
-  }, []);
-  
+  }, [currentUser.accessToken]);
+
+  const handleSearch = async () => {
+    try {
+      const res = await fetch('http://localhost:8080/category/search', {
+        method: "POST",
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${currentUser.accessToken}`,
+        },
+        body: JSON.stringify(formData),
+      });
+      const data = await res.json();
+      setData(data);
+      setTotalRows(data.length);
+    } catch (error) {
+      console.error('Error fetching category data:', error);
+    }
+  };
+
   return (
     <Paper sx={{ width: '100%', margin: '0 auto', maxWidth: '1000px' }}>
+      <CardContent>
+        <Typography
+          variant='h4'
+          color='secondary'
+          gutterBottom
+          style={{ fontFamily: "'EB Garamond'", textAlign: 'center', marginBottom: "60px" }}
+        >
+          View Category
+        </Typography>
+        <Grid item xs={12} sm={6}>
+          <FormControl fullWidth sx={{ width: '50%', display: "flex", margin: "auto" }}>
+            <InputLabel id='demo-simple-select-label'>Category</InputLabel>
+            <Select
+              labelId='demo-simple-select-label'
+              id='category'
+              label='Category'
+              MenuProps={{
+                PaperProps: {
+                  style: {
+                    maxHeight: 120,
+                  },
+                },
+              }}
+              onChange={(e) => setFormData({ name: e.target.value })}
+            >
+              {state.nonPersisted.category.data?.map((item, index) => (
+                <MenuItem key={index} value={item?.name}>
+                  {item?.name}
+                </MenuItem>
+              ))}
+            </Select>
+            <Button
+              variant='contained'
+              color='secondary'
+              size='large'
+              sx={{
+                mt: '33px',
+                mb: '17px',
+                marginLeft: 'auto',
+                marginRight: 'auto',
+                display: 'block',
+              }}
+              onClick={handleSearch}
+            >
+              Search
+            </Button>
+          </FormControl>
+        </Grid>
+      </CardContent>
       <TableContainer sx={{ maxHeight: 500 }}>
         <Table
           stickyHeader
@@ -173,47 +232,38 @@ export default function CategoryTable() {
           </TableBody>
         </Table>
       </TableContainer>
-      {/* <TablePagination
-        rowsPerPageOptions={[5, 25, 100]}
-        component='div'
-        count={data.length}
-        rowsPerPage={rowsPerPage}
-        page={page}
-        onPageChange={handleChangePage}
-        onRowsPerPageChange={handleChangeRowsPerPage}
-      /> */}
-
-<TableRow>
-                <TableCell colSpan={5} align="center">
-                  <CustomTablePagination
-                    rowsPerPageOptions={[5, 10, 25, { label: 'All', value: -1 }]}
-                    colSpan={3}
-                    count={totalRows}
-                    rowsPerPage={5}
-                    page={page}
-                    slotProps={{
-                      select: {
-                        'aria-label': 'Rows per page',
-                      },
-                      actions: {
-                        showFirstButton: true,
-                        showLastButton: true,
-                        slots: {
-                          firstPageIcon: FirstPageRoundedIcon,
-                          lastPageIcon: LastPageRoundedIcon,
-                          nextPageIcon: ChevronRightRoundedIcon,
-                          backPageIcon: ChevronLeftRoundedIcon,
-                        },
-                      },
-                    }}
-                    onPageChange={handleChangePage}
-                    onRowsPerPageChange={handleChangeRowsPerPage}
-                  />
-                </TableCell>
-              </TableRow>
+      <TableRow>
+        <TableCell colSpan={5} align="center">
+          <CustomTablePagination
+            rowsPerPageOptions={[5, 10, 25, { label: 'All', value: -1 }]}
+            colSpan={3}
+            count={totalRows}
+            rowsPerPage={rowsPerPage}
+            page={page}
+            slotProps={{
+              select: {
+                'aria-label': 'Rows per page',
+              },
+              actions: {
+                showFirstButton: true,
+                showLastButton: true,
+                slots: {
+                  firstPageIcon: FirstPageRoundedIcon,
+                  lastPageIcon: LastPageRoundedIcon,
+                  nextPageIcon: ChevronRightRoundedIcon,
+                  backPageIcon: ChevronLeftRoundedIcon,
+                },
+              },
+            }}
+            onPageChange={handleChangePage}
+            onRowsPerPageChange={handleChangeRowsPerPage}
+          />
+        </TableCell>
+      </TableRow>
     </Paper>
   );
 }
+
 const blue = {
   200: '#A5D8FF',
   400: '#3399FF',
@@ -231,32 +281,6 @@ const grey = {
   800: '#303740',
   900: '#1C2025',
 };
-
-const Root = styled('div')(
-  ({ theme }) => `
-  table {
-    font-family: 'IBM Plex Sans', sans-serif;
-    font-size: 0.875rem;
-    width: 100%;
-    background-color: ${theme.palette.mode === 'dark' ? grey[900] : '#fff'};
-    box-shadow: 0px 4px 16px ${
-      theme.palette.mode === 'dark' ? 'rgba(0, 0, 0, 0.3)' : grey[200]
-    };
-    border-radius: 12px;
-    border: 1px solid ${theme.palette.mode === 'dark' ? grey[800] : grey[200]};
-    overflow: hidden;
-  }
-
-  td,
-  th {
-    padding: 16px;
-  }
-
-  th {
-    background-color: ${theme.palette.mode === 'dark' ? grey[900] : '#fff'};
-  }
-  `,
-);
 
 const CustomTablePagination = styled(TablePagination)(
   ({ theme }) => `
@@ -351,5 +375,3 @@ const CustomTablePagination = styled(TablePagination)(
   }
   `,
 );
-
-
