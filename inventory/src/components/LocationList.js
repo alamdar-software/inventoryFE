@@ -31,7 +31,7 @@ import {
 import { fetchlocationsearch } from "../redux/slice/location";
 
 const LocationList = () => {
-  const [formData, setformData] = useState({
+  const [formData, setFormData] = useState({
     locationName: "",
     address: ""
   });
@@ -42,35 +42,40 @@ const LocationList = () => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5); // Adjust as needed
   const [error, setError] = useState(null);
-  const [location, setLocationName] = useState([]);
-  const [selectedLocation, setselectedLocation] = useState("");
-  const [selectedLocationId, setselectedLocationId] = useState(null);
+  const [locations, setLocations] = useState([]);
+  const [selectedLocation, setSelectedLocation] = useState("");
+  const [selectedLocationId, setSelectedLocationId] = useState(null);
   const [showError, setShowError] = useState(false);
   const [totalRows, setTotalRows] = useState(0);
 
   useEffect(() => {
     dispatch(fetchlocationsearch(currentUser.accessToken));
-  }, []);
+  }, [dispatch, currentUser.accessToken]);
 
   useEffect(() => {
-    fetch("http://localhost:8080/location/search", {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${currentUser.accessToken}`,
-      },
-      body: JSON.stringify({}) // If you need to send any initial data
-    })
-      .then((res) => res.json())
-      .then((result) => {
-        console.log(result);
-        setLocationName(result);
-        console.log(result, "jumajiiiiiiiiiiiiii");
-      });
+    fetchLocations();
   }, []);
 
+  const fetchLocations = async () => {
+    try {
+      const res = await fetch("http://localhost:8080/location/search", {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${currentUser.accessToken}`,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({})
+      });
+
+      const result = await res.json();
+      setLocations(result);
+      setTotalRows(result.length);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const handleSearch = async () => {
-    console.log("I am here");
-    console.log(formData, "lllllllllllllllllllllllllzz");
     try {
       const res = await fetch("http://localhost:8080/location/search", {
         method: 'POST',
@@ -82,30 +87,27 @@ const LocationList = () => {
       });
 
       const response = await res.json();
-    
-      setLocationName(response);
+      setLocations(response);
+      setTotalRows(response.length);
     } catch (error) {
       console.log(error);
     }
   };
 
   const deleteLocation = async (id) => {
-    console.log(id);
-    fetch(`http://localhost:8080/location/delete/${id}`, {
-      method: "DELETE",
-      headers: {
-        "Content-type": "application/json",
-        Authorization: `Bearer ${currentUser.accessToken}`,
-      },
-      body: JSON.stringify(LocationList),
-    })
-      .then(() => {
-        console.log("Location deleted");
-        window.location.reload();
-      })
-      .catch((error) => {
-        console.error("Error updating location:", error);
+    try {
+      await fetch(`http://localhost:8080/location/delete/${id}`, {
+        method: "DELETE",
+        headers: {
+          "Content-type": "application/json",
+          Authorization: `Bearer ${currentUser.accessToken}`,
+        },
       });
+
+      fetchLocations(); // Refresh the list after deletion
+    } catch (error) {
+      console.error("Error deleting location:", error);
+    }
   };
 
   const handleChangePage = (event, newPage) => {
@@ -119,7 +121,6 @@ const LocationList = () => {
 
   const handleUpdateClick = (locationId) => {
     if (!locationId) {
-      console.log("error happens");
       setShowError(true);
     } else {
       setShowError(false);
@@ -127,7 +128,6 @@ const LocationList = () => {
     }
   };
 
-  console.log(state, "heyyyy");
   return (
     <>
       <Grid>
@@ -172,7 +172,7 @@ const LocationList = () => {
                         },
                       },
                     }}
-                    onChange={(e) => setformData({
+                    onChange={(e) => setFormData({
                       ...formData,
                       locationName: e.target.value
                     })}
@@ -198,7 +198,7 @@ const LocationList = () => {
                         },
                       },
                     }}
-                    onChange={(e) => setformData({
+                    onChange={(e) => setFormData({
                       ...formData,
                       address: e.target.value
                     })}
@@ -237,12 +237,11 @@ const LocationList = () => {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {location?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                {locations
+                  .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                   .map((location, index) => (
                     <React.Fragment key={location.id}>
-                      <TableRow
-                        key={location.name}
-                      >
+                      <TableRow key={location.name}>
                         <TableCell align="left">
                           {location?.locationName}
                         </TableCell>
@@ -250,9 +249,7 @@ const LocationList = () => {
                           {location?.address}
                         </TableCell>
                         <TableCell>
-                          <Link
-                            to={`/updateLocation/${location.id}`}
-                          >
+                          <Link to={`/updateLocation/${location.id}`}>
                             <Button
                               variant="contained"
                               color="secondary"
@@ -278,22 +275,13 @@ const LocationList = () => {
                   ))}
               </TableBody>
             </Table>
-            <TablePagination
-              rowsPerPageOptions={[5, 10, 25]}
-              component="div"
-              count={location.length}
-              rowsPerPage={rowsPerPage}
-              page={page}
-              onPageChange={handleChangePage}
-              onRowsPerPageChange={handleChangeRowsPerPage}
-            />
             <TableRow>
               <TableCell colSpan={5} align="center">
                 <CustomTablePagination
                   rowsPerPageOptions={[5, 10, 25, { label: 'All', value: -1 }]}
                   colSpan={3}
                   count={totalRows}
-                  rowsPerPage={5}
+                  rowsPerPage={rowsPerPage}
                   page={page}
                   slotProps={{
                     select: {
