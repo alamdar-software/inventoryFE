@@ -11,7 +11,6 @@ import {
   TableHead,
   TableRow,
   Typography,
-  
   Select,
   MenuItem,
   InputLabel,
@@ -29,9 +28,13 @@ import {
   TablePagination,
   tablePaginationClasses as classes,
 } from '@mui/base/TablePagination';
-import {  fetchlocationsearch } from "../redux/slice/location";
+import { fetchlocationsearch } from "../redux/slice/location";
 
 const LocationList = () => {
+  const [formData, setformData] = useState({
+    locationName: "",
+    address: ""
+  });
 
   const dispatch = useDispatch();
   const state = useSelector((state) => state);
@@ -44,35 +47,47 @@ const LocationList = () => {
   const [selectedLocationId, setselectedLocationId] = useState(null);
   const [showError, setShowError] = useState(false);
   const [totalRows, setTotalRows] = useState(0);
- 
+
   useEffect(() => {
     dispatch(fetchlocationsearch(currentUser.accessToken));
-
   }, []);
+
   useEffect(() => {
     fetch("http://localhost:8080/location/search", {
-      method:"POST",
+      method: "POST",
       headers: {
         Authorization: `Bearer ${currentUser.accessToken}`,
-    
       },
+      body: JSON.stringify({}) // If you need to send any initial data
     })
       .then((res) => res.json())
       .then((result) => {
         console.log(result);
         setLocationName(result);
-        console.log(result,"jumajiiiiiiiiiiiiii");
-       
-          if (result.length > 0 ) {
-          setselectedLocation(result.address);
-          // setselectedLocationId(result[0].addresses[0].id);
-        } 
-      //   if (result.length > 0 && result[0].addresses.length > 0) {
-      //    setselectedLocationId(result[0].addresses[0].id);
-      //    setTotalRows(result.length); 
-      // }
+        console.log(result, "jumajiiiiiiiiiiiiii");
       });
   }, []);
+
+  const handleSearch = async () => {
+    console.log("I am here");
+    console.log(formData, "lllllllllllllllllllllllllzz");
+    try {
+      const res = await fetch("http://localhost:8080/location/search", {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${currentUser.accessToken}`,
+        },
+        body: JSON.stringify(formData),
+      });
+
+      const response = await res.json();
+      console.log(response,"uuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuz");
+      setLocationName(response);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const deleteLocation = async (id) => {
     console.log(id);
@@ -92,6 +107,7 @@ const LocationList = () => {
         console.error("Error updating location:", error);
       });
   };
+
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
@@ -100,19 +116,18 @@ const LocationList = () => {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
-  // console.log(selectedLocation, "heyyy");
+
   const handleUpdateClick = (locationId) => {
     if (!locationId) {
       console.log("error happens");
       setShowError(true);
     } else {
-      // Reset the error if a sublocation is selected
       setShowError(false);
-      // Redirect to the update page
       window.location.href = `/updateLocation/${locationId}`;
     }
   };
-console.log(state,"heyyyy");
+
+  console.log(state, "heyyyy");
   return (
     <>
       <Grid>
@@ -140,66 +155,73 @@ console.log(state,"heyyyy");
             component={Paper}
             sx={{ borderRadius: "33px", borderBottom: "2px solid yellow" }}
           >
-          <div sx={{backgroundColor:blue}}>
+            <div sx={{ backgroundColor: blue }}>
 
-         
-        <div  style={{ display: 'flex',  margin:"40px",gap:"30px" }}>
-        <FormControl fullWidth sx={{ width: '70%' }}>
-            <InputLabel id='demo-simple-select-label'>Location</InputLabel>
-            <Select
-              labelId='demo-simple-select-label'
-              id='demo-simple-select'
-              //value={age}
-              // value={formData.locationName || ''}
-              label='location'
-              MenuProps={{
-                PaperProps: {
-                  style: {
-                    maxHeight: 120, // Adjust the height as needed
-                  },
-                },
-              }}
-              // onChange={handleLocationChange}
-              //onChange={handleChange}
-            >
-              {state?.nonPersisted?.location?.data?.map((item, index) => (
-                
-                <MenuItem key={index} >
-                  {' '}
-                  {item?.locationName}
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
-          <FormControl fullWidth sx={{ width: '70%' }}>
-            <InputLabel id='demo-simple-select-label'>Sub Location</InputLabel>
-            <Select
-              labelId='demo-simple-select-label'
-              id='demo-simple-select'
-              //value={age}
-              // value={formData.locationName || ''}
-              label='location'
-              MenuProps={{
-                PaperProps: {
-                  style: {
-                    maxHeight: 120, // Adjust the height as needed
-                  },
-                },
-              }}
-              // onChange={handleLocationChange}
-              //onChange={handleChange}
-            >
-              {state?.nonPersisted?.location?.data?.map((item, index) => (
-                
-                <MenuItem key={index}>
-                  {' '}
-                  {item?.address}
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
-        </div>
-        </div>
+              <div style={{ display: 'flex', margin: "40px", gap: "30px" }}>
+                <FormControl fullWidth sx={{ width: '70%' }}>
+                  <InputLabel id='demo-simple-select-label'>Location</InputLabel>
+                  <Select
+                    labelId='demo-simple-select-label'
+                    id='demo-simple-select'
+                    value={formData.locationName}
+                    label='location'
+                    MenuProps={{
+                      PaperProps: {
+                        style: {
+                          maxHeight: 120,
+                        },
+                      },
+                    }}
+                    onChange={(e) => setformData({
+                      ...formData,
+                      locationName: e.target.value
+                    })}
+                  >
+                    {state?.nonPersisted?.location?.data?.map((item, index) => (
+                      <MenuItem key={index} value={item?.locationName}>
+                        {item?.locationName}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
+                <FormControl fullWidth sx={{ width: '70%' }}>
+                  <InputLabel id='demo-simple-select-label'>Sub Location</InputLabel>
+                  <Select
+                    labelId='demo-simple-select-label'
+                    id='demo-simple-select'
+                    value={formData.address}
+                    label='address'
+                    MenuProps={{
+                      PaperProps: {
+                        style: {
+                          maxHeight: 120,
+                        },
+                      },
+                    }}
+                    onChange={(e) => setformData({
+                      ...formData,
+                      address: e.target.value
+                    })}
+                  >
+                    {state?.nonPersisted?.location?.data?.map((item, index) => (
+                      <MenuItem key={index} value={item?.address}>
+                        {item?.address}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    handleSearch();
+                  }}
+                >
+                  Search
+                </Button>
+              </div>
+            </div>
             <Table sx={{ minWidth: 500 }} aria-label="simple table">
               <TableHead>
                 <TableRow>
@@ -221,9 +243,6 @@ console.log(state,"heyyyy");
                     <React.Fragment key={location.id}>
                       <TableRow
                         key={location.name}
-                        /*  sx={{
-                          "&:last-child td, &:last-child th": { border: 0 },
-                        }} */
                       >
                         <TableCell align="left">
                           {location?.locationName}
@@ -231,8 +250,6 @@ console.log(state,"heyyyy");
                         <TableCell align="left">
                           {location?.address}
                         </TableCell>
-
-                   
                         <TableCell>
                           <Link
                             to={`/updateLocation/${location.id}`}
@@ -243,7 +260,6 @@ console.log(state,"heyyyy");
                               onClick={(e) => {
                                 e.preventDefault();
                                 handleUpdateClick(location.id);
-                              
                               }}
                             >
                               Update
@@ -262,9 +278,8 @@ console.log(state,"heyyyy");
                     </React.Fragment>
                   ))}
               </TableBody>
-            
             </Table>
-            {/* <TablePagination
+            <TablePagination
               rowsPerPageOptions={[5, 10, 25]}
               component="div"
               count={location.length}
@@ -272,44 +287,41 @@ console.log(state,"heyyyy");
               page={page}
               onPageChange={handleChangePage}
               onRowsPerPageChange={handleChangeRowsPerPage}
-            /> */}
-
-
-<TableRow>
-                <TableCell colSpan={5} align="center">
-                  <CustomTablePagination
-                    rowsPerPageOptions={[5, 10, 25, { label: 'All', value: -1 }]}
-                    colSpan={3}
-                    count={totalRows}
-                    rowsPerPage={5}
-                    page={page}
-                    slotProps={{
-                      select: {
-                        'aria-label': 'Rows per page',
+            />
+            <TableRow>
+              <TableCell colSpan={5} align="center">
+                <CustomTablePagination
+                  rowsPerPageOptions={[5, 10, 25, { label: 'All', value: -1 }]}
+                  colSpan={3}
+                  count={totalRows}
+                  rowsPerPage={5}
+                  page={page}
+                  slotProps={{
+                    select: {
+                      'aria-label': 'Rows per page',
+                    },
+                    actions: {
+                      showFirstButton: true,
+                      showLastButton: true,
+                      slots: {
+                        firstPageIcon: FirstPageRoundedIcon,
+                        lastPageIcon: LastPageRoundedIcon,
+                        nextPageIcon: ChevronRightRoundedIcon,
+                        backPageIcon: ChevronLeftRoundedIcon,
                       },
-                      actions: {
-                        showFirstButton: true,
-                        showLastButton: true,
-                        slots: {
-                          firstPageIcon: FirstPageRoundedIcon,
-                          lastPageIcon: LastPageRoundedIcon,
-                          nextPageIcon: ChevronRightRoundedIcon,
-                          backPageIcon: ChevronLeftRoundedIcon,
-                        },
-                      },
-                    }}
-                    onPageChange={handleChangePage}
-                    onRowsPerPageChange={handleChangeRowsPerPage}
-                  />
-                </TableCell>
-              </TableRow>
+                    },
+                  }}
+                  onPageChange={handleChangePage}
+                  onRowsPerPageChange={handleChangeRowsPerPage}
+                />
+              </TableCell>
+            </TableRow>
           </TableContainer>
         </Grid>
       </Grid>
     </>
   );
 };
-
 
 const blue = {
   200: '#A5D8FF',
@@ -450,30 +462,3 @@ const CustomTablePagination = styled(TablePagination)(
 );
 
 export default LocationList;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
