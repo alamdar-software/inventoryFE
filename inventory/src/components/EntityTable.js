@@ -7,12 +7,12 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 
 import TableRow from '@mui/material/TableRow';
-import { Button } from '@mui/material';
+import { Box, Button, Card, CardContent, FormControl, Grid, InputLabel, MenuItem, Select, Typography } from '@mui/material';
 import ButtonGroup from '@mui/material/ButtonGroup';
 
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 
 import {
@@ -24,6 +24,7 @@ import FirstPageRoundedIcon from '@mui/icons-material/FirstPageRounded';
 import LastPageRoundedIcon from '@mui/icons-material/LastPageRounded';
 import ChevronLeftRoundedIcon from '@mui/icons-material/ChevronLeftRounded';
 import ChevronRightRoundedIcon from '@mui/icons-material/ChevronRightRounded';
+import { fetchentity } from '../redux/slice/entitySlice';
 const columns = [
   { id: 'Entity Name', label: 'Entity Name', minWidth: 200 },
   { id: 'Actions', label: 'Actions', minWidth: 100 },
@@ -33,11 +34,23 @@ export default function EntityTable({  }) {
   const navigate = useNavigate();
   const [data,setdata] = useState([]);
   const [page, setPage] = React.useState(0);
+  const [entity, setEntity]= useState([]);
   /*  const [datas, setdatas] = useState([]); */
   /*   setdatas(data); */
   console.log(data, 'tableeeeeeeeee');
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
   console.log(Array.isArray(data), 'yesss');
+
+  const dispatch= useDispatch()
+  
+  const [formData, setformData] = useState({
+    entityName: '',
+    
+  });
+  useEffect(() => {
+    dispatch(fetchentity(currentUser.accessToken));
+  
+  }, []);
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -120,7 +133,7 @@ export default function EntityTable({  }) {
         const data = await res.json();
   
         console.log(data, "backdata");
-        setdata(data);
+        setEntity(data);
   
         // Set the total number of rows based on the length of the fetched data array
         setTotalRows(data.length);
@@ -133,10 +146,111 @@ export default function EntityTable({  }) {
   
     getCurrency();
   }, []);
-  
+  const handleSearch = () => {
+    console.log('Form Data:', formData);
+
+    fetch('http://localhost:8080/entity/search', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${currentUser.accessToken}`,
+      },
+      body: JSON.stringify(formData),
+    })
+      .then((res) => res.json())
+      .then((result) => {
+        if (Array.isArray(result)) {
+          setEntity(result);
+        } else {
+          console.error('Received data does not contain an array:', result);
+          setEntity([]);
+        }
+      })
+      .catch((error) => {
+        console.error('Error searching data:', error);
+        setEntity([]);
+      });
+  };
+  console.log(formData,"jujuju");
 
   return (
+    
     <Paper sx={{ width: '100%', margin: '0 auto', maxWidth: '1000px' }}>
+
+      
+<Box>
+        <Card 
+          color='secondary'
+          sx={{
+            width: '100%',
+            backgroundColor: 'secondary',
+            borderBottom: '2px solid yellow',
+            mb: '31px',
+            mt:'31px'
+          }}
+        >
+          <CardContent >
+            <Typography
+              variant='h4'
+              color='secondary'
+              gutterBottom
+              style={{ fontFamily: "'EB Garamond'" }}
+            >
+              View Entity
+            </Typography>
+          </CardContent>
+        </Card>
+        {/* <Chip
+          sx={{ mb: '11px', fontWeight: 'bolder' }}
+          //label={`Total Incoming Stock: ${totalCount}`}
+          variant='outlined'
+        /> */}
+        <Grid container spacing={2}>
+          <Grid item xs={12} sm={6}>
+            <FormControl fullWidth sx={{ width: '90%' }}>
+              <InputLabel id='demo-simple-select-label'>
+                Entity Name
+              </InputLabel>
+              <Select
+                labelId='demo-simple-select-label'
+                id='demo-simple-select'
+                label='entityName'
+                onChange={(e) =>
+                  setformData({
+                    ...formData,
+                    entityName: e.target.value,
+                  })
+                }
+              >
+                {state.nonPersisted.entity.data?.map((item, index) => (
+                  <MenuItem key={index} value={item?.entityName}>
+                    {' '}
+                    {item?.entityName}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+          </Grid>
+         
+        <Button
+          variant='contained'
+          color='secondary'
+          size='large'
+          onClick={handleSearch}
+          sx={{
+            mt: '33px',
+            mb: '17px',
+            marginLeft: 'auto',
+            marginRight: 'auto',
+            display: 'block',
+          }}
+        >
+          Search
+        </Button>
+        </Grid>
+       
+      </Box>
+
       <TableContainer sx={{ maxHeight: 500 }}>
         <Table
           stickyHeader
@@ -163,14 +277,14 @@ export default function EntityTable({  }) {
             </TableRow>
           </TableHead>
           <TableBody>
-            {data.length === 0 ? (
+            {entity.length === 0 ? (
               <TableRow>
                 <TableCell colSpan={columns.length} align='center'>
                   No Data Found
                 </TableCell>
               </TableRow>
             ) : (
-              data
+              entity
                 ?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((row, index) => (
                   <TableRow hover role='checkbox' tabIndex={-1} key={index}>

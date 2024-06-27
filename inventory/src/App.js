@@ -149,6 +149,7 @@ import React from 'react';
 import { ToastContainer } from 'react-toastify';
 import { TableContainer } from '@mui/material';
 import ItemInventory from './components/ItemInventory.js';
+import ViewPickup from './components/ViewPickup.js';
 
 const theme = createTheme({
   palette: {
@@ -335,6 +336,14 @@ theme="light"
                   element={
                     <Sidebar>
                       <LocationList />
+                    </Sidebar>
+                  }
+                />
+                 <Route
+                  path='/view-pickup'
+                  element={
+                    <Sidebar>
+                      <ViewPickup />
                     </Sidebar>
                   }
                 />

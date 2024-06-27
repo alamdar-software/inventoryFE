@@ -90,6 +90,14 @@ export default function TableComp({  }) {
   const { currentUser } = state.persisted.user;
 
   useEffect(() => {
+    // Update totalRows when locationData or itemData changes
+    
+    setTotalRows(data.length);
+    
+  },);
+
+
+  useEffect(() => {
     const getCurrency = async () => {
         console.log(currentUser.accessToken);
         try {
@@ -109,7 +117,7 @@ export default function TableComp({  }) {
             setdata(data);
             
             // Set the total number of rows based on the length of the fetched data array
-            setTotalRows(data.length);
+            
         } catch (error) {
             console.error('Error fetching data:', error);
             // Handle error, e.g., setdata([]) to clear previous data or show an error message

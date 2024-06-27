@@ -17,7 +17,7 @@ import {
   Paper,
   Table,
   TableBody,
-  TablePagination,
+
   Box,
 } from '@mui/material';
 import { Link } from 'react-router-dom';
@@ -32,6 +32,8 @@ import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
 import { CSVLink } from 'react-csv';
 
 import {
+  
+  TablePagination,
   
   tablePaginationClasses as classes,
 } from '@mui/base/TablePagination';
