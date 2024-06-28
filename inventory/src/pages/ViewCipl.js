@@ -59,7 +59,7 @@ export const ViewCipl = () => {
     item: '',
     transferDate: '',
     locationName: '',
-    referenceNo: "",
+    referenceNunber: "",
     status: ""
   });
 
@@ -258,7 +258,7 @@ export const ViewCipl = () => {
                 onChange={(e) => {
                   setformData({
                     ...formData,
-                    referenceNo: e.target.value,
+                    referenceNumber: e.target.value,
                   });
                 }}
               >
