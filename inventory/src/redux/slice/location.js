@@ -12,18 +12,7 @@ export const fetchlocation = createAsyncThunk(
     return response.json();
   }
 );
-export const fetchlocationsearch = createAsyncThunk(
-  "fetchlocation",
-  async (accessToken) => {
-    const response = await fetch("http://localhost:8080/location/search", {
-      method:"post",
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-      },
-    });
-    return response.json();
-  }
-);
+
 
 const consigneeSlice = createSlice({
   name: "location",

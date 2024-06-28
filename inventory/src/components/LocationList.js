@@ -28,7 +28,8 @@ import {
   TablePagination,
   tablePaginationClasses as classes,
 } from '@mui/base/TablePagination';
-import { fetchlocationsearch } from "../redux/slice/location";
+import { fetchlocationsearch } from "../redux/slice/fetchLocationSearch";
+import { fetchlocation } from "../redux/slice/location";
 
 const LocationList = () => {
   const [formData, setFormData] = useState({
@@ -43,28 +44,31 @@ const LocationList = () => {
   const [rowsPerPage, setRowsPerPage] = useState(5); // Adjust as needed
   const [error, setError] = useState(null);
   const [locations, setLocations] = useState([]);
-  const [selectedLocation, setSelectedLocation] = useState("");
-  const [selectedLocationId, setSelectedLocationId] = useState(null);
-  const [showError, setShowError] = useState(false);
+  const [filteredSublocations, setFilteredSublocations] = useState([]);
   const [totalRows, setTotalRows] = useState(0);
+  const [ShowError, setShowError] = useState(false)
+
+
+
 
   useEffect(() => {
     dispatch(fetchlocationsearch(currentUser.accessToken));
+    dispatch(fetchlocation(currentUser.accessToken));
   }, [dispatch, currentUser.accessToken]);
 
   useEffect(() => {
     fetchLocations();
+    handleSearch();
   }, []);
 
   const fetchLocations = async () => {
     try {
-      const res = await fetch("http://localhost:8080/location/search", {
-        method: "POST",
+      const res = await fetch("http://localhost:8080/location/viewAll", {
+        method: "GET",
         headers: {
           Authorization: `Bearer ${currentUser.accessToken}`,
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({})
       });
 
       const result = await res.json();
@@ -87,6 +91,7 @@ const LocationList = () => {
       });
 
       const response = await res.json();
+      console.log(response, "jummaaaaaaaaaaaaaaaaanji");
       setLocations(response);
       setTotalRows(response.length);
     } catch (error) {
@@ -128,6 +133,22 @@ const LocationList = () => {
     }
   };
 
+  useEffect(() => {
+    if (formData.locationName) {
+      const selectedLocation = state?.nonPersisted?.location?.data?.find(
+        (item) => item.locationName === formData.locationName
+      );
+      console.log(selectedLocation,"human");
+      if (selectedLocation) {
+        setFilteredSublocations(selectedLocation.addresses);
+      } else {
+        setFilteredSublocations([]);
+      }
+    } else {
+      setFilteredSublocations([]);
+    }
+  }, [formData.locationName, state?.nonPersisted?.location?.data]);
+
   return (
     <>
       <Grid>
@@ -156,7 +177,6 @@ const LocationList = () => {
             sx={{ borderRadius: "33px", borderBottom: "2px solid yellow" }}
           >
             <div sx={{ backgroundColor: blue }}>
-
               <div style={{ display: 'flex', margin: "40px", gap: "30px" }}>
                 <FormControl fullWidth sx={{ width: '70%' }}>
                   <InputLabel id='demo-simple-select-label'>Location</InputLabel>
@@ -203,9 +223,9 @@ const LocationList = () => {
                       address: e.target.value
                     })}
                   >
-                    {state?.nonPersisted?.location?.data?.map((item, index) => (
-                      <MenuItem key={index} value={item?.address}>
-                        {item?.address}
+                    {filteredSublocations.map((item, index) => (
+                      <MenuItem key={index} value={item.address}>
+                        {item.address}
                       </MenuItem>
                     ))}
                   </Select>
