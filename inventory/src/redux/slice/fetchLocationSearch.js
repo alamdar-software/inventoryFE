@@ -1,21 +1,23 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { useSelector } from "react-redux";
 
-export const fetchlocation = createAsyncThunk(
-  "fetchlocation",
+
+export const fetchlocationsearch = createAsyncThunk(
+  "fetchlocationSearch",
   async (accessToken) => {
-    const response = await fetch("http://localhost:8080/location/getAll", {
+    const response = await fetch("http://localhost:8080/location/search", {
+        method:"POST",
       headers: {
         Authorization: `Bearer ${accessToken}`,
       },
+      body:{}
     });
     return response.json();
   }
 );
 
-
-const consigneeSlice = createSlice({
-  name: "location",
+const locationSLice = createSlice({
+  name: "locationSearch",
   initialState: {
     loading: false,
     data: null,
@@ -23,19 +25,19 @@ const consigneeSlice = createSlice({
   },
   //returned data is in action.payload
   extraReducers: (builder) => {
-    builder.addCase(fetchlocation.fulfilled, (state, action) => {
+    builder.addCase(fetchlocationsearch.fulfilled, (state, action) => {
       state.loading = false;
       state.data = action.payload;
       state.error = false;
     });
-    builder.addCase(fetchlocation.pending, (state, action) => {
+    builder.addCase(fetchlocationsearch.pending, (state, action) => {
       state.loading = true;
     });
-    builder.addCase(fetchlocation.rejected, (state, action) => {
+    builder.addCase(fetchlocationsearch.rejected, (state, action) => {
       state.loading = true;
       state.error = action.payload;
     });
     
   },
 });
-export default consigneeSlice.reducer;
+export default locationSLice.reducer;

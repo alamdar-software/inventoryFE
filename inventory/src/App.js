@@ -356,7 +356,7 @@ theme="light"
                   }
                 />
                 <Route
-                  path='/updateLocation/:locationId/addresses/:addressId'
+                  path='/updateLocation/:locationId'
                   element={
                     <Sidebar>
                       <Update />

@@ -121,8 +121,7 @@ export default function UomTable({ data }) {
             </TableRow>
           </TableHead>
           <TableBody>
-            {data
-              ?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+            {data?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
               .map((row, index) => (
                 <TableRow hover role="checkbox" tabIndex={-1} key={index}>
                   <TableCell>{row.unitName}</TableCell>

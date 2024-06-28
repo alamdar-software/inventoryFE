@@ -102,7 +102,7 @@ const Consignee = () => {
         theme: 'dark',
       });
       setTimeout(() => {
-        window.location.reload();
+        // window.location.reload();
       }, 3000);
     } catch (error) {
       console.error('Error during fetch:', error);

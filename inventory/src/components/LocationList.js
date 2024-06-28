@@ -11,14 +11,13 @@ import {
   TableHead,
   TableRow,
   Typography,
-  
   Select,
   MenuItem,
   InputLabel,
   FormControl,
 } from "@mui/material";
 import React, { useState, useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import FirstPageRoundedIcon from '@mui/icons-material/FirstPageRounded';
 import LastPageRoundedIcon from '@mui/icons-material/LastPageRounded';
@@ -29,58 +28,94 @@ import {
   TablePagination,
   tablePaginationClasses as classes,
 } from '@mui/base/TablePagination';
+import { fetchlocationsearch } from "../redux/slice/fetchLocationSearch";
+import { fetchlocation } from "../redux/slice/location";
 
 const LocationList = () => {
+  const [formData, setFormData] = useState({
+    locationName: "",
+    address: ""
+  });
+
+  const dispatch = useDispatch();
+  const state = useSelector((state) => state);
   const { currentUser } = useSelector((state) => state.persisted.user);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5); // Adjust as needed
   const [error, setError] = useState(null);
-  const [location, setLocationName] = useState([]);
-  const [selectedLocation, setselectedLocation] = useState("");
-  const [selectedLocationId, setselectedLocationId] = useState(null);
-  const [showError, setShowError] = useState(false);
+  const [locations, setLocations] = useState([]);
+  const [filteredSublocations, setFilteredSublocations] = useState([]);
   const [totalRows, setTotalRows] = useState(0);
- 
+  const [ShowError, setShowError] = useState(false)
+
+
+
+
   useEffect(() => {
-    fetch("http://localhost:8080/location/getAll", {
-      headers: {
-        Authorization: `Bearer ${currentUser.accessToken}`,
-      },
-    })
-      .then((res) => res.json())
-      .then((result) => {
-        console.log(result);
-        setLocationName(result);
-       
-        /*  if (result.length > 0 && result[0].addresses.length > 0) {
-          setselectedLocation(result[0].addresses[0].address);
-          setselectedLocationId(result[0].addresses[0].id);
-        } */
-        if (result.length > 0 && result[0].addresses.length > 0) {
-          setselectedLocationId(result[0].addresses[0].id);
-          setTotalRows(result.length); 
-        }
-      });
+    dispatch(fetchlocationsearch(currentUser.accessToken));
+    dispatch(fetchlocation(currentUser.accessToken));
+  }, [dispatch, currentUser.accessToken]);
+
+  useEffect(() => {
+    fetchLocations();
+    handleSearch();
   }, []);
 
-  const deleteLocation = async (id) => {
-    console.log(id);
-    fetch(`http://localhost:8080/location/delete/${id}`, {
-      method: "DELETE",
-      headers: {
-        "Content-type": "application/json",
-        Authorization: `Bearer ${currentUser.accessToken}`,
-      },
-      body: JSON.stringify(LocationList),
-    })
-      .then(() => {
-        console.log("Location deleted");
-        window.location.reload();
-      })
-      .catch((error) => {
-        console.error("Error updating location:", error);
+  const fetchLocations = async () => {
+    try {
+      const res = await fetch("http://localhost:8080/location/viewAll", {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${currentUser.accessToken}`,
+          'Content-Type': 'application/json'
+        },
       });
+
+      const result = await res.json();
+      setLocations(result);
+      setTotalRows(result.length);
+    } catch (error) {
+      console.log(error);
+    }
   };
+
+  const handleSearch = async () => {
+    try {
+      const res = await fetch("http://localhost:8080/location/search", {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${currentUser.accessToken}`,
+        },
+        body: JSON.stringify(formData),
+      });
+
+      const response = await res.json();
+      console.log(response, "jummaaaaaaaaaaaaaaaaanji");
+      setLocations(response);
+      setTotalRows(response.length);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  console.log(formData,"mehraaaaaaaaaaaaaaaaaaaaaaaaaaan");
+
+  const deleteLocation = async (id) => {
+    try {
+      await fetch(`http://localhost:8080/location/delete/${id}`, {
+        method: "DELETE",
+        headers: {
+          "Content-type": "application/json",
+          Authorization: `Bearer ${currentUser.accessToken}`,
+        },
+      });
+
+      fetchLocations(); // Refresh the list after deletion
+    } catch (error) {
+      console.error("Error deleting location:", error);
+    }
+  };
+
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
@@ -89,17 +124,31 @@ const LocationList = () => {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
-  console.log(selectedLocation, "heyyy");
+
   const handleUpdateClick = (locationId) => {
-    if (!selectedLocation) {
+    if (!locationId) {
       setShowError(true);
     } else {
-      // Reset the error if a sublocation is selected
       setShowError(false);
-      // Redirect to the update page
-      window.location.href = `/updateLocation/${locationId}/addresses/${selectedLocationId}`;
+      window.location.href = `/updateLocation/${locationId}`;
     }
   };
+
+  useEffect(() => {
+    if (formData.locationName) {
+      const selectedLocation = state?.nonPersisted?.location?.data?.find(
+        (item) => item.locationName === formData.locationName
+      );
+      console.log(selectedLocation,"human");
+      if (selectedLocation) {
+        setFilteredSublocations(selectedLocation.addresses);
+      } else {
+        setFilteredSublocations([]);
+      }
+    } else {
+      setFilteredSublocations([]);
+    }
+  }, [formData.locationName, state?.nonPersisted?.location?.data]);
 
   return (
     <>
@@ -128,6 +177,72 @@ const LocationList = () => {
             component={Paper}
             sx={{ borderRadius: "33px", borderBottom: "2px solid yellow" }}
           >
+            <div sx={{ backgroundColor: blue }}>
+              <div style={{ display: 'flex', margin: "40px", gap: "30px" }}>
+                <FormControl fullWidth sx={{ width: '70%' }}>
+                  <InputLabel id='demo-simple-select-label'>Location</InputLabel>
+                  <Select
+                    labelId='demo-simple-select-label'
+                    id='demo-simple-select'
+                    value={formData.locationName}
+                    label='location'
+                    MenuProps={{
+                      PaperProps: {
+                        style: {
+                          maxHeight: 120,
+                        },
+                      },
+                    }}
+                    onChange={(e) => setFormData({
+                      ...formData,
+                      locationName: e.target.value
+                    })}
+                  >
+                    {state?.nonPersisted?.location?.data?.map((item, index) => (
+                      <MenuItem key={index} value={item?.locationName}>
+                        {item?.locationName}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
+                <FormControl fullWidth sx={{ width: '70%' }}>
+                  <InputLabel id='demo-simple-select-label'>Sub Location</InputLabel>
+                  <Select
+                    labelId='demo-simple-select-label'
+                    id='demo-simple-select'
+                    value={formData.address}
+                    label='address'
+                    MenuProps={{
+                      PaperProps: {
+                        style: {
+                          maxHeight: 120,
+                        },
+                      },
+                    }}
+                    onChange={(e) => setFormData({
+                      ...formData,
+                      address: e.target.value
+                    })}
+                  >
+                    {filteredSublocations.map((item, index) => (
+                      <MenuItem key={index} value={item.address}>
+                        {item.address}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    handleSearch();
+                  }}
+                >
+                  Search
+                </Button>
+              </div>
+            </div>
             <Table sx={{ minWidth: 500 }} aria-label="simple table">
               <TableHead>
                 <TableRow>
@@ -143,62 +258,19 @@ const LocationList = () => {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {location
+                {locations
                   .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                   .map((location, index) => (
                     <React.Fragment key={location.id}>
-                      <TableRow
-                        key={location.name}
-                        /*  sx={{
-                          "&:last-child td, &:last-child th": { border: 0 },
-                        }} */
-                      >
+                      <TableRow key={location.name}>
                         <TableCell align="left">
-                          {location.locationName}
+                          {location?.locationName}
                         </TableCell>
-
                         <TableCell align="left">
-                          <FormControl fullWidth sx={{ width: "20rem" }}>
-                            <InputLabel id="subLocation">
-                              View Sub Location
-                            </InputLabel>
-                            <Select
-                              labelId="subLocation"
-                              id="subLocation"
-                              label="Sub Location"
-                              defaultValue={selectedLocation || ""}
-                              /* value={formData?.name} */
-                              //value={age}
-                              value={selectedLocation}
-                              onChange={(e) => {
-                                setselectedLocation(e.target.value);
-                                // Assuming each address has a unique ID, use it here
-                                const selectedAddress =
-                                  location?.addresses.find(
-                                    (address) =>
-                                      address?.address === e.target.value
-                                  );
-                                setselectedLocationId(
-                                  selectedAddress ? selectedAddress.id : null
-                                );
-                              }}
-                              style={{ width: "60%" }}
-
-                              //onChange={handleChange}
-                            >
-                              {location?.addresses.map((adress) => (
-                                <MenuItem key={index} value={adress?.address}>
-                                  {" "}
-                                  {adress?.address}
-                                </MenuItem>
-                              ))}
-                            </Select>
-                          </FormControl>
+                          {location?.address}
                         </TableCell>
                         <TableCell>
-                          <Link
-                            to={`/updateLocation/${location.id}/addresses/${selectedLocationId}`}
-                          >
+                          <Link to={`/updateLocation/${location.id}`}>
                             <Button
                               variant="contained"
                               color="secondary"
@@ -223,60 +295,41 @@ const LocationList = () => {
                     </React.Fragment>
                   ))}
               </TableBody>
-              {showError && (
-                <TableRow>
-                  <TableCell colSpan={3} align="center" sx={{ color: "red" }}>
-                    Please select a sublocation
-                  </TableCell>
-                </TableRow>
-              )}
             </Table>
-            {/* <TablePagination
-              rowsPerPageOptions={[5, 10, 25]}
-              component="div"
-              count={location.length}
-              rowsPerPage={rowsPerPage}
-              page={page}
-              onPageChange={handleChangePage}
-              onRowsPerPageChange={handleChangeRowsPerPage}
-            /> */}
-
-
-<TableRow>
-                <TableCell colSpan={5} align="center">
-                  <CustomTablePagination
-                    rowsPerPageOptions={[5, 10, 25, { label: 'All', value: -1 }]}
-                    colSpan={3}
-                    count={totalRows}
-                    rowsPerPage={5}
-                    page={page}
-                    slotProps={{
-                      select: {
-                        'aria-label': 'Rows per page',
+            <TableRow>
+              <TableCell colSpan={5} align="center">
+                <CustomTablePagination
+                  rowsPerPageOptions={[5, 10, 25, { label: 'All', value: -1 }]}
+                  colSpan={3}
+                  count={totalRows}
+                  rowsPerPage={rowsPerPage}
+                  page={page}
+                  slotProps={{
+                    select: {
+                      'aria-label': 'Rows per page',
+                    },
+                    actions: {
+                      showFirstButton: true,
+                      showLastButton: true,
+                      slots: {
+                        firstPageIcon: FirstPageRoundedIcon,
+                        lastPageIcon: LastPageRoundedIcon,
+                        nextPageIcon: ChevronRightRoundedIcon,
+                        backPageIcon: ChevronLeftRoundedIcon,
                       },
-                      actions: {
-                        showFirstButton: true,
-                        showLastButton: true,
-                        slots: {
-                          firstPageIcon: FirstPageRoundedIcon,
-                          lastPageIcon: LastPageRoundedIcon,
-                          nextPageIcon: ChevronRightRoundedIcon,
-                          backPageIcon: ChevronLeftRoundedIcon,
-                        },
-                      },
-                    }}
-                    onPageChange={handleChangePage}
-                    onRowsPerPageChange={handleChangeRowsPerPage}
-                  />
-                </TableCell>
-              </TableRow>
+                    },
+                  }}
+                  onPageChange={handleChangePage}
+                  onRowsPerPageChange={handleChangeRowsPerPage}
+                />
+              </TableCell>
+            </TableRow>
           </TableContainer>
         </Grid>
       </Grid>
     </>
   );
 };
-
 
 const blue = {
   200: '#A5D8FF',
@@ -417,30 +470,3 @@ const CustomTablePagination = styled(TablePagination)(
 );
 
 export default LocationList;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

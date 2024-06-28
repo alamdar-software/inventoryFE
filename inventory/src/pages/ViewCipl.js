@@ -17,7 +17,6 @@ import {
   Paper,
   Table,
   TableBody,
-  
   Box,
   TableFooter,
   IconButton,
@@ -25,8 +24,7 @@ import {
 import { Link } from 'react-router-dom';
 import { fetchlocation } from '../redux/slice/location';
 import { fetchItem } from '../redux/slice/ItemSlice';
-import { useDispatch } from 'react-redux';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
@@ -42,7 +40,6 @@ import LastPageRoundedIcon from '@mui/icons-material/LastPageRounded';
 import ChevronLeftRoundedIcon from '@mui/icons-material/ChevronLeftRounded';
 import ChevronRightRoundedIcon from '@mui/icons-material/ChevronRightRounded';
 
-
 export const ViewCipl = () => {
   const dispatch = useDispatch();
   const state = useSelector((state) => state);
@@ -53,117 +50,26 @@ export const ViewCipl = () => {
   const [allCipl, setAllCipl] = useState([]);
   const [filteredCipl, setFilteredCipl] = useState([]);
   const { currentUser } = useSelector((state) => state.persisted.user);
-  const [totalRows,setTotalRows] = useState(0);
-  
-
-  useEffect(() => {
-    dispatch(fetchlocation(currentUser.accessToken));
-    dispatch(fetchItem(currentUser.accessToken));
-  }, []);
-
+  const [totalRows, setTotalRows] = useState(0);
+  const [referenceNo, setreferenceNo] = useState("");
+  const [uniqueRefNos, setUniqueRefNos] = useState([]);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [formData, setformData] = useState({
     item: '',
     transferDate: '',
     locationName: '',
+    referenceNo: "",
+    status: ""
   });
-  const handleChangePage = (event, newPage) => {
-    setPage(newPage);
-  };
 
-  const handleChangeRowsPerPage = (event) => {
-    setRowsPerPage(parseInt(event.target.value, 10));
-    setPage(0);
-  };
-  console.log(formData, 'heyyy');
-  // const handleClick = () => {
-  //   try {
-  //     const formData = {
-  //       pickupAddress,
-  //       pIC,
-  //       companyName,
-  //       countryCode,
-  //       contactNumber,
-  //     };
-
-  //     console.log(formData);
-
-  //     fetch('http://localhost:8080/pickup/add', {
-  //       method: 'POST',
-  //       headers: { 'Content-type': 'application/json' },
-  //       body: JSON.stringify(formData),
-  //     }).then(() => {
-  //       console.log('Pickup Added');
-  //     });
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
-
-  /*   const handleClick = (e) => {
-    e.preventDefault();
-    const attendence = {
-      pickupAddress,
-      pic,
-      companyName,
-      countryCode,
-      contactNumber,
-    };
-    console.log(attendence);
-
-    fetch("http://localhost:8080/pickup/add", {
-      method: "POST",
-      headers: { "Content-type": "application/json" },
-      body: JSON.stringify(attendence),
-    }).then(() => {
-      console.log("Pickup Added");
-      window.location.reload();
-    });
-  };
   useEffect(() => {
-    fetch('http://localhost:8080/pickup/view')
-      .then((res) => {
-        if (!res.ok) {
-          throw new Error(`HTTP error! Status: ${res.status}`);
-        }
-        return res.json();
-      })
-      .then((result) => {
-        console.log(result);
-        setPickUp(result);
-      })
-      .catch((error) => {
-        console.error('Error fetching pickup data:', error);
-      });
-  }, []);
-*/
-  const handledeleteCipl = async (id) => {
-    alert('Deleted Successfully!');
-    console.log(id);
-    fetch(`http://localhost:8080/cipl/delete/${id}`, {
-      method: 'DELETE',
-      headers: {
-        'Content-type': 'application/json',
-        Authorization: `Bearer ${currentUser.accessToken}`,
-      },
-    })
-      .then(() => {
-        console.log('Pickup Deleted');
-        window.location.reload();
-      })
-      .catch((error) => {
-        console.error('Error updating pickup:', error);
-      });
-  };
+    dispatch(fetchlocation(currentUser.accessToken));
+    dispatch(fetchItem(currentUser.accessToken));
+  }, [dispatch, currentUser.accessToken]);
+
   useEffect(() => {
-    // Update totalRows when locationData or itemData changes
-    
-      setTotalRows(filteredCipl.length);
-    
-  },);
-  useEffect(() => {
-    fetch('http://localhost:8080/cipl/approved', {
+    fetch('http://localhost:8080/cipl/view', {
       method: 'GET',
       headers: {
         Authorization: `Bearer ${currentUser.accessToken}`,
@@ -180,12 +86,18 @@ export const ViewCipl = () => {
         console.log(result, 'rupaaaaaaaaaaa');
         setAllCipl(result);
         setFilteredCipl(result);
-       
+        // Extract unique reference numbers
+        const uniqueRefs = [...new Set(result.map(cipl => cipl.referenceNo))];
+        setUniqueRefNos(uniqueRefs);
       })
       .catch((error) => {
         console.error('Error fetching pickup data:', error);
       });
-  }, []);
+  }, [currentUser.accessToken]);
+
+  useEffect(() => {
+    setTotalRows(filteredCipl.length);
+  }, [filteredCipl]);
 
   const handleClick = async (e) => {
     e.preventDefault();
@@ -212,24 +124,44 @@ export const ViewCipl = () => {
     }
   };
 
+  const handleChangePage = (event, newPage) => {
+    setPage(newPage);
+  };
+
+  const handleChangeRowsPerPage = (event) => {
+    setRowsPerPage(parseInt(event.target.value, 10));
+    setPage(0);
+  };
+
   const handleDateChange = (date) => {
     setformData({
       ...formData,
       transferDate: date.format('YYYY-MM-DD'),
     });
   };
+
+  const handledeleteCipl = async (id) => {
+    alert('Deleted Successfully!');
+    fetch(`http://localhost:8080/cipl/delete/${id}`, {
+      method: 'DELETE',
+      headers: {
+        'Content-type': 'application/json',
+        Authorization: `Bearer ${currentUser.accessToken}`,
+      },
+    })
+      .then(() => {
+        console.log('Pickup Deleted');
+        window.location.reload();
+      })
+      .catch((error) => {
+        console.error('Error updating pickup:', error);
+      });
+  };
+
   const generatePDF = async (rowData, index) => {
     console.log('Generate PDF clicked');
-    // const pdf = new jsPDF();
-
-    const tableRow = document.getElementById(`${rowData.id}-${index}`);
-    if (tableRow) {
-      // const canvas = await html2canvas(tableRow);
-      // const imgData = canvas.toDataURL('image/png');
-      // pdf.addImage(imgData, 'PNG', 10, 10, 190, 0);
-      // pdf.save('table.pdf');
-    }
   };
+
   return (
     <>
       <Grid>
@@ -237,9 +169,6 @@ export const ViewCipl = () => {
           color='secondary'
           sx={{
             width: '100%',
-            // background:
-            //   'linear-gradient(217deg, rgba(255,0,0,.8), rgba(255,0,0,0) 70.71%)',
-
             borderBottom: '2px solid #ab47bc',
           }}
         >
@@ -279,13 +208,6 @@ export const ViewCipl = () => {
                     item: e.target.value,
                   });
                 }}
-                /* onChange={(e) =>
-                  handleItemChange(
-                    index,
-                    selectedSubLocations[index],
-                    e.target.value
-                  )
-                } */
               >
                 {state.nonPersisted.item.data?.map((item, index) => (
                   <MenuItem key={index} value={item?.description}>
@@ -302,13 +224,11 @@ export const ViewCipl = () => {
               <Select
                 labelId='demo-simple-select-label'
                 id='demo-simple-select'
-                //value={age}
-
                 label='location'
                 MenuProps={{
                   PaperProps: {
                     style: {
-                      maxHeight: 120, // Adjust the height as needed
+                      maxHeight: 120,
                     },
                   },
                 }}
@@ -318,8 +238,6 @@ export const ViewCipl = () => {
                     locationName: e.target.value,
                   });
                 }}
-
-                //onChange={handleChange}
               >
                 {state.nonPersisted.location.data?.map((item, index) => (
                   <MenuItem key={index} value={item?.locationName}>
@@ -331,190 +249,214 @@ export const ViewCipl = () => {
             </FormControl>
           </Grid>
           <Grid item xs={12} sm={6}>
+            <FormControl fullWidth>
+              <InputLabel id='demo-simple-select-label'>Ref No</InputLabel>
+              <Select
+                labelId='demo-simple-select-label'
+                id='referenceNo'
+                label='referenceNo'
+                onChange={(e) => {
+                  setformData({
+                    ...formData,
+                    referenceNo: e.target.value,
+                  });
+                }}
+              >
+                {uniqueRefNos.map((refNo, index) => (
+                  <MenuItem key={index} value={refNo}>
+                    {refNo}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+          </Grid>
+          <Grid item xs={12} sm={6}>
             <FormControl fullWidth sx={{ width: '90%' }}>
-              <Grid item xs={12} sm={6}>
-                <LocalizationProvider dateAdapter={AdapterDayjs}>
-                  <DatePicker
-                    /* value={
-                formData.purchaseDate ? dayjs(formData.purchaseDate) : null
-              } */
-                    onChange={(newDate) => handleDateChange(newDate)}
-                    // onChange={(newDate) => handleDateChange(newDate)}
-                    fullWidth
-                    sx={{ width: '90%' }}
-                    /* format="yyyy-MM-dd" */
-                  />
-                </LocalizationProvider>
-              </Grid>
+              <LocalizationProvider dateAdapter={AdapterDayjs}>
+                <DatePicker
+                  onChange={(newDate) => handleDateChange(newDate)}
+                  fullWidth
+                  sx={{ width: '90%' }}
+                />
+              </LocalizationProvider>
+            </FormControl>
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <FormControl fullWidth>
+              <InputLabel id='status-label'>Status</InputLabel>
+              <Select
+                labelId='status-label'
+                id='status'
+                label='Status'
+                onChange={(e) => {
+                  setformData({
+                    ...formData,
+                    status: e.target.value,
+                  });
+                }}
+              >
+                <MenuItem value="created">Created</MenuItem>
+                <MenuItem value="approved">Approved</MenuItem>
+                <MenuItem value="rejected">Rejected</MenuItem>
+              </Select>
             </FormControl>
           </Grid>
         </Grid>
-
         <Button
           variant='contained'
           color='secondary'
-          size='large'
-          sx={{
-            mt: '33px',
-            mb: '17px',
-            marginLeft: 'auto',
-            marginRight: 'auto',
-            display: 'block',
-          }}
           onClick={handleClick}
+          sx={{
+            mt: '22px',
+            mb: '22px',
+            ml: '33px',
+            borderRadius: '33px',
+            width: '22%',
+          }}
         >
           Search
         </Button>
       </Card>
-      <Grid sx={{ mt: '33px' }}>
-        <TableContainer
-          component={Paper}
-          sx={{
-            borderRadius: '33px',
-            borderBottom: '2px solid yellow',
-          }}
-        >
-          <Table sx={{ minWidth: 650 }} aria-label='simple table'>
+
+      <Box
+        sx={{
+          mt: '22px',
+        }}
+      >
+        <TableContainer component={Paper}>
+          <Table>
             <TableHead>
               <TableRow>
-                <TableCell align='left' sx={{ fontWeight: 'bold' }}>
-                  Source Location
-                </TableCell>
-                <TableCell align='left' sx={{ fontWeight: 'bold' }}>
-                  SubLocations
-                </TableCell>
-                <TableCell align='left' sx={{ fontWeight: 'bold' }}>
-                  Shipper
-                </TableCell>
-                <TableCell align='left' sx={{ fontWeight: 'bold' }}>
-                  Consignee
-                </TableCell>
-                <TableCell align='left' sx={{ fontWeight: 'bold' }}>
-                  Ref Number
-                </TableCell>
-
-                <TableCell align='left' sx={{ fontWeight: 'bold' }}>
-                  Transfer Date
-                </TableCell>
-                <TableCell align='left' sx={{ fontWeight: 'bold' }}>
-                  Status
-                </TableCell>
-
-                <TableCell align='left' sx={{ fontWeight: 'bold' }}>
-                  Print
-                </TableCell>
-                <TableCell align='left' sx={{ fontWeight: 'bold' }}>
-                  Action
-                </TableCell>
+                <TableCell align='center'>Sr.No</TableCell>
+                <TableCell align='center'>Location Name</TableCell>
+                <TableCell align='center'>Item Description</TableCell>
+                <TableCell align='center'>TransferDate</TableCell>
+                <TableCell align='center'>Reference No</TableCell>
+                <TableCell align='center'>Status</TableCell>
+                <TableCell align='center'>Actions</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
-              {filteredCipl.length > 0 ? (
-                filteredCipl
-                  .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                  .map((ciplRow) =>
-                    // Render a row for each sublocation
-                    ciplRow.SubLocations.map((subLocation, index) => (
-                      <TableRow
-                        key={`${ciplRow.id}-${index}`} // Use a unique key for each row
-                        sx={{
-                          '&:last-child td, &:last-child th': { border: 0 },
-                        }}
-                      >
-                        <TableCell align='left'>
-                          {ciplRow.locationName}
-                        </TableCell>
-                        <TableCell align='left'>{subLocation}</TableCell>
-                        <TableCell align='left'>
-                          {ciplRow.shipperName}
-                        </TableCell>
-                        <TableCell align='left'>
-                          {ciplRow.consigneeName}
-                        </TableCell>
-                        <TableCell align='left'>
-                          {ciplRow.referenceNo}
-                        </TableCell>
-                        {/* Replace one of the TableCell components if needed */}
-                        <TableCell align='left'>
-                          {ciplRow.transferDate}
-                        </TableCell>
-                        <TableCell align='left'>{ciplRow.status}</TableCell>
-
-
-                        <TableCell align='left'>
-                          <Link to={`/cipl/createpdf/${ciplRow.id}`}>
-                            <Button
-                              variant='contained'
-                              color='primary'
-                              onClick={() => generatePDF(ciplRow.id, index)}
-                            >
-                              <PictureAsPdfIcon />
-                            </Button>
-                          </Link>
-                          </TableCell>
-                          <TableCell>
-                          <Link to={`/updateCipl/${ciplRow.id}`}>
-                            <IconButton>
-                              <EditIcon />
-                            </IconButton>
-                          </Link>
-                          <Button
-                            sx={{ marginLeft: '11px' }}
-                            variant='contained'
-                            color='secondary'
-                            onClick={() => handledeleteCipl(ciplRow.id)}
-                          >
-                            Delete
-                          </Button>
-                        </TableCell>
-                      </TableRow>
-                    ))
+              {(rowsPerPage > 0
+                ? filteredCipl.slice(
+                    page * rowsPerPage,
+                    page * rowsPerPage + rowsPerPage
                   )
-              ) : (
-                <TableRow>
-                  <TableCell colSpan={7} align='center' sx={{ color: 'red' }}>
-                    No incoming data available.
+                : filteredCipl
+              ).map((row, index) => (
+                <TableRow key={index}>
+                  <TableCell align='center'>{index + 1}</TableCell>
+                  <TableCell align='center'>{row.locationName}</TableCell>
+                  <TableCell align='center'>{row.item}</TableCell>
+                  <TableCell align='center'>{row.transferDate}</TableCell>
+                  <TableCell align='center'>{row.referenceNo}</TableCell>
+                  <TableCell align='center'>{row.status}</TableCell>
+                  <TableCell align='center'>
+                    <IconButton
+                      component={Link}
+                      to={`/pdf-page/${row.referenceNo}`}
+                      onClick={() => generatePDF(row)}
+                    >
+                      <PictureAsPdfIcon />
+                    </IconButton>
+                    <IconButton
+                      component={Link}
+                      to={`/edit-cipl/${row.id}`}
+                      aria-label='edit'
+                    >
+                      <EditIcon />
+                    </IconButton>
+                    <IconButton
+                      aria-label='delete'
+                      onClick={() => handledeleteCipl(row.id)}
+                    >
+                      {/* Add a delete icon */}
+                    </IconButton>
                   </TableCell>
                 </TableRow>
-              )}
+              ))}
             </TableBody>
-
             <TableFooter>
-            <TableRow>
-                <TableCell colSpan={5} align="center">
-                  <CustomTablePagination
-                    rowsPerPageOptions={[5, 10, 25, { label: 'All', value: -1 }]}
-                    colSpan={3}
-                    count={totalRows}
-                    rowsPerPage={5}
-                    page={page}
-                    slotProps={{
-                      select: {
-                        'aria-label': 'Rows per page',
-                      },
-                      actions: {
-                        showFirstButton: true,
-                        showLastButton: true,
-                        slots: {
-                          firstPageIcon: FirstPageRoundedIcon,
-                          lastPageIcon: LastPageRoundedIcon,
-                          nextPageIcon: ChevronRightRoundedIcon,
-                          backPageIcon: ChevronLeftRoundedIcon,
-                        },
-                      },
-                    }}
-                    onPageChange={handleChangePage}
-                    onRowsPerPageChange={handleChangeRowsPerPage}
-                  />
-                </TableCell>
+              <TableRow>
+                <TablePagination
+                  rowsPerPageOptions={[5, 10, 25]}
+                  colSpan={3}
+                  count={totalRows}
+                  rowsPerPage={rowsPerPage}
+                  page={page}
+                  onPageChange={handleChangePage}
+                  onRowsPerPageChange={handleChangeRowsPerPage}
+                  ActionsComponent={(subprops) => (
+                    <Box sx={{ flexShrink: 0, ml: 2.5 }}>
+                      <IconButton
+                        onClick={() => subprops.onPageChange(null, 0)}
+                        disabled={subprops.page === 0}
+                        aria-label='first page'
+                      >
+                        <FirstPageRoundedIcon />
+                      </IconButton>
+                      <IconButton
+                        onClick={() =>
+                          subprops.onPageChange(null, subprops.page - 1)
+                        }
+                        disabled={subprops.page === 0}
+                        aria-label='previous page'
+                      >
+                        <ChevronLeftRoundedIcon />
+                      </IconButton>
+                      <IconButton
+                        onClick={() =>
+                          subprops.onPageChange(null, subprops.page + 1)
+                        }
+                        disabled={
+                          subprops.page >=
+                          Math.ceil(subprops.count / subprops.rowsPerPage) - 1
+                        }
+                        aria-label='next page'
+                      >
+                        <ChevronRightRoundedIcon />
+                      </IconButton>
+                      <IconButton
+                        onClick={() =>
+                          subprops.onPageChange(
+                            null,
+                            Math.max(
+                              0,
+                              Math.ceil(subprops.count / subprops.rowsPerPage) -
+                                1
+                            )
+                          )
+                        }
+                        disabled={
+                          subprops.page >=
+                          Math.ceil(subprops.count / subprops.rowsPerPage) - 1
+                        }
+                        aria-label='last page'
+                      >
+                        <LastPageRoundedIcon />
+                      </IconButton>
+                    </Box>
+                  )}
+                  sx={{
+                    [`& .${classes.spacer}`]: {
+                      display: 'none',
+                    },
+                    [`& .${classes.toolbar}`]: {
+                      justifyContent: 'flex-end',
+                      gap: '10px',
+                    },
+                  }}
+                />
               </TableRow>
             </TableFooter>
           </Table>
         </TableContainer>
-      </Grid>
+      </Box>
     </>
   );
 };
+
+
 
 
 const blue = {

@@ -562,7 +562,7 @@ const SingleIncome = () => {
               }
               //onChange={handleChange}
             >
-              {state.nonPersisted.currency.data?.currencyList?.map(
+              {state.nonPersisted.currency.data?.map(
                 (item, index) => (
                   <MenuItem key={index} value={item?.currencyName}>
                     {' '}
