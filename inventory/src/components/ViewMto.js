@@ -44,6 +44,7 @@ const ViewMto = () => {
     description: '',
     locationName: '',
     transferDate: '',
+    status:'',
   });
   console.log(formData);
   const state = useSelector((state) => state);
@@ -54,6 +55,7 @@ const ViewMto = () => {
   const [totalCount, setTotalCount] = useState(0);
   const [totalRows,setTotalRows] = useState(0);
   const { currentUser } = state.persisted.user;
+  const [ref,setRef]=useState([]);
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
@@ -113,7 +115,7 @@ useEffect(() => {
   
   useEffect(() => {
     console.log(currentUser.accessToken, 'heyyyy');
-    fetch('http://localhost:8080/mto/approved', {
+    fetch('http://localhost:8080/mto/view', {
         headers: {
             Authorization: `Bearer ${currentUser.accessToken}`,
         },
@@ -305,7 +307,65 @@ useEffect(() => {
               />
             </LocalizationProvider>
           </Grid>
+          <Grid item xs={12} sm={6}>
+           <FormControl fullWidth sx={{ width: '90%', mt: '23px' }}>
+            <InputLabel id='demo-simple-select-label'>Status</InputLabel>
+            <Select
+              labelId='demo-simple-select-label'
+              id='demo-simple-select'
+              //value={age}
+              value={mto ? mto.status : ''}
+              InputProps={{ readOnly: true }}
+              label='status'
+              //onChange={handleChange}
+              onChange={(e) =>
+                setformData({
+                  ...mto,
+                  status: e.target.value,
+                })
+              }
+            >
+              <MenuItem value={'approved'}>Approved</MenuItem>
+              <MenuItem value={'rejected'}>Rejected</MenuItem>
+              <MenuItem value={'created'}>Created</MenuItem>
+
+            </Select>
+           </FormControl>
         </Grid>
+        <Grid item xs={12} sm={6}>
+            <FormControl fullWidth sx={{ width: '90%' }}>
+              <InputLabel id='demo-simple-select-label'>Ref No</InputLabel>
+              <Select
+                labelId='demo-simple-select-label'
+                id='referenceNo'
+                //value={age}
+                label='referenceNo'
+                MenuProps={{
+                  PaperProps: {
+                    style: {
+                      maxHeight: 120, // Adjust the height as needed
+                    },
+                  },
+                }}
+                //onChange={handleLocationChange}
+                onChange={(e) =>
+                  setformData({
+                    ...formData,
+                    referenceNo: e.target.value,
+                  })
+                }
+              >
+                {ref.map((referenceNo, index) => (
+                  <MenuItem key={index} value={referenceNo}>
+                    {' '}
+                    {referenceNo}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+          </Grid>
+        </Grid>
+      
         <Button
           variant='contained'
           color='secondary'

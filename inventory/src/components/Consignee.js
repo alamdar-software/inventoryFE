@@ -2,6 +2,7 @@ import {
   Button,
   Card,
   CardContent,
+  FormControl,
   Grid,
   InputLabel,
   MenuItem,
@@ -36,6 +37,7 @@ import FirstPageRoundedIcon from '@mui/icons-material/FirstPageRounded';
 import LastPageRoundedIcon from '@mui/icons-material/LastPageRounded';
 import ChevronLeftRoundedIcon from '@mui/icons-material/ChevronLeftRounded';
 import ChevronRightRoundedIcon from '@mui/icons-material/ChevronRightRounded';
+import { fetchConsignee } from '../redux/slice/ConsigneeSlice';
 
 const Consignee = () => {
   const state = useSelector((state) => state);
@@ -45,6 +47,8 @@ const Consignee = () => {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(fetchlocation(currentUser.accessToken));
+    dispatch(fetchConsignee(currentUser.accessToken));
+
   }, []);
 
   const [formData, setformData] = useState({
@@ -179,6 +183,30 @@ const Consignee = () => {
   };
   console.log(formData, 'hey');
   console.log(state, 'heyy bro');
+
+  const handleSearch = () => {
+    fetch('http://localhost:8080/consignee/search', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${currentUser.accessToken}`,
+      },
+      body: JSON.stringify(formData),
+    })
+      .then((res) => res.json())
+      .then((result) => {
+        if (Array.isArray(result)) {
+          setConsignee(result);
+        } else {
+          console.error('Received data does not contain an array:', result);
+          setConsignee([]);
+        }
+      })
+      .catch((error) => {
+        console.error('Error searching data:', error);
+        setConsignee([]);
+      });
+  };
   return (
     <>
       <Grid>
@@ -366,6 +394,79 @@ const Consignee = () => {
           Add
         </Button>
       </Card>
+
+      <Box>
+        <Card 
+          color='secondary'
+          sx={{
+            width: '100%',
+            backgroundColor: 'secondary',
+            borderBottom: '2px solid yellow',
+            mb: '31px',
+            mt:'31px'
+          }}
+        >
+          <CardContent >
+            <Typography
+              variant='h4'
+              color='secondary'
+              gutterBottom
+              style={{ fontFamily: "'EB Garamond'" }}
+            >
+              View Consignee
+            </Typography>
+          </CardContent>
+        </Card>
+        {/* <Chip
+          sx={{ mb: '11px', fontWeight: 'bolder' }}
+          //label={`Total Incoming Stock: ${totalCount}`}
+          variant='outlined'
+        /> */}
+        <Grid container spacing={2}>
+          <Grid item xs={12} sm={6}>
+            <FormControl fullWidth sx={{ width: '90%' }}>
+              <InputLabel id='demo-simple-select-label'>
+                Consignee Name
+              </InputLabel>
+              <Select
+                labelId='demo-simple-select-label'
+                id='demo-simple-select'
+                label='companyName'
+                onChange={(e) =>
+                  setformData({
+                    ...formData,
+                    consigneeName: e.target.value,
+                  })
+                }
+              >
+                {state.nonPersisted.consignee.data?.map((item, index) => (
+                  <MenuItem key={index} value={item?.consigneeName}>
+                    {' '}
+                    {item?.consigneeName}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+          </Grid>
+         
+        </Grid>
+       
+        <Button
+          variant='contained'
+          color='secondary'
+          size='large'
+          onClick={handleSearch}
+          sx={{
+            mt: '33px',
+            mb: '17px',
+            marginLeft: 'auto',
+            marginRight: 'auto',
+            display: 'block',
+          }}
+        >
+          Search
+        </Button>
+      </Box>
 
       <Grid sx={{ mt: '33px', width: '99%', overflowX: 'scroll' }}>
         <TableContainer
