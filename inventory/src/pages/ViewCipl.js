@@ -354,8 +354,8 @@ export const ViewCipl = () => {
                   <TableCell align='center'>
                     <IconButton
                       component={Link}
-                      to={`/cipl/createpdf/${row.referenceNo}`}
-                      onClick={() => generatePDF(row)}
+                      to={`/cipl/createpdf/${row.id}`}
+                      onClick={() => generatePDF(row.id, index)}
                     >
                       <PictureAsPdfIcon />
                     </IconButton>

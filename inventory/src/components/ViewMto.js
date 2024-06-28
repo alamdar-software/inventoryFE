@@ -438,7 +438,7 @@ useEffect(() => {
                           <Button
                             variant='contained'
                             color='primary'
-                            /*  onClick={() => generatePDF(ciplRow.id, index)} */
+                              onClick={() => generatePDF(ciplRow.id, index)} 
                           >
                             {<PictureAsPdfIcon />}
                           </Button>
