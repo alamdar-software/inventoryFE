@@ -1,9 +1,14 @@
 import {
+  Box,
   Button,
   Card,
   CardContent,
+  FormControl,
   Grid,
+  InputLabel,
+  MenuItem,
   Paper,
+  Select,
   Table,
   TableBody,
   TableCell,
@@ -15,7 +20,7 @@ import {
   Typography,
 } from '@mui/material';
 import React, { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import Swal from 'sweetalert2';
@@ -28,6 +33,7 @@ import FirstPageRoundedIcon from '@mui/icons-material/FirstPageRounded';
 import LastPageRoundedIcon from '@mui/icons-material/LastPageRounded';
 import ChevronLeftRoundedIcon from '@mui/icons-material/ChevronLeftRounded';
 import ChevronRightRoundedIcon from '@mui/icons-material/ChevronRightRounded';
+import { fetchShipper } from '../redux/slice/ShipperSlice';
 
 const Shipper = () => {
   const [shipperList, setShipperList] = useState([]);
@@ -40,6 +46,16 @@ const Shipper = () => {
   const [rowsPerPage, setRowsPerPage] = useState(5); // You can adjust the number of rows per page
   const { currentUser } = useSelector((state) => state.persisted.user);
   const [totalRows,setTotalRows] = useState(0);
+  const [shipper,setShipper] =useState([]);
+  const state = useSelector((state) => state);
+  const dispatch= useDispatch()
+
+
+
+  useEffect(() => {
+    dispatch(fetchShipper(currentUser.accessToken));
+  
+  }, []);
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -49,6 +65,10 @@ const Shipper = () => {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
+  const [searchData, setSearchData] = useState({
+    shipperName: '',
+    
+  });
 
   const handleClick = (e) => {
     e.preventDefault();
@@ -106,7 +126,7 @@ const Shipper = () => {
       .then((result) => {
         if (result) {
           const shippersArray = Object.values(result);
-          setShipperList(shippersArray);
+          setShipper(shippersArray);
           setTotalRows(shipperList.length);
         } else {
           console.error('Empty or invalid JSON response');
@@ -146,6 +166,30 @@ const Shipper = () => {
       })
       .catch((error) => {
         console.error('Error updating shipper:', error);
+      });
+  };
+  const handleSearch = () => {
+    console.log(searchData,"searchdata")
+    fetch('http://localhost:8080/shipper/search', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${currentUser.accessToken}`,
+      },
+      body: JSON.stringify(searchData),
+    })
+      .then((res) => res.json())
+      .then((result) => {
+        if (Array.isArray(result)) {
+          setShipper(result);
+        } else {
+          console.error('Received data does not contain an array:', result);
+          setShipper([]);
+        }
+      })
+      .catch((error) => {
+        console.error('Error searching data:', error);
+        setShipper([]);
       });
   };
 
@@ -263,6 +307,80 @@ const Shipper = () => {
           Add
         </Button>
       </Card>
+
+      <Box>
+        <Card 
+          color='secondary'
+          sx={{
+            width: '100%',
+            backgroundColor: 'secondary',
+            borderBottom: '2px solid yellow',
+            mb: '31px',
+            mt:'31px'
+          }}
+        >
+          <CardContent >
+            <Typography
+              variant='h4'
+              color='secondary'
+              gutterBottom
+              style={{ fontFamily: "'EB Garamond'" }}
+            >
+              View Shipper
+            </Typography>
+          </CardContent>
+        </Card>
+        {/* <Chip
+          sx={{ mb: '11px', fontWeight: 'bolder' }}
+          //label={`Total Incoming Stock: ${totalCount}`}
+          variant='outlined'
+        /> */}
+        <Grid container spacing={2}>
+          <Grid item xs={12} sm={6}>
+            <FormControl fullWidth sx={{ width: '90%' }}>
+              <InputLabel id='demo-simple-select-label'>
+                Shipper Name
+              </InputLabel>
+              <Select
+                labelId='demo-simple-select-label'
+                id='demo-simple-select'
+                label='companyName'
+                onChange={(e) =>
+                  setSearchData({
+                    ...searchData,
+                    shipperName: e.target.value,
+                  })
+                }
+              >
+                {state.nonPersisted.shipper.data?.map((item, index) => (
+                  <MenuItem key={index} value={item?.shipperName}>
+                    {' '}
+                    {item?.shipperName}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+          </Grid>
+         
+        </Grid>
+       
+        <Button
+          variant='contained'
+          color='secondary'
+          size='large'
+          onClick={handleSearch}
+          sx={{
+            mt: '33px',
+            mb: '17px',
+            marginLeft: 'auto',
+            marginRight: 'auto',
+            display: 'block',
+          }}
+        >
+          Search
+        </Button>
+      </Box>
+
       <Grid sx={{ mt: '33px' }}>
         <TableContainer
           component={Paper}
@@ -290,8 +408,8 @@ const Shipper = () => {
             </TableHead>
 
             <TableBody>
-              {shipperList.length > 0 ? (
-                shipperList
+              {shipper.length > 0 ? (
+                shipper
                   .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                   .map((shipperList) => (
                     <TableRow
@@ -332,6 +450,7 @@ const Shipper = () => {
                   </TableCell>
                 </TableRow>
               )}
+              
             </TableBody>
             <TableFooter>
             <TableRow>
