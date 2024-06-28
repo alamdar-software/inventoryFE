@@ -354,14 +354,14 @@ export const ViewCipl = () => {
                   <TableCell align='center'>
                     <IconButton
                       component={Link}
-                      to={`/pdf-page/${row.referenceNo}`}
+                      to={`/cipl/createpdf/${row.referenceNo}`}
                       onClick={() => generatePDF(row)}
                     >
                       <PictureAsPdfIcon />
                     </IconButton>
                     <IconButton
                       component={Link}
-                      to={`/edit-cipl/${row.id}`}
+                      to={`/updateCipl/${row.id}`}
                       aria-label='edit'
                     >
                       <EditIcon />
