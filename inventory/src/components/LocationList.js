@@ -98,6 +98,7 @@ const LocationList = () => {
       console.log(error);
     }
   };
+  console.log(formData,"mehraaaaaaaaaaaaaaaaaaaaaaaaaaan");
 
   const deleteLocation = async (id) => {
     try {
