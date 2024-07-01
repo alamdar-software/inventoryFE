@@ -113,62 +113,98 @@ useEffect(() => {
 
 
   
-  useEffect(() => {
-    console.log(currentUser.accessToken, 'heyyyy');
-    fetch('http://localhost:8080/mto/view', {
-        headers: {
-            Authorization: `Bearer ${currentUser.accessToken}`,
-        },
-    })
-    .then((res) => {
-        if (!res.ok) {
-            throw new Error(`HTTP error! Status: ${res.status}`);
-        }
-        return res.json();
-    })
-    .then((result) => {
-        if (result.mtoList && Array.isArray(result.mtoList)) {
-            setMto(result.mtoList);
-            setTotalCount(result.totalCount);
+//   useEffect(() => {
+//     console.log(currentUser.accessToken, 'heyyyy');
+//     fetch('http://localhost:8080/mto/view', {
+//         headers: {
+//             Authorization: `Bearer ${currentUser.accessToken}`,
+//         },
+//     })
+//     .then((res) => {
+//         if (!res.ok) {
+//             throw new Error(`HTTP error! Status: ${res.status}`);
+//         }
+//         return res.json();
+//     })
+//     .then((result) => {
+//         if (result.mtoList && Array.isArray(result.mtoList)) {
+//             setMto(result.mtoList);
+//             setTotalCount(result.totalCount);
            
-        } else {
-            console.error('Invalid data structure:', result);
-            // Handle the situation where the expected data is not available
-            setMto([]);
-        }
-    })
-    .catch((error) => {
-        console.error('Error fetching MTO data:', error);
-        // Handle the error by setting an empty array or showing an error message
-        setMto([]);
-    });
+//         } else {
+//             console.error('Invalid data structure:', result);
+//             // Handle the situation where the expected data is not available
+//             setMto([]);
+//         }
+//     })
+//     .catch((error) => {
+//         console.error('Error fetching MTO data:', error);
+//         // Handle the error by setting an empty array or showing an error message
+//         setMto([]);
+//     });
+// }, []);
+
+
+ // console.log(mto);
+
+
+ useEffect(() => {
+  console.log(currentUser.accessToken, 'heyyyy');
+  fetch('http://localhost:8080/mto/view', {
+    headers: {
+      Authorization: `Bearer ${currentUser.accessToken}`,
+    },
+  })
+  .then((res) => {
+    if (!res.ok) {
+      throw new Error(`HTTP error! Status: ${res.status}`);
+    }
+    return res.json();
+  })
+  .then((result) => {
+    if (result.mtoList && Array.isArray(result.mtoList)) {
+      setMto(result.mtoList);
+      setTotalCount(result.totalCount);
+      const referenceNumbers = result.mtoList.map(mto => mto.referenceNo);
+      setRef(referenceNumbers);
+    } else {
+      console.error('Invalid data structure:', result);
+      setMto([]);
+    }
+  })
+  .catch((error) => {
+    console.error('Error fetching MTO data:', error);
+    setMto([]);
+  });
 }, []);
 
+const handleSearch = () => {
+  console.log('Searching with data:', formData);
 
-  console.log(mto);
-  const handleSearch = () => {
-    fetch('http://localhost:8080/mto/search', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${currentUser.accessToken}`,
-      },
-      body: JSON.stringify(formData),
-    })
-      .then((res) => res.json())
-      .then((result) => {
-        if (Array.isArray(result)) {
-          setMto(result);
-        } else {
-          console.error('Received data does not contain an array:', result);
-          setMto([]);
-        }
-      })
-      .catch((error) => {
-        console.error('Error searching data:', error);
+  fetch('http://localhost:8080/mto/search', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${currentUser.accessToken}`,
+    },
+    body: JSON.stringify(formData),
+  })
+    .then((res) => res.json())
+    .then((result) => {
+      console.log('Search result:', result);
+      if (Array.isArray(result)) {
+        setMto(result);
+        setTotalRows(result.length);
+      } else {
+        console.error('Received data does not contain an array:', result);
         setMto([]);
-      });
-  };
+      }
+    })
+    .catch((error) => {
+      console.error('Error searching data:', error);
+      setMto([]);
+    });
+};
 
   const handleDateChange = (transferDate) => {
     setformData({
@@ -307,12 +343,12 @@ useEffect(() => {
               />
             </LocalizationProvider>
           </Grid>
-          <Grid item xs={12} sm={6}>
+          {/* <Grid item xs={12} sm={6}>
            <FormControl fullWidth sx={{ width: '90%', mt: '23px' }}>
-            <InputLabel id='demo-simple-select-label'>Status</InputLabel>
+            <InputLabel id='status'>Status</InputLabel>
             <Select
-              labelId='demo-simple-select-label'
-              id='demo-simple-select'
+              labelId='status'
+              id='status'
               //value={age}
               value={mto ? mto.status : ''}
               InputProps={{ readOnly: true }}
@@ -331,15 +367,35 @@ useEffect(() => {
 
             </Select>
            </FormControl>
-        </Grid>
+        </Grid> */}
+         <Grid item xs={12} sm={6}>
+            <FormControl fullWidth>
+              <InputLabel id='status-label'>Status</InputLabel>
+              <Select
+                labelId='status-label'
+                id='status'
+                label='Status'
+                onChange={(e) => {
+                  setformData({
+                    ...formData,
+                    status: e.target.value,
+                  });
+                }}
+              >
+                <MenuItem value="created">Created</MenuItem>
+                <MenuItem value="approved">Approved</MenuItem>
+                <MenuItem value="rejected">Rejected</MenuItem>
+              </Select>
+            </FormControl>
+          </Grid>
         <Grid item xs={12} sm={6}>
             <FormControl fullWidth sx={{ width: '90%' }}>
               <InputLabel id='demo-simple-select-label'>Ref No</InputLabel>
               <Select
                 labelId='demo-simple-select-label'
-                id='referenceNo'
+                id='referenceNumber'
                 //value={age}
-                label='refNo'
+                label='referenceNumber'
                 MenuProps={{
                   PaperProps: {
                     style: {
@@ -351,7 +407,7 @@ useEffect(() => {
                 onChange={(e) =>
                   setformData({
                     ...formData,
-                    referenceNo: e.target.value,
+                    referenceNumber: e.target.value,
                   })
                 }
               >
