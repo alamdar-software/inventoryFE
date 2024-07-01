@@ -83,6 +83,7 @@ export const ViewCipl = () => {
         return res.json();
       })
       .then((result) => {
+       
         console.log(result, 'rupaaaaaaaaaaa');
         setAllCipl(result);
         setFilteredCipl(result);
@@ -378,75 +379,32 @@ export const ViewCipl = () => {
             </TableBody>
             <TableFooter>
               <TableRow>
-                <TablePagination
-                  rowsPerPageOptions={[5, 10, 25]}
-                  colSpan={3}
-                  count={totalRows}
-                  rowsPerPage={rowsPerPage}
-                  page={page}
-                  onPageChange={handleChangePage}
-                  onRowsPerPageChange={handleChangeRowsPerPage}
-                  ActionsComponent={(subprops) => (
-                    <Box sx={{ flexShrink: 0, ml: 2.5 }}>
-                      <IconButton
-                        onClick={() => subprops.onPageChange(null, 0)}
-                        disabled={subprops.page === 0}
-                        aria-label='first page'
-                      >
-                        <FirstPageRoundedIcon />
-                      </IconButton>
-                      <IconButton
-                        onClick={() =>
-                          subprops.onPageChange(null, subprops.page - 1)
-                        }
-                        disabled={subprops.page === 0}
-                        aria-label='previous page'
-                      >
-                        <ChevronLeftRoundedIcon />
-                      </IconButton>
-                      <IconButton
-                        onClick={() =>
-                          subprops.onPageChange(null, subprops.page + 1)
-                        }
-                        disabled={
-                          subprops.page >=
-                          Math.ceil(subprops.count / subprops.rowsPerPage) - 1
-                        }
-                        aria-label='next page'
-                      >
-                        <ChevronRightRoundedIcon />
-                      </IconButton>
-                      <IconButton
-                        onClick={() =>
-                          subprops.onPageChange(
-                            null,
-                            Math.max(
-                              0,
-                              Math.ceil(subprops.count / subprops.rowsPerPage) -
-                                1
-                            )
-                          )
-                        }
-                        disabled={
-                          subprops.page >=
-                          Math.ceil(subprops.count / subprops.rowsPerPage) - 1
-                        }
-                        aria-label='last page'
-                      >
-                        <LastPageRoundedIcon />
-                      </IconButton>
-                    </Box>
-                  )}
-                  sx={{
-                    [`& .${classes.spacer}`]: {
-                      display: 'none',
-                    },
-                    [`& .${classes.toolbar}`]: {
-                      justifyContent: 'flex-end',
-                      gap: '10px',
-                    },
-                  }}
-                />
+              <TableCell colSpan={5} align="center">
+                  <CustomTablePagination
+                    rowsPerPageOptions={[5, 10, 25, { label: 'All', value: -1 }]}
+                    colSpan={3}
+                    count={totalRows}
+                    rowsPerPage={5}
+                    page={page}
+                    slotProps={{
+                      select: {
+                        'aria-label': 'Rows per page',
+                      },
+                      actions: {
+                        showFirstButton: true,
+                        showLastButton: true,
+                        slots: {
+                          firstPageIcon: FirstPageRoundedIcon,
+                          lastPageIcon: LastPageRoundedIcon,
+                          nextPageIcon: ChevronRightRoundedIcon,
+                          backPageIcon: ChevronLeftRoundedIcon,
+                        },
+                      },
+                    }}
+                    onPageChange={handleChangePage}
+                    onRowsPerPageChange={handleChangeRowsPerPage}
+                  />
+                </TableCell>
               </TableRow>
             </TableFooter>
           </Table>

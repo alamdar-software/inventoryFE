@@ -42,7 +42,7 @@ const UpdateIncomingVerifier = () => {
       .then((result) => {
         const filteredResult = { ...result };
         delete filteredResult.dataType;
-        console.log(result, 'bulkiiiiiiiii');
+        console.log(filteredResult, 'bulkiiiiiiiii');
         setIncoming(filteredResult);
       });
   }, []);
@@ -56,6 +56,7 @@ const UpdateIncomingVerifier = () => {
       incoming,
     };
     console.log(update);
+    console.log(formData,"julsaaaaaaaaaa");
 console.log(incoming.status,"status dekho");
     fetch(`http://localhost:8080/bulkstock/status/${id}`, {
       method: 'PUT',
@@ -79,7 +80,7 @@ console.log(incoming.status,"status dekho");
           });
           setTimeout(() => {
             
-            window.location.reload();
+          
         }, 3000);
       })
       .catch((error) => {

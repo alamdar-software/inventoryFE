@@ -85,7 +85,7 @@ const BulkIncome = () => {
       date: date.format('YYYY-MM-DD'),
     });
   };
-
+console.log(state,"kikikikikikiki");
   // const handleUnitCostChange = (index, newUnitCost) => {
   //   // Assuming newUnitCost is a string, you might want to parse it to a number
   //   const parsedUnitCost = parseFloat(newUnitCost);
@@ -162,7 +162,7 @@ const BulkIncome = () => {
       body: JSON.stringify(formData),
     }).then(() => {
       console.log('Bulk Added');
-      toast.success('🦄 Scrapped Added Successfully!', {
+      toast.success('🦄 Bulk  Added Successfully!', {
         position: 'top-right',
         autoClose: 3000,
         hideProgressBar: false,
@@ -1006,7 +1006,7 @@ const BulkIncome = () => {
               }
               //onChange={handleChange}
             >
-              {state.nonPersisted.currency.data?.currencyList?.map(
+              {state.nonPersisted.currency.data?.map(
                 (item, index) => (
                   <MenuItem key={index} value={item?.currencyName}>
                     {' '}
