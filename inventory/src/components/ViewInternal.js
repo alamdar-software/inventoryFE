@@ -56,6 +56,7 @@ const ViewInternal = () => {
   const [internal, setInternal] = useState([]);
   const { currentUser } = state.persisted.user;
   const [totalRows,setTotalRows] = useState(0);
+  const [ref,setRef]=useState([]);
   const handleDateChange = (transferDate) => {
     setformData({
       ...formData,
@@ -80,8 +81,36 @@ const ViewInternal = () => {
   },);
 
 
+  // useEffect(() => {
+  //   fetch('http://localhost:8080/internaltransfer/view', {
+  //     headers: {
+  //       Authorization: `Bearer ${currentUser.accessToken}`,
+  //     },
+  //   })
+  //     .then((res) => {
+  //       if (!res.ok) {
+  //         throw new Error(`HTTP error! Status: ${res.status}`);
+  //       }
+  //       return res.json();
+  //     })
+  //     .then((result) => {
+  //       if (result.mtoList && Array.isArray(result.mtoList)) {
+  //         setInternal(result.mtoList);
+  //         setTotalCount(result.totalCount);
+  //       } else {
+  //         console.error('Invalid data structure:', result);
+  //         // Handle the situation where the expected data is not available
+  //         setInternal([]);
+  //       }
+  //     })
+  //     .catch((error) => {
+  //       console.error('Error fetching internal transfer data:', error);
+  //       // Handle the error by setting an empty array or showing an error message
+  //       setInternal([]);
+  //     });
+  // }, []);
   useEffect(() => {
-    fetch('http://localhost:8080/internaltransfer/approved', {
+    fetch('http://localhost:8080/internaltransfer/view', {
       headers: {
         Authorization: `Bearer ${currentUser.accessToken}`,
       },
@@ -96,18 +125,18 @@ const ViewInternal = () => {
         if (result.mtoList && Array.isArray(result.mtoList)) {
           setInternal(result.mtoList);
           setTotalCount(result.totalCount);
+          setRef(result.mtoList.map(item => item.referenceNo)); // Set reference numbers
         } else {
           console.error('Invalid data structure:', result);
-          // Handle the situation where the expected data is not available
           setInternal([]);
         }
       })
       .catch((error) => {
         console.error('Error fetching internal transfer data:', error);
-        // Handle the error by setting an empty array or showing an error message
         setInternal([]);
       });
-  }, []);
+  }, [currentUser.accessToken]);
+
 
   const handleSearch = () => {
     fetch('http://localhost:8080/internaltransfer/search', {
@@ -250,6 +279,60 @@ const ViewInternal = () => {
               />
             </LocalizationProvider>
           </Grid>
+          <Grid item xs={12} sm={6}>
+            <FormControl fullWidth sx={{ width: '90%' }}>
+              <InputLabel id='demo-simple-select-label'>Ref No</InputLabel>
+              <Select
+                labelId='demo-simple-select-label'
+                id='referenceNumber'
+                //value={age}
+                label='referenceNumber'
+                MenuProps={{
+                  PaperProps: {
+                    style: {
+                      maxHeight: 120, // Adjust the height as needed
+                    },
+                  },
+                }}
+                //onChange={handleLocationChange}
+                onChange={(e) =>
+                  setformData({
+                    ...formData,
+                    referenceNumber: e.target.value,
+                  })
+                }
+              >
+                {ref.map((referenceNo, index) => (
+                  <MenuItem key={index} value={referenceNo}>
+                    {' '}
+                    {referenceNo}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <FormControl fullWidth>
+              <InputLabel id='status-label'>Status</InputLabel>
+              <Select
+                labelId='status-label'
+                id='status'
+                label='Status'
+                onChange={(e) => {
+                  setformData({
+                    ...formData,
+                    status: e.target.value,
+                  });
+                }}
+              >
+                <MenuItem value="created">Created</MenuItem>
+                <MenuItem value="approved">Approved</MenuItem>
+                <MenuItem value="rejected">Rejected</MenuItem>
+              </Select>
+            </FormControl>
+          </Grid>
+
+          
         </Grid>
         <Button
           variant='contained'
@@ -347,6 +430,7 @@ const ViewInternal = () => {
                           </Button>
                         </Link>
                       </TableCell>
+                      
                       <Link to={`/updateIt/${internal.id}`}>
                         <Button color='success'>Update</Button>
                       </Link>
