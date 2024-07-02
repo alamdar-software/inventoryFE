@@ -6,6 +6,7 @@ import {
   Chip,
   FormControl,
   Grid,
+  IconButton,
   InputLabel,
   MenuItem,
   Paper,
@@ -37,6 +38,8 @@ import FirstPageRoundedIcon from '@mui/icons-material/FirstPageRounded';
 import LastPageRoundedIcon from '@mui/icons-material/LastPageRounded';
 import ChevronLeftRoundedIcon from '@mui/icons-material/ChevronLeftRounded';
 import ChevronRightRoundedIcon from '@mui/icons-material/ChevronRightRounded';
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 const ViewInternal = () => {
   const [formData, setformData] = useState({
@@ -389,6 +392,9 @@ const ViewInternal = () => {
                 <TableCell align='right' sx={{ fontWeight: 'bold' }}>
                   Print
                 </TableCell>
+                <TableCell align='right' sx={{ fontWeight: 'bold' }}>
+                  Action
+                </TableCell>
               </TableRow>
             </TableHead>
 
@@ -429,20 +435,24 @@ const ViewInternal = () => {
                             {<PictureAsPdfIcon />}
                           </Button>
                         </Link>
-                      </TableCell>
-                      
-                      <Link to={`/updateIt/${internal.id}`}>
-                        <Button color='success'>Update</Button>
-                      </Link>
 
-                      <Button
-                        sx={{ marginLeft: '11px', mt: '11px' }}
-                        variant='contained'
-                        color='secondary'
-                        onClick={() => handledeleteIt(internal.id)}
-                      >
-                        Delete
-                      </Button>
+                      </TableCell>
+
+                     <Box display="flex" alignItems="center">
+      <IconButton
+        component={Link}
+        to={`/updateIt/${internal.id}`}
+        aria-label='edit'
+      >
+        <EditIcon />
+      </IconButton>
+      <IconButton
+        aria-label='delete'
+        onClick={() => handledeleteIt(internal.id)}
+      >
+        <DeleteIcon />
+      </IconButton>
+    </Box>
                     </TableRow>
                   ))
               ) : (
