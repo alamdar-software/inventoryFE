@@ -473,6 +473,7 @@ const handleSearch = () => {
                 <TableCell align='right' sx={{ fontWeight: 'bold' }}>
                   Print
                 </TableCell>
+
               </TableRow>
             </TableHead>
 
@@ -501,7 +502,17 @@ const handleSearch = () => {
                         </Link>
                       </TableCell>
 
-                      <Link to={`/updateMto/${mto.id}`}></Link>
+                      <Link to={`/updateMto/${mto.id}`}>
+                      <Button
+                        sx={{ marginLeft: '11px', mt: '11px' }}
+                        variant='contained'
+                        color='secondary'
+                        //onClick={() => handledeleteMto(mto.id)}
+                      >
+                        Update
+                      </Button>
+                      
+                      </Link>
                       <Button
                         sx={{ marginLeft: '11px', mt: '11px' }}
                         variant='contained'
