@@ -66,6 +66,7 @@ const ViewScrapp = () => {
     item: '',
     transferDate: '',
     locationName: '',
+    status:""
   });
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -363,6 +364,26 @@ const ViewScrapp = () => {
               </Grid>
             </FormControl>
           </Grid>
+          <Grid item xs={12} sm={6}>
+      <FormControl fullWidth sx={{width:"468px"}}>
+        <InputLabel id='status-label'>Status</InputLabel>
+        <Select
+          labelId='status-label'
+          id='status'
+          label='Status'
+          onChange={(e) => {
+            setformData({
+              ...formData,
+              status: e.target.value,
+            });
+          }}
+        >
+          <MenuItem value="created">Created</MenuItem>
+          <MenuItem value="approved">Approved</MenuItem>
+          <MenuItem value="rejected">Rejected</MenuItem>
+        </Select>
+      </FormControl>
+    </Grid>
         </Grid>
 
         <Button
@@ -408,6 +429,9 @@ const ViewScrapp = () => {
                 <TableCell align='right' sx={{ fontWeight: 'bold' }}>
                   Date
                 </TableCell>
+                <TableCell align='right' sx={{ fontWeight: 'bold' }}>
+                  Status
+                </TableCell>
 
                 <TableCell align='center' sx={{ fontWeight: 'bold' }}>
                   Action
@@ -440,6 +464,7 @@ const ViewScrapp = () => {
                           {consumedRow.quantity}
                         </TableCell>
                         <TableCell align='right'>{consumedRow.date}</TableCell>
+                        <TableCell align='right'>{consumedRow.status}</TableCell>
                         <TableCell align='right'>
                           <Box>
                             <Link to={`/updateScapped/${consumedRow.id}`}>

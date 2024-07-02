@@ -53,6 +53,7 @@ const ViewIncoming = () => {
     date: '',
     purchaseOrder: '',
     entityName: '',
+    status:""
   });
   const [incoming, setIncoming] = useState([]);
   const state = useSelector((state) => state);
@@ -93,10 +94,10 @@ const ViewIncoming = () => {
     })
       .then((res) => res.json())
       .then((result) => {
-        console.log(result, 'kabsetuhai');
-
+        
         if (Array.isArray(result.stockViewList)) {
           setIncoming(result.stockViewList);
+          console.log(result, 'kabsetuhai');
           setTotalCount(result.totalCount); // Set the total count
         } else {
           console.error('Received data does not contain an array:', result);
@@ -199,11 +200,11 @@ const ViewIncoming = () => {
           </CardContent>
         </Card>
         <Chip
-          sx={{ mb: '11px', fontWeight: 'bolder' }}
+          sx={{ margin:"10px", fontWeight: 'bolder' }}
           label={`Total Incoming Stock: ${totalCount}`}
           variant='outlined'
         />
-        <Grid container spaciing={2}>
+        <Grid container spaciing={2} sx={{margin:"10px"}}>
           <Grid item xs={12} sm={6}>
             <FormControl fullWidth sx={{ width: '90%' }}>
               <InputLabel id='demo-simple-select-label'>
@@ -247,9 +248,8 @@ const ViewIncoming = () => {
               </Select>
             </FormControl>
           </Grid>
-        </Grid>
-        <Grid container spacing={2} sx={{ mt: '33px' }}>
-          <Grid item xs={21} sm={6}>
+      
+          <Grid item xs={21} sm={6} sx={{marginTop:"15px"}}>
             <LocalizationProvider dateAdapter={AdapterDayjs}>
               <DatePicker
                 /* value={
@@ -262,7 +262,7 @@ const ViewIncoming = () => {
               />
             </LocalizationProvider>
           </Grid>
-          <Grid item xs={21} sm={6}>
+          <Grid item xs={21} sm={6} sx={{marginTop:"15px"}}>
             <TextField
               id='outlined-basic'
               label='PO Number'
@@ -277,9 +277,8 @@ const ViewIncoming = () => {
               }
             />
           </Grid>
-        </Grid>
-        <Grid container spacing={2} sx={{ mt: '33px' }}>
-          <Grid item xs={21} sm={6}>
+          <Grid item xs={21} sm={6} sx={{marginTop:"15px"}}>
+
             <FormControl fullWidth sx={{ width: '90%' }}>
               <InputLabel id='demo-simple-select-label'>Entity</InputLabel>
               <Select
@@ -311,7 +310,31 @@ const ViewIncoming = () => {
               </Select>
             </FormControl>
           </Grid>
+          <Grid item xs={12} sm={6} sx={{marginTop:"15px"}} >
+          <FormControl fullWidth sx={{ width: '90%' }}>
+              <InputLabel id='status-label'>Status</InputLabel>
+              <Select
+                labelId='status-label'
+                id='status'
+            
+                label='Status'
+                onChange={(e) => {
+                  setformData({
+                    ...formData,
+                    status: e.target.value,
+                  });
+                }}
+              >
+                <MenuItem value="created">Created</MenuItem>
+                <MenuItem value="approved">Approved</MenuItem>
+                <MenuItem value="rejected">Rejected</MenuItem>
+              </Select>
+            </FormControl>
+          </Grid>
         </Grid>
+    
+     
+
         <Button
           variant='contained'
           color='secondary'
