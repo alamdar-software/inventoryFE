@@ -438,9 +438,9 @@ const UpdateMto = () => {
             Destination SubLocation
           </InputLabel>
           <TextField
-            id='outlined-basic'
+            id='destinationSubLocation'
             variant='outlined'
-            value={mto ? mto.destinationSubLocation : ''}
+            value={mto ? mto.destinationSublocation : ''}
             sx={{ width: '490px' }}
             InputProps={{ readOnly: true }}
             onChange={(e) => {
