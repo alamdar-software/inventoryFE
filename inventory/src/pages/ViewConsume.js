@@ -55,6 +55,7 @@ const ViewConsume = () => {
     item: '',
     transferDate: '',
     locationName: '',
+    status:""
   });
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -150,7 +151,7 @@ const ViewConsume = () => {
     })
       .then((res) => res.json())
       .then((result) => {
-        console.log(result);
+        console.log(result, "consumed");
         setAllConsumed(result);
         setFilteredConsumed(result);
       })
@@ -263,113 +264,115 @@ const ViewConsume = () => {
       </Grid>
 
       <Card
-        sx={{
-          width: '100%',
-          mt: '33px',
-          pt: '33px',
-          borderBottom: '2px solid #ab47bc',
-          borderRadius: '33px',
-        }}
-      >
-        <Grid container spacing={2} sx={{ ml: '13px' }}>
-          <Grid item xs={12} sm={6}>
-            <FormControl fullWidth>
-              <InputLabel id='demo-simple-select-label'>Item Desc</InputLabel>
-              <Select
-                labelId='demo-simple-select-label'
-                id='itemName'
-                label='itemName'
-                onChange={(e) => {
-                  setformData({
-                    ...formData,
-                    item: e.target.value,
-                  });
-                }}
-                /* onChange={(e) =>
-                  handleItemChange(
-                    index,
-                    selectedSubLocations[index],
-                    e.target.value
-                  )
-                } */
-              >
-                {state.nonPersisted.item.data?.map((item, index) => (
-                  <MenuItem key={index} value={item?.description}>
-                    {' '}
-                    {item?.description}
-                  </MenuItem>
-                ))}
-              </Select>
-            </FormControl>
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <FormControl fullWidth sx={{ width: '90%' }}>
-              <InputLabel id='demo-simple-select-label'>Location</InputLabel>
-              <Select
-                labelId='demo-simple-select-label'
-                id='demo-simple-select'
-                //value={age}
-
-                label='location'
-                MenuProps={{
-                  PaperProps: {
-                    style: {
-                      maxHeight: 120, // Adjust the height as needed
-                    },
-                  },
-                }}
-                onChange={(e) => {
-                  setformData({
-                    ...formData,
-                    locationName: e.target.value,
-                  });
-                }}
-              >
-                {state.nonPersisted?.location.data?.map((item, index) => (
-                  <MenuItem key={index} value={item?.locationName}>
-                    {' '}
-                    {item?.locationName}
-                  </MenuItem>
-                ))}
-              </Select>
-            </FormControl>
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <FormControl fullWidth sx={{ width: '220%' }}>
-              <Grid item xs={12} sm={6}>
-                <LocalizationProvider dateAdapter={AdapterDayjs}>
-                  <DatePicker
-                    /* value={
-                formData.purchaseDate ? dayjs(formData.purchaseDate) : null
-              } */
-                    onChange={(newDate) => handleDateChange(newDate)}
-                    // onChange={(newDate) => handleDateChange(newDate)}
-                    fullWidth
-                    sx={{ width: '90%' }}
-                    /* format="yyyy-MM-dd" */
-                  />
-                </LocalizationProvider>
-              </Grid>
-            </FormControl>
-          </Grid>
-        </Grid>
-
-        <Button
-          variant='contained'
-          color='secondary'
-          size='large'
-          sx={{
-            mt: '33px',
-            mb: '17px',
-            marginLeft: 'auto',
-            marginRight: 'auto',
-            display: 'block',
+  sx={{
+    width: '100%',
+    mt: '33px',
+    pt: '33px',
+    borderBottom: '2px solid #ab47bc',
+    borderRadius: '33px',
+  }}
+>
+  <Grid container spacing={2} sx={{ ml: '13px' }}>
+    <Grid item xs={12} sm={6}>
+      <FormControl fullWidth>
+        <InputLabel id='demo-simple-select-label'>Item Desc</InputLabel>
+        <Select
+          labelId='demo-simple-select-label'
+          id='itemName'
+          label='itemName'
+          onChange={(e) => {
+            setformData({
+              ...formData,
+              item: e.target.value,
+            });
           }}
-          onClick={handleClick}
         >
-          Search
-        </Button>
-      </Card>
+          {state.nonPersisted.item.data?.map((item, index) => (
+            <MenuItem key={index} value={item?.description}>
+              {item?.description}
+            </MenuItem>
+          ))}
+        </Select>
+      </FormControl>
+    </Grid>
+    <Grid item xs={12} sm={6}>
+      <FormControl fullWidth sx={{width:"540px"}}>
+        <InputLabel id='demo-simple-select-label'>Location</InputLabel>
+        <Select
+          labelId='demo-simple-select-label'
+          id='demo-simple-select'
+          label='location'
+          MenuProps={{
+            PaperProps: {
+              style: {
+                maxHeight: 120, // Adjust the height as needed
+              },
+            },
+          }}
+          onChange={(e) => {
+            setformData({
+              ...formData,
+              locationName: e.target.value,
+            });
+          }}
+        >
+          {state.nonPersisted?.location.data?.map((item, index) => (
+            <MenuItem key={index} value={item?.locationName}>
+              {item?.locationName}
+            </MenuItem>
+          ))}
+        </Select>
+      </FormControl>
+    </Grid>
+    <Grid item xs={12} sm={6}>
+      <FormControl fullWidth>
+        <LocalizationProvider dateAdapter={AdapterDayjs}>
+          <DatePicker
+            onChange={(newDate) => handleDateChange(newDate)}
+            fullWidth
+          />
+        </LocalizationProvider>
+      </FormControl>
+    </Grid>
+    <Grid item xs={12} sm={6}>
+      <FormControl fullWidth sx={{width:"540px"}}>
+        <InputLabel id='status-label'>Status</InputLabel>
+        <Select
+          labelId='status-label'
+          id='status'
+          label='Status'
+          onChange={(e) => {
+            setformData({
+              ...formData,
+              status: e.target.value,
+            });
+          }}
+        >
+          <MenuItem value="created">Created</MenuItem>
+          <MenuItem value="approved">Approved</MenuItem>
+          <MenuItem value="rejected">Rejected</MenuItem>
+        </Select>
+      </FormControl>
+    </Grid>
+  </Grid>
+
+  <Button
+    variant='contained'
+    color='secondary'
+    size='large'
+    sx={{
+      mt: '33px',
+      mb: '17px',
+      marginLeft: 'auto',
+      marginRight: 'auto',
+      display: 'block',
+    }}
+    onClick={handleClick}
+  >
+    Search
+  </Button>
+</Card>
+
       <Grid sx={{ mt: '33px', width: '100%', overflowX: 'scroll' }}>
         <TableContainer
           component={Paper}
@@ -396,6 +399,9 @@ const ViewConsume = () => {
                 </TableCell>
                 <TableCell align='right' sx={{ fontWeight: 'bold' }}>
                   Date
+                </TableCell>
+                <TableCell align='right' sx={{ fontWeight: 'bold' }}>
+                  Status
                 </TableCell>
 
                 <TableCell align='center' sx={{ fontWeight: 'bold' }}>
@@ -425,6 +431,7 @@ const ViewConsume = () => {
                         {consumedRow.quantity}
                       </TableCell>
                       <TableCell align='right'>{consumedRow.date}</TableCell>
+                      <TableCell align='right'>{consumedRow.status}</TableCell>
                       <TableCell align='right'>
                         <Box>
                           <Link to={`/updateConsumed/${consumedRow.id}`}>
