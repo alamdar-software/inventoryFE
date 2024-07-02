@@ -6,6 +6,7 @@ import {
   Chip,
   FormControl,
   Grid,
+  IconButton,
   InputLabel,
   MenuItem,
   Paper,
@@ -37,6 +38,8 @@ import FirstPageRoundedIcon from '@mui/icons-material/FirstPageRounded';
 import LastPageRoundedIcon from '@mui/icons-material/LastPageRounded';
 import ChevronLeftRoundedIcon from '@mui/icons-material/ChevronLeftRounded';
 import ChevronRightRoundedIcon from '@mui/icons-material/ChevronRightRounded';
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 const ViewInternal = () => {
   const [formData, setformData] = useState({
@@ -56,6 +59,7 @@ const ViewInternal = () => {
   const [internal, setInternal] = useState([]);
   const { currentUser } = state.persisted.user;
   const [totalRows,setTotalRows] = useState(0);
+  const [ref,setRef]=useState([]);
   const handleDateChange = (transferDate) => {
     setformData({
       ...formData,
@@ -80,8 +84,36 @@ const ViewInternal = () => {
   },);
 
 
+  // useEffect(() => {
+  //   fetch('http://localhost:8080/internaltransfer/view', {
+  //     headers: {
+  //       Authorization: `Bearer ${currentUser.accessToken}`,
+  //     },
+  //   })
+  //     .then((res) => {
+  //       if (!res.ok) {
+  //         throw new Error(`HTTP error! Status: ${res.status}`);
+  //       }
+  //       return res.json();
+  //     })
+  //     .then((result) => {
+  //       if (result.mtoList && Array.isArray(result.mtoList)) {
+  //         setInternal(result.mtoList);
+  //         setTotalCount(result.totalCount);
+  //       } else {
+  //         console.error('Invalid data structure:', result);
+  //         // Handle the situation where the expected data is not available
+  //         setInternal([]);
+  //       }
+  //     })
+  //     .catch((error) => {
+  //       console.error('Error fetching internal transfer data:', error);
+  //       // Handle the error by setting an empty array or showing an error message
+  //       setInternal([]);
+  //     });
+  // }, []);
   useEffect(() => {
-    fetch('http://localhost:8080/internaltransfer/approved', {
+    fetch('http://localhost:8080/internaltransfer/view', {
       headers: {
         Authorization: `Bearer ${currentUser.accessToken}`,
       },
@@ -96,18 +128,18 @@ const ViewInternal = () => {
         if (result.mtoList && Array.isArray(result.mtoList)) {
           setInternal(result.mtoList);
           setTotalCount(result.totalCount);
+          setRef(result.mtoList.map(item => item.referenceNo)); // Set reference numbers
         } else {
           console.error('Invalid data structure:', result);
-          // Handle the situation where the expected data is not available
           setInternal([]);
         }
       })
       .catch((error) => {
         console.error('Error fetching internal transfer data:', error);
-        // Handle the error by setting an empty array or showing an error message
         setInternal([]);
       });
-  }, []);
+  }, [currentUser.accessToken]);
+
 
   const handleSearch = () => {
     fetch('http://localhost:8080/internaltransfer/search', {
@@ -250,6 +282,60 @@ const ViewInternal = () => {
               />
             </LocalizationProvider>
           </Grid>
+          <Grid item xs={12} sm={6}>
+            <FormControl fullWidth sx={{ width: '90%' }}>
+              <InputLabel id='demo-simple-select-label'>Ref No</InputLabel>
+              <Select
+                labelId='demo-simple-select-label'
+                id='referenceNumber'
+                //value={age}
+                label='referenceNumber'
+                MenuProps={{
+                  PaperProps: {
+                    style: {
+                      maxHeight: 120, // Adjust the height as needed
+                    },
+                  },
+                }}
+                //onChange={handleLocationChange}
+                onChange={(e) =>
+                  setformData({
+                    ...formData,
+                    referenceNumber: e.target.value,
+                  })
+                }
+              >
+                {ref.map((referenceNo, index) => (
+                  <MenuItem key={index} value={referenceNo}>
+                    {' '}
+                    {referenceNo}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <FormControl fullWidth>
+              <InputLabel id='status-label'>Status</InputLabel>
+              <Select
+                labelId='status-label'
+                id='status'
+                label='Status'
+                onChange={(e) => {
+                  setformData({
+                    ...formData,
+                    status: e.target.value,
+                  });
+                }}
+              >
+                <MenuItem value="created">Created</MenuItem>
+                <MenuItem value="approved">Approved</MenuItem>
+                <MenuItem value="rejected">Rejected</MenuItem>
+              </Select>
+            </FormControl>
+          </Grid>
+
+          
         </Grid>
         <Button
           variant='contained'
@@ -306,6 +392,9 @@ const ViewInternal = () => {
                 <TableCell align='right' sx={{ fontWeight: 'bold' }}>
                   Print
                 </TableCell>
+                <TableCell align='right' sx={{ fontWeight: 'bold' }}>
+                  Action
+                </TableCell>
               </TableRow>
             </TableHead>
 
@@ -346,19 +435,24 @@ const ViewInternal = () => {
                             {<PictureAsPdfIcon />}
                           </Button>
                         </Link>
-                      </TableCell>
-                      <Link to={`/updateIt/${internal.id}`}>
-                        <Button color='success'>Update</Button>
-                      </Link>
 
-                      <Button
-                        sx={{ marginLeft: '11px', mt: '11px' }}
-                        variant='contained'
-                        color='secondary'
-                        onClick={() => handledeleteIt(internal.id)}
-                      >
-                        Delete
-                      </Button>
+                      </TableCell>
+
+                     <Box display="flex" alignItems="center">
+      <IconButton
+        component={Link}
+        to={`/updateIt/${internal.id}`}
+        aria-label='edit'
+      >
+        <EditIcon />
+      </IconButton>
+      <IconButton
+        aria-label='delete'
+        onClick={() => handledeleteIt(internal.id)}
+      >
+        <DeleteIcon />
+      </IconButton>
+    </Box>
                     </TableRow>
                   ))
               ) : (
