@@ -384,7 +384,7 @@ const UpdateMto = () => {
             id='outlined-basic'
             variant='outlined'
             value={mto ? mto.locationName : ''}
-            sx={{ width: '570px' }}
+            sx={{ width: '490px' }}
             onChange={(e) => {
               setformData({
                 ...mto,
@@ -441,7 +441,7 @@ const UpdateMto = () => {
             id='outlined-basic'
             variant='outlined'
             value={mto ? mto.destinationSubLocation : ''}
-            sx={{ width: '590px' }}
+            sx={{ width: '490px' }}
             InputProps={{ readOnly: true }}
             onChange={(e) => {
               setMto({
@@ -493,7 +493,7 @@ const UpdateMto = () => {
             id='outlined-basic'
             variant='outlined'
             value={mto ? mto.consigneeName : ''}
-            sx={{ width: '590px' }}
+            sx={{ width: '490px' }}
             InputProps={{ readOnly: true }}
             onChange={(e) => {
               setMto({
@@ -516,6 +516,7 @@ const UpdateMto = () => {
               //value={age}
               value={formData.repairService || ''}
               label='Repair/service'
+              sx={{ width: '490px' }}
               //onChange={handleChange}
               onChange={(e) =>
                 setformData({
@@ -540,12 +541,12 @@ const UpdateMto = () => {
               //   value={cipl ? cipl.date : ''}
               onChange={(date) => handleDateChange(date)}
               fullWidth
-              sx={{ width: '90%' }}
+              sx={{ width: '490px' }}
               /* format="yyyy-MM-dd" */
             />
           </LocalizationProvider>
         </Grid>
-        <Grid item xs={12} sm={6}>
+        {/* <Grid item xs={12} sm={6}>
           <FormControl fullWidth sx={{ width: '90%', mt: '23px' }}>
             <InputLabel id='demo-simple-select-label'>Status</InputLabel>
             <Select
@@ -555,6 +556,8 @@ const UpdateMto = () => {
               value={mto ? mto.status : ''}
               InputProps={{ readOnly: true }}
               label='Repair/service'
+              sx={{ width: '490px' }}
+
               //onChange={handleChange}
               onChange={(e) =>
                 setformData({
@@ -567,7 +570,7 @@ const UpdateMto = () => {
               <MenuItem value={'rejected'}>Rejected</MenuItem>
             </Select>
           </FormControl>
-        </Grid>
+        </Grid> */}
       </Grid>
 
       <div

@@ -6,6 +6,7 @@ import {
   Chip,
   FormControl,
   Grid,
+  IconButton,
   InputLabel,
   MenuItem,
   Paper,
@@ -38,6 +39,8 @@ import FirstPageRoundedIcon from '@mui/icons-material/FirstPageRounded';
 import LastPageRoundedIcon from '@mui/icons-material/LastPageRounded';
 import ChevronLeftRoundedIcon from '@mui/icons-material/ChevronLeftRounded';
 import ChevronRightRoundedIcon from '@mui/icons-material/ChevronRightRounded';
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 const ViewMto = () => {
   const [formData, setformData] = useState({
@@ -502,7 +505,7 @@ const handleSearch = () => {
                         </Link>
                       </TableCell>
 
-                      <Link to={`/updateMto/${mto.id}`}>
+                      {/* <Link to={`/updateMto/${mto.id}`}>
                       <Button
                         sx={{ marginLeft: '11px', mt: '11px' }}
                         variant='contained'
@@ -512,15 +515,28 @@ const handleSearch = () => {
                         Update
                       </Button>
                       
-                      </Link>
-                      <Button
+                      </Link> */}
+                      <IconButton
+        component={Link}
+        to={`/updateMto/${mto.id}`}
+        aria-label='edit'
+      >
+        <EditIcon />
+      </IconButton>
+      <IconButton
+        aria-label='delete'
+        onClick={() => handledeleteMto(mto.id)}
+      >
+        <DeleteIcon />
+      </IconButton>
+                      {/* <Button
                         sx={{ marginLeft: '11px', mt: '11px' }}
                         variant='contained'
                         color='secondary'
                         onClick={() => handledeleteMto(mto.id)}
                       >
                         Delete
-                      </Button>
+                      </Button> */}
 
                       {/* Add more TableCell components for other properties as needed */}
                     </TableRow>
