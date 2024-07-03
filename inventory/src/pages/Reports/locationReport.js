@@ -32,9 +32,9 @@ import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
 import { CSVLink } from 'react-csv';
 
 import {
-  
+
   TablePagination,
-  
+
   tablePaginationClasses as classes,
 } from '@mui/base/TablePagination';
 import { styled } from '@mui/system';
@@ -55,7 +55,7 @@ const LocationReport = () => {
   const [allCipl, setAllCipl] = useState([]);
   const [filteredCipl, setFilteredCipl] = useState([]);
   const { currentUser } = state.persisted.user;
-  const [totalRows,setTotalRows] = useState(0);
+  const [totalRows, setTotalRows] = useState(0);
 
   useEffect(() => {
     dispatch(fetchlocation(currentUser.accessToken));
@@ -68,6 +68,7 @@ const LocationReport = () => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [formData, setformData] = useState({
+    locationName: '',
     address: '',
   });
   const handleChangePage = (event, newPage) => {
@@ -156,6 +157,7 @@ const LocationReport = () => {
         console.error("Error updating pickup:", error);
       });
     }; */
+  console.log(formData, "lolololo");
 
   const handleClick = async (e) => {
     e.preventDefault();
@@ -168,11 +170,11 @@ const LocationReport = () => {
         },
         body: JSON.stringify(formData),
       });
-
+  
       if (!res.ok) {
         throw new Error(`HTTP error! Status: ${res.status}`);
       }
-
+  
       const data = await res.json();
       console.log(data, 'came from backend');
       setFilteredCipl(data);
@@ -181,6 +183,7 @@ const LocationReport = () => {
       alert('data not found');
     }
   };
+  
 
   /*   const generatePDF = async (rowData, index) => {
     console.log("Generate PDF clicked");
@@ -199,7 +202,7 @@ const LocationReport = () => {
   const generateCsvData = () => {
     // Your logic to create CSV data based on search parameters
     const csvData = [
-      ['Serial No', 'Location/Vessel', 'SubLocation'],
+      ['Serial No', 'Location/Vessel', 'SubLocation'], // Header row
       ...filteredCipl.flatMap((ciplRow, rowIndex) =>
         ciplRow.addresses?.map((subLocation, subIndex) => [
           rowIndex * ciplRow.addresses.length + subIndex + 1,
@@ -211,6 +214,7 @@ const LocationReport = () => {
 
     return csvData;
   };
+
   const handleDownloadCsv = () => {
     const boldStyle = { bold: true };
     const workbook = new ExcelJS.Workbook();
@@ -285,6 +289,34 @@ const LocationReport = () => {
           <Grid item xs={12} sm={4} sx={{ marginLeft: '400px' }}>
             <FormControl fullWidth>
               <InputLabel id='demo-simple-select-label'>
+                Location
+              </InputLabel>
+              <Select
+                labelId='demo-simple-select-label'
+                id='demo-simple-select'
+                value={formData.locationName}
+                label='location'
+                MenuProps={{
+                  PaperProps: {
+                    style: {
+                      maxHeight: 120,
+                    },
+                  },
+                }}
+                onChange={(e) => setformData({
+                  ...formData,
+                  locationName: e.target.value
+                })}
+              >
+                {state?.nonPersisted?.location?.data?.map((item, index) => (
+                  <MenuItem key={index} value={item?.locationName}>
+                    {item?.locationName}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+            <FormControl fullWidth>
+              <InputLabel id='demo-simple-select-label'>
                 Sub Location
               </InputLabel>
               <Select
@@ -304,13 +336,13 @@ const LocationReport = () => {
                     },
                   },
                 }}
-                /* onChange={(e) =>
-                  handleItemChange(
-                    index,
-                    selectedSubLocations[index],
-                    e.target.value
-                  )
-                } */
+              /* onChange={(e) =>
+                handleItemChange(
+                  index,
+                  selectedSubLocations[index],
+                  e.target.value
+                )
+              } */
               >
                 {state.nonPersisted.location.data?.map((location) =>
                   location.addresses.map((address) => (
@@ -354,11 +386,11 @@ const LocationReport = () => {
               color='secondary'
               size='large'
               sx={{ marginRight: '8px' }}
-              hidden
             >
-              Download Excel
+              Download CSV
             </Button>
           </CSVLink>
+
 
           <Button
             variant='contained'
@@ -419,33 +451,33 @@ const LocationReport = () => {
           </Table>
         </TableContainer>
         <TableRow>
-                <TableCell colSpan={5} align="center">
-                  <CustomTablePagination
-                    rowsPerPageOptions={[5, 10, 25, { label: 'All', value: -1 }]}
-                    colSpan={3}
-                    count={totalRows}
-                    rowsPerPage={5}
-                    page={page}
-                    slotProps={{
-                      select: {
-                        'aria-label': 'Rows per page',
-                      },
-                      actions: {
-                        showFirstButton: true,
-                        showLastButton: true,
-                        slots: {
-                          firstPageIcon: FirstPageRoundedIcon,
-                          lastPageIcon: LastPageRoundedIcon,
-                          nextPageIcon: ChevronRightRoundedIcon,
-                          backPageIcon: ChevronLeftRoundedIcon,
-                        },
-                      },
-                    }}
-                    onPageChange={handleChangePage}
-                    onRowsPerPageChange={handleChangeRowsPerPage}
-                  />
-                </TableCell>
-              </TableRow>
+          <TableCell colSpan={5} align="center">
+            <CustomTablePagination
+              rowsPerPageOptions={[5, 10, 25, { label: 'All', value: -1 }]}
+              colSpan={3}
+              count={totalRows}
+              rowsPerPage={5}
+              page={page}
+              slotProps={{
+                select: {
+                  'aria-label': 'Rows per page',
+                },
+                actions: {
+                  showFirstButton: true,
+                  showLastButton: true,
+                  slots: {
+                    firstPageIcon: FirstPageRoundedIcon,
+                    lastPageIcon: LastPageRoundedIcon,
+                    nextPageIcon: ChevronRightRoundedIcon,
+                    backPageIcon: ChevronLeftRoundedIcon,
+                  },
+                },
+              }}
+              onPageChange={handleChangePage}
+              onRowsPerPageChange={handleChangeRowsPerPage}
+            />
+          </TableCell>
+        </TableRow>
       </Grid>
     </>
   );
@@ -475,8 +507,7 @@ const Root = styled('div')(
     font-size: 0.875rem;
     width: 100%;
     background-color: ${theme.palette.mode === 'dark' ? grey[900] : '#fff'};
-    box-shadow: 0px 4px 16px ${
-      theme.palette.mode === 'dark' ? 'rgba(0, 0, 0, 0.3)' : grey[200]
+    box-shadow: 0px 4px 16px ${theme.palette.mode === 'dark' ? 'rgba(0, 0, 0, 0.3)' : grey[200]
     };
     border-radius: 12px;
     border: 1px solid ${theme.palette.mode === 'dark' ? grey[800] : grey[200]};
