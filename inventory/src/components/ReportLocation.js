@@ -21,7 +21,7 @@ import {
   Box,
 } from '@mui/material';
 import { Link } from 'react-router-dom';
-import { fetchlocation } from '../../redux/slice/location';
+//import { fetchlocation } from '../../redux/slice/location';
 
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
@@ -45,7 +45,8 @@ import ChevronRightRoundedIcon from '@mui/icons-material/ChevronRightRounded';
 import Papa from 'papaparse';
 import * as XLSX from 'xlsx';
 import ExcelJS from 'exceljs';
-const LocationReport = () => {
+import { fetchlocation } from '../redux/slice/location';
+const ReportLocation = () => {
   const dispatch = useDispatch();
   const state = useSelector((state) => state);
   const [item, setitem] = useState();
@@ -181,7 +182,7 @@ const LocationReport = () => {
   useEffect(() => {
     const fetchLocations = async () => {
       try {
-        const res = await fetch('http://localhost:8080/location/viewAll', {
+        const res = await fetch('http://localhost:8080/inventory/view', {
           headers: {
             'Content-Type': 'application/json',
             Authorization: `Bearer ${currentUser.accessToken}`,
@@ -202,7 +203,7 @@ const LocationReport = () => {
   const handleClick = async (e) => {
     e.preventDefault();
     try {
-      const res = await fetch('http://localhost:8080/location/search', {
+      const res = await fetch('http://localhost:8080/location/searchByInventory', {
         method: 'post',
         headers: {
           'content-type': 'application/json',
@@ -311,7 +312,7 @@ const LocationReport = () => {
               gutterBottom
               style={{ fontFamily: "'EB Garamond'" }}
             >
-              Location Report
+              Inventory Location Report
             </Typography>
           </CardContent>
         </Card>
@@ -450,16 +451,26 @@ const LocationReport = () => {
         >
           <Table sx={{ minWidth: 100 }} aria-label='simple table'>
             <TableHead>
-              <TableRow>
-                <TableCell
-                  align='left'
-                  sx={{ fontWeight: 'bold', paddingLeft: '40px' }}
-                >
-                  Location/Vessel
+            <TableRow>
+                <TableCell align='left' sx={{ fontWeight: 'bold' }}>
+                  Location
                 </TableCell>
                 <TableCell align='left' sx={{ fontWeight: 'bold' }}>
                   SubLocation
                 </TableCell>
+                <TableCell align='left' sx={{ fontWeight: 'bold' }}>
+                  Item Description
+                </TableCell>
+                <TableCell align='left' sx={{ fontWeight: 'bold' }}>
+                  Quantity
+                </TableCell>
+                <TableCell align='left' sx={{ fontWeight: 'bold' }}>
+                  Consumed Quantity
+                </TableCell>
+                <TableCell align='left' sx={{ fontWeight: 'bold' }}>
+                  Scrapped Quantity
+                </TableCell>
+              
               </TableRow>
             </TableHead>
             <TableBody>
@@ -479,7 +490,19 @@ const LocationReport = () => {
                           {ciplRow.locationName}
                         </TableCell>
                         <TableCell align='left'>
-                          {ciplRow.address}
+                          {ciplRow.address?.address || ''}
+                        </TableCell>
+                        <TableCell align='left'>
+                          {ciplRow.description.match(/^[^-(]*/)[0].trim()}
+                        </TableCell>
+                        <TableCell align='left'>
+                          {ciplRow.quantity}
+                        </TableCell>
+                        <TableCell align='left'>
+                          {ciplRow.consumedItem}
+                        </TableCell>
+                        <TableCell align='left'>
+                          {ciplRow.scrappedItem}
                         </TableCell>
                       </TableRow>
                  
@@ -657,4 +680,4 @@ const CustomTablePagination = styled(TablePagination)(
 );
 
 
-export default LocationReport;
+export default ReportLocation;

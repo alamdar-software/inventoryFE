@@ -150,6 +150,7 @@ import { ToastContainer } from 'react-toastify';
 import { TableContainer } from '@mui/material';
 import ItemInventory from './components/ItemInventory.js';
 import ViewPickup from './components/ViewPickup.js';
+import ReportLocation from './components/ReportLocation.js';
 
 const theme = createTheme({
   palette: {
@@ -1207,6 +1208,14 @@ theme="light"
                     element={
                       <Sidebar>
                         <ReportItem />
+                      </Sidebar>
+                    }
+                  />
+                   <Route
+                    path='/reportLocation'
+                    element={
+                      <Sidebar>
+                        <ReportLocation />
                       </Sidebar>
                     }
                   />

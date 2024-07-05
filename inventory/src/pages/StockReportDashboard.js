@@ -142,7 +142,30 @@ const StockReportDashboard = () => {
             <CardActions></CardActions>
           </Card>
         </Link>
+        <Link to='/reportLocation' style={{ textDecoration: 'none' }}>
+          <Card sx={{ minWidth: 300 ,ml:'31px'}}>
+            <CardContent
+              sx={{
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+              }}
+            >
+              <AccountBalanceWalletIcon
+                sx={{ fontSize: '70px', color: '#91E96B' }}
+              />
+              <Typography
+                component='div'
+                sx={{ fontWeight: 'bolder', fontSize: '20px' }}
+              >
+                Inventory Report By Location
+              </Typography>
+            </CardContent>
+            <CardActions></CardActions>
+          </Card>
+        </Link>
       </Grid>
+      
     </>
   );
 };
