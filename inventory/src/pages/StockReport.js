@@ -411,6 +411,7 @@ export const StockReport = () => {
                     /* format="yyyy-MM-dd" */
                   />
                 </LocalizationProvider>
+                
               </Grid>
             </FormControl>
           </Grid>

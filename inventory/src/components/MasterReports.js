@@ -356,6 +356,27 @@ const MasterReports = () => {
                 </Select>
               </FormControl>
             </Grid>
+
+            <Grid item xs={12} sm={6}>
+            <FormControl fullWidth>
+              <InputLabel id='status-label'>Status</InputLabel>
+              <Select
+                labelId='status-label'
+                id='status'
+                label='Status'
+                onChange={(e) => {
+                  setformData({
+                    ...formData,
+                    status: e.target.value,
+                  });
+                }}
+              >
+                <MenuItem value="created">Created</MenuItem>
+                <MenuItem value="approved">Approved</MenuItem>
+                <MenuItem value="rejected">Rejected</MenuItem>
+              </Select>
+            </FormControl>
+          </Grid>
           </Grid>
           <Box
             sx={{

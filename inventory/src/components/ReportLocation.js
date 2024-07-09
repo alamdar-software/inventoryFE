@@ -329,7 +329,7 @@ const ReportLocation = () => {
       >
 <Grid container spacing={2} sx={{ ml: '13px', alignItems: 'center' }}>
   <Grid item xs={12} sm={6} sx={{ marginLeft: 'auto', marginRight: 'auto' }}>
-    <FormControl fullWidth>
+    <FormControl fullWidth sx={{ width: '90%' }}>
       <InputLabel id='demo-simple-select-label'>
         Location
       </InputLabel>
@@ -359,7 +359,7 @@ const ReportLocation = () => {
     </FormControl>
   </Grid>
   <Grid item xs={12} sm={6} sx={{ marginLeft: 'auto', marginRight: 'auto' }}>
-    <FormControl fullWidth>
+    <FormControl fullWidth sx={{ width: '90%' }} >
       <InputLabel id='demo-simple-select-label'>
         Sub Location
       </InputLabel>
