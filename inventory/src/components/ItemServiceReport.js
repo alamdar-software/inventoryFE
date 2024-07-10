@@ -299,6 +299,7 @@ const ItemServiceReport = () => {
                   }
                   MenuProps={{
                     PaperProps: {
+                      
                       style: {
                         maxHeight: 120,
                       },
