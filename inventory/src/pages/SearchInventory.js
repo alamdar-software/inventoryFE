@@ -307,6 +307,26 @@ export const SearchInventory = () => {
       pdf.save('table.pdf');
     });
   };
+  useEffect(() => {
+    const fetchLocations = async () => {
+      try {
+        const res = await fetch('http://localhost:8080/inventory/view', {
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${currentUser.accessToken}`,
+          },
+        });
+        if (!res.ok) throw new Error(`HTTP error! Status: ${res.status}`);
+        const result = await res.json();
+        setFilteredCipl(result);
+      } catch (error) {
+        console.error('Error fetching location data:', error);
+      }
+    };
+  
+    fetchLocations();
+  }, [currentUser.accessToken]);
+  
   return (
     <>
       <Grid>
@@ -483,9 +503,9 @@ export const SearchInventory = () => {
                 <TableCell align='right' sx={{ fontWeight: 'bold' }}>
                   Location/Vessel
                 </TableCell>
-                <TableCell align='right' sx={{ fontWeight: 'bold' }}>
+                {/* <TableCell align='right' sx={{ fontWeight: 'bold' }}>
                   Sub Location
-                </TableCell>
+                </TableCell> */}
                 <TableCell align='right' sx={{ fontWeight: 'bold' }}>
                   Quantity
                 </TableCell>
@@ -510,9 +530,9 @@ export const SearchInventory = () => {
                   >
                     <TableCell align='right'>{ciplRow.description}</TableCell>
                     <TableCell align='right'>{ciplRow.locationName}</TableCell>
-                    <TableCell align='right'>
-                      {ciplRow.address.address}
-                    </TableCell>
+                    {/* <TableCell align='right'>
+                      {ciplRow?.address.address}
+                    </TableCell> */}
                     <TableCell align='right'>{ciplRow.quantity}</TableCell>
 
                     <TableCell align='right'>{ciplRow.consumedItem}</TableCell>

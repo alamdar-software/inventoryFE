@@ -322,7 +322,7 @@ const InventoryList = () => {
                         {inventory?.address?.address || ''}
                       </TableCell>
                       <TableCell align='left'>
-                        {inventory.description.match(/^[^-(]*/)[0].trim()}
+                        {inventory.description}
                       </TableCell>
                       <TableCell align='left'>{inventory.quantity}</TableCell>
                       <TableCell align='left'>

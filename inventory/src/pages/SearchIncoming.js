@@ -305,6 +305,25 @@ export const SearchIncoming = () => {
       pdf.save('table.pdf');
     });
   };
+  useEffect(() => {
+    const fetchLocations = async () => {
+      try {
+        const res = await fetch('http://localhost:8080/incomingstock/view', {
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${currentUser.accessToken}`,
+          },
+        });
+        if (!res.ok) throw new Error(`HTTP error! Status: ${res.status}`);
+        const result = await res.json();
+        setFilteredCipl(result);
+      } catch (error) {
+        console.error('Error fetching location data:', error);
+      }
+    };
+  
+    fetchLocations();
+  }, [currentUser.accessToken]);
 
   return (
     <>
