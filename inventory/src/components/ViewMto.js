@@ -3,13 +3,17 @@ import {
   Button,
   Card,
   CardContent,
+  Checkbox,
   Chip,
   FormControl,
+  FormControlLabel,
   Grid,
   IconButton,
   InputLabel,
   MenuItem,
   Paper,
+  Radio,
+  RadioGroup,
   Select,
   Table,
   TableBody,
@@ -62,11 +66,26 @@ const ViewMto = () => {
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
+  
 
   const handleChangeRowsPerPage = (event) => {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
+  const handleCompanyChange = (rowId, event) => {
+    const { value, checked } = event.target;
+    if (checked) {
+      setformData(prevState => ({
+        ...prevState,
+        selectedCompanyName: value // Update state with the selected company name
+      }));
+    }
+  };
+  
+  
+  
+  const [selectedCompanyName, setSelectedCompanies] = useState({});
+
 
   useEffect(() => {
     dispatch(fetchlocation(currentUser.accessToken));
@@ -172,7 +191,7 @@ useEffect(() => {
       setRef(referenceNumbers);
     } else {
       console.error('Invalid data structure:', result);
-      setMto([]);
+      setMto([]); 
     }
   })
   .catch((error) => {
@@ -337,6 +356,7 @@ const handleSearch = () => {
         </Grid>
         <Grid container spacing={2} sx={{ mt: '23px' }}>
           <Grid item xs={12} sm={6}>
+          <InputLabel shrink>Request Date</InputLabel>
             <LocalizationProvider dateAdapter={AdapterDayjs}>
               <DatePicker
                 value={formData.transferDate}
@@ -371,7 +391,7 @@ const handleSearch = () => {
             </Select>
            </FormControl>
         </Grid> */}
-         <Grid item xs={12} sm={6}>
+         <Grid item xs={12} sm={6} sx={{mt:"23px"}}>
             <FormControl fullWidth>
               <InputLabel id='status-label'>Status</InputLabel>
               <Select
@@ -391,7 +411,7 @@ const handleSearch = () => {
               </Select>
             </FormControl>
           </Grid>
-        <Grid item xs={12} sm={6}>
+        <Grid item xs={12} sm={6} sx={{mt:"23px"}}>
             <FormControl fullWidth sx={{ width: '90%' }}>
               <InputLabel id='demo-simple-select-label'>Ref No</InputLabel>
               <Select
@@ -467,7 +487,10 @@ const handleSearch = () => {
                   Ref Number
                 </TableCell>
                 <TableCell align='right' sx={{ fontWeight: 'bold' }}>
-                  Transfer Date
+                  Request Date
+                </TableCell>
+                <TableCell align='right' sx={{ fontWeight: 'bold' }}>
+                  Select Print
                 </TableCell>
                 <TableCell align='right' sx={{ fontWeight: 'bold' }}>
                   Item Description
@@ -492,18 +515,52 @@ const handleSearch = () => {
                       <TableCell align='right'>{mto.referenceNo}</TableCell>
 
                       <TableCell align='right'>{mto.transferDate}</TableCell>
+                      <TableCell align='right'>
+                      <FormControl component="fieldset">
+  <RadioGroup
+    aria-label='company'
+    name={`company-${mto.id}`}
+    value={formData.selectedCompanyName}
+    onChange={(event) => handleCompanyChange(mto.id, event)}
+  >
+    <FormControlLabel
+      value='PT. Satrya Maritim Indonesia'
+      control={<Radio />}
+      label='Indonesia'
+    />
+    <FormControlLabel
+      value='Bourbon'
+      control={<Radio />}
+      label='Bourbon'
+    />
+  </RadioGroup>
+</FormControl>
+
+                      </TableCell>
+
+
                       <TableCell align='right'>{mto.description}</TableCell>
                       <TableCell align='right'>
-                        <Link to={`/mto/createpdf/${mto.id}`}>
-                          <Button
-                            variant='contained'
-                            color='primary'
-                            /*  onClick={() => generatePDF(ciplRow.id, index)} */
-                          >
-                            {<PictureAsPdfIcon />}
-                          </Button>
-                        </Link>
-                      </TableCell>
+  <Link to={`/mto/createpdf/${mto.id}/${encodeURIComponent(formData.selectedCompanyName)}`}>
+    {/* <Button
+      variant='contained'
+      color='primary'
+    > */}
+     <Button
+    variant='contained'
+    color='primary'
+    onClick={(e) => {
+      if (!formData.selectedCompanyName) {
+        e.preventDefault(); // Prevent navigation
+        alert('Please select a company before printing.');
+      }
+    }}
+  >
+      <PictureAsPdfIcon />
+    </Button>
+  </Link>
+</TableCell>
+
 
                       {/* <Link to={`/updateMto/${mto.id}`}>
                       <Button

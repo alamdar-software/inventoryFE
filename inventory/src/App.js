@@ -1244,13 +1244,14 @@ theme="light"
                     }
                   />
                   <Route
-                    path='/mto/createpdf/:id'
+                    path='/mto/createpdf/:id/:companyName'
                     element={
                       <Sidebar>
                         <PrintMto />
                       </Sidebar>
                     }
                   />
+                  {/* <Route path="/mto/createpdf/:id/:companyName" element={<PrintMto />} /> */}
                   <Route
                     path='/updateMto/:id'
                     element={

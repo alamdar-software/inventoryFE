@@ -416,7 +416,7 @@ const ViewIncoming = () => {
                       <TableCell align='left' className='flex flex-row'>
                         <Link
                           to={`/updateIncoming/${item.id}`}
-                          className='flex flex-row'
+                          //className='flex flex-row'
                         >
                           <Button>
                             <BorderColorSharpIcon
@@ -425,10 +425,13 @@ const ViewIncoming = () => {
                             />
                           </Button>
                         </Link>
-                        <Button onClick={() => handledeleteincome(item.id)}>
+
+                      </TableCell>
+                      <TableCell align='left' className='flex flex-row'>
+                      <Button onClick={() => handledeleteincome(item.id)}>
                           <DeleteIcon />
                         </Button>
-                      </TableCell>
+                        </TableCell>
 
                       {/* Add more TableCell components for other properties as needed */}
                     </TableRow>

@@ -249,7 +249,7 @@ export const ViewCipl = () => {
               </Select>
             </FormControl>
           </Grid>
-          <Grid item xs={12} sm={6}>
+          <Grid item xs={12} sm={6} sx={{mt:"23px"}}>
             <FormControl fullWidth>
               <InputLabel id='demo-simple-select-label'>Ref No</InputLabel>
               <Select
@@ -272,6 +272,7 @@ export const ViewCipl = () => {
             </FormControl>
           </Grid>
           <Grid item xs={12} sm={6}>
+          <InputLabel shrink>Request Date</InputLabel>
             <FormControl fullWidth sx={{ width: '90%' }}>
               <LocalizationProvider dateAdapter={AdapterDayjs}>
                 <DatePicker
@@ -331,7 +332,7 @@ export const ViewCipl = () => {
                 <TableCell align='center'>Sr.No</TableCell>
                 <TableCell align='center'>Location Name</TableCell>
                 <TableCell align='center'>Item Description</TableCell>
-                <TableCell align='center'>TransferDate</TableCell>
+                <TableCell align='center'>Request Date</TableCell>
                 <TableCell align='center'>Reference No</TableCell>
                 <TableCell align='center'>Status</TableCell>
                 <TableCell align='center'>Actions</TableCell>

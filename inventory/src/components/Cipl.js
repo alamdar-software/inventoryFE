@@ -1193,6 +1193,7 @@ export const Cipl = () => {
       </Grid>
       <Grid container spacing={2} sx={{ mt: '23px' }}>
         <Grid item xs={12} sm={6}>
+        <InputLabel shrink>Request Date</InputLabel>
           <LocalizationProvider dateAdapter={AdapterDayjs}>
             <DatePicker
               /* value={
@@ -1205,7 +1206,7 @@ export const Cipl = () => {
             />
           </LocalizationProvider>
         </Grid>
-        <Grid item xs={12} sm={6}>
+        <Grid item xs={12} sm={6} sx={{ mt: '23px' }} >
           <FormControl fullWidth sx={{ width: '90%' }}>
             <InputLabel id='demo-simple-select-label'>Consignee</InputLabel>
             <Select

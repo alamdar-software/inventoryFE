@@ -475,7 +475,7 @@ const CiplReport = () => {
                   Shipper
                 </TableCell>
                 <TableCell align='right' sx={{ fontWeight: 'bold' }}>
-                  Transfer Date
+                  Request Date
                 </TableCell>
                 <TableCell align='right' sx={{ fontWeight: 'bold' }}>
                   Transfer Items
