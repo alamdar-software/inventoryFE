@@ -476,7 +476,7 @@ theme="light"
               />
               {/*   transfer item*/}
 
-              <Route element={<VerifierandApprover />&&<OnlyPreparer />}>
+              <Route element={<VerifierandApprover />||<OnlyPreparer />}>
               <Route
                   path='/updateIncoming/:id'
                   element={
