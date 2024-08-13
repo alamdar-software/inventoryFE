@@ -236,7 +236,7 @@ const Dashboard = () => {
   
 
   if (currentUser && currentUser.roles) {
-    if (roleSuperAdmin) {
+    if (roleSuperAdmin ||rolePreparer) {
       return (
         // Render grid for ROLE_SUPERADMIN
         <Grid
