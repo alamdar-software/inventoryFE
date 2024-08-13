@@ -23,6 +23,8 @@ import FirstPageRoundedIcon from '@mui/icons-material/FirstPageRounded';
 import LastPageRoundedIcon from '@mui/icons-material/LastPageRounded';
 import ChevronLeftRoundedIcon from '@mui/icons-material/ChevronLeftRounded';
 import ChevronRightRoundedIcon from '@mui/icons-material/ChevronRightRounded';
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from '@mui/icons-material/Delete';
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Link, Navigate } from 'react-router-dom';
@@ -174,9 +176,9 @@ const ViewItem = () => {
           <Table sx={{ minWidth: 650 }} aria-label='simple table'>
             <TableHead>
               <TableRow>
-                <TableCell align='left' sx={{ fontWeight: 'bold' }}>
+                {/* <TableCell align='left' sx={{ fontWeight: 'bold' }}>
                   Item Name
-                </TableCell>
+                </TableCell> */}
                 <TableCell align='left' sx={{ fontWeight: 'bold' }}>
                   Item Description
                 </TableCell>
@@ -209,7 +211,7 @@ const ViewItem = () => {
           key={item.name}
           sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
         >
-          <TableCell align='left'>{item.itemName}</TableCell>
+          {/* <TableCell align='left'>{item.itemName}</TableCell> */}
           <TableCell align='left'>{item.description}</TableCell>
           <TableCell align='left'>{item.name}</TableCell>
           <TableCell align='left'>{item.unitName}</TableCell>
@@ -217,23 +219,23 @@ const ViewItem = () => {
           <TableCell align='left'>
             <Link to={`/item/viewInventories/${item.id}`}>
               <Button
-                sx={{ marginRight: '11px' }}
+                sx={{ marginRight: '11px',width:"30px",fontSize:"10px" }}
                 variant='contained'
               >
-                View Inventories
+                Inventory
               </Button>
             </Link>
             <Link to={`/updateItem/${item.id}`}>
-              <Button variant='contained'>Update</Button>
+              <EditIcon/>
             </Link>
-            <Button
+            {/* <Button
               sx={{ marginLeft: '11px' }}
               variant='contained'
               color='secondary'
               onClick={() => deleteItem(item.id)}
-            >
-              Delete
-            </Button>
+            > */}
+           <DeleteIcon  onClick={() => deleteItem(item.id)}/>
+            {/* </Button> */}
           </TableCell>
         </TableRow>
       ))
