@@ -47,6 +47,8 @@ const UpdateMto = () => {
   });
 
   const [mto, setMto] = useState([]);
+  const [subLocations, setSubLocations] = useState([]);
+  const [description, setDescription] = useState([]);
 
   const state = useSelector((state) => state);
   const [formRows, setFormRows] = useState(1);
@@ -89,34 +91,30 @@ const UpdateMto = () => {
     })
       .then((res) => res.json())
       .then((result) => {
-        console.log(result);
+        console.log(result,"result");
         setMto(result);
       });
   }, []);
 
   const handleClick = (e) => {
     e.preventDefault();
-    const update = {
-      mto,
-    };
-    console.log(update);
-
     fetch(`http://localhost:8080/mto/status/${id}`, {
       method: 'PUT',
       headers: {
-        'Content-type': 'application/json',
+        'Content-Type': 'application/json',
         Authorization: `Bearer ${currentUser.accessToken}`,
       },
       body: JSON.stringify(formData),
     })
       .then(() => {
-        console.log('Cipl Updated');
-        // navigate('/consignee');
+        console.log('MTO Updated');
+        navigate('/consignee'); // Adjust navigation as needed
       })
       .catch((error) => {
-        console.error('Error updating consignee:', error);
+        console.error('Error updating MTO:', error);
       });
   };
+
 
   const handleDateChange = (transferDate) => {
     setformData({
@@ -125,6 +123,13 @@ const UpdateMto = () => {
     });
   };
   console.log(formData, 'formData');
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setformData({
+      ...formData,
+      [name]: value,
+    });
+  };
 
   // const updateFormDataSubLocation = (index, value) => {
   //   setformData((prevFormData) => {
@@ -437,7 +442,7 @@ const UpdateMto = () => {
           <InputLabel htmlFor='outlined-basic'>
             Destination SubLocation
           </InputLabel>
-          <TextField
+          {/* <TextField
             id='destinationSubLocation'
             variant='outlined'
             value={mto ? mto.destinationSublocation : ''}
@@ -451,7 +456,48 @@ const UpdateMto = () => {
               setformData(e.target.value);
             }}
             width={'100%'}
-          />
+          /> */}
+             <Select
+              labelId='destinationSubLocation'
+              id='destinationSubLocation'
+              //value={age}
+              value={mto ? mto.destinationSublocation : ''}
+              label='location'
+              MenuProps={{
+                PaperProps: {
+                  style: {
+                    maxHeight: 120, // Adjust the height as needed
+                  },
+                },
+              }}
+              onChange={(e) => {
+                setMto({
+                  ...mto,
+                  destinationSubLocation: e.target.value,
+                });
+                setformData(e.target.value);
+              }}
+              //onChange={handleChange}
+            >
+
+              {/* {state.nonPersisted.location.data?.map(
+                (item, index) => (
+                  console.log(item, 'meinhun'),
+                  item.addresses.map((addressItem, addressIndex) => (
+                    <MenuItem key={addressIndex} value={addressItem.address}>
+                      {addressItem.address}
+                    </MenuItem>
+                  ))
+                )
+              )} */}
+              {subLocations.map((address, index) => (
+              <MenuItem key={index} value={address?.address}>
+                {address?.address}
+              </MenuItem>
+            ))}
+
+
+            </Select>
           
         </Grid>
       </Grid>
