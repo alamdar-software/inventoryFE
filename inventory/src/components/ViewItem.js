@@ -201,7 +201,7 @@ const ViewItem = () => {
                       sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                     >
                       <TableCell align='left'>{item.itemName}</TableCell>
-                      <TableCell align='left'>{item.description}</TableCell>
+                      <TableCell align='left'>{item.description?.substring(0, 5)+"..."}</TableCell>
                       <TableCell align='left'>{item.name}</TableCell>
                       <TableCell align='left'>{item.unitName}</TableCell>
                       <TableCell align='left'>{item.minimumStock}</TableCell>
