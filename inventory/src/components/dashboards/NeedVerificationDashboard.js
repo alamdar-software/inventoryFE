@@ -187,7 +187,7 @@ const NeedVerificationDashboard = () => {
                   marginTop: 3,
                   borderRadius: 5,
                   width: "90px !important",
-                  height:"210px",
+                  height:"230px",
 
                   transition: "transform 0.3s",
                   "&:hover": {
@@ -269,7 +269,7 @@ const NeedVerificationDashboard = () => {
                 sx={{
                   //border: '2px solid yellow',
                   minWidth: 40,
-                  height:"210px",
+                  height:"230px",
                   flex: 1,
                   marginTop: 3,
                   marginLeft: 3,
@@ -325,7 +325,7 @@ const NeedVerificationDashboard = () => {
                 sx={{
                   //border: '2px solid yellow',
                   minWidth: 20,
-                  height:"210px",
+                  height:"230px",
                   flex: 1,
                   marginLeft: 3,
                   borderRadius: 8,
@@ -381,7 +381,7 @@ const NeedVerificationDashboard = () => {
                 sx={{
                   //border: '2px solid yellow',
                   minWidth: 20,
-                  height:"210px",
+                  height:"230px",
                   flex: 1,
                   marginLeft: 3,
                   borderRadius: 8,
@@ -451,14 +451,15 @@ const NeedVerificationDashboard = () => {
               <Card
                 sx={{
                   //border: '2px solid yellow',
-                  minWidth: 30,
+                  minWidth: 40,
                   height:"210px",
+                  width:"290px !important",
                   flex: 1,
                   marginLeft: 3,
                   marginRight:2,
                   borderRadius: 8,
-                  marginTop: 3,
-                width:"180px",
+                  
+              
                 
                   // Add z-index to ensure the card appears above other content
                   

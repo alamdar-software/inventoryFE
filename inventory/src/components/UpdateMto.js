@@ -49,7 +49,7 @@ const UpdateMto = () => {
   const [mto, setMto] = useState([]);
   const [subLocations, setSubLocations] = useState([]);
   const [description, setDescription] = useState([]);
-
+  const [subblocations, setsubblocations] = useState([])
   const state = useSelector((state) => state);
   const [item, setItem] = useState([]);
   const [formRows, setFormRows] = useState(1);
@@ -76,7 +76,7 @@ const UpdateMto = () => {
 
     setformData({
       ...formData,
-      SubLocation:[ e.target.value],
+      SubLocation: [e.target.value],
     })
 
 
@@ -117,6 +117,19 @@ const UpdateMto = () => {
 
 
   }, [mto?.locationName])
+  useEffect(() => {
+    fetch(`http://localhost:8080/location/getAllAddresses`, {
+      headers: {
+        Authorization: `Bearer ${currentUser.accessToken}`,
+      },
+    })
+      .then((res) => res.json())
+      .then((result) => {
+
+        setsubblocations(result);
+
+      });
+  }, []);
 
   useEffect(() => {
 
@@ -232,9 +245,10 @@ const UpdateMto = () => {
     selectedPartNo
   ) => {
     // ... (your existing code)
+    console.log(selectedPartNo, "kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk");
     setformData({
       ...formData,
-      pn: selectedPartNo,
+      pn: [selectedPartNo],
     })
     // Find the corresponding data in state.singleIncome for the selected part number
     const selectedIncomeData = state.nonPersisted.singleIncome?.data.find(
@@ -267,6 +281,12 @@ const UpdateMto = () => {
   console.log(formData, "heyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy");
   console.log(state, "kiki");
 
+
+  const isPreparer = currentUser.roles[0] === 'ROLE_PREPARER';
+  console.log(isPreparer,"kkkkkkklkkkkkkkkkkkkkkkkkkkkkk");
+
+
+
   const renderFormControls = () => {
     return formControls.map((control, index) => (
       <div key={control.key} style={{ display: 'flex', marginBottom: '10px' }}>
@@ -277,6 +297,9 @@ const UpdateMto = () => {
             labelId='demo-simple-select-label'
             id='demo-simple-select'
             //value={age}
+            InputProps={{
+              readOnly: !isPreparer,
+            }}
             value={formData.SubLocation}
             label='sublocation'
             sx={{ width: '90%' }}
@@ -305,6 +328,9 @@ const UpdateMto = () => {
           <Select
             labelId='demo-simple-select-label'
             id='description'
+            InputProps={{
+              readOnly: !isPreparer,
+            }}
             sx={{ width: '90%' }}
             label='description'
             value={(formData?.description)}
@@ -499,9 +525,8 @@ const UpdateMto = () => {
           <Select
             labelId='destinationSubLocation'
             id='destinationSubLocation'
-            //value={age}
             sx={{ width: '490px' }}
-            value={mto ? mto.destinationSublocation : ''}
+            value={formData.destinationSubLocation || ''}
             label='location'
             MenuProps={{
               PaperProps: {
@@ -516,18 +541,14 @@ const UpdateMto = () => {
                 destinationSubLocation: e.target.value,
               })
             }
-
           >
-
-
-            {subLocations.map((address, index) => (
-              <MenuItem key={index} value={address?.address}>
-                {address?.address}
+            {subblocations.map((address, index) => (
+              <MenuItem key={index} value={address}>
+                {address}
               </MenuItem>
             ))}
-
-
           </Select>
+
 
         </Grid>
       </Grid>
