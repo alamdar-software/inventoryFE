@@ -27,6 +27,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { fetchlocation } from '../redux/slice/location';
 import { fetchItem } from '../redux/slice/ItemSlice';
 import { Link } from 'react-router-dom';
+import BorderColorSharpIcon from '@mui/icons-material/BorderColorSharp';
 import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
 
 const ViewInternalVerifier = () => {
@@ -155,6 +156,13 @@ const ViewInternalVerifier = () => {
                 labelId='demo-simple-select-label'
                 id='demo-simple-select'
                 label='Description'
+                MenuProps={{
+                  PaperProps: {
+                    style: {
+                      maxHeight: '120px',
+                    },
+                  },
+                }}
                 onChange={(e) =>
                   setformData({
                     ...formData,
@@ -271,9 +279,7 @@ const ViewInternalVerifier = () => {
                   Status
                 </TableCell>
 
-                <TableCell align='right' sx={{ fontWeight: 'bold' }}>
-                  Print
-                </TableCell>
+             
                 <TableCell align='right' sx={{ fontWeight: 'bold' }}>
                   Action
                 </TableCell>
@@ -308,19 +314,11 @@ const ViewInternalVerifier = () => {
                         {internal.description}
                       </TableCell>
                       <TableCell align='right'>{internal.status}</TableCell>
-                      <TableCell align='right'>
-                        <Link to={`/internal/createpdf/${internal.id}`}>
-                          <Button
-                            variant='contained'
-                            color='primary'
-                            /*  onClick={() => generatePDF(ciplRow.id, index)} */
-                          >
-                            {<PictureAsPdfIcon />}
-                          </Button>
-                        </Link>
-                      </TableCell>
+                    
                       <Link to={`/updateItVerifier/${internal.id}`}>
-                        <Button color='success'>Update</Button>
+                        <Button color='success'>
+                        <BorderColorSharpIcon/>
+                        </Button>
                       </Link>
 
                       {/* <Link to={`/updateMto/${mto.id}`}>

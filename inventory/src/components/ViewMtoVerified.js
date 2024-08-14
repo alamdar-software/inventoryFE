@@ -158,6 +158,13 @@ const ViewMtoVerified = () => {
                 labelId='demo-simple-select-label'
                 id='demo-simple-select'
                 label='Description'
+                MenuProps={{
+                  PaperProps: {
+                    style: {
+                      maxHeight: '120px',
+                    },
+                  },
+                }}
                 onChange={(e) =>
                   setformData({
                     ...formData,
