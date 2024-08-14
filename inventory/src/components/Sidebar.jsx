@@ -159,7 +159,7 @@ export default function Sidebar({ children }) {
         {
           text: "Inventory",
           icon: <TransferWithinAStationIcon />,
-          submenu: [{ text: "Add Inventory" }, { text: "View Inventory" }],
+          submenu: [ { text: "View Inventory" }],
         },
         /* { text: "Transfer Item", icon: <WhatshotIcon /> }, */
         {
@@ -214,7 +214,7 @@ export default function Sidebar({ children }) {
         {
           text: "Inventory",
           icon: <TransferWithinAStationIcon />,
-          submenu: [{ text: "Add Inventory" }, { text: "View Inventory" }],
+          submenu: [ { text: "View Inventory" }],
         },
 
         { text: "Reports", icon: <ReportIcon /> }
@@ -239,7 +239,7 @@ export default function Sidebar({ children }) {
         {
           text: "Inventory",
           icon: <TransferWithinAStationIcon />,
-          submenu: [{ text: "Add Inventory" }, { text: "View Inventory" }],
+          submenu: [ { text: "View Inventory" }],
         },
         /* { text: "Transfer Item", icon: <WhatshotIcon /> }, */
         {
@@ -289,7 +289,7 @@ export default function Sidebar({ children }) {
         {
           text: "Inventory",
           icon: <TransferWithinAStationIcon />,
-          submenu: [{ text: "Add Inventory" }, { text: "View Inventory" }],
+          submenu: [ { text: "View Inventory" }],
         },
         { text: "Reports", icon: <ReportIcon /> }
       );
