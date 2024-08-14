@@ -591,7 +591,7 @@ const UpdateMtoVerifier = () => {
               }
             >
               <MenuItem value={'verified'}>Verified</MenuItem>
-              <MenuItem value={'rejected'}>Rejected</MenuItem>
+              <MenuItem value={'verifierRejected'}>Rejected</MenuItem>
             </Select>
           </FormControl>
         </Grid>
