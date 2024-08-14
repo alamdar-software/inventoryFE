@@ -30,7 +30,7 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
-
+import BorderColorSharpIcon from '@mui/icons-material/BorderColorSharp';
 export const ViewCiplVerification = () => {
   const dispatch = useDispatch();
   const state = useSelector((state) => state);
@@ -252,6 +252,13 @@ export const ViewCiplVerification = () => {
                 labelId='demo-simple-select-label'
                 id='itemName'
                 label='itemName'
+                MenuProps={{
+                  PaperProps: {
+                    style: {
+                      maxHeight: '120px',
+                    },
+                  },
+                }}
                 onChange={(e) => {
                   setformData({
                     ...formData,
@@ -311,7 +318,7 @@ export const ViewCiplVerification = () => {
           </Grid>
           <Grid item xs={12} sm={6}>
             <FormControl fullWidth sx={{ width: '90%' }}>
-              <Grid item xs={12} sm={6}>
+              
                 <LocalizationProvider dateAdapter={AdapterDayjs}>
                   <DatePicker
                     /* value={
@@ -320,11 +327,11 @@ export const ViewCiplVerification = () => {
                     onChange={(newDate) => handleDateChange(newDate)}
                     // onChange={(newDate) => handleDateChange(newDate)}
                     fullWidth
-                    sx={{ width: '90%' }}
+                    sx={{ width: '110%' }}
                     /* format="yyyy-MM-dd" */
                   />
                 </LocalizationProvider>
-              </Grid>
+           
             </FormControl>
           </Grid>
         </Grid>
@@ -357,26 +364,26 @@ export const ViewCiplVerification = () => {
           <Table sx={{ minWidth: 650 }} aria-label='simple table'>
             <TableHead>
               <TableRow>
-                <TableCell align='right' sx={{ fontWeight: 'bold' }}>
+                <TableCell align='left' sx={{ fontWeight: 'bold' }}>
                   Source Location
                 </TableCell>
-                <TableCell align='right' sx={{ fontWeight: 'bold' }}>
+                <TableCell align='left' sx={{ fontWeight: 'bold' }}>
                   SubLocations
                 </TableCell>
-                <TableCell align='right' sx={{ fontWeight: 'bold' }}>
+                <TableCell align='left' sx={{ fontWeight: 'bold' }}>
                   Shipper
                 </TableCell>
-                <TableCell align='right' sx={{ fontWeight: 'bold' }}>
+                <TableCell align='left' sx={{ fontWeight: 'bold' }}>
                   Consignee
                 </TableCell>
-                <TableCell align='right' sx={{ fontWeight: 'bold' }}>
+                <TableCell align='left' sx={{ fontWeight: 'bold' }}>
                   Ref Number
                 </TableCell>
 
-                <TableCell align='right' sx={{ fontWeight: 'bold' }}>
+                <TableCell align='left' sx={{ fontWeight: 'bold' }}>
                   Transfer Date
                 </TableCell>
-                <TableCell align='right' sx={{ fontWeight: 'bold' }}>
+                <TableCell align='left' sx={{ fontWeight: 'bold' }}>
                   Status
                 </TableCell>
 
@@ -396,16 +403,16 @@ export const ViewCiplVerification = () => {
                       key={`${ciplRow.id}-${index}`} // Use a unique key for each row
                       sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                     >
-                      <TableCell align='right'>
+                      <TableCell align='left'>
                         {ciplRow.locationName}
                       </TableCell>
-                      <TableCell align='right'>{subLocation}</TableCell>
-                      <TableCell align='right'>{ciplRow.shipperName}</TableCell>
-                      <TableCell align='right'>
+                      <TableCell align='left'>{subLocation}</TableCell>
+                      <TableCell align='left'>{ciplRow.shipperName}</TableCell>
+                      <TableCell align='left'>
                         {ciplRow.consigneeName}
                       </TableCell>
-                      <TableCell align='right'>{ciplRow.referenceNo}</TableCell>
-                      <TableCell align='right'>
+                      <TableCell align='left'>{ciplRow.referenceNo}</TableCell>
+                      <TableCell align='left'>
                         {ciplRow.transferDate}
                       </TableCell>
                       <TableCell align='right'>{ciplRow.status}</TableCell>
@@ -417,18 +424,11 @@ export const ViewCiplVerification = () => {
                             sx={{ marginLeft: '11px', marginTop: '10px' }}
                             variant='contained'
                           >
-                            Update
+                            <BorderColorSharpIcon/>
                           </Button>
                         </Link>
 
-                        <Button
-                          sx={{ marginLeft: '11px' }}
-                          variant='contained'
-                          color='secondary'
-                          /*  onClick={() => deleteConsignee(consignee.id)} */
-                        >
-                          Delete
-                        </Button>
+                       
                       </Box>
                     </TableRow>
                   ))
