@@ -49,7 +49,7 @@ const UpdateMto = () => {
   const [mto, setMto] = useState([]);
   const [subLocations, setSubLocations] = useState([]);
   const [description, setDescription] = useState([]);
-  const [subblocations, setsubblocations] = useState([])
+const [subblocations, setsubblocations] = useState([])
   const state = useSelector((state) => state);
   const [item, setItem] = useState([]);
   const [formRows, setFormRows] = useState(1);
@@ -76,7 +76,7 @@ const UpdateMto = () => {
 
     setformData({
       ...formData,
-      SubLocation: [e.target.value],
+      SubLocation:[ e.target.value],
     })
 
 
@@ -127,7 +127,7 @@ const UpdateMto = () => {
       .then((result) => {
 
         setsubblocations(result);
-
+       
       });
   }, []);
 
@@ -157,11 +157,14 @@ const UpdateMto = () => {
     })
       .then((res) => res.json())
       .then((result) => {
+        console.log(result,"resulttttttttttttttttttttttttttttttttttttttttttttttttttt");
+        
 
         setMto(result);
         setformData({
           locationName: result.locationName || '',
-          destinationSubLocation: result.destinationSubLocation || '',
+          destinationSubLocation:result?.destinationSublocation
+           || '',
           transferDate: result.transferDate || '',
           consigneeName: result.consigneeName || '',
           status: result.status || '',
@@ -245,10 +248,10 @@ const UpdateMto = () => {
     selectedPartNo
   ) => {
     // ... (your existing code)
-    console.log(selectedPartNo, "kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk");
+    console.log(selectedPartNo,"kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk");
     setformData({
       ...formData,
-      pn: [selectedPartNo],
+      pn:[selectedPartNo],
     })
     // Find the corresponding data in state.singleIncome for the selected part number
     const selectedIncomeData = state.nonPersisted.singleIncome?.data.find(
@@ -280,13 +283,10 @@ const UpdateMto = () => {
 
   console.log(formData, "heyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy");
   console.log(state, "kiki");
+console.log(formData,"hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh");
 
-
-  const isPreparer = currentUser.roles[0] === 'ROLE_PREPARER';
+const isPreparer = currentUser.roles[0] === 'ROLE_PREPARER';
   console.log(isPreparer,"kkkkkkklkkkkkkkkkkkkkkkkkkkkkk");
-
-
-
   const renderFormControls = () => {
     return formControls.map((control, index) => (
       <div key={control.key} style={{ display: 'flex', marginBottom: '10px' }}>
@@ -297,11 +297,12 @@ const UpdateMto = () => {
             labelId='demo-simple-select-label'
             id='demo-simple-select'
             //value={age}
+           disabled={!isPreparer}
+            value={formData.SubLocation}
+            label='sublocation'
             InputProps={{
               readOnly: !isPreparer,
             }}
-            value={formData.SubLocation}
-            label='sublocation'
             sx={{ width: '90%' }}
             onChange={(e) => handleSubLocationChange(e, index)}
             MenuProps={{
@@ -328,9 +329,7 @@ const UpdateMto = () => {
           <Select
             labelId='demo-simple-select-label'
             id='description'
-            InputProps={{
-              readOnly: !isPreparer,
-            }}
+            disabled={!isPreparer}
             sx={{ width: '90%' }}
             label='description'
             value={(formData?.description)}
@@ -366,6 +365,7 @@ const UpdateMto = () => {
             labelId='demo-simple-select-label'
             id='demo-simple-select'
             //value={age}
+            disabled={!isPreparer}
             label='location'
             MenuProps={{
               PaperProps: {
@@ -440,6 +440,7 @@ const UpdateMto = () => {
 
             value={formData.quantity}
             // InputProps={{ readOnly: true }}
+            disabled={!isPreparer}
             onChange={(e) =>
               setformData({
                 ...formData,
@@ -458,6 +459,7 @@ const UpdateMto = () => {
 
             minRows={4} // You can adjust the number of rows as needed
             value={mto ? mto.remarks : ''}
+            disabled={!isPreparer}
             InputProps={{ readOnly: true }}
             onChange={(e) => {
               setMto({
@@ -526,7 +528,8 @@ const UpdateMto = () => {
             labelId='destinationSubLocation'
             id='destinationSubLocation'
             sx={{ width: '490px' }}
-            value={formData.destinationSubLocation || ''}
+            disabled={!isPreparer}
+            value={formData?.destinationSubLocation || ''}
             label='location'
             MenuProps={{
               PaperProps: {
@@ -538,17 +541,21 @@ const UpdateMto = () => {
             onChange={(e) =>
               setformData({
                 ...formData,
-                destinationSubLocation: e.target.value,
+                destinationSubLocation:e.target.value,
               })
             }
           >
+
+
+
             {subblocations.map((address, index) => (
               <MenuItem key={index} value={address}>
                 {address}
               </MenuItem>
             ))}
-          </Select>
 
+
+          </Select>
 
         </Grid>
       </Grid>
@@ -560,6 +567,7 @@ const UpdateMto = () => {
           <Select
             labelId='demo-simple-select-label'
             id='demo-simple-select'
+            disabled={!isPreparer}
             sx={{ width: '490px' }}
             value={formData.consigneeName}
             label='consignee'
@@ -596,6 +604,7 @@ const UpdateMto = () => {
               //value={age}
               value={formData.repairService || ''}
               label='Repair/service'
+              disabled={!isPreparer}
               sx={{ width: '490px' }}
               //onChange={handleChange}
               onChange={(e) =>
@@ -617,6 +626,7 @@ const UpdateMto = () => {
               value={formData?.transferDate ? dayjs(formData.transferDate) : null}
               onChange={(date) => handleDateChange(date)}
               fullWidth
+              disabled={!isPreparer}
               sx={{ width: '490px' }}
             />
           </LocalizationProvider>
@@ -658,6 +668,7 @@ const UpdateMto = () => {
         variant='contained'
         color='secondary'
         size='large'
+        disabled={!isPreparer}
         onClick={handleClick}
         sx={{
           mt: '33px',
