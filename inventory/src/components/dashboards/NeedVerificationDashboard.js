@@ -529,9 +529,10 @@ const NeedVerificationDashboard = () => {
                   //border: '2px solid yellow',
                   minWidth: 10,
                   flex: 1,
+                 
                   marginRight: 3,
                   marginLeft: 3,
-                  marginTop: 3,
+                  
                   borderRadius: 8,
                   transition: "transform 0.3s",
                   "&:hover": {
@@ -556,7 +557,7 @@ const NeedVerificationDashboard = () => {
                   <Typography
         sx={{
           mb: 1.5,
-          ml:3,
+          ml:1,
           textAlign: "center",
           fontWeight: "bolder",
           fontFamily: "Montserrat",
