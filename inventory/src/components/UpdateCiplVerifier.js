@@ -969,7 +969,7 @@ const UpdateCiplVerifier = () => {
            
             >
               <MenuItem value={'verified'}>Verified</MenuItem>
-              <MenuItem value={'rejected'}>Rejected</MenuItem>
+              <MenuItem value={'verifier rejected'}>Rejected</MenuItem>
             </Select>
           </FormControl>
         </Grid>

@@ -140,29 +140,33 @@ export const ViewCiplRejected = () => {
         console.error("Error updating pickup:", error);
       });
     }; */
-  useEffect(() => {
-    fetch('http://localhost:8080/cipl/rejected', {
-      method: 'GET',
-      headers: {
-        Authorization: `Bearer ${currentUser.accessToken}`,
-        'Content-Type': 'application/json',
-      },
-    })
-      .then((res) => {
-        if (!res.ok) {
-          throw new Error(`HTTP error! Status: ${res.status}`);
+    useEffect(() => {
+      const fetchRejectedCipl = async () => {
+        try {
+          const response = await fetch('http://localhost:8080/cipl/rejected', {
+            method: 'GET',
+            headers: {
+              Authorization: `Bearer ${currentUser.accessToken}`,
+              'Content-Type': 'application/json',
+            },
+          });
+          console.log(response,"kjkj");
+  
+          if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+          }
+  
+          const result = await response.json();
+          console.log(result, 'meinhunkhalnayak');
+          setAllCipl(result);
+          setFilteredCipl(result);
+        } catch (error) {
+          console.error('Error fetching rejected CIPL data:', error);
         }
-        return res.json();
-      })
-      .then((result) => {
-        console.log(result, 'meinhunkhalnayak');
-        setAllCipl(result);
-        setFilteredCipl(result);
-      })
-      .catch((error) => {
-        console.error('Error fetching pickup data:', error);
-      });
-  }, []);
+      };
+  
+      fetchRejectedCipl();
+    }, [currentUser.accessToken]); 
 
   const handleClick = async (e) => {
     e.preventDefault();
