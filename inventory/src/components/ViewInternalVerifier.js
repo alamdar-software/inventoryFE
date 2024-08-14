@@ -94,7 +94,7 @@ const ViewInternalVerifier = () => {
   }, []);
 
   const handleSearch = () => {
-    fetch('http://localhost:8080/internaltransfer/search', {
+    fetch('http://localhost:8080/internaltransfer/searchInternalCreated', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

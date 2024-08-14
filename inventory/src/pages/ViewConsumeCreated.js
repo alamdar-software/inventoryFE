@@ -163,7 +163,7 @@ const ViewConsumeCreated = () => {
   const handleClick = async (e) => {
     e.preventDefault();
     try {
-      const res = await fetch('http://localhost:8080/consumeditem/search', {
+      const res = await fetch('http://localhost:8080/consumeditem/createdComsumedSearch', {
         method: 'post',
         headers: {
           Authorization: `Bearer ${currentUser.accessToken}`,

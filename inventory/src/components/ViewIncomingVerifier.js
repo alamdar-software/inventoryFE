@@ -115,7 +115,7 @@ const ViewIncomingVerifier = () => {
     });
   };
   const handleSearch = () => {
-    fetch('http://localhost:8080/bulkstock/search', {
+    fetch('http://localhost:8080/bulkstock/searchCreatedPurchase', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
