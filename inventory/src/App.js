@@ -1244,7 +1244,7 @@ theme="light"
                     }
                   />
                   <Route
-                    path='/mto/createpdf/:id/:companyName'
+                    path='/mto/createpdf/:id'
                     element={
                       <Sidebar>
                         <PrintMto />
