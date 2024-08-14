@@ -2,34 +2,55 @@ import React from 'react';
 import { useEffect } from 'react';
 import { useState } from 'react';
 import { useParams } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 // import './styles.css';
 // import './printStyles.css';
 
 function PrintMto() {
   const [data, setdata] = useState([]);
-  const { id } = useParams();
+  const { id,companyName  } = useParams();
+  const { currentUser } = useSelector((state) => state.persisted.user);
+  // useEffect(() => {
+  //   const getMto = async () => {
+  //     const res = await fetch(`http://localhost:8080/mto/createpdf/${id}`);
+
+  //     const data = await res.json();
+  //     setdata(data);
+
+  //     console.log(data, 'backdata');
+
+  //     /* setdata(data); */
+  //   };
+  //   getMto();
+  // }, []);
   useEffect(() => {
     const getMto = async () => {
-      const res = await fetch(`http://localhost:8080/mto/createpdf/${id}`);
-
+      const res = await fetch(`http://localhost:8080/mto/createpdf/${id}`, {
+        headers: {
+          Authorization: `Bearer ${currentUser.accessToken}`,
+        },
+      });
+  
       const data = await res.json();
       setdata(data);
-
+  
       console.log(data, 'backdata');
-
-      /* setdata(data); */
     };
+  
     getMto();
-  }, []);
+  }, [id, currentUser]);
+  
 
   const [transferItem, settransferItem] = useState();
   const [sourceLocation, setsourceLocation] = useState();
+  const [selectedCompanyName, setSelectedCompanyName] = useState("PT. Satrya Maritim Indonesia"); // Default value
+
   const handlePrint = () => {
     const printWindow = window.open();
 
     printWindow.document.write(`
       <html>
-        <head>
+        <head> 
           <link rel="stylesheet" href="./styles.css">
           <link rel="stylesheet" type="text/css" href="./printStyles.css" media="print" />
           <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous" />
@@ -90,11 +111,19 @@ function PrintMto() {
                     <div className='row'>
                       <div className='col-md-8 d-flex align-items-center gap-2'>
                         <img src='/logo/logo.jpg' />
-                        <span>
+                        {/* <span>
                           <h3 className='text-uppercase text-bold'>
                             <b>PT. Satrya Maritim Indonesia</b>
-                          </h3>
-                        </span>
+                          </h3> 
+                        </span> */}
+                        {/* <h3 className='text-uppercase text-bold'>
+                          <b>{selectedCompanyName}</b>
+                        </h3> */}
+                        <span>
+                        <h3 className='text-uppercase text-bold'>
+        <b>{decodeURIComponent(companyName) || 'Bourbon'}</b> {/* Display the company name */}
+      </h3>
+                      </span>
                       </div>
                       <div className='col-md-4'>
                         <h5 className='mt-3'>
@@ -258,7 +287,7 @@ function PrintMto() {
                               flexDirection: 'column',
                             }}
                           >
-                            {data.item?.map((value, index) => (
+                            {data.description?.map((value, index) => (
                               <React.Fragment key={index}>
                                 <b
                                   className='text-capitalise'
@@ -266,7 +295,7 @@ function PrintMto() {
                                 >
                                   {value}
                                 </b>
-                                {index < data.item?.length - 1 && (
+                                {index < data.description?.length - 1 && (
                                   <span className='quantity-gap' />
                                 )}
                               </React.Fragment>

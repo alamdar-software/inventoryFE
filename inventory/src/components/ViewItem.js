@@ -23,15 +23,19 @@ import FirstPageRoundedIcon from '@mui/icons-material/FirstPageRounded';
 import LastPageRoundedIcon from '@mui/icons-material/LastPageRounded';
 import ChevronLeftRoundedIcon from '@mui/icons-material/ChevronLeftRounded';
 import ChevronRightRoundedIcon from '@mui/icons-material/ChevronRightRounded';
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from '@mui/icons-material/Delete';
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Link, Navigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import { CircularProgress } from '@mui/material';  // Import CircularProgress
 
 const ViewItem = () => {
   const [totalRows, setTotalRows] = useState(0);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
+  const [loading, setLoading] = useState(true);  // Initialize loading state
   const [formData, setformData] = useState({
     itemName: '',
     description: '',
@@ -71,6 +75,8 @@ const ViewItem = () => {
   // }, []); // Make sure to include an empty dependency array if you only want this effect to run once on component mount
 
   const fetchData = () => {
+    setLoading(true); // Start loading
+  
     fetch('http://localhost:8080/item/view', {
       headers: {
         Authorization: `Bearer ${currentUser.accessToken}`,
@@ -91,18 +97,17 @@ const ViewItem = () => {
           console.error('Empty response from the server');
           setItem([]);
           setTotalRows(0);
-          // Optionally, display a message to the user
-          // You can use state to control the visibility of the message
-          // setMessage('No incoming data available');
         }
       })
       .catch((error) => {
         console.error('Error fetching data:', error);
-        // Handle fetch error here, e.g., display an error message to the user
-        // You can use state to control the visibility of the error message
-        // setError('Error fetching data. Please try again later.');
+        // Optionally handle the error here
+      })
+      .finally(() => {
+        setLoading(false); // End loading regardless of fetch result
       });
   };
+  
 
   useEffect(() => {
     fetchData();
@@ -171,9 +176,9 @@ const ViewItem = () => {
           <Table sx={{ minWidth: 650 }} aria-label='simple table'>
             <TableHead>
               <TableRow>
-                <TableCell align='left' sx={{ fontWeight: 'bold' }}>
+                {/* <TableCell align='left' sx={{ fontWeight: 'bold' }}>
                   Item Name
-                </TableCell>
+                </TableCell> */}
                 <TableCell align='left' sx={{ fontWeight: 'bold' }}>
                   Item Description
                 </TableCell>
@@ -192,52 +197,58 @@ const ViewItem = () => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {item.length > 0 ? (
-                item
-                  .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                  .map((item) => (
-                    <TableRow
-                      key={item.name}
-                      sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                    >
-                      <TableCell align='left'>{item.itemName}</TableCell>
-                      <TableCell align='left'>{item.description?.substring(0, 5)+"..."}</TableCell>
-                      <TableCell align='left'>{item.name}</TableCell>
-                      <TableCell align='left'>{item.unitName}</TableCell>
-                      <TableCell align='left'>{item.minimumStock}</TableCell>
-                      <Link to={`/item/viewInventories/${item.id}`}>
-                        <Button
-                          sx={{ marginRight: '11px' }}
-                          variant='contained'
-                        >
-                          View Inventories
-                        </Button>
-                      </Link>
+  {loading ? (
+    <TableRow>
+      <TableCell colSpan={7} align='center'>
+        <CircularProgress />
+      </TableCell>
+    </TableRow>
+  ) : item.length > 0 ? (
+    item
+      .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+      .map((item) => (
+        <TableRow
+          key={item.name}
+          sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+        >
+          {/* <TableCell align='left'>{item.itemName}</TableCell> */}
+          <TableCell align='left'>{item.description}</TableCell>
+          <TableCell align='left'>{item.name}</TableCell>
+          <TableCell align='left'>{item.unitName}</TableCell>
+          <TableCell align='left'>{item.minimumStock}</TableCell>
+          <TableCell align='left'>
+            <Link to={`/item/viewInventories/${item.id}`}>
+              <Button
+                sx={{ marginRight: '11px',width:"30px",fontSize:"10px" }}
+                variant='contained'
+              >
+                Inventory
+              </Button>
+            </Link>
+            <Link to={`/updateItem/${item.id}`}>
+              <EditIcon/>
+            </Link>
+            {/* <Button
+              sx={{ marginLeft: '11px' }}
+              variant='contained'
+              color='secondary'
+              onClick={() => deleteItem(item.id)}
+            > */}
+           <DeleteIcon  onClick={() => deleteItem(item.id)}/>
+            {/* </Button> */}
+          </TableCell>
+        </TableRow>
+      ))
+  ) : (
+    <TableRow>
+      <TableCell colSpan={7} align='center'>
+        No incoming data available.
+      </TableCell>
+    </TableRow>
+  )}
+</TableBody>
 
-                      <Link
-                        sx={{ marginLeft: '11px' }}
-                        to={`/updateItem/${item.id}`}
-                      >
-                        <Button variant='contained'>Update</Button>
-                      </Link>
-                      <Button
-                        sx={{ marginLeft: '11px' }}
-                        variant='contained'
-                        color='secondary'
-                        onClick={() => deleteItem(item.id)}
-                      >
-                        Delete
-                      </Button>
-                    </TableRow>
-                  ))
-              ) : (
-                <TableRow>
-                  <TableCell colSpan={7} align='center'>
-                    No incoming data available.
-                  </TableCell>
-                </TableRow>
-              )}
-            </TableBody>
+
             <TableFooter>
               <TableRow>
               <TableCell colSpan={7} align='center'>

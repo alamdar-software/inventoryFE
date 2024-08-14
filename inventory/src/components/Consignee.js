@@ -38,6 +38,8 @@ import LastPageRoundedIcon from '@mui/icons-material/LastPageRounded';
 import ChevronLeftRoundedIcon from '@mui/icons-material/ChevronLeftRounded';
 import ChevronRightRoundedIcon from '@mui/icons-material/ChevronRightRounded';
 import { fetchConsignee } from '../redux/slice/ConsigneeSlice';
+import BorderColorSharpIcon from '@mui/icons-material/BorderColorSharp';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 const Consignee = () => {
   const state = useSelector((state) => state);
@@ -468,7 +470,7 @@ const Consignee = () => {
         </Button>
       </Box>
 
-      <Grid sx={{ mt: '33px', width: '99%', overflowX: 'scroll' }}>
+      <Grid sx={{ mt: '33px' }}>
         <TableContainer
           component={Paper}
           sx={{
@@ -539,20 +541,32 @@ const Consignee = () => {
                       <TableCell align='left'>
                         {consignee.locationName}
                       </TableCell>
-                      <Box>
+                      <TableCell>
                         <Link to={`/updateConsignee/${consignee.id}`}>
-                          <Button variant='contained'>Update</Button>
-                        </Link>
-
-                        <Button
+                          {/* <Button variant='contained'>Update</Button> */}
+                          <Button>
+                            <BorderColorSharpIcon
+                              // onClick={() => handleDeleteClick(index)}
+                              style={{ color: 'green' }}
+                            />
+                          </Button>
+                        </Link> 
+                        
+                        </TableCell>
+                        <TableCell>
+                        {/* <Button
                           sx={{ marginLeft: '11px', mt: '10px' }}
                           variant='contained'
                           color='secondary'
                           onClick={() => deleteConsignee(consignee.id)}
                         >
                           Delete
+                        </Button> */}
+                        <Button   onClick={() => deleteConsignee(consignee.id)}>
+                          <DeleteIcon />
                         </Button>
-                      </Box>
+                        </TableCell>
+                      
                     </TableRow>
                   ))
               ) : (

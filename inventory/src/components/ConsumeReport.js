@@ -329,10 +329,11 @@ const ConsumeReport = () => {
               <LocalizationProvider dateAdapter={AdapterDayjs}>
                 <DatePicker
                   //value={formData.date}
-                  onChange={(newDate) => handleDateChange(newDate)}
+                  onChange={(newDate) => handleDateChange(newDate)} 
                   fullWidth
                   sx={{ width: '90%' }}
                 />
+                
               </LocalizationProvider>
             </Grid>
             <Grid item xs={12} sm={6}>
