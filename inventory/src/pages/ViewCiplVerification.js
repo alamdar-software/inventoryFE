@@ -380,9 +380,7 @@ export const ViewCiplVerification = () => {
                   Status
                 </TableCell>
 
-                <TableCell align='right' sx={{ fontWeight: 'bold' }}>
-                  Print
-                </TableCell>
+                
                 <TableCell align='left' sx={{ fontWeight: 'bold' }}>
                   Action
                 </TableCell>
@@ -411,17 +409,7 @@ export const ViewCiplVerification = () => {
                         {ciplRow.transferDate}
                       </TableCell>
                       <TableCell align='right'>{ciplRow.status}</TableCell>
-                      <TableCell align='right'>
-                        <Link to={`/cipl/createpdf/${ciplRow.id}`}>
-                          <Button
-                            variant='contained'
-                            color='primary'
-                            onClick={() => generatePDF(ciplRow.id, index)}
-                          >
-                            {<PictureAsPdfIcon />}
-                          </Button>
-                        </Link>
-                      </TableCell>
+                      
 
                       <Box>
                         <Link to={`/updateCiplverifier/${ciplRow.id}`}>
