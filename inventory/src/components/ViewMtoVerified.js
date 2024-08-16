@@ -89,14 +89,16 @@ const ViewMtoVerified = () => {
   }, []);
 
   console.log(mto);
+  console.log(formData,"hhhhhhhhhhhhhhhhhh");
   const handleSearch = () => {
-    fetch('http://localhost:8080/mto/search', {
+    fetch('http://localhost:8080/mto/mtoCreatedSearch', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${currentUser.accessToken}`,
       },
       body: JSON.stringify(formData),
+     
     })
       .then((res) => res.json())
       .then((result) => {
@@ -158,6 +160,13 @@ const ViewMtoVerified = () => {
                 labelId='demo-simple-select-label'
                 id='demo-simple-select'
                 label='Description'
+                MenuProps={{
+                  PaperProps: {
+                    style: {
+                      maxHeight: '120px',
+                    },
+                  },
+                }}
                 onChange={(e) =>
                   setformData({
                     ...formData,
@@ -270,9 +279,9 @@ const ViewMtoVerified = () => {
                   Status
                 </TableCell>
 
-                <TableCell align='right' sx={{ fontWeight: 'bold' }}>
+                {/* <TableCell align='right' sx={{ fontWeight: 'bold' }}>
                   Print
-                </TableCell>
+                </TableCell> */}
               </TableRow>
             </TableHead>
 
@@ -290,17 +299,7 @@ const ViewMtoVerified = () => {
                       <TableCell align='right'>{mto.transferDate}</TableCell>
                       <TableCell align='right'>{mto.description}</TableCell>
                       <TableCell align='right'>{mto.status}</TableCell>
-                      <TableCell align='right'>
-                        <Link to={`/mto/createpdf/${mto.id}`}>
-                          <Button
-                            variant='contained'
-                            color='primary'
-                            /*  onClick={() => generatePDF(ciplRow.id, index)} */
-                          >
-                            {<PictureAsPdfIcon />}
-                          </Button>
-                        </Link>
-                      </TableCell>
+                   
 
                       <Link to={`/updateMtoVerified/${mto.id}`}>
                         <Button>

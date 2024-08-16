@@ -115,7 +115,7 @@ const ViewIncomingVerifier = () => {
     });
   };
   const handleSearch = () => {
-    fetch('http://localhost:8080/bulkstock/search', {
+    fetch('http://localhost:8080/bulkstock/searchCreatedPurchase', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -177,6 +177,13 @@ const ViewIncomingVerifier = () => {
                 labelId='demo-simple-select-label'
                 id='demo-simple-select'
                 label='Description'
+                MenuProps={{
+                  PaperProps: {
+                    style: {
+                      maxHeight: '120px',
+                    },
+                  },
+                }}
                 onChange={(e) =>
                   setformData({
                     ...formData,
@@ -201,6 +208,13 @@ const ViewIncomingVerifier = () => {
                 id='demo-simple-select'
                 label='location'
                 onChange={handleLocationChange}
+                MenuProps={{
+                  PaperProps: {
+                    style: {
+                      maxHeight: '120px',
+                    },
+                  },
+                }}
               >
                 {state.nonPersisted.location.data?.map((item, index) => (
                   <MenuItem key={index} value={item?.locationName}>

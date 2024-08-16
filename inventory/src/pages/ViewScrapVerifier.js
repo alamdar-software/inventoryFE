@@ -164,7 +164,7 @@ const ViewScrappVerifier = () => {
   const handleClick = async (e) => {
     e.preventDefault();
     try {
-      const res = await fetch('http://localhost:8080/scrappeditem/search', {
+      const res = await fetch('http://localhost:8080/scrappeditem/scrappedCreatedSearch', {
         method: 'post',
         headers: {
           'content-type': 'application/json',
