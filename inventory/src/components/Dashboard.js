@@ -1809,7 +1809,7 @@ const Dashboard = () => {
               }}
             >
               <Link
-                to={"/view-consumeditem"}
+                to={"/bulkVerify"}
                 style={{ textDecoration: "none" }}
               >
                 <CardContent

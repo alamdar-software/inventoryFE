@@ -151,6 +151,7 @@ import { TableContainer } from '@mui/material';
 import ItemInventory from './components/ItemInventory.js';
 import ViewPickup from './components/ViewPickup.js';
 import ReportLocation from './components/ReportLocation.js';
+import BulkVerifyReject from './components/BulkVerifyReject.js';
 
 const theme = createTheme({
   palette: {
@@ -528,6 +529,15 @@ theme="light"
                     <Sidebar>
                       <ToastContainer/>
                       <ViewCiplVerification />
+                    </Sidebar>
+                  }
+                />
+                  <Route
+                  path='/bulkVerify'
+                  element={
+                    <Sidebar>
+                      <ToastContainer/>
+                      <BulkVerifyReject />
                     </Sidebar>
                   }
                 />
