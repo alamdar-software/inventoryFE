@@ -837,7 +837,7 @@ theme="light"
                   }
                 />
                 <Route
-                  path='/cipl/createpdf/:id'
+                  path='/cipl/createpdf/:id/:companyName'
                   element={
                     <Sidebar>
                       <PrintCipl />
@@ -1251,6 +1251,22 @@ theme="light"
                       </Sidebar>
                     }
                   />
+                    {/* <Route
+                    path='/mto/createpdf/:id/:companyName'
+                    element={
+                      <Sidebar>
+                        <PrintMto />
+                      </Sidebar>
+                    }
+                  /> */}
+                   <Route
+                    path='/mto/createpdf/:id/'
+                    element={
+                      <Sidebar>
+                        <PrintMto />
+                      </Sidebar>
+                    }
+                  />
                   {/* <Route path="/mto/createpdf/:id/:companyName" element={<PrintMto />} /> */}
                   <Route
                     path='/updateMto/:id'
@@ -1279,7 +1295,7 @@ theme="light"
                     }
                   />
                   <Route
-                    path='/internal/createpdf/:id'
+                    path='/internal/createpdf/:id/:companyName'
                     element={
                       <Sidebar>
                         <PrintInternal />

@@ -3,6 +3,7 @@ import {
   Button,
   Card,
   CardContent,
+  CircularProgress,
   FormControl,
   Grid,
   InputLabel,
@@ -51,6 +52,8 @@ const InventoryList = () => {
   const dispatch = useDispatch();
   const [isCardOpen, setIsCardOpen] = useState(false);
   const [isCardVisible, setIsCardVisible] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+
 
   const handleButtonClick = () => {
     setIsCardVisible(!isCardVisible);
@@ -77,8 +80,29 @@ const InventoryList = () => {
     scrappedItem: '',
   });
 
+  // useEffect(() => {
+  //   console.log(currentUser.accessToken, 'heyyyy');
+  //   fetch('http://localhost:8080/inventory/view', {
+  //     headers: {
+  //       Authorization: `Bearer ${currentUser.accessToken}`,
+  //     },
+  //   })
+  //     .then((res) => res.json())
+  //     .then((result) => {
+  //       if (result) {
+  //         const inventoryArray = Object.values(result);
+  //         setInventoryData(inventoryArray);
+  //         console.log(inventoryData, 'mujhe');
+  //       } else {
+  //         console.error('Empty or invalid JSON response');
+  //       }
+  //     })
+  //     .catch((error) => {
+  //       console.error('Error fetching inventory data:', error);
+  //     });
+  // }, []);
   useEffect(() => {
-    console.log(currentUser.accessToken, 'heyyyy');
+    setIsLoading(true);
     fetch('http://localhost:8080/inventory/view', {
       headers: {
         Authorization: `Bearer ${currentUser.accessToken}`,
@@ -89,15 +113,19 @@ const InventoryList = () => {
         if (result) {
           const inventoryArray = Object.values(result);
           setInventoryData(inventoryArray);
-          console.log(inventoryData, 'mujhe');
+          setTotalRows(inventoryArray.length);
         } else {
           console.error('Empty or invalid JSON response');
         }
       })
       .catch((error) => {
         console.error('Error fetching inventory data:', error);
+      })
+      .finally(() => {
+        setIsLoading(false); // Set loading to false after data fetch
       });
-  }, []);
+  }, [currentUser.accessToken]);
+  
   useEffect(() => {
     setTotalRows(inventoryData.length);
   }, [inventoryData]);
@@ -303,7 +331,15 @@ const InventoryList = () => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {inventoryData.length > 0 ? (
+              
+              {isLoading  ? (
+                <TableRow>
+                  <TableCell colSpan={7} align='center'>
+                    <CircularProgress />
+                  </TableCell>
+                </TableRow>
+              )
+              :inventoryData.length > 0 ? (
                 inventoryData
                   .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                   .map((inventory) => (
