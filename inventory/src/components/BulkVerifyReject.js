@@ -244,7 +244,7 @@ export const BulkVerifyReject = () => {
         throw new Error(`HTTP error! Status: ${res.status}`);
       }
   
-      const data = await res.json();
+   
   
       toast.success("Bulk status updated successfully");
     } catch (error) {
