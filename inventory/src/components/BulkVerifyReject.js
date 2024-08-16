@@ -221,37 +221,38 @@ export const BulkVerifyReject = () => {
   };
 
   const handlesubmit = async (e) => {
+    e.preventDefault();
+    
     const finalData = {
       ...formData,
-      purchaseOrder: searchData?.purchaseOrder, // Ensure `po` is the predefined value
+      purchaseOrder: searchData?.purchaseOrder, // Ensure `purchaseOrder` is included
     };
-    console.log(finalData,"i am here");
-    e.preventDefault();
+    
+    console.log(finalData, "i am here");
+  
     try {
       const res = await fetch('http://localhost:8080/bulkstock/updateByPurchaseOrder', {
-        method: 'post',
+        method: 'POST',
         headers: {
-          'content-type': 'application/json',
+          'Content-Type': 'application/json',
           Authorization: `Bearer ${currentUser.accessToken}`,
         },
-       
-        body: JSON.stringify({
-          finalData
-        }),
+        body: JSON.stringify(finalData), // Send `finalData` directly
       });
-
+  
       if (!res.ok) {
         throw new Error(`HTTP error! Status: ${res.status}`);
       }
-
+  
       const data = await res.json();
-
-      toast.success("bulk Status Updated Successfully")
+  
+      toast.success("Bulk status updated successfully");
     } catch (error) {
-      console.error('Error while adding inventory:', error.message);
-      alert('data not found');
+      console.error('Error while updating bulk status:', error.message);
+      alert('Data not found');
     }
   };
+  
   const handleDateChange = (date) => {
     setformData({
       ...formData,
