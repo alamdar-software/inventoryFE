@@ -41,6 +41,22 @@ const theme = createTheme({
 });
 
 const ApproverRejected = () => {
+  const [isBlinking, setIsBlinking] = React.useState(true);
+  useEffect(() => {
+    // Toggle blinking every 1 second
+    const interval = setInterval(() => {
+      setIsBlinking((prevIsBlinking) => !prevIsBlinking);
+    }, 900);
+
+    // Clear interval on component unmount
+    return () => clearInterval(interval);
+  }, []);
+  const [ciplCount, setciplCount] = React.useState(0)
+  const [mto, setmto] = React.useState(0)
+  const [scrappedcount, setscrappedcount] = React.useState(0)
+  const [consumedCount, setconsumedCount] = React.useState(0)
+  const [incomingcount, setincomingcount] = React.useState(0)
+  const [itcount, setitcount] = React.useState(0)
   const state = useSelector((state) => state);
   const { currentUser } = state.persisted.user;
 
@@ -51,6 +67,100 @@ const ApproverRejected = () => {
   useEffect(() => {
     dispatch(fetchItem(currentUser.accessToken));
   }, []);
+
+
+  useEffect(() => {
+    dispatch(fetchItem(currentUser.accessToken));
+  }, []);
+
+
+  useEffect(() => {
+    const getciplCount = async () => {
+
+      const res = await fetch("http://localhost:8080/cipl/approverrejectedCount", {
+        method: "get",
+        headers: {
+          'content-type': 'application/json',
+          Authorization: `Bearer ${currentUser.accessToken}`,
+        },
+      })
+      const data = await res.json();
+      console.log(data, "inventorycount");
+      setciplCount(data?.totalCount || 0)
+    }
+    getciplCount();
+    const getitCount = async () => {
+
+      const res = await fetch("http://localhost:8080/internaltransfer/approverrejectedCount", {
+        method: "get",
+        headers: {
+          'content-type': 'application/json',
+          Authorization: `Bearer ${currentUser.accessToken}`,
+        },
+      })
+      const data = await res.json();
+      console.log(data, "inventorycount");
+      setitcount(data?.totalCount || 0)
+    }
+    getitCount();
+    const getincomingCount = async () => {
+
+      const res = await fetch("http://localhost:8080/bulkstock/approverrejectedCount", {
+        method: "get",
+        headers: {
+          'content-type': 'application/json',
+          Authorization: `Bearer ${currentUser.accessToken}`,
+        },
+      })
+      const data = await res.json();
+      console.log(data, "inventorycount");
+      setincomingcount(data?.totalCount || 0)
+    }
+    getincomingCount();
+    const getscrappedCount = async () => {
+
+      const res = await fetch("http://localhost:8080/scrappeditem/approverrejectedCount", {
+        method: "get",
+        headers: {
+          'content-type': 'application/json',
+          Authorization: `Bearer ${currentUser.accessToken}`,
+        },
+      })
+      const data = await res.json();
+      console.log(data, "inventorycount");
+      setscrappedcount(data?.totalCount || 0)
+    }
+    getscrappedCount();
+    const getconsumedCount = async () => {
+
+      const res = await fetch("http://localhost:8080/consumeditem/approverrejectedCount", {
+        method: "get",
+        headers: {
+          'content-type': 'application/json',
+          Authorization: `Bearer ${currentUser.accessToken}`,
+        },
+      })
+      const data = await res.json();
+      console.log(data, "inventorycount");
+      setconsumedCount(data?.totalCount || 0)
+    }
+    getconsumedCount();
+    const getmtoCount = async () => {
+
+      const res = await fetch("http://localhost:8080/mto/approverrejectedCount", {
+        method: "get",
+        headers: {
+          'content-type': 'application/json',
+          Authorization: `Bearer ${currentUser.accessToken}`,
+        },
+      })
+      const data = await res.json();
+      console.log(data.totalCount, "inventorycounttt");
+      setmto(data?.totalCount || 0)
+    }
+    getmtoCount();
+
+  }, [])
   if (currentUser && currentUser.roles) {
     if (roleVerifier) {
       return (
@@ -79,6 +189,7 @@ const ApproverRejected = () => {
                   marginTop: 3,
                   borderRadius: 5,
                   width: '80px !important',
+                  height:"200px",
 
                   transition: 'transform 0.3s',
                   '&:hover': {
@@ -87,13 +198,14 @@ const ApproverRejected = () => {
                 }}
               >
                 <Link
-                  to={'/view-inventoryMoc'}
+                  to={'/approvalCiplRejected'}
                   style={{ textDecoration: 'none', position: 'relative' }}
                 >
                   <CardContent>
                     {/* Your small box */}
                     <Box
                       sx={{
+                        height:"200px",
                         position: 'absolute',
                         top: 0,
                         left: 0,
@@ -125,6 +237,7 @@ const ApproverRejected = () => {
                         mb: 1.5,
                         textAlign: 'center',
                         fontWeight: 'bolder',
+                        fontSize:20,
                         fontFamily: 'Montserrat',
                       }}
                       color='#333'
@@ -133,8 +246,20 @@ const ApproverRejected = () => {
                     >
                       Approver Rejected Cipl
                     </Typography>
-                    <Typography sx={{ mb: 1.5 }} color='text.secondary'>
-                      Count:
+                    <Typography
+                      sx={{
+                        mb: -6,
+
+                        ml: 3,
+                        fontWeight: 'bold', // Set font weight to bold
+                        animation: isBlinking ? 'blinkingText 1s infinite' : 'none', // Apply blinking animation
+                        color: 'green',
+                        textAlign: 'center' // Set the text color to blue
+                      }}
+                      variant="h4"
+                      color="text.secondary"
+                    >
+                      {ciplCount}
                     </Typography>
                   </CardContent>
                 </Link>
@@ -144,6 +269,8 @@ const ApproverRejected = () => {
                 sx={{
                   //border: '2px solid yellow',
                   minWidth: 40,
+                  width: '80px !important',
+                  height:"200px",
                   flex: 1,
                   marginTop: 3,
                   marginLeft: 3,
@@ -154,7 +281,7 @@ const ApproverRejected = () => {
                   },
                 }}
               >
-                <Link to={'/datacount'} style={{ textDecoration: 'none' }}>
+                <Link to={'/approvalMtoRejected'} style={{ textDecoration: 'none' }}>
                   <CardContent>
                     <ArticleIcon
                       fontSize='large'
@@ -167,6 +294,7 @@ const ApproverRejected = () => {
                       component='div'
                       sx={{
                         mb: 1.5,
+                        fontSize:20,
                         textAlign: 'center',
                         fontWeight: 'bolder',
                         fontFamily: 'Montserrat',
@@ -174,8 +302,20 @@ const ApproverRejected = () => {
                     >
                       Approver Rejected Mto
                     </Typography>
-                    <Typography sx={{ mb: 1.5 }} color='text.secondary'>
-                      Count:
+                    <Typography
+                      sx={{
+                        mb: -6,
+                        
+                        ml: 3,
+                        fontWeight: 'bold', // Set font weight to bold
+                        animation: isBlinking ? 'blinkingText 1s infinite' : 'none', // Apply blinking animation
+                        color: 'green',
+                        textAlign: 'center' // Set the text color to blue
+                      }}
+                      variant="h4"
+                      color="text.secondary"
+                    >
+                      {mto}
                     </Typography>
                   </CardContent>
                 </Link>
@@ -194,7 +334,7 @@ const ApproverRejected = () => {
                   },
                 }}
               >
-                <Link to={'/Reports'} style={{ textDecoration: 'none' }}>
+                <Link to={'/approvalItRejected'} style={{ textDecoration: 'none' }}>
                   <CardContent>
                     <SummarizeIcon
                       fontSize='large'
@@ -206,12 +346,28 @@ const ApproverRejected = () => {
                       color='#333'
                       sx={{
                         mb: 1.5,
+                        fontSize:20,
                         textAlign: 'center',
                         fontWeight: 'bolder',
                         fontFamily: 'Montserrat',
                       }}
                     >
                       Approver Rejected It
+                    </Typography>
+                    <Typography
+                      sx={{
+                        mb: -6,
+
+                        ml: 3,
+                        fontWeight: 'bold', // Set font weight to bold
+                        animation: isBlinking ? 'blinkingText 1s infinite' : 'none', // Apply blinking animation
+                        color: 'green',
+                        textAlign: 'center' // Set the text color to blue
+                      }}
+                      variant="h4"
+                      color="text.secondary"
+                    >
+                      {itcount}
                     </Typography>
                   </CardContent>
                 </Link>
@@ -230,7 +386,7 @@ const ApproverRejected = () => {
                   },
                 }}
               >
-                <Link to={'/Items'} style={{ textDecoration: 'none' }}>
+                <Link to={'/approvalIncomingRejected'} style={{ textDecoration: 'none' }}>
                   <CardContent>
                     <ArticleIcon
                       fontSize='large'
@@ -239,16 +395,35 @@ const ApproverRejected = () => {
                     <Typography
                       variant='h5'
                       component='div'
+                      
                       color='#333'
                       sx={{
                         mb: 1.5,
                         textAlign: 'center',
                         fontWeight: 'bolder',
+                        fontSize:20,
                         fontFamily: 'Montserrat',
                       }}
                     >
                       Approver Rejected Incoming Stock
                     </Typography>
+                    <Typography
+                      sx={{
+                        mb: -6,
+                       
+                        ml: 3,
+                        fontWeight: 'bold', // Set font weight to bold
+                        animation: isBlinking ? 'blinkingText 1s infinite' : 'none', // Apply blinking animation
+                        color: 'green',
+                        textAlign: 'center' // Set the text color to blue
+                      }}
+                      variant="h4"
+                      color="text.secondary"
+                    >
+                      {incomingcount}
+                    </Typography>
+
+
                   </CardContent>
                 </Link>
               </Card>
@@ -258,13 +433,15 @@ const ApproverRejected = () => {
                 display: 'flex',
                 flexDirection: 'row',
                 marginTop: 5,
-                paddingRight: 700,
+                paddingRight: 560,
               }}
             >
               <Card
                 sx={{
                   //border: '2px solid yellow',
-                  minWidth: 10,
+                  minWidth: 70,
+                  width: '100px !important',
+                  height:"200px",
                   flex: 1,
                   marginRight: 3,
                   marginLeft: 3,
@@ -277,7 +454,7 @@ const ApproverRejected = () => {
                 }}
               >
                 <Link
-                  to={'/locationDashboard'}
+                  to={'/approvalScrapRejected'}
                   style={{ textDecoration: 'none' }}
                 >
                   <CardContent
@@ -294,6 +471,7 @@ const ApproverRejected = () => {
 
                     <Typography
                       sx={{
+                        fontSize:20,
                         mb: 1.5,
                         textAlign: 'center',
                         fontWeight: 'bolder',
@@ -305,9 +483,21 @@ const ApproverRejected = () => {
                     >
                       Approver Rejected Scrapped Stock
                     </Typography>
-                    <Typography sx={{ mb: 1.5 }} color='text.secondary'>
-                      Count:
-                    </Typography>
+                    <Typography
+        sx={{
+          mb: -6,
+        
+          ml:3,
+          fontWeight: 'bold', // Set font weight to bold
+          animation: isBlinking ? 'blinkingText 1s infinite' : 'none', // Apply blinking animation
+          color: 'green',
+          textAlign: 'center' // Set the text color to blue
+        }}
+        variant="h4"
+        color="text.secondary"
+      >
+        {scrappedcount}
+      </Typography>
                   </CardContent>
                 </Link>
               </Card>
@@ -326,7 +516,7 @@ const ApproverRejected = () => {
                   },
                 }}
               >
-                <Link to={'/view-inventory'} style={{ textDecoration: 'none' }}>
+                <Link to={'/approvalConsumeRejected'} style={{ textDecoration: 'none' }}>
                   <CardContent
                     sx={{
                       display: 'flex',
@@ -342,6 +532,7 @@ const ApproverRejected = () => {
                     <Typography
                       sx={{
                         mb: 1.5,
+                        fontSize:20,
                         textAlign: 'center',
                         fontWeight: 'bolder',
                         fontFamily: 'Montserrat',
@@ -352,9 +543,21 @@ const ApproverRejected = () => {
                     >
                       Approver Rejected Consumed Stock
                     </Typography>
-                    <Typography sx={{ mb: 1.5 }} color='text.secondary'>
-                      Count:
-                    </Typography>
+                    <Typography
+        sx={{
+          mb: -6,
+        
+          ml:3,
+          fontWeight: 'bold', // Set font weight to bold
+          animation: isBlinking ? 'blinkingText 1s infinite' : 'none', // Apply blinking animation
+          color: 'green',
+          textAlign: 'center' // Set the text color to blue
+        }}
+        variant="h4"
+        color="text.secondary"
+      >
+        {consumedCount}
+      </Typography>
                   </CardContent>
                 </Link>
               </Card>
