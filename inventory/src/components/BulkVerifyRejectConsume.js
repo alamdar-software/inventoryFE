@@ -158,13 +158,13 @@ export const BulkVerifyRejectConsume = () => {
     
     const finalData = {
       ...formData,
-      purchaseOrder: searchData?.purchaseOrder, // Ensure `purchaseOrder` is included
+      transferDate: searchData?.transferDate, // Ensure `purchaseOrder` is included
     };
     
     console.log(finalData, "i am here");
   
     try {
-      const res = await fetch('http://localhost:8080/bulkstock/updateByPurchaseOrder', {
+      const res = await fetch('http://localhost:8080/consumeditem/updateByDate', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -176,9 +176,7 @@ export const BulkVerifyRejectConsume = () => {
       if (!res.ok) {
         throw new Error(`HTTP error! Status: ${res.status}`);
       }
-  
-   
-  
+
       toast.success("Bulk status updated successfully");
     } catch (error) {
       console.error('Error while updating bulk status:', error.message);
@@ -296,18 +294,16 @@ export const BulkVerifyRejectConsume = () => {
                   SubLocation
                 </TableCell>
                 <TableCell align='right' sx={{ fontWeight: 'bold' }}>
-                  Entity
+                 Quantity
                 </TableCell>
                 <TableCell align='right' sx={{ fontWeight: 'bold' }}>
-                  Quantity
+                  Date
                 </TableCell>
 
                 <TableCell align='right' sx={{ fontWeight: 'bold' }}>
-                  Purchase Date
-                </TableCell>
-                <TableCell align='right' sx={{ fontWeight: 'bold' }}>
                   Status
                 </TableCell>
+             
 
 
               </TableRow>
@@ -324,15 +320,15 @@ export const BulkVerifyRejectConsume = () => {
                     sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                   >
                     <TableCell align='right'>
-                      {bulk.description[0].substring(0, 20)}
+                      {bulk.item[0].substring(0, 20)}
 
                     </TableCell>
 
                     <TableCell align='right'>{bulk.locationName}</TableCell>
-                    <TableCell align='right'>{bulk.address}</TableCell>
-                    <TableCell align='right'>{bulk.entityName}</TableCell>
+                    <TableCell align='right'>{bulk.SubLocations}</TableCell>
                     <TableCell align='right'>{bulk.quantity}</TableCell>
                     <TableCell align='right'>{bulk.date}</TableCell>
+                    
                     <TableCell align='right'>{bulk.status}</TableCell>
 
 
@@ -396,7 +392,7 @@ export const BulkVerifyRejectConsume = () => {
                 id='outlined-basic'
                 disabled
                 variant='outlined'
-                value={searchData.purchaseOrder}
+                value={searchData?.transferDate}
                 fullWidth
                 sx={{ width: '90%' }}
 
