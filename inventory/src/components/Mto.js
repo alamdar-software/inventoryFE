@@ -3,6 +3,7 @@ import {
   Button,
   Card,
   CardContent,
+  CircularProgress,
   FormControl,
   Grid,
   InputLabel,
@@ -30,6 +31,7 @@ import { toast } from 'react-toastify';
 
 const Mto = () => {
   const state = useSelector((state) => state);
+  // const [loading, setLoading] = useState(true); // State for loading
   const [formData, setformData] = useState({
     locationName: '',
     destinationSubLocation: '',
@@ -58,10 +60,13 @@ const Mto = () => {
   const [item, setItem] = useState([]);
   const [partNumbersData, setPartNumbersData] = useState([]);
   const [selectedPartNo, setselectedPartNo] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+
   const [partNo, setPartNo] = useState(
     Array.from({ length: formRows }, () => [])
   );
   const { currentUser } = state.persisted.user;
+  
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(fetchConsignee(currentUser.accessToken));
@@ -130,33 +135,67 @@ const Mto = () => {
   };
   console.log(subLocations, 'subbbbb');
 
+  // const handleSubLocationChange = (e, index) => {
+  //   const selectedSubLocation = e.target.value || ''; // Ensure a default value if undefined
+  //   updateFormDataSubLocation(index, selectedSubLocation);
+  //   setSelectedSubLocations((prevSubLocations) => {
+  //     const updatedSubLocations = [...prevSubLocations];
+  //     updatedSubLocations[index] = selectedSubLocation;
+  //     return updatedSubLocations;
+  //   });
+
+  //   const selectedInventoryData = state.nonPersisted.inventory.data.filter(
+  //     (inventoryItem) => inventoryItem.address?.address === selectedSubLocation
+  //   );
+  //   console.log(selectedInventoryData, '22');
+
+  //   // Extract item descriptions from the selected inventory data
+  //   const itemDescriptions = selectedInventoryData.map(
+  //     (inventoryItem) => inventoryItem.description
+  //   );
+  //   console.log(itemDescriptions, '33');
+
+  //   // Update the item state with the selected item descriptions
+  //   setItem((prevItems) => {
+  //     const updatedItems = [...prevItems];
+  //     updatedItems[index] = itemDescriptions; // This line is updated
+  //     return updatedItems;
+  //   });
+  // };
   const handleSubLocationChange = (e, index) => {
-    const selectedSubLocation = e.target.value || ''; // Ensure a default value if undefined
+    const selectedSubLocation = e.target.value || ''; 
     updateFormDataSubLocation(index, selectedSubLocation);
     setSelectedSubLocations((prevSubLocations) => {
       const updatedSubLocations = [...prevSubLocations];
       updatedSubLocations[index] = selectedSubLocation;
       return updatedSubLocations;
     });
-
+  
+    // Start the loader
+    setIsLoading(true);
+  
+    // Simulate the fetching of item descriptions based on the sublocation
     const selectedInventoryData = state.nonPersisted.inventory.data.filter(
       (inventoryItem) => inventoryItem.address?.address === selectedSubLocation
     );
-    console.log(selectedInventoryData, '22');
-
+  
     // Extract item descriptions from the selected inventory data
     const itemDescriptions = selectedInventoryData.map(
       (inventoryItem) => inventoryItem.description
     );
-    console.log(itemDescriptions, '33');
-
+  
+    // Set loading to false when data is fetched
+    setIsLoading(itemDescriptions.length === 0);
+  
     // Update the item state with the selected item descriptions
     setItem((prevItems) => {
       const updatedItems = [...prevItems];
-      updatedItems[index] = itemDescriptions; // This line is updated
+      updatedItems[index] = itemDescriptions;
       return updatedItems;
     });
   };
+  
+  
   const updateFormDataSubLocation = (index, selectedSubLocation) => {
     setformData((prevFormData) => {
       const updatedSubLocations = [...prevFormData.SubLocation];
@@ -472,7 +511,7 @@ const Mto = () => {
             ))} */}
           </Select>
         </FormControl>
-        <FormControl fullWidth sx={{ width: '50%', marginRight: '10px' }}>
+        {/* <FormControl fullWidth sx={{ width: '50%', marginRight: '10px' }}>
           <InputLabel id='demo-simple-select-label'>
             Item Description
           </InputLabel>
@@ -509,7 +548,39 @@ const Mto = () => {
               </MenuItem>
             ))}
           </Select>
-        </FormControl>
+        </FormControl> */}
+      <FormControl fullWidth sx={{ width: '50%', marginRight: '10px' }}>
+  <InputLabel id='demo-simple-select-label'>Item Description</InputLabel>
+  {isLoading ? (
+    <div style={{ padding: '3px', textAlign: 'center', marginTop: '27px' }}>Loading...</div>
+  ) : (
+    <Select
+      labelId='demo-simple-select-label'
+      id='description'
+      label='Item Description'
+      onChange={(e) => handleDescriptionChange(index, e.target.value)}
+      MenuProps={{
+        PaperProps: {
+          style: {
+            maxHeight: 120,
+          },
+        },
+      }}
+    >
+      {item[index]?.map((filteredItem, itemIndex) => (
+        <MenuItem key={itemIndex} value={filteredItem}>
+          {filteredItem}
+        </MenuItem>
+      ))}
+    </Select>
+  )}
+</FormControl>
+
+
+
+
+
+
         <FormControl fullWidth sx={{ width: '50%', marginRight: '10px' }}>
           <InputLabel id='demo-simple-select-label'>Part No</InputLabel>
           <Select

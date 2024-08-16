@@ -20,6 +20,9 @@ import {
   Box,
   TableFooter,
   IconButton,
+  RadioGroup,
+  FormControlLabel,
+  Radio,
 } from '@mui/material';
 import { Link } from 'react-router-dom';
 import { fetchlocation } from '../redux/slice/location';
@@ -62,6 +65,15 @@ export const ViewCipl = () => {
     referenceNunber: "",
     status: ""
   });
+  const handleCompanyChange = (rowId, event) => {
+    const { value, checked } = event.target;
+    if (checked) {
+      setformData(prevState => ({
+        ...prevState,
+        selectedCompanyName: value // Update state with the selected company name
+      }));
+    }
+  };
 
   useEffect(() => {
     dispatch(fetchlocation(currentUser.accessToken));
@@ -334,6 +346,8 @@ export const ViewCipl = () => {
                 <TableCell align='center'>Item Description</TableCell>
                 <TableCell align='center'>Request Date</TableCell>
                 <TableCell align='center'>Reference No</TableCell>
+                <TableCell align='center'>Select Print</TableCell>
+
                 <TableCell align='center'>Status</TableCell>
                 <TableCell align='center'>Actions</TableCell>
               </TableRow>
@@ -352,12 +366,45 @@ export const ViewCipl = () => {
                   <TableCell align='center'>{row.item}</TableCell>
                   <TableCell align='center'>{row.transferDate}</TableCell>
                   <TableCell align='center'>{row.referenceNo}</TableCell>
+                  <TableCell align='right'>
+                      <FormControl component="fieldset">
+                      <RadioGroup
+                        aria-label='company'
+                        name={`company-${filteredCipl.id}`}
+                        value={formData.selectedCompanyName}
+                        onChange={(event) => handleCompanyChange(filteredCipl.id, event)}
+                      >
+                        <FormControlLabel
+                          value='PT. Satrya Maritim Indonesia'
+                          control={<Radio />}
+                          label='Indonesia'
+                        />
+                        <FormControlLabel
+                          value='Bourbon'
+                          control={<Radio />}
+                          label='Bourbon'
+                        />
+                      </RadioGroup>
+                    </FormControl>
+
+                    </TableCell>
                   <TableCell align='center'>{row.status}</TableCell>
                   <TableCell align='center'>
                     <IconButton
                       component={Link}
-                      to={`/cipl/createpdf/${row.id}`}
-                      onClick={() => generatePDF(row.id, index)}
+                      // to={`/cipl/createpdf/${row.id}`}
+                       to={`/cipl/createpdf/${row.id}/${encodeURIComponent(formData.selectedCompanyName)}`}
+                      
+                      // onClick={() => generatePDF(row.id, index)}
+                      onClick={(e) => {
+                        if (!formData.selectedCompanyName) {
+                          e.preventDefault(); // Prevent the PDF generation
+                          alert('Please select a company before printing.');
+                        } else {
+                          generatePDF(row.id, index); // Call the generatePDF function
+                        }
+                      }}
+                      
                     >
                       <PictureAsPdfIcon />
                     </IconButton>

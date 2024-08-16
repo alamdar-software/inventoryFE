@@ -1,28 +1,57 @@
 import React from 'react';
 import { useEffect } from 'react';
 import { useState } from 'react';
+import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 // import './styles.css';
 // import './printStyles.css';
 
 function PrintMto() {
   const [data, setdata] = useState([]);
-  const { id } = useParams();
+  const { currentUser } = useSelector((state) => state.persisted.user);
+  const { id,companyName } = useParams();
+  // useEffect(() => {
+  //   const getInternal = async () => {
+  //     const res = await fetch(
+  //       `http://localhost:8080/internaltransfer/createpdf/${id}`
+        
+  //     );
+
+  //     const data = await res.json();
+  //     setdata(data);
+
+  //     console.log(data, 'backdata');
+
+  //     /* setdata(data); */
+  //   };
+  //   getInternal();
+  // }, []);
   useEffect(() => {
     const getInternal = async () => {
-      const res = await fetch(
-        `http://localhost:8080/internaltransfer/createpdf/${id}`
-      );
+      try {
+        const res = await fetch(`http://localhost:8080/internaltransfer/createpdf/${id}`, {
+          headers: {
+            Authorization: `Bearer ${currentUser.accessToken}`,
+            'Content-Type': 'application/json', // Optional, depending on your API
+          },
+        });
 
-      const data = await res.json();
-      setdata(data);
+        if (!res.ok) {
+          throw new Error('Network response was not ok');
+        }
 
-      console.log(data, 'backdata');
+        const data = await res.json();
+        setdata(data);
 
-      /* setdata(data); */
+        console.log(data, 'backdata');
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
     };
+
     getInternal();
-  }, []);
+  }, [id, currentUser]);
+
 
   const [transferItem, settransferItem] = useState();
   const [sourceLocation, setsourceLocation] = useState();
@@ -92,11 +121,14 @@ function PrintMto() {
                     <div className='row'>
                       <div className='col-md-8 d-flex align-items-center gap-2'>
                         <img src='/logo/logo.jpg' />
-                        <span>
+                        {/* <span>
                           <h3 className='text-uppercase text-bold'>
                             <b>PT. Satrya Maritim Indonesia</b>
                           </h3>
-                        </span>
+                        </span> */}
+                         <h3 className='text-uppercase text-bold'>
+        <b>{decodeURIComponent(companyName) || 'Bourbon'}</b> {/* Display the company name */}
+      </h3>
                       </div>
                       <div className='col-md-4'>
                         <h5 className='mt-3'>
@@ -260,7 +292,7 @@ function PrintMto() {
                               flexDirection: 'column',
                             }}
                           >
-                            {data.item?.map((value, index) => (
+                            {data.description?.map((value, index) => (
                               <React.Fragment key={index}>
                                 <b
                                   className='text-capitalise'

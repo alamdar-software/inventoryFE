@@ -5,11 +5,14 @@ import {
   CardContent,
   Chip,
   FormControl,
+  FormControlLabel,
   Grid,
   IconButton,
   InputLabel,
   MenuItem,
   Paper,
+  Radio,
+  RadioGroup,
   Select,
   Table,
   TableBody,
@@ -74,6 +77,15 @@ const ViewInternal = () => {
   const handleChangeRowsPerPage = (event) => {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
+  };
+  const handleCompanyChange = (rowId, event) => {
+    const { value, checked } = event.target;
+    if (checked) {
+      setformData(prevState => ({
+        ...prevState,
+        selectedCompanyName: value // Update state with the selected company name
+      }));
+    }
   };
 
   useEffect(() => {
@@ -386,6 +398,10 @@ const ViewInternal = () => {
                   Transfer Date
                 </TableCell>
                 <TableCell align='right' sx={{ fontWeight: 'bold' }}>
+                  Select Print
+                </TableCell>
+               
+                <TableCell align='right' sx={{ fontWeight: 'bold' }}>
                   Item Description
                 </TableCell>
 
@@ -422,15 +438,46 @@ const ViewInternal = () => {
                       <TableCell align='right'>
                         {internal.transferDate}
                       </TableCell>
+
+
+                      <TableCell align='right'>
+                      <FormControl component="fieldset">
+                          <RadioGroup
+                            aria-label='company'
+                            name={`company-${internal.id}`}
+                            value={formData.selectedCompanyName}
+                            onChange={(event) => handleCompanyChange(internal.id, event)}
+                          >
+                            <FormControlLabel
+                              value='PT. Satrya Maritim Indonesia'
+                              control={<Radio />}
+                              label='Indonesia'
+                            />
+                            <FormControlLabel
+                              value='Bourbon'
+                              control={<Radio />}
+                              label='Bourbon'
+                            />
+                          </RadioGroup>
+                        </FormControl>
+
+                      </TableCell>
                       <TableCell align='right'>
                         {internal.description}
                       </TableCell>
                       <TableCell align='right'>
-                        <Link to={`/internal/createpdf/${internal.id}`}>
+                        {/* <Link to={`/internal/createpdf/${internal.id}`}> */}
+                        <Link to={`/internal/createpdf/${internal.id}/${encodeURIComponent(formData.selectedCompanyName)}`}>
                           <Button
                             variant='contained'
                             color='primary'
                             /*  onClick={() => generatePDF(ciplRow.id, index)} */
+                            onClick={(e) => {
+                              if (!formData.selectedCompanyName) {
+                                e.preventDefault(); // Prevent navigation
+                                alert('Please select a company before printing.');
+                              }
+                            }}
                           >
                             {<PictureAsPdfIcon />}
                           </Button>

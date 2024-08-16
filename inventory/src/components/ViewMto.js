@@ -517,24 +517,24 @@ const handleSearch = () => {
                       <TableCell align='right'>{mto.transferDate}</TableCell>
                       <TableCell align='right'>
                       <FormControl component="fieldset">
-  <RadioGroup
-    aria-label='company'
-    name={`company-${mto.id}`}
-    value={formData.selectedCompanyName}
-    onChange={(event) => handleCompanyChange(mto.id, event)}
-  >
-    <FormControlLabel
-      value='PT. Satrya Maritim Indonesia'
-      control={<Radio />}
-      label='Indonesia'
-    />
-    <FormControlLabel
-      value='Bourbon'
-      control={<Radio />}
-      label='Bourbon'
-    />
-  </RadioGroup>
-</FormControl>
+                        <RadioGroup
+                          aria-label='company'
+                          name={`company-${mto.id}`}
+                          value={formData.selectedCompanyName}
+                          onChange={(event) => handleCompanyChange(mto.id, event)}
+                        >
+                          <FormControlLabel
+                            value='PT. Satrya Maritim Indonesia'
+                            control={<Radio />}
+                            label='Indonesia'
+                          />
+                          <FormControlLabel
+                            value='Bourbon'
+                            control={<Radio />}
+                            label='Bourbon'
+                          />
+                        </RadioGroup>
+                      </FormControl>
 
                       </TableCell>
 

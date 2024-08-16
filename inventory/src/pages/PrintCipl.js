@@ -7,7 +7,7 @@ import { useParams } from 'react-router-dom';
 function PrintCipl() {
   const { currentUser } = useSelector((state) => state.persisted.user);
   const [data, setdata] = useState([]);
-  const { id } = useParams();
+  const { id,companyName } = useParams();
   useEffect(() => {
     const getCipl = async () => {
       const res = await fetch(`http://localhost:8080/cipl/createpdf/${id}`,{
@@ -110,11 +110,14 @@ function PrintCipl() {
                     <div className='row'>
                       <div className='col-md-8 d-flex align-items-center gap-2'>
                         <img src='/logo/logo.jpg' />
-                        <span>
+                        {/* <span>
                           <h3 className='text-uppercase text-bold'>
                             <b>PT. Satrya Maritim Indonesia</b>
                           </h3>
-                        </span>
+                        </span> */}
+                             <h3 className='text-uppercase text-bold'>
+        <b>{decodeURIComponent(companyName) || 'Bourbon'}</b> {/* Display the company name */}
+      </h3>
                       </div>
                       <div className='col-md-4'>
                         <h5 className='mt-3'>
