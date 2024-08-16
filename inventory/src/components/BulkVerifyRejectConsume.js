@@ -59,7 +59,7 @@ export const BulkVerifyRejectConsume = () => {
     transferDate: ""
   })
   const [formData, setformData] = useState({
-    purchaseOrder: searchData?.purchaseOrder,
+    transferDate: searchData?.transferDate,
     status: '',
     verifierComments: '',
   });
@@ -131,7 +131,7 @@ export const BulkVerifyRejectConsume = () => {
     console.log("i am here");
     e.preventDefault();
     try {
-      const res = await fetch('http://localhost:8080/incomingstock/searchPo', {
+      const res = await fetch('http://localhost:8080/consumeditem/searchDate', {
         method: 'post',
         headers: {
           'content-type': 'application/json',
