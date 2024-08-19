@@ -212,8 +212,8 @@ export const BulkApproveReject = () => {
       }
 
       const data = await res.json();
-      setFilteredBulk(data);
       console.log(data, 'came from backend');
+      setFilteredBulk(data);
     } catch (error) {
       console.error('Error while adding inventory:', error.message);
       alert('data not found');
@@ -413,10 +413,9 @@ export const BulkApproveReject = () => {
                     key={`${bulk.id}`} // Use a unique key for each row
                     sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                   >
-                    <TableCell align='right'>
-                      {bulk.description[0].substring(0, 20)}
-
-                    </TableCell>
+                  <TableCell align='right'>
+  {bulk.address && bulk.address.address}
+</TableCell>
 
                     <TableCell align='right'>{bulk.locationName}</TableCell>
                     <TableCell align='right'>{bulk.address}</TableCell>
