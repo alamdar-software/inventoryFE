@@ -179,6 +179,13 @@ const ViewInternalApproval = () => {
                 labelId='demo-simple-select-label'
                 id='demo-simple-select'
                 label='Description'
+                MenuProps={{
+                  PaperProps: {
+                    style: {
+                      maxHeight: 120, // Adjust the height as needed
+                    },
+                  },
+                }}
                 onChange={(e) =>
                   setformData({
                     ...formData,
