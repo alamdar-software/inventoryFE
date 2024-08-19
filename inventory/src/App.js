@@ -152,6 +152,7 @@ import ItemInventory from './components/ItemInventory.js';
 import ViewPickup from './components/ViewPickup.js';
 import ReportLocation from './components/ReportLocation.js';
 import BulkVerifyReject from './components/BulkVerifyReject.js';
+import BulkVerifyRejectConsume from './components/BulkVerifyRejectConsume.js';
 
 const theme = createTheme({
   palette: {
@@ -538,6 +539,15 @@ theme="light"
                     <Sidebar>
                       <ToastContainer/>
                       <BulkVerifyReject />
+                    </Sidebar>
+                  }
+                />
+                  <Route
+                  path='/bulkVerifyconsume'
+                  element={
+                    <Sidebar>
+                      <ToastContainer/>
+                      <BulkVerifyRejectConsume />
                     </Sidebar>
                   }
                 />

@@ -167,7 +167,7 @@ export const ViewCiplApproval = () => {
   const handleClick = async (e) => {
     e.preventDefault();
     try {
-      const res = await fetch('http://localhost:8080/cipl/search', {
+      const res = await fetch('http://localhost:8080/cipl/ciplVerifiedSearch                                                ', {
         method: 'post',
         headers: {
           'content-type': 'application/json',
@@ -250,6 +250,13 @@ export const ViewCiplApproval = () => {
                 labelId='demo-simple-select-label'
                 id='itemName'
                 label='itemName'
+                MenuProps={{
+                  PaperProps: {
+                    style: {
+                      maxHeight: 120, // Adjust the height as needed
+                    },
+                  },
+                }}
                 onChange={(e) => {
                   setformData({
                     ...formData,

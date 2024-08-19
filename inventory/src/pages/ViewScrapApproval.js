@@ -191,7 +191,7 @@ const ViewScrapApproval = () => {
   const handleClick = async (e) => {
     e.preventDefault();
     try {
-      const res = await fetch('http://localhost:8080/scrappeditem/search', {
+      const res = await fetch('http://localhost:8080/scrappeditem/searchScrappedVerified', {
         method: 'post',
         headers: {
           'content-type': 'application/json',

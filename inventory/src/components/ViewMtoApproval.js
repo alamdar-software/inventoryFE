@@ -115,7 +115,7 @@ const ViewMtoApproval = () => {
 
   console.log(mto);
   const handleSearch = () => {
-    fetch('http://localhost:8080/mto/search', {
+    fetch('http://localhost:8080/mto/mtoVerifiedSearch', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -181,6 +181,13 @@ const ViewMtoApproval = () => {
               </InputLabel>
               <Select
                 labelId='demo-simple-select-label'
+                MenuProps={{
+                  PaperProps: {
+                    style: {
+                      maxHeight: 120, // Adjust the height as needed
+                    },
+                  },
+                }}
                 id='demo-simple-select'
                 label='Description'
                 onChange={(e) =>

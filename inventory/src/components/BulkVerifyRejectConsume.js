@@ -27,13 +27,15 @@ import { fetchlocation } from '../redux/slice/location';
 import { fetchItem } from '../redux/slice/ItemSlice';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
+
+
+
+import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
 import { toast } from 'react-toastify';
 
-export const BulkVerifyReject = () => {
+export const BulkVerifyRejectConsume = () => {
   const dispatch = useDispatch();
   const state = useSelector((state) => state);
   const [item, setitem] = useState();
@@ -54,99 +56,30 @@ export const BulkVerifyReject = () => {
   const [rowsPerPage, setRowsPerPage] = useState(5);
 
   const [searchData, setsearchData] = useState({
-    purchaseOrder: ""
+    transferDate: ""
   })
   const [formData, setformData] = useState({
-    purchaseOrder: searchData?.purchaseOrder,
+    transferDate: searchData?.transferDate,
     status: '',
     verifierComments: '',
   });
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
+  const handleDateChange = (date) => {
+    setsearchData({
+     
+      transferDate: date.format('YYYY-MM-DD'),
+    });
+  };
+  
 
   const handleChangeRowsPerPage = (event) => {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
-  console.log(formData, 'heyyy');
-  // const handleClick = () => {
-  //   try {
-  //     const formData = {
-  //       pickupAddress,
-  //       pIC,
-  //       companyName,
-  //       countryCode,
-  //       contactNumber,
-  //     };
+  console.log(searchData, 'heyyy');
 
-  //     console.log(formData);
-
-  //     fetch('http://localhost:8080/pickup/add', {
-  //       method: 'POST',
-  //       headers: { 'Content-type': 'application/json' },
-  //       body: JSON.stringify(formData),
-  //     }).then(() => {
-  //       console.log('Pickup Added');
-  //     });
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
-
-  /*   const handleClick = (e) => {
-    e.preventDefault();
-    const attendence = {
-      pickupAddress,
-      pic,
-      companyName,
-      countryCode,
-      contactNumber,
-    };
-    console.log(attendence);
-
-    fetch("http://localhost:8080/pickup/add", {
-      method: "POST",
-      headers: { "Content-type": "application/json" },
-      body: JSON.stringify(attendence),
-    }).then(() => {
-      console.log("Pickup Added");
-      window.location.reload();
-    });
-  };
-  useEffect(() => {
-    fetch('http://localhost:8080/pickup/view')
-      .then((res) => {
-        if (!res.ok) {
-          throw new Error(`HTTP error! Status: ${res.status}`);
-        }
-        return res.json();
-      })
-      .then((result) => {
-        console.log(result);
-        setPickUp(result);
-      })
-      .catch((error) => {
-        console.error('Error fetching pickup data:', error);
-      });
-  }, []);
-
-  const deletePickup = async (id) => {
-    alert("Deleted Successfully!");
-    console.log(id);
-    fetch(`http://localhost:8080/pickup/delete/${id}`, {
-      method: "DELETE",
-      headers: { "Content-type": "application/json" },
-      body: JSON.stringify(Pickup),
-    })
-      .then(() => {
-        console.log("Pickup Deleted");
-        window.location.reload();
-      })
-      .catch((error) => {
-        console.error("Error updating pickup:", error);
-      });
-    }; */
   useEffect(() => {
     fetch('http://localhost:8080/bulkstock/view/purchaseOrders', {
       method: "GET",
@@ -198,7 +131,7 @@ export const BulkVerifyReject = () => {
     console.log("i am here");
     e.preventDefault();
     try {
-      const res = await fetch('http://localhost:8080/incomingstock/searchPo', {
+      const res = await fetch('http://localhost:8080/consumeditem/searchDate', {
         method: 'post',
         headers: {
           'content-type': 'application/json',
@@ -225,13 +158,13 @@ export const BulkVerifyReject = () => {
     
     const finalData = {
       ...formData,
-      purchaseOrder: searchData?.purchaseOrder, // Ensure `purchaseOrder` is included
+      transferDate: searchData?.transferDate, // Ensure `purchaseOrder` is included
     };
     
     console.log(finalData, "i am here");
   
     try {
-      const res = await fetch('http://localhost:8080/bulkstock/updateByPurchaseOrder', {
+      const res = await fetch('http://localhost:8080/consumeditem/updateByDate', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -243,9 +176,7 @@ export const BulkVerifyReject = () => {
       if (!res.ok) {
         throw new Error(`HTTP error! Status: ${res.status}`);
       }
-  
-   
-  
+
       toast.success("Bulk status updated successfully");
     } catch (error) {
       console.error('Error while updating bulk status:', error.message);
@@ -253,12 +184,7 @@ export const BulkVerifyReject = () => {
     }
   };
   
-  const handleDateChange = (date) => {
-    setformData({
-      ...formData,
-      date: date.format('YYYY-MM-DD'),
-    });
-  };
+ 
   const generatePDF = async (rowData, index) => {
     console.log('Generate PDF clicked');
     // const pdf = new jsPDF();
@@ -292,7 +218,7 @@ export const BulkVerifyReject = () => {
               gutterBottom
               style={{ fontFamily: "'EB Garamond'" }}
             >
-              Bulk/Verify Reject
+              Bulk Verify/Reject COnsume
             </Typography>
           </CardContent>
         </Card>
@@ -310,39 +236,21 @@ export const BulkVerifyReject = () => {
         <Grid container spacing={2} sx={{ ml: '13px' }}>
           <Grid item xs={12} sm={6}>
             <FormControl fullWidth>
-              <InputLabel id='demo-simple-select-label'>Po</InputLabel>
-              <Select
-                labelId='demo-simple-select-label'
-                id='itemName'
-                label='itemName'
-                MenuProps={{
-                  PaperProps: {
-                    style: {
-                      maxHeight: 120, // Adjust the height as needed
-                    },
-                  },
-                }}
-                onChange={(e) => {
-                  setsearchData({
-                    ...setsearchData,
-                    purchaseOrder: e.target.value,
-                  });
-                }}
-              /* onChange={(e) =>
-                handleItemChange(
-                  index,
-                  selectedSubLocations[index],
-                  e.target.value
-                )
+          
+          
+              <Grid item xs={21} sm={6}>
+            <LocalizationProvider dateAdapter={AdapterDayjs}>
+              <DatePicker
+                /* value={
+                formData.purchaseDate ? dayjs(formData.purchaseDate) : null
               } */
-              >
-                {Po?.map((item, index) => (
-                  <MenuItem key={index} value={item}>
-                    {' '}
-                    {item}
-                  </MenuItem>
-                ))}
-              </Select>
+                onChange={(newDate) => handleDateChange(newDate)}
+                fullWidth
+                sx={{ width: '90%' }}
+                /* format="yyyy-MM-dd" */
+              />
+            </LocalizationProvider>
+          </Grid>
             </FormControl>
           </Grid>
 
@@ -386,18 +294,16 @@ export const BulkVerifyReject = () => {
                   SubLocation
                 </TableCell>
                 <TableCell align='right' sx={{ fontWeight: 'bold' }}>
-                  Entity
+                 Quantity
                 </TableCell>
                 <TableCell align='right' sx={{ fontWeight: 'bold' }}>
-                  Quantity
+                  Date
                 </TableCell>
 
                 <TableCell align='right' sx={{ fontWeight: 'bold' }}>
-                  Purchase Date
-                </TableCell>
-                <TableCell align='right' sx={{ fontWeight: 'bold' }}>
                   Status
                 </TableCell>
+             
 
 
               </TableRow>
@@ -414,15 +320,15 @@ export const BulkVerifyReject = () => {
                     sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                   >
                     <TableCell align='right'>
-                      {bulk.description[0].substring(0, 20)}
+                      {bulk.item[0].substring(0, 20)}
 
                     </TableCell>
 
                     <TableCell align='right'>{bulk.locationName}</TableCell>
-                    <TableCell align='right'>{bulk.address}</TableCell>
-                    <TableCell align='right'>{bulk.entityName}</TableCell>
+                    <TableCell align='right'>{bulk.SubLocations}</TableCell>
                     <TableCell align='right'>{bulk.quantity}</TableCell>
                     <TableCell align='right'>{bulk.date}</TableCell>
+                    
                     <TableCell align='right'>{bulk.status}</TableCell>
 
 
@@ -486,7 +392,7 @@ export const BulkVerifyReject = () => {
                 id='outlined-basic'
                 disabled
                 variant='outlined'
-                value={searchData.purchaseOrder}
+                value={searchData?.transferDate}
                 fullWidth
                 sx={{ width: '90%' }}
 
@@ -560,4 +466,4 @@ export const BulkVerifyReject = () => {
   );
 };
 
-export default BulkVerifyReject;
+export default BulkVerifyRejectConsume;

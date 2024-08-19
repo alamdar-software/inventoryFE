@@ -96,9 +96,7 @@ const ApprovalIncoming = () => {
       locationName: selectedLocation,
       //   address: [], // Reset sublocation when location changes
     });
-    const selectedLocationObj = state.location.data.find(
-      (location) => location.locationName === selectedLocation
-    );
+
   };
   console.log(formData);
 
@@ -109,7 +107,7 @@ const ApprovalIncoming = () => {
     });
   };
   const handleSearch = () => {
-    fetch('http://localhost:8080/bulkstock/search', {
+    fetch('http://localhost:8080/bulkstock/searchVerified', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -167,6 +165,14 @@ const ApprovalIncoming = () => {
                 Item Description
               </InputLabel>
               <Select
+
+                MenuProps={{
+                  PaperProps: {
+                    style: {
+                      maxHeight: 120, // Adjust the height as needed
+                    },
+                  },
+                }}
                 labelId='demo-simple-select-label'
                 id='demo-simple-select'
                 label='Description'
@@ -215,7 +221,7 @@ const ApprovalIncoming = () => {
                 onChange={(newDate) => handleDateChange(newDate)}
                 fullWidth
                 sx={{ width: '90%' }}
-                /* format="yyyy-MM-dd" */
+              /* format="yyyy-MM-dd" */
               />
             </LocalizationProvider>
           </Grid>
@@ -257,7 +263,7 @@ const ApprovalIncoming = () => {
                   },
                 }}
 
-                //onChange={handleChange}
+              //onChange={handleChange}
               >
                 {state.nonPersisted.entity.data?.map((item, index) => (
                   <MenuItem key={index} value={item?.entityName}>

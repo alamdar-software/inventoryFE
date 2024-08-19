@@ -1841,9 +1841,68 @@ const Dashboard = () => {
               </Link>
             </Card>
           </div>
+            <div style={{ display: "flex", flexDirection: "row", marginTop: 3 }}>
+            <Card
+              sx={{
+                boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.3)',
+                //border: '2px solid yellow',
+              
+                width:"240px",
+            
+                marginRight: 3,
+                marginLeft: 3,
+                marginTop: 3,
+                marginBottom:10,
+                borderRadius: 1,
+                transition: "transform 0.3s",
+                "&:hover": {
+                  transform: "scale(1.1)",
+                },
+              }}
+            >
+              <Link
+                to={"/bulkVerifyconsume"}
+                style={{ textDecoration: "none" }}
+              >
+                <CardContent
+                  sx={{
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "start",
+                  }}
+                >
+                  < CheckBoxIcon
+                    fontSize="large"
+                    style={{ color: "#795548", fontSize: "50px" }}
+                  />
+
+                  <Typography
+                    sx={{
+                      mb: 1.5,
+                      textAlign: "center",
+                      fontWeight: "bolder",
+                      fontFamily: "Montserrat",
+                    }}
+                    color="#333"
+                    variant="h6"
+                    component="div"
+                  >
+                    Bulk Verify/Reject Consume
+                  </Typography>
+                </CardContent>
+              </Link>
+            </Card>
+            </div>
         </Grid>
         // Render grid for ROLE_VERIFIER
       );
+
+
+
+
+
+
+
     } else if (roleApprover) {
       return (
         <Grid
