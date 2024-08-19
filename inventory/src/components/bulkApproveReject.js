@@ -198,7 +198,7 @@ export const BulkApproveReject = () => {
     console.log("i am here");
     e.preventDefault();
     try {
-      const res = await fetch('http://localhost:8080/bulkstock/searchVerified', {
+      const res = await fetch('http://localhost:8080/incomingstock/searchPoVerified', {
         method: 'post',
         headers: {
           'content-type': 'application/json',
