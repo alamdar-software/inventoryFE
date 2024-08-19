@@ -549,7 +549,7 @@ const Mto = () => {
             ))}
           </Select>
         </FormControl> */}
-      <FormControl fullWidth sx={{ width: '50%', marginRight: '10px' }}>
+      {/* <FormControl fullWidth sx={{ width: '50%', marginRight: '10px' }}>
   <InputLabel id='demo-simple-select-label'>Item Description</InputLabel>
   {isLoading ? (
     <div style={{ padding: '3px', textAlign: 'center', marginTop: '27px' }}>Loading...</div>
@@ -574,7 +574,43 @@ const Mto = () => {
       ))}
     </Select>
   )}
+</FormControl> */}
+<FormControl fullWidth sx={{ width: '50%', marginRight: '10px' }}>
+  {/* Keep the label as usual */}
+  <InputLabel id='demo-simple-select-label'>Item Description</InputLabel>
+
+  {/* Select box remains in place */}
+  <Select
+    labelId='demo-simple-select-label'
+    id='description'
+    label='Item Description'
+    value={item[index]?.[0] || ''} // Adjust based on the default item value
+    onChange={(e) => handleDescriptionChange(index, e.target.value)}
+    disabled={isLoading} // Disable the select while loading
+    MenuProps={{
+      PaperProps: {
+        style: {
+          maxHeight: 120, // Adjust the height as needed
+        },
+      },
+    }}
+  >
+    {item[index]?.map((filteredItem, itemIndex) => (
+      <MenuItem key={itemIndex} value={filteredItem}>
+        {filteredItem}
+      </MenuItem>
+    ))}
+  </Select>
+
+  {/* Show "Loading..." below the select box */}
+  {isLoading && (
+    <div style={{ padding: '3px', textAlign: 'center', marginTop: '10px' }}>
+      Loading...
+    </div>
+  )}
 </FormControl>
+
+
 
 
 
