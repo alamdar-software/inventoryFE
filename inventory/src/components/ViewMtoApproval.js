@@ -181,6 +181,13 @@ const ViewMtoApproval = () => {
               </InputLabel>
               <Select
                 labelId='demo-simple-select-label'
+                MenuProps={{
+                  PaperProps: {
+                    style: {
+                      maxHeight: 120, // Adjust the height as needed
+                    },
+                  },
+                }}
                 id='demo-simple-select'
                 label='Description'
                 onChange={(e) =>

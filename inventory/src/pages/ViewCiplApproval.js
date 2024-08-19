@@ -250,6 +250,13 @@ export const ViewCiplApproval = () => {
                 labelId='demo-simple-select-label'
                 id='itemName'
                 label='itemName'
+                MenuProps={{
+                  PaperProps: {
+                    style: {
+                      maxHeight: 120, // Adjust the height as needed
+                    },
+                  },
+                }}
                 onChange={(e) => {
                   setformData({
                     ...formData,
