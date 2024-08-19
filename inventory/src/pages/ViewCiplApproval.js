@@ -167,7 +167,7 @@ export const ViewCiplApproval = () => {
   const handleClick = async (e) => {
     e.preventDefault();
     try {
-      const res = await fetch('http://localhost:8080/cipl/search', {
+      const res = await fetch('http://localhost:8080/cipl/ciplVerifiedSearch                                                ', {
         method: 'post',
         headers: {
           'content-type': 'application/json',

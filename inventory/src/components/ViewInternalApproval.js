@@ -117,7 +117,7 @@ const ViewInternalApproval = () => {
   }, []);
 
   const handleSearch = () => {
-    fetch('http://localhost:8080/internaltransfer/search', {
+    fetch('http://localhost:8080/internaltransfer/searchInternalVerified', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

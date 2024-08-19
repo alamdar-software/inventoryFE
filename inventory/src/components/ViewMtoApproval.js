@@ -115,7 +115,7 @@ const ViewMtoApproval = () => {
 
   console.log(mto);
   const handleSearch = () => {
-    fetch('http://localhost:8080/mto/search', {
+    fetch('http://localhost:8080/mto/mtoVerifiedSearch', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

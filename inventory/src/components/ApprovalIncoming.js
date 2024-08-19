@@ -109,7 +109,7 @@ const ApprovalIncoming = () => {
     });
   };
   const handleSearch = () => {
-    fetch('http://localhost:8080/bulkstock/search', {
+    fetch('http://localhost:8080/bulkstock/searchVerified', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

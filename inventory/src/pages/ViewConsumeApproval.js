@@ -163,7 +163,7 @@ const ViewConsumeApproval = () => {
   const handleClick = async (e) => {
     e.preventDefault();
     try {
-      const res = await fetch('http://localhost:8080/consumeditem/search', {
+      const res = await fetch('http://localhost:8080/consumeditem/verifiedConsumedSearch', {
         method: 'post',
         headers: {
           Authorization: `Bearer ${currentUser.accessToken}`,
