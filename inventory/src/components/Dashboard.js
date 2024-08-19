@@ -44,7 +44,7 @@ const theme = createTheme({
 });
 
 const Dashboard = () => {
- 
+
   const [isBlinking, setIsBlinking] = React.useState(true);
   const [invCount, setinvCount] = React.useState(0)
   const [locationCount, setlocationCount] = React.useState(0)
@@ -81,183 +81,183 @@ const Dashboard = () => {
     dispatch(fetchItem(currentUser.accessToken));
   }, []);
   useEffect(() => {
-    const getinvCount=async()=>{
+    const getinvCount = async () => {
 
-      const res = await fetch("http://localhost:8080/inventory/count",{
-        method:"get",
+      const res = await fetch("http://localhost:8080/inventory/count", {
+        method: "get",
         headers: {
           'content-type': 'application/json',
           Authorization: `Bearer ${currentUser.accessToken}`,
         },
       })
-        const data = await res.json();
-        console.log(data.totalCount,"inventorycount");
-        setinvCount(data?.totalCount)
+      const data = await res.json();
+      console.log(data.totalCount, "inventorycount");
+      setinvCount(data?.totalCount)
     }
     getinvCount();
-    const getapprovalTotalCount=async()=>{
+    const getapprovalTotalCount = async () => {
 
-      const res = await fetch("http://localhost:8080/incomingstock/approvedTotalCount",{
-        method:"get",
+      const res = await fetch("http://localhost:8080/incomingstock/approvedTotalCount", {
+        method: "get",
         headers: {
           'content-type': 'application/json',
           Authorization: `Bearer ${currentUser.accessToken}`,
         },
       })
-        const data = await res.json();
-        console.log(data.totalCount,"inventorycount");
-        setapprovalTotalCount(data?.totalCount)
+      const data = await res.json();
+      console.log(data.totalCount, "inventorycount");
+      setapprovalTotalCount(data?.totalCount)
     }
     getapprovalTotalCount();
-    const getverifierTotalCount=async()=>{
+    const getverifierTotalCount = async () => {
 
-      const res = await fetch("http://localhost:8080/incomingstock/totalCount",{
-        method:"get",
+      const res = await fetch("http://localhost:8080/incomingstock/totalCount", {
+        method: "get",
         headers: {
           'content-type': 'application/json',
           Authorization: `Bearer ${currentUser.accessToken}`,
         },
       })
-        const data = await res.json();
-        console.log(data.totalCount,"inventorycount");
-        setverifierTotalCount(data?.totalCount)
+      const data = await res.json();
+      console.log(data.totalCount, "inventorycount");
+      setverifierTotalCount(data?.totalCount)
     }
     getverifierTotalCount();
 
-    const getincomingCount=async()=>{
+    const getincomingCount = async () => {
 
-      const res = await fetch("http://localhost:8080/bulkstock/view",{
-        method:"get",
+      const res = await fetch("http://localhost:8080/bulkstock/view", {
+        method: "get",
         headers: {
           'content-type': 'application/json',
           Authorization: `Bearer ${currentUser.accessToken}`,
         },
       })
-        const data = await res.json();
-       
-        setincomingCount(data?.totalCount)
+      const data = await res.json();
+
+      setincomingCount(data?.totalCount)
     }
     getincomingCount();
-   
+
   }, [])
   useEffect(() => {
-    const getconsumedCount=async()=>{
+    const getconsumedCount = async () => {
 
-      const res = await fetch("http://localhost:8080/consumeditem/count",{
-        method:"get",
+      const res = await fetch("http://localhost:8080/consumeditem/count", {
+        method: "get",
         headers: {
           'content-type': 'application/json',
           Authorization: `Bearer ${currentUser.accessToken}`,
         },
       })
-        const data = await res.json();
-        setconsumedCount(data?.totalCount)
-     
+      const data = await res.json();
+      setconsumedCount(data?.totalCount)
+
     }
-    const getScrappedCount=async()=>{
+    const getScrappedCount = async () => {
 
-      const res = await fetch("http://localhost:8080/scrappeditem/count",{
-        method:"get",
+      const res = await fetch("http://localhost:8080/scrappeditem/count", {
+        method: "get",
         headers: {
           'content-type': 'application/json',
           Authorization: `Bearer ${currentUser.accessToken}`,
         },
       })
-        const data = await res.json();
-        setscrappedCount(data?.totalCount)
-        
+      const data = await res.json();
+      setscrappedCount(data?.totalCount)
+
     }
     getconsumedCount();
     getScrappedCount();
 
-   
+
   }, [])
 
   useEffect(() => {
-    const getciplCount=async()=>{
+    const getciplCount = async () => {
 
-      const res = await fetch("http://localhost:8080/cipl/count",{
-        method:"get",
+      const res = await fetch("http://localhost:8080/cipl/count", {
+        method: "get",
         headers: {
           'content-type': 'application/json',
           Authorization: `Bearer ${currentUser.accessToken}`,
         },
       })
-        const data = await res.json();
-        setciplCount(data?.totalCount)
-        console.log(invCount,"inventorycount");
+      const data = await res.json();
+      setciplCount(data?.totalCount)
+      console.log(invCount, "inventorycount");
     }
     getciplCount();
-   
+
   }, [])
   useEffect(() => {
-    const getlocationCount=async()=>{
+    const getlocationCount = async () => {
 
-      const res = await fetch("http://localhost:8080/location/count",{
-        method:"get",
+      const res = await fetch("http://localhost:8080/location/count", {
+        method: "get",
         headers: {
           'content-type': 'application/json',
           Authorization: `Bearer ${currentUser.accessToken}`,
         },
       })
-        const data = await res.json();
-        setlocationCount(data?.totalCount)
-        
+      const data = await res.json();
+      setlocationCount(data?.totalCount)
+
     }
     getlocationCount();
-   
+
   }, [])
- useEffect(() => {
-  const getItemCount = async () => {
-    try {
-      const res = await fetch("http://localhost:8080/item/count", {
-        method: "GET",
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${currentUser.accessToken}`,
-        },
-      });
+  useEffect(() => {
+    const getItemCount = async () => {
+      try {
+        const res = await fetch("http://localhost:8080/item/count", {
+          method: "GET",
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${currentUser.accessToken}`,
+          },
+        });
 
-      if (!res.ok) {
-        throw new Error('Failed to fetch item count');
+        if (!res.ok) {
+          throw new Error('Failed to fetch item count');
+        }
+
+        const data = await res.json();
+        setitemCount(data?.totalCount);
+      } catch (error) {
+        console.error('Error fetching item count:', error);
+        // Handle error, e.g., setItemCount(0) to clear previous count or show an error message
       }
+    };
 
-      const data = await res.json();
-      setitemCount(data?.totalCount);
-    } catch (error) {
-      console.error('Error fetching item count:', error);
-      // Handle error, e.g., setItemCount(0) to clear previous count or show an error message
-    }
-  };
+    getItemCount();
+  }, []);
 
-  getItemCount();
-}, []);
 
-  
 
   if (currentUser && currentUser.roles) {
-    if (roleSuperAdmin ||rolePreparer) {
+    if (roleSuperAdmin || rolePreparer) {
       return (
         // Render grid for ROLE_SUPERADMIN
         <Grid
-        item xs={12}
+          item xs={12}
           sx={{
             // backgroundImage: `url(${inventory})`, // Use the imported image as the background
             // backgroundSize: 'cover',
             margin: "-7px",
           }}
         >
-          <div style={{ display: "flex", flexDirection: "row", marginTop: -32,paddingBottom:10 }}>
+          <div style={{ display: "flex", flexDirection: "row", marginTop: -32, paddingBottom: 10 }}>
             <Card
               sx={{
                 boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.3)',
-                height:"160px",
+                height: "160px",
                 flex: 1,
                 marginRight: 3,
                 marginLeft: 3,
                 marginTop: 4,
                 borderRadius: 1,
-                paddingBottom:5,
+                paddingBottom: 5,
                 width: "90px !important",
 
                 transition: "transform 0.3s",
@@ -277,7 +277,7 @@ const Dashboard = () => {
                       position: "absolute",
                       top: 0,
                       left: 0,
-                     mb:1,
+                      mb: 1,
                       backgroundColor: "white", // Set your desired color
                       color: "white", // Set your desired text color
                       padding: 1,
@@ -301,37 +301,37 @@ const Dashboard = () => {
                     }}
                   />
 
-<div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                  <Typography
-        sx={{
-          mb: 1.5,
-          ml:3,
-          textAlign: "center",
-          fontWeight: "bolder",
-          fontFamily: "Montserrat",
-          color: 'black', // Set the text color to blue
-        }}
-        variant="h5"
-        component="div"
-      >
-        Moc
-      </Typography>
-      <Typography
-        sx={{
-          mb: -6,
-        
-          ml:3,
-          fontWeight: 'bold', // Set font weight to bold
-          animation: isBlinking ? 'blinkingText 1s infinite' : 'none', // Apply blinking animation
-          color: 'green',
-          textAlign: 'center' // Set the text color to blue
-        }}
-        variant="h4"
-        color="text.secondary"
-      >
-        {invCount}
-      </Typography>
-      </div>
+                  <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                    <Typography
+                      sx={{
+                        mb: 1.5,
+                        ml: 3,
+                        textAlign: "center",
+                        fontWeight: "bolder",
+                        fontFamily: "Montserrat",
+                        color: 'black', // Set the text color to blue
+                      }}
+                      variant="h5"
+                      component="div"
+                    >
+                      Moc
+                    </Typography>
+                    <Typography
+                      sx={{
+                        mb: -6,
+
+                        ml: 3,
+                        fontWeight: 'bold', // Set font weight to bold
+                        animation: isBlinking ? 'blinkingText 1s infinite' : 'none', // Apply blinking animation
+                        color: 'green',
+                        textAlign: 'center' // Set the text color to blue
+                      }}
+                      variant="h4"
+                      color="text.secondary"
+                    >
+                      {invCount}
+                    </Typography>
+                  </div>
                 </CardContent>
               </Link>
             </Card>
@@ -371,7 +371,7 @@ const Dashboard = () => {
                   >
                     Daily Data Count
                   </Typography>
-                  
+
                 </CardContent>
               </Link>
             </Card>
@@ -433,35 +433,35 @@ const Dashboard = () => {
                     fontSize="50px"
                     sx={{ fontSize: "50px", color: "#c6ff00" }}
                   />
-                   <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                  <Typography
-        sx={{
-          mb: 1.5,
-          textAlign: "center",
-          fontWeight: "bolder",
-          fontFamily: "Montserrat",
-          color: 'black', // Set the text color to blue
-        }}
-        variant="h5"
-        component="div"
-      >
-        Items
-      </Typography>
-      <Typography
-        sx={{
-          mb: -4,
-          ml:4,
-          fontWeight: 'bold', // Set font weight to bold
-          animation: isBlinking ? 'blinkingText 1s infinite' : 'none', // Apply blinking animation
-          color: 'green',
-          textAlign: 'center' // Set the text color to blue
-        }}
-        variant="h4"
-        color="text.secondary"
-      >
-        {itemCount}
-      </Typography>
-      </div>
+                  <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                    <Typography
+                      sx={{
+                        mb: 1.5,
+                        textAlign: "center",
+                        fontWeight: "bolder",
+                        fontFamily: "Montserrat",
+                        color: 'black', // Set the text color to blue
+                      }}
+                      variant="h5"
+                      component="div"
+                    >
+                      Items
+                    </Typography>
+                    <Typography
+                      sx={{
+                        mb: -4,
+                        ml: 4,
+                        fontWeight: 'bold', // Set font weight to bold
+                        animation: isBlinking ? 'blinkingText 1s infinite' : 'none', // Apply blinking animation
+                        color: 'green',
+                        textAlign: 'center' // Set the text color to blue
+                      }}
+                      variant="h4"
+                      color="text.secondary"
+                    >
+                      {itemCount}
+                    </Typography>
+                  </div>
                 </CardContent>
               </Link>
             </Card>
@@ -469,7 +469,7 @@ const Dashboard = () => {
 
 
 
-          <div style={{ display: "flex", flexDirection: "row", marginTop: 3,marginRight:-20 }}>
+          <div style={{ display: "flex", flexDirection: "row", marginTop: 3, marginRight: -20 }}>
             <Card
               sx={{
                 boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.3)',
@@ -479,7 +479,7 @@ const Dashboard = () => {
                 minWidth: 35,
                 flex: 1,
                 marginRight: 3,
-                paddingRight:3,
+                paddingRight: 3,
                 marginLeft: 3,
                 marginTop: 3,
                 borderRadius: 1,
@@ -505,37 +505,37 @@ const Dashboard = () => {
                     sx={{ fontSize: "50px", color: "black" }}
                   />
 
-<div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center',marginBottom:"-20px" }}>
-                  <Typography
-        sx={{
-          mb: 0,
-          textAlign: "center",
-          fontWeight: "bolder",
-          fontFamily: "Montserrat",
-          mb:1,
-          color: 'black', // Set the text color to blue
-        }}
-        variant="h5"
-        component="div"
-      >
-        Location/Vessel
-      </Typography>
-      <Typography
-        sx={{
-          mb: -20,
-          mb: 1.5,
-          ml:4,
-          fontWeight: 'bold', // Set font weight to bold
-          animation: isBlinking ? 'blinkingText 1s infinite' : 'none', // Apply blinking animation
-          color: 'green',
-          textAlign: 'center' // Set the text color to blue
-        }}
-        variant="h4"
-        color="text.secondary"
-      >
-        {locationCount}
-      </Typography>
-      </div>
+                  <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginBottom: "-20px" }}>
+                    <Typography
+                      sx={{
+                        mb: 0,
+                        textAlign: "center",
+                        fontWeight: "bolder",
+                        fontFamily: "Montserrat",
+                        mb: 1,
+                        color: 'black', // Set the text color to blue
+                      }}
+                      variant="h5"
+                      component="div"
+                    >
+                      Location/Vessel
+                    </Typography>
+                    <Typography
+                      sx={{
+                        mb: -20,
+                        mb: 1.5,
+                        ml: 4,
+                        fontWeight: 'bold', // Set font weight to bold
+                        animation: isBlinking ? 'blinkingText 1s infinite' : 'none', // Apply blinking animation
+                        color: 'green',
+                        textAlign: 'center' // Set the text color to blue
+                      }}
+                      variant="h4"
+                      color="text.secondary"
+                    >
+                      {locationCount}
+                    </Typography>
+                  </div>
                 </CardContent>
               </Link>
             </Card>
@@ -546,7 +546,7 @@ const Dashboard = () => {
                 minWidth: 20,
                 flex: 1,
                 marginRight: 0.8,
-                paddingRight:4,
+                paddingRight: 4,
                 marginLeft: 3,
                 marginTop: 3,
                 borderRadius: 1,
@@ -582,37 +582,37 @@ const Dashboard = () => {
                   >
                     Inventory
                   </Typography> */}
-          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                  <Typography
-        sx={{
-          mb: 1.5,
-          ml:4,
-          textAlign: "center",
-          fontWeight: "bolder",
-          fontFamily: "Montserrat",
-          color: 'black', // Set the text color to blue
-        }}
-        variant="h5"
-        component="div"
-      >
-        Inventory
-      </Typography>
-      <Typography
-        sx={{
-          mb: -6,
-        
-          ml:8,
-          fontWeight: 'bold', // Set font weight to bold
-          animation: isBlinking ? 'blinkingText 1s infinite' : 'none', // Apply blinking animation
-          color: 'green',
-          textAlign: 'center' // Set the text color to blue
-        }}
-        variant="h4"
-        color="text.secondary"
-      >
-        {invCount}
-      </Typography>
-      </div>
+                  <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                    <Typography
+                      sx={{
+                        mb: 1.5,
+                        ml: 4,
+                        textAlign: "center",
+                        fontWeight: "bolder",
+                        fontFamily: "Montserrat",
+                        color: 'black', // Set the text color to blue
+                      }}
+                      variant="h5"
+                      component="div"
+                    >
+                      Inventory
+                    </Typography>
+                    <Typography
+                      sx={{
+                        mb: -6,
+
+                        ml: 8,
+                        fontWeight: 'bold', // Set font weight to bold
+                        animation: isBlinking ? 'blinkingText 1s infinite' : 'none', // Apply blinking animation
+                        color: 'green',
+                        textAlign: 'center' // Set the text color to blue
+                      }}
+                      variant="h4"
+                      color="text.secondary"
+                    >
+                      {invCount}
+                    </Typography>
+                  </div>
 
 
                 </CardContent>
@@ -626,7 +626,7 @@ const Dashboard = () => {
                 flex: 1,
                 marginRight: 0.5,
                 marginLeft: 2,
-                paddingLeft:2,
+                paddingLeft: 2,
                 marginTop: 3,
                 borderRadius: 1,
                 transition: "transform 0.3s",
@@ -648,37 +648,37 @@ const Dashboard = () => {
                     style={{ color: "#9e9e9e", fontSize: "50px" }}
                   />
 
-<div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                  <Typography
-        sx={{
-          mb: 1.5,
-          ml:1,
-          textAlign: "center",
-          fontWeight: "bolder",
-          fontFamily: "Montserrat",
-          color: 'black', // Set the text color to blue
-        }}
-        variant="h5"
-        component="div"
-      >
-        TransferItem
-      </Typography>
-      <Typography
-        sx={{
-          mb: -6,
-        
-          ml:5,
-          fontWeight: 'bold', // Set font weight to bold
-          animation: isBlinking ? 'blinkingText 1s infinite' : 'none', // Apply blinking animation
-          color: 'green',
-          textAlign: 'center' // Set the text color to blue
-        }}
-        variant="h4"
-        color="text.secondary"
-      >
-        {ciplCount}
-      </Typography>
-      </div>
+                  <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                    <Typography
+                      sx={{
+                        mb: 1.5,
+                        ml: 1,
+                        textAlign: "center",
+                        fontWeight: "bolder",
+                        fontFamily: "Montserrat",
+                        color: 'black', // Set the text color to blue
+                      }}
+                      variant="h5"
+                      component="div"
+                    >
+                      TransferItem
+                    </Typography>
+                    <Typography
+                      sx={{
+                        mb: -6,
+
+                        ml: 5,
+                        fontWeight: 'bold', // Set font weight to bold
+                        animation: isBlinking ? 'blinkingText 1s infinite' : 'none', // Apply blinking animation
+                        color: 'green',
+                        textAlign: 'center' // Set the text color to blue
+                      }}
+                      variant="h4"
+                      color="text.secondary"
+                    >
+                      {ciplCount}
+                    </Typography>
+                  </div>
                 </CardContent>
               </Link>
             </Card>
@@ -690,7 +690,7 @@ const Dashboard = () => {
                 flex: 1,
                 marginRight: 2.5,
                 marginLeft: 3,
-                paddingLeft:3,
+                paddingLeft: 3,
                 marginTop: 3,
                 borderRadius: 1,
                 transition: "transform 0.3s",
@@ -718,49 +718,49 @@ const Dashboard = () => {
                     style={{ color: "#795548", fontSize: "50px" }}
                   />
 
-<div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                  <Typography
-        sx={{
-          mb: 1.5,
-          ml:-1,
-          textAlign: "center",
-          fontWeight: "bolder",
-          fontFamily: "Montserrat",
-          color: 'black', // Set the text color to blue
-        }}
-        variant="h5"
-        component="div"
-      >
-        ConsumedItem
-      </Typography>
-      <Typography
-        sx={{
-          mb: -6,
-        
-          ml:3,
-          fontWeight: 'bold', // Set font weight to bold
-          animation: isBlinking ? 'blinkingText 1s infinite' : 'none', // Apply blinking animation
-          color: 'green',
-          textAlign: 'center' // Set the text color to blue
-        }}
-        variant="h4"
-        color="text.secondary"
-      >
-        {consumedCount}
-      </Typography>
-      </div>
+                  <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                    <Typography
+                      sx={{
+                        mb: 1.5,
+                        ml: -1,
+                        textAlign: "center",
+                        fontWeight: "bolder",
+                        fontFamily: "Montserrat",
+                        color: 'black', // Set the text color to blue
+                      }}
+                      variant="h5"
+                      component="div"
+                    >
+                      ConsumedItem
+                    </Typography>
+                    <Typography
+                      sx={{
+                        mb: -6,
+
+                        ml: 3,
+                        fontWeight: 'bold', // Set font weight to bold
+                        animation: isBlinking ? 'blinkingText 1s infinite' : 'none', // Apply blinking animation
+                        color: 'green',
+                        textAlign: 'center' // Set the text color to blue
+                      }}
+                      variant="h4"
+                      color="text.secondary"
+                    >
+                      {consumedCount}
+                    </Typography>
+                  </div>
                 </CardContent>
               </Link>
             </Card>
           </div>
-          <div style={{ display: "flex", flexDirection: "row", marginTop: 3,paddingBottom:"-5px" }}>
+          <div style={{ display: "flex", flexDirection: "row", marginTop: 3, paddingBottom: "-5px" }}>
             <Card
               sx={{
                 boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.3)',
-                height:"160px",
+                height: "160px",
                 //border: '2px solid yellow',
                 minWidth: 20,
-                paddingBottom:"-15px" ,
+                paddingBottom: "-15px",
                 marginRight: 2,
                 marginLeft: 3,
                 marginTop: 3,
@@ -785,37 +785,37 @@ const Dashboard = () => {
                     style={{ color: "#ff5722", fontSize: "50px" }}
                   />
 
-                  <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center',paddingBottom:"-20px" }}>
-                  <Typography
-        sx={{
-          mb: 1.5,
-          ml:1,
-          textAlign: "center",
-          fontWeight: "bolder",
-          fontFamily: "Montserrat",
-          color: 'black', // Set the text color to blue
-        }}
-        variant="h5"
-        component="div"
-      >
-        IncommingStock
-      </Typography>
-      <Typography
-        sx={{
-          mb: -6,
-        
-          ml:1,
-          fontWeight: 'bold', // Set font weight to bold
-          animation: isBlinking ? 'blinkingText 1s infinite' : 'none', // Apply blinking animation
-          color: 'green',
-          textAlign: 'center' // Set the text color to blue
-        }}
-        variant="h4"
-        color="text.secondary"
-      >
-        {incomingCount}
-      </Typography>
-      </div>
+                  <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', paddingBottom: "-20px" }}>
+                    <Typography
+                      sx={{
+                        mb: 1.5,
+                        ml: 1,
+                        textAlign: "center",
+                        fontWeight: "bolder",
+                        fontFamily: "Montserrat",
+                        color: 'black', // Set the text color to blue
+                      }}
+                      variant="h5"
+                      component="div"
+                    >
+                      IncommingStock
+                    </Typography>
+                    <Typography
+                      sx={{
+                        mb: -6,
+
+                        ml: 1,
+                        fontWeight: 'bold', // Set font weight to bold
+                        animation: isBlinking ? 'blinkingText 1s infinite' : 'none', // Apply blinking animation
+                        color: 'green',
+                        textAlign: 'center' // Set the text color to blue
+                      }}
+                      variant="h4"
+                      color="text.secondary"
+                    >
+                      {incomingCount}
+                    </Typography>
+                  </div>
                 </CardContent>
               </Link>
             </Card>
@@ -823,9 +823,9 @@ const Dashboard = () => {
               sx={{
                 boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.3)',
                 //border: '2px solid yellow',
-                height:"160px",
+                height: "160px",
                 minWidth: 20,
-                paddingBottom:"-20px",
+                paddingBottom: "-20px",
                 marginRight: 3,
                 marginLeft: 3,
                 marginTop: 3,
@@ -853,38 +853,38 @@ const Dashboard = () => {
                     style={{ color: "#00bcd4", fontSize: "50px" }}
                   />
 
-           <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center',paddingBottom:"-45px" }}>
-                  <Typography
-        sx={{
-          mb: 6,
-          ml:4,
-          textAlign: "center",
-          fontWeight: "bolder",
-          fontFamily: "Montserrat",
-          color: 'black', // Set the text color to blue
-        }}
-        variant="h5"
-        component="div"
-      >
-        Scrapped Item
-      </Typography>
-      <Typography
-        sx={{
-       
-        mt:-5,
-          ml:7,
-         
-          fontWeight: 'bold', // Set font weight to bold
-          animation: isBlinking ? 'blinkingText 1s infinite' : 'none', // Apply blinking animation
-          color: 'green',
-          textAlign: 'center' // Set the text color to blue
-        }}
-        variant="h4"
-        color="text.secondary"
-      >
-        {scrappedCount}
-      </Typography>
-      </div>
+                  <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', paddingBottom: "-45px" }}>
+                    <Typography
+                      sx={{
+                        mb: 6,
+                        ml: 4,
+                        textAlign: "center",
+                        fontWeight: "bolder",
+                        fontFamily: "Montserrat",
+                        color: 'black', // Set the text color to blue
+                      }}
+                      variant="h5"
+                      component="div"
+                    >
+                      Scrapped Item
+                    </Typography>
+                    <Typography
+                      sx={{
+
+                        mt: -5,
+                        ml: 7,
+
+                        fontWeight: 'bold', // Set font weight to bold
+                        animation: isBlinking ? 'blinkingText 1s infinite' : 'none', // Apply blinking animation
+                        color: 'green',
+                        textAlign: 'center' // Set the text color to blue
+                      }}
+                      variant="h4"
+                      color="text.secondary"
+                    >
+                      {scrappedCount}
+                    </Typography>
+                  </div>
                 </CardContent>
               </Link>
             </Card>
@@ -973,7 +973,7 @@ const Dashboard = () => {
 
             <Card
               sx={{
-                height:"200px",
+                height: "200px",
                 boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.3)',
                 //border: '2px solid yellow',
                 minWidth: 40,
@@ -1007,7 +1007,7 @@ const Dashboard = () => {
                   >
                     Daily Data Count
                   </Typography>
-                  
+
                 </CardContent>
               </Link>
             </Card>
@@ -1064,7 +1064,7 @@ const Dashboard = () => {
               }}
             >
               <Link to={"/Items"} style={{ textDecoration: "none" }}>
-                
+
                 <CardContent>
                   <DescriptionIcon
                     fontSize="large"
@@ -1168,37 +1168,37 @@ const Dashboard = () => {
                     sx={{ fontSize: "50px", color: "#64dd17" }}
                   />
 
-<div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                  <Typography
-        sx={{
-          mb: 1.5,
-          ml:4,
-          textAlign: "center",
-          fontWeight: "bolder",
-          fontFamily: "Montserrat",
-          color: 'black', // Set the text color to blue
-        }}
-        variant="h5"
-        component="div"
-      >
-        Inventory
-      </Typography>
-      <Typography
-        sx={{
-          mb: -6,
-        
-          ml:16,
-          fontWeight: 'bold', // Set font weight to bold
-          animation: isBlinking ? 'blinkingText 1s infinite' : 'none', // Apply blinking animation
-          color: 'green',
-          textAlign: 'center' // Set the text color to blue
-        }}
-        variant="h4"
-        color="text.secondary"
-      >
-        {invCount}
-      </Typography>
-      </div>
+                  <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                    <Typography
+                      sx={{
+                        mb: 1.5,
+                        ml: 4,
+                        textAlign: "center",
+                        fontWeight: "bolder",
+                        fontFamily: "Montserrat",
+                        color: 'black', // Set the text color to blue
+                      }}
+                      variant="h5"
+                      component="div"
+                    >
+                      Inventory
+                    </Typography>
+                    <Typography
+                      sx={{
+                        mb: -6,
+
+                        ml: 16,
+                        fontWeight: 'bold', // Set font weight to bold
+                        animation: isBlinking ? 'blinkingText 1s infinite' : 'none', // Apply blinking animation
+                        color: 'green',
+                        textAlign: 'center' // Set the text color to blue
+                      }}
+                      variant="h4"
+                      color="text.secondary"
+                    >
+                      {invCount}
+                    </Typography>
+                  </div>
                 </CardContent>
               </Link>
             </Card>
@@ -1420,7 +1420,7 @@ const Dashboard = () => {
           <div style={{ display: "flex", flexDirection: "row", marginTop: 3 }}>
             <Card
               sx={{
-                height:"200px",
+                height: "200px",
                 boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.3)',
                 //border: '2px solid yellow',
                 minWidth: 40,
@@ -1454,7 +1454,7 @@ const Dashboard = () => {
                   >
                     Daily Data Count
                   </Typography>
-                  
+
                 </CardContent>
               </Link>
             </Card>
@@ -1524,37 +1524,37 @@ const Dashboard = () => {
                     sx={{ fontSize: "50px", color: "#64dd17" }}
                   />
 
-<div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                  <Typography
-        sx={{
-          mb: 1.5,
-          ml:5,
-          textAlign: "center",
-          fontWeight: "bolder",
-          fontFamily: "Montserrat",
-          color: 'black', // Set the text color to blue
-        }}
-        variant="h5"
-        component="div"
-      >
-        Inventory
-      </Typography>
-      <Typography
-        sx={{
-          mb: -6,
-        
-          ml:5,
-          fontWeight: 'bold', // Set font weight to bold
-          animation: isBlinking ? 'blinkingText 1s infinite' : 'none', // Apply blinking animation
-          color: 'green',
-          textAlign: 'center' // Set the text color to blue
-        }}
-        variant="h4"
-        color="text.secondary"
-      >
-        {invCount}
-      </Typography>
-      </div>
+                  <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                    <Typography
+                      sx={{
+                        mb: 1.5,
+                        ml: 5,
+                        textAlign: "center",
+                        fontWeight: "bolder",
+                        fontFamily: "Montserrat",
+                        color: 'black', // Set the text color to blue
+                      }}
+                      variant="h5"
+                      component="div"
+                    >
+                      Inventory
+                    </Typography>
+                    <Typography
+                      sx={{
+                        mb: -6,
+
+                        ml: 5,
+                        fontWeight: 'bold', // Set font weight to bold
+                        animation: isBlinking ? 'blinkingText 1s infinite' : 'none', // Apply blinking animation
+                        color: 'green',
+                        textAlign: 'center' // Set the text color to blue
+                      }}
+                      variant="h4"
+                      color="text.secondary"
+                    >
+                      {invCount}
+                    </Typography>
+                  </div>
                 </CardContent>
               </Link>
             </Card>
@@ -1608,37 +1608,37 @@ const Dashboard = () => {
                     }}
                   />
 
-<div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                  <Typography
-        sx={{
-          mb: 1.5,
-          ml:2,
-          textAlign: "center",
-          fontWeight: "bolder",
-          fontFamily: "Montserrat",
-          color: 'black', // Set the text color to blue
-        }}
-        variant="h5"
-        component="div"
-      >
-       Need Verification
-      </Typography>
-      <Typography
-        sx={{
-          mb: -6,
-        
-          ml:3,
-          fontWeight: 'bold', // Set font weight to bold
-          animation: isBlinking ? 'blinkingText 1s infinite' : 'none', // Apply blinking animation
-          color: 'red',
-          textAlign: 'center' // Set the text color to blue
-        }}
-        variant="h4"
-        color="text.secondary"
-      >
-        {verifierTotalCount}
-      </Typography>
-      </div>
+                  <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                    <Typography
+                      sx={{
+                        mb: 1.5,
+                        ml: 2,
+                        textAlign: "center",
+                        fontWeight: "bolder",
+                        fontFamily: "Montserrat",
+                        color: 'black', // Set the text color to blue
+                      }}
+                      variant="h5"
+                      component="div"
+                    >
+                      Need Verification
+                    </Typography>
+                    <Typography
+                      sx={{
+                        mb: -6,
+
+                        ml: 3,
+                        fontWeight: 'bold', // Set font weight to bold
+                        animation: isBlinking ? 'blinkingText 1s infinite' : 'none', // Apply blinking animation
+                        color: 'red',
+                        textAlign: 'center' // Set the text color to blue
+                      }}
+                      variant="h4"
+                      color="text.secondary"
+                    >
+                      {verifierTotalCount}
+                    </Typography>
+                  </div>
                 </CardContent>
               </Link>
             </Card>
@@ -1841,18 +1841,18 @@ const Dashboard = () => {
               </Link>
             </Card>
           </div>
-            <div style={{ display: "flex", flexDirection: "row", marginTop: 3 }}>
+          <div style={{ display: "flex", flexDirection: "row", marginTop: 3 }}>
             <Card
               sx={{
                 boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.3)',
                 //border: '2px solid yellow',
-              
-                width:"240px",
-            
+
+                width: "240px",
+
                 marginRight: 3,
                 marginLeft: 3,
                 marginTop: 3,
-                marginBottom:10,
+                marginBottom: 10,
                 borderRadius: 1,
                 transition: "transform 0.3s",
                 "&:hover": {
@@ -1892,7 +1892,7 @@ const Dashboard = () => {
                 </CardContent>
               </Link>
             </Card>
-            </div>
+          </div>
         </Grid>
         // Render grid for ROLE_VERIFIER
       );
@@ -1907,8 +1907,6 @@ const Dashboard = () => {
       return (
         <Grid
           sx={{
-            // backgroundImage: `url(${inventory})`, // Use the imported image as the background
-            // backgroundSize: 'cover',
             margin: "-30px",
           }}
         >
@@ -1916,8 +1914,7 @@ const Dashboard = () => {
             <Card
               sx={{
                 boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.3)',
-                height:"200px",
-                //border: '2px solid yellow',
+                height: "200px",
                 minWidth: 40,
                 flex: 1,
                 marginTop: 3,
@@ -1925,7 +1922,7 @@ const Dashboard = () => {
                 borderRadius: 1,
                 transition: "transform 0.3s",
                 "&:hover": {
-                  transform: "scale(1.1)", // Adjust the scaling factor as needed
+                  transform: "scale(1.1)",
                 },
               }}
             >
@@ -1949,14 +1946,13 @@ const Dashboard = () => {
                   >
                     Daily Data Count
                   </Typography>
-               
                 </CardContent>
               </Link>
             </Card>
+
             <Card
               sx={{
                 boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.3)',
-                //border: '2px solid yellow',
                 minWidth: 20,
                 flex: 1,
                 marginLeft: 3,
@@ -1964,7 +1960,7 @@ const Dashboard = () => {
                 marginTop: 3,
                 transition: "transform 0.3s",
                 "&:hover": {
-                  transform: "scale(1.1)", // Adjust the scaling factor as needed
+                  transform: "scale(1.1)",
                 },
               }}
             >
@@ -1990,10 +1986,10 @@ const Dashboard = () => {
                 </CardContent>
               </Link>
             </Card>
+
             <Card
               sx={{
                 boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.3)',
-                //border: '2px solid yellow',
                 minWidth: 20,
                 flex: 1,
                 marginRight: 3,
@@ -2002,7 +1998,7 @@ const Dashboard = () => {
                 borderRadius: 1,
                 transition: "transform 0.3s",
                 "&:hover": {
-                  transform: "scale(1.1)", // Adjust the scaling factor as needed
+                  transform: "scale(1.1)",
                 },
               }}
             >
@@ -2011,48 +2007,43 @@ const Dashboard = () => {
                   sx={{
                     display: "flex",
                     flexDirection: "column",
-                    alignItems: "start",
+                    alignItems: "center",
                   }}
                 >
                   <CountertopsIcon
                     fontSize="large"
                     sx={{ fontSize: "50px", color: "#64dd17" }}
                   />
-
-<div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                   <Typography
-        sx={{
-          mb: 1.5,
-          ml:10,
-          textAlign: "center",
-          fontWeight: "bolder",
-          fontFamily: "Montserrat",
-          color: 'black', // Set the text color to blue
-        }}
-        variant="h5"
-        component="div"
-      >
-        Inventory
-      </Typography>
-      <Typography
-        sx={{
-          mb: -6,
-        
-          ml:16,
-          fontWeight: 'bold', // Set font weight to bold
-          animation: isBlinking ? 'blinkingText 1s infinite' : 'none', // Apply blinking animation
-          color: 'green',
-          textAlign: 'center' // Set the text color to blue
-        }}
-        variant="h4"
-        color="text.secondary"
-      >
-        {invCount}
-      </Typography>
-      </div>
+                    variant="h5"
+                    component="div"
+                    sx={{
+                      mb: 1.5,
+                      textAlign: "center",
+                      fontWeight: "bolder",
+                      fontFamily: "Montserrat",
+                      color: 'black',
+                    }}
+                  >
+                    Inventory
+                  </Typography>
+                  <Typography
+                    variant="h4"
+                    color="text.secondary"
+                    sx={{
+                      mb: -6,
+                      fontWeight: 'bold',
+                      animation: isBlinking ? 'blinkingText 1s infinite' : 'none',
+                      color: 'green',
+                      textAlign: 'center',
+                    }}
+                  >
+                    {invCount}
+                  </Typography>
                 </CardContent>
               </Link>
             </Card>
+
             <Card
               sx={{
                 boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.3)',
@@ -2061,99 +2052,55 @@ const Dashboard = () => {
                 marginLeft: 3,
                 marginTop: 3,
                 borderRadius: 1,
-                width: "100px !important",
-
                 transition: "transform 0.3s",
                 "&:hover": {
-                  transform: "scale(1.1)", // Adjust the scaling factor as needed
+                  transform: "scale(1.1)",
                 },
               }}
             >
-              <Link
-                to={"/need-approval"}
-                style={{ textDecoration: "none", position: "relative" }}
-              >
+              <Link to={"/need-approval"} style={{ textDecoration: "none" }}>
                 <CardContent>
-                  {/* Your small box */}
-                  <Box
-                    sx={{
-                      position: "absolute",
-                      top: 0,
-                      left: 0,
-                      backgroundColor: "white", // Set your desired color
-                      color: "white", // Set your desired text color
-                      padding: 2,
-                    }}
-                  >
-                    {/* <CountertopsIcon
-                fontSize='large'
-                color='primary'
-                sx={{ fontSize: '70px' }}
-              /> */}
-                  </Box>
-
                   <CountertopsIcon
                     fontSize="large"
                     color="primary"
-                    sx={{
-                      fontSize: "50px",
-                      display: "flex",
-                      alignItems: "center",
-                      // justifyContent: 'center',
-                    }}
+                    sx={{ fontSize: "50px" }}
                   />
-
-<div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                   <Typography
-        sx={{
-          mb: 1.5,
-          ml:3,
-          textAlign: "center",
-          fontWeight: "bolder",
-          fontFamily: "Montserrat",
-          color: 'black', // Set the text color to blue
-        }}
-        variant="h5"
-        component="div"
-      >
-        Need Approval
-      </Typography>
-      <Typography
-        sx={{
-          mb: -6,
-        
-          ml:3,
-          fontWeight: 'bold', // Set font weight to bold
-          animation: isBlinking ? 'blinkingText 1s infinite' : 'none', // Apply blinking animation
-          color: 'red',
-          textAlign: 'center' // Set the text color to blue
-        }}
-        variant="h4"
-        color="text.secondary"
-      >
-        {approvalTotalCount}
-      </Typography>
-      </div>
+                    variant="h5"
+                    component="div"
+                    sx={{
+                      mb: 1.5,
+                      textAlign: "center",
+                      fontWeight: "bolder",
+                      fontFamily: "Montserrat",
+                      color: 'black',
+                    }}
+                  >
+                    Need Approval
+                  </Typography>
+                  <Typography
+                    variant="h4"
+                    color="text.secondary"
+                    sx={{
+                      mb: -6,
+                      fontWeight: 'bold',
+                      animation: isBlinking ? 'blinkingText 1s infinite' : 'none',
+                      color: 'red',
+                      textAlign: 'center',
+                    }}
+                  >
+                    {approvalTotalCount}
+                  </Typography>
                 </CardContent>
               </Link>
             </Card>
           </div>
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "row",
-              marginTop: 2,
-              marginRight: 300,
-              marginLeft: 380,
-              height: 250,
-              paddingBottom: 50,
-            }}
-          >
+
+          <div style={{ display: "flex", flexDirection: "row", marginTop: 2, justifyContent: "center", paddingBottom: 50 }}>
             <Card
               sx={{
-                height:"200px",
+                height: "200px",
                 boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.3)',
-                //border: '2px solid yellow',
                 minWidth: 20,
                 flex: 1,
                 marginRight: 3,
@@ -2162,44 +2109,37 @@ const Dashboard = () => {
                 borderRadius: 1,
                 transition: "transform 0.3s",
                 "&:hover": {
-                  transform: "scale(1.1)", // Adjust the scaling factor as needed
+                  transform: "scale(1.1)",
                 },
               }}
             >
               <Link to={"/approved"} style={{ textDecoration: "none" }}>
-                <CardContent
-                // sx={{
-                //   display: 'flex',
-                //   flexDirection: 'column',
-                //   alignItems: 'start',
-                // }}
-                >
+                <CardContent>
                   <CheckBoxIcon
                     fontSize="large"
                     sx={{ fontSize: "50px", color: "#c6ff00" }}
                   />
-
                   <Typography
+                    variant="h5"
+                    component="div"
                     sx={{
                       mb: 1.5,
                       textAlign: "center",
                       fontWeight: "bolder",
                       fontFamily: "Montserrat",
+                      color: "#333",
                     }}
-                    color="#333"
-                    variant="h5"
-                    component="div"
                   >
                     Approved
                   </Typography>
                 </CardContent>
               </Link>
             </Card>
+
             <Card
               sx={{
                 boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.3)',
-                height:"200px",
-                //border: '2px solid yellow',
+                height: "200px",
                 minWidth: 20,
                 flex: 1,
                 marginRight: 3,
@@ -2208,36 +2148,26 @@ const Dashboard = () => {
                 borderRadius: 1,
                 transition: "transform 0.3s",
                 "&:hover": {
-                  transform: "scale(1.1)", // Adjust the scaling factor as needed
+                  transform: "scale(1.1)",
                 },
               }}
             >
-              <Link
-                to={"/approved-rejected"}
-                style={{ textDecoration: "none" }}
-              >
-                <CardContent
-                // sx={{
-                //   display: 'flex',
-                //   flexDirection: 'column',
-                //   alignItems: 'start',
-                // }}
-                >
+              <Link to={"/approved-rejected"} style={{ textDecoration: "none" }}>
+                <CardContent>
                   <CancelIcon
                     fontSize="large"
                     sx={{ fontSize: "50px", color: "red" }}
                   />
-
                   <Typography
+                    variant="h5"
+                    component="div"
                     sx={{
                       mb: 1.5,
                       textAlign: "center",
                       fontWeight: "bolder",
                       fontFamily: "Montserrat",
+                      color: "#333",
                     }}
-                    color="#333"
-                    variant="h5"
-                    component="div"
                   >
                     Approver Rejected
                   </Typography>
@@ -2245,9 +2175,112 @@ const Dashboard = () => {
               </Link>
             </Card>
 
-           
+            <Card
+              sx={{
+                boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.3)',
+                minWidth: 20,
+                flex: 1,
+                marginRight: 3,
+                marginLeft: 3,
+                marginTop: 3,
+                borderRadius: 1,
+                transition: "transform 0.3s",
+                "&:hover": {
+                  transform: "scale(1.1)",
+                },
+              }}
+            >
+              <Link to={"/bulkVerifyapprover"} style={{ textDecoration: "none" }}>
+                <CardContent
+                  sx={{
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                  }}
+                >
+                  <DownloadDoneIcon
+                    fontSize="large"
+                    style={{ color: "#795548", fontSize: "50px" }}
+                  />
+                  <Typography
+                    variant="h6"
+                    component="div"
+                    sx={{
+                      mb: 1.5,
+                      textAlign: "center",
+                      fontWeight: "bolder",
+                      fontFamily: "Montserrat",
+                      color: "#333",
+                    }}
+                  >
+                    Bulk Approve/Reject Purchase
+                  </Typography>
+                </CardContent>
+              </Link>
+            </Card>
+            <Card
+              sx={{
+                boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.3)',
+                minWidth: 20,
+                flex: 1,
+                marginRight: 3,
+                marginLeft: 3,
+                marginTop: 3,
+                borderRadius: 1,
+                transition: "transform 0.3s",
+                "&:hover": {
+                  transform: "scale(1.1)",
+                },
+              }}
+            >
+              <Link
+                to={"/bulkApproveconsumeapprover"} style={{ textDecoration: "none" }}>
+                <CardContent
+                  sx={{
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                  }}
+                >
+                 <DownloadDoneIcon
+                    fontSize="large"
+                    style={{ color: "red", fontSize: "50px" }}
+                  />
+                  <Typography
+                    variant="h6"
+                    component="div"
+                    sx={{
+                      mb: 1.5,
+                      textAlign: "center",
+                      fontWeight: "bolder",
+                      fontFamily: "Montserrat",
+                      color: "#333",
+                    }}
+                  >
+                    Bulk Approve/Reject Consume
+                  </Typography>
+                  <Typography
+                    variant="h4"
+                    color="text.secondary"
+                    sx={{
+                      mb: -6,
+                      fontWeight: 'bold',
+                      animation: isBlinking ? 'blinkingText 1s infinite' : 'none',
+                      color: 'red',
+                      textAlign: 'center',
+                    }}
+                  >
+                 0
+                  </Typography>
+                </CardContent>
+              </Link>
+            </Card>
+          </div>
+
+          <div style={{ display: "flex", flexDirection: "row", marginTop: 2, justifyContent: "center", paddingBottom: 50 }}>
           </div>
         </Grid>
+
         // Render grid for ROLE_APPROVER
       );
     } else if (roleOthers) {
@@ -2310,44 +2343,44 @@ const Dashboard = () => {
                     }}
                   />
 
-<div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                  <Typography
-        sx={{
-          mb: 1.5,
-          ml:10,
-          textAlign: "center",
-          fontWeight: "bolder",
-          fontFamily: "Montserrat",
-          color: 'black', // Set the text color to blue
-        }}
-        variant="h5"
-        component="div"
-      >
-        Moc
-      </Typography>
-      <Typography
-        sx={{
-          mb: -6,
-        
-          ml:16,
-          fontWeight: 'bold', // Set font weight to bold
-          animation: isBlinking ? 'blinkingText 1s infinite' : 'none', // Apply blinking animation
-          color: 'green',
-          textAlign: 'center' // Set the text color to blue
-        }}
-        variant="h4"
-        color="text.secondary"
-      >
-        {invCount}
-      </Typography>
-      </div>
+                  <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                    <Typography
+                      sx={{
+                        mb: 1.5,
+                        ml: 10,
+                        textAlign: "center",
+                        fontWeight: "bolder",
+                        fontFamily: "Montserrat",
+                        color: 'black', // Set the text color to blue
+                      }}
+                      variant="h5"
+                      component="div"
+                    >
+                      Moc
+                    </Typography>
+                    <Typography
+                      sx={{
+                        mb: -6,
+
+                        ml: 16,
+                        fontWeight: 'bold', // Set font weight to bold
+                        animation: isBlinking ? 'blinkingText 1s infinite' : 'none', // Apply blinking animation
+                        color: 'green',
+                        textAlign: 'center' // Set the text color to blue
+                      }}
+                      variant="h4"
+                      color="text.secondary"
+                    >
+                      {invCount}
+                    </Typography>
+                  </div>
                 </CardContent>
               </Link>
             </Card>
 
             <Card
               sx={{
-                height:"200px",
+                height: "200px",
                 boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.3)',
                 //border: '2px solid yellow',
                 minWidth: 40,
@@ -2381,7 +2414,7 @@ const Dashboard = () => {
                   >
                     Daily Data Count
                   </Typography>
-                 
+
                 </CardContent>
               </Link>
             </Card>
@@ -2541,37 +2574,37 @@ const Dashboard = () => {
                     sx={{ fontSize: "50px", color: "#64dd17" }}
                   />
 
-<div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                  <Typography
-        sx={{
-          mb: 1.5,
-          ml:10,
-          textAlign: "center",
-          fontWeight: "bolder",
-          fontFamily: "Montserrat",
-          color: 'black', // Set the text color to blue
-        }}
-        variant="h5"
-        component="div"
-      >
-        Inventory
-      </Typography>
-      <Typography
-        sx={{
-          mb: -6,
-        
-          ml:16,
-          fontWeight: 'bold', // Set font weight to bold
-          animation: isBlinking ? 'blinkingText 1s infinite' : 'none', // Apply blinking animation
-          color: 'green',
-          textAlign: 'center' // Set the text color to blue
-        }}
-        variant="h4"
-        color="text.secondary"
-      >
-        {invCount}
-      </Typography>
-      </div>
+                  <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                    <Typography
+                      sx={{
+                        mb: 1.5,
+                        ml: 10,
+                        textAlign: "center",
+                        fontWeight: "bolder",
+                        fontFamily: "Montserrat",
+                        color: 'black', // Set the text color to blue
+                      }}
+                      variant="h5"
+                      component="div"
+                    >
+                      Inventory
+                    </Typography>
+                    <Typography
+                      sx={{
+                        mb: -6,
+
+                        ml: 16,
+                        fontWeight: 'bold', // Set font weight to bold
+                        animation: isBlinking ? 'blinkingText 1s infinite' : 'none', // Apply blinking animation
+                        color: 'green',
+                        textAlign: 'center' // Set the text color to blue
+                      }}
+                      variant="h4"
+                      color="text.secondary"
+                    >
+                      {invCount}
+                    </Typography>
+                  </div>
                 </CardContent>
               </Link>
             </Card>

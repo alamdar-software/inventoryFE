@@ -153,6 +153,8 @@ import ViewPickup from './components/ViewPickup.js';
 import ReportLocation from './components/ReportLocation.js';
 import BulkVerifyReject from './components/BulkVerifyReject.js';
 import BulkVerifyRejectConsume from './components/BulkVerifyRejectConsume.js';
+import BulkApproveReject from './components/bulkApproveReject.js';
+import BulkApproveRejectConsume from './components/BulkApproveRejectConsume.js';
 
 const theme = createTheme({
   palette: {
@@ -789,6 +791,22 @@ theme="light"
                   }
                 />
                 <Route
+                  path='/bulkVerifyapprover'
+                  element={
+                    <Sidebar>
+                      <BulkApproveReject />
+                    </Sidebar>
+                  }
+                />
+                 <Route
+                  path='/bulkApproveconsumeapprover'
+                  element={
+                    <Sidebar>
+                      <BulkApproveRejectConsume />
+                    </Sidebar>
+                  }
+                />
+                 <Route
                   path='/ApprovedCipl'
                   element={
                     <Sidebar>
